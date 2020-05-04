@@ -1,0 +1,18 @@
+@import 'variables';
+
+@mixin for-large-down {
+  // @media (max-width: 899px) { @content; }
+  @media (max-width: 599px) { @content; }
+}
+@mixin for-large-up {
+  // @media (min-width: 900px) { @content; }
+  @media (min-width: 600px) { @content; }
+}
+@mixin for-very-wide-up {
+  @media (min-width: 1200px) { @content; }
+}
+
+
+@mixin shadow-color($color) {
+  box-shadow: 4px 3px $color;
+}

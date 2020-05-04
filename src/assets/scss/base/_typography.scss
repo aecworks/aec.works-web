@@ -1,0 +1,64 @@
+// Yes: Font, Sizes, Spacing
+// No: Left-Right Padding/Margins, Component Specific Spacing
+
+
+body {
+    font-family: $font-family;
+    font-size: $font-size-p;
+    line-height: 1.5;
+}
+
+code {
+    font-family: $font-family-mono;
+    tab-size: 2;
+}
+
+p {
+    font-size: $font-size-p;
+    margin-bottom: 16px;
+}
+
+label {
+    font-size: $font-size-h4;
+    margin: $padding-md, $padding-xs;
+    display: inline-block;
+}
+
+h1,h2,h3,h4,h5 {
+    font-weight: $font-weight-bold;
+    margin-top: 0;
+}
+h1 {
+    font-size: $font-size-h1;
+    margin-bottom: $padding-md;
+}
+h2 {
+    font-size: $font-size-h2;
+    margin-bottom: $padding-md;
+}
+h3 {
+    font-size: $font-size-h3;
+    margin-bottom: $padding-md;
+}
+h4 {
+    font-size: $font-size-h4;
+    margin-bottom: $padding-sm;
+}
+h5 {
+    font-size: $font-size-h5;
+    margin-bottom: $padding-sm;
+}
+
+
+// .text-info {
+//     color: $info;
+// }
+
+// .title {
+//     font-size: $font-size-xlarge;
+//     font-weight: 500;
+//     line-height: 1;
+// }
+// .description {
+//     font-size: $font-size-small;
+// }

@@ -1,0 +1,48 @@
+// @import url('https://fonts.googleapis.com/css2?family=&Montserrat:wght@100;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@200;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@200;400;700&display=swap');
+
+$font-family: 'Roboto Slab';
+$font-family-serif: 'Libre Baskerville';
+$font-family-mono: 'Roboto Mono', 'Consolas', 'monospace';
+
+$font-weight-bold: 700;
+$font-weight-normal: 400;
+$font-weight-light: 200;
+
+$font-size-h1: 3rem;
+$font-size-h2: 1.8rem; // 28px
+$font-size-h3: 1rem; // 16px
+$font-size-p: 16px; // 16px
+$font-size-h4: 0.9rem; // 14.4px
+$font-size-h5: 0.8rem; //12.8px
+
+$gray-950: #262626;
+$gray-900: #303030;
+$gray-800: #353535;
+$gray-600: #606060;
+$gray-500: #909090;
+$gray-300: #C4C4C4;
+$gray-200: #DADADA;
+$gray-100: #F1F1F1;
+$background: #f6f6f6;
+
+$light-gray: #CBC9C4;
+$dark-gray: #A6A49F;
+$cream: #F6F3EC;
+$dark: #32312D;
+$yellow: #F5D59A;
+$orange: #F8BD9F;
+$pink: #F6D7D4;
+$blue: #CCEFEF;
+$green: #C3EFD6;
+
+
+$padding-4xl: 2rem;
+$padding-3xl: 1.75rem;
+$padding-2xl: 1.5rem;
+$padding-xl: 1.25rem;
+$padding: 1rem;
+$padding-md: 0.75rem;
+$padding-sm: 0.5rem;
+$padding-xs: 0.25rem;

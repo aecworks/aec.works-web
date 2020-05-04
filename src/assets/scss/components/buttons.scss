@@ -1,0 +1,24 @@
+.button {
+    cursor: pointer;
+    display: inline-block;
+    padding: $padding-xs $padding-md;
+    background-color: $yellow;
+    border: 1px solid $dark;
+    border-radius: 3px;
+    font-size: $font-size-p;
+    @extend .shadow;
+}
+
+
+.button-text {
+    cursor: pointer;
+    span {
+        border-bottom: 2px solid $yellow;
+        padding-bottom: 1px;
+        &:hover{
+            border-bottom-color: $dark;
+        }
+    }
+    // text-decoration: underline;
+    // text-decoration-color: $yellow;
+}

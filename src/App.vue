@@ -1,28 +1,47 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" class="app-wrapper">
+    <Nav />
+    <router-view />
+
+    <p>
+      <a href="#" @click="showModal = true">Login</a>
+    </p>
+
+    <!-- Modals -->
+    <Modal v-if="showModal" @on-close="showModal = false">
+      <div class="form">
+        <input class="form-text" type="text" placeholder="username" />
+        <input class="form-text" type="text" placeholder="username" />
+      </div>
+    </Modal>
+    <!-- Modals -->
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Nav from '@/components/Nav'
+import Modal from '@/components/Modal'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    Nav,
+    Modal,
+  },
+  data() {
+    return {
+      showModal: false,
+    }
+  },
+  computed: {
+    // ?modal=login
+    loginModal() {
+      return this.$route.query.modal
+    },
+  },
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss">
+@import '~@/assets/scss/main.scss';
 </style>

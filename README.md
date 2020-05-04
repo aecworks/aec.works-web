@@ -27,3 +27,10 @@ yarn run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+# Licences
+
+* Vue
+* [...packages.json]
+* https://twemoji.twitter.com/
