@@ -1,15 +1,20 @@
-
-.form-text {
-     border: 2px solid $dark;
-     border-radius: 5px;
-     background-color: transparent;
+.form {
+  input, textarea {
+    display: block;
+    margin-bottom: .75rem;
+  }
+  .button {
+    margin-top: 1rem;
+  }
+}
+input[type=text], textarea {
      padding: $padding-sm $padding;
      font-size: $font-size-p;
+
+     @extend .border-thick;
+
      &:focus {
-       border-color: darken($gray-300, 10);
-     }
-     &.fill {
-       width: 100%
+      @include shadow-color($dark);
      }
 }
 

@@ -1,8 +1,9 @@
 <template>
-  <div class="modal-overlay" @click="onClick">
+  <div class="modal-container">
     <div class="modal">
       <slot />
     </div>
+    <div class="modal-overlay" @click="onOverlayClick" />
   </div>
 </template>
 
@@ -18,9 +19,9 @@ export default {
   },
   created() {},
   methods: {
-    onClick(el) {
+    onOverlayClick(el) {
       if (el.target.className === 'modal-overlay') {
-        this.$emit('on-close')
+        this.$emit('clickOutside')
       }
     },
   },
@@ -28,38 +29,36 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.modal-overlay {
+.modal-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: fixed;
-  z-index: 100;
-
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
 
-  background-color: $cream;
-  opacity: 0.75;
-}
-.modal {
-  display: block;
-  position: fixed;
-  z-index: 101;
-  // background-color: white;
+  .modal-overlay {
+    position: fixed;
+    z-index: 100;
+    background-color: white;
+    opacity: 0.75;
+    width: 100%;
+    height: 100%;
+  }
+  .modal {
+    z-index: 101;
+    background-color: white;
+    @extend .border-thick;
+    @include shadow-color($dark);
 
-  left: 50%;
-  top: 50%;
+    height: 400px;
+    width: 90%;
 
-  width: 600px;
-  max-width: 100%;
-  height: 400px;
-  max-height: 100%;
-
-  transform: translate(-50%, -50%);
-
-  background-color: $cream;
-  box-shadow: 10px 10px $pink;
-
-  border: 2px $dark solid;
-  border-radius: 5px;
+    @include for-large-up {
+      width: 600px;
+    }
+  }
 }
 </style>

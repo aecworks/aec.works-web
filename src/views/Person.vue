@@ -10,9 +10,9 @@
           <p>{{ person.bio }}</p>
         </div>
         <div class="profile-facts">
-          <h5>Location</h5>
+          <label>Location</label>
           <p class="small muted">{{ person.location }}</p>
-          <h5>Twitter</h5>
+          <label>Twitter</label>
           <p>{{ person.twitter }}</p>
         </div>
       </div>
@@ -24,7 +24,7 @@
         data-theme="light"
         :href="`https://twitter.com/${person.twitter}`"
       >Tweets by {{person.twitter}}</a>
-        <!-- data-width="400" -->
+      <!-- data-width="400" -->
     </div>
   </div>
 </template>
@@ -63,7 +63,7 @@ export default {
   width: 100% !important;
   // text-align: right;
 }
-.profile-content{
+.profile-content {
   margin-bottom: 2rem;
   flex: 0;
 
@@ -71,18 +71,17 @@ export default {
     flex-wrap: wrap;
   }
 
-  .profile-bio{
+  .profile-bio {
     @include for-large-up {
       padding-right: 2rem;
     }
   }
-  .profile-facts{
+  .profile-facts {
     @include for-large-up {
       flex-shrink: 0;
-      margin-left:auto;
+      margin-left: auto;
       text-align: right;
     }
   }
 }
-
 </style>

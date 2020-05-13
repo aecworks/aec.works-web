@@ -1,7 +1,9 @@
 <template>
   <div class="company-card" @click="onClick">
-    <div class="company-card-icon">
-      <img :src="getImageUrl(company.logo)" />
+    <div class="company-card-icon-container">
+      <div class="company-card-icon">
+        <img :src="getImageUrl(company.logo)" />
+      </div>
     </div>
     <div class="company-card-body">
       <h3 class="company-card-title">{{ company.name }}</h3>
@@ -35,50 +37,58 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .company-card {
   position: relative;
-  display: flex;
-  flex: 1;
   padding-bottom: 3rem;
   cursor: pointer;
+  display: flex;
+  // flex: 1;
+  justify-content: right;
 
-  .company-card-icon {
+  .company-card-icon-container {
+    width: 200px;
     margin-right: 1.5rem;
-    width: 4rem;
-    height: 4rem;
-    flex-shrink: 0;
-    overflow: hidden;
+    // display: flex;
+    // justify-content: right;
+  }
+  .company-card-icon {
+    display: inline-block;
+    float: right;
+    height: 75px;
 
-    border: 3px solid white;
-    border-radius: 3px;
-    box-shadow: .5rem .5em black;
+    overflow: hidden;
+    flex-shrink: 0;
+    max-width: 150px;
+
+    // border-radius: 3px;
+    // border: 3px solid white;
+    // box-shadow: 0.5rem 0.5em black;
+    @extend .border-thin;
+    @include shadow-color($dark);
 
     img {
-      width: 100%;
+      // width: 100%;
       height: 100%;
       object-fit: cover;
+      // object-fit: fill;
+      // object-fit: scale-down;
       object-position: center;
     }
-
   }
 
   .company-card-body {
-    display: flex;
-    flex-direction: column;
     height: 4rem;
+    // flex-direction: column;
+    // display: flex;
 
     .company-card-title {
-        line-height: 2rem;
-        margin-top: 0;
+      line-height: 2rem;
+      margin-top: 0;
     }
 
     .company-card-description {
-        @extend .muted;
+      @extend .muted;
     }
   }
-
 }
-
 </style>

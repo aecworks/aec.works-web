@@ -4,40 +4,33 @@
     <router-view />
 
     <p>
-      <a href="#" @click="showModal = true">Login</a>
+      <a href="#" @click="showLoginModal = true">Login</a>
     </p>
 
-    <!-- Modals -->
-    <Modal v-if="showModal" @on-close="showModal = false">
-      <div class="form">
-        <input class="form-text" type="text" placeholder="username" />
-        <input class="form-text" type="text" placeholder="username" />
-      </div>
-    </Modal>
-    <!-- Modals -->
+    <Login v-if="showLoginModal" @closed="showLoginModal = false" />
   </div>
 </template>
 
 <script>
 import Nav from '@/components/Nav'
-import Modal from '@/components/Modal'
+import Login from '@/components/Login'
 
 export default {
   name: 'App',
   components: {
     Nav,
-    Modal,
+    Login,
   },
   data() {
     return {
-      showModal: false,
+      showLoginModal: false,
     }
   },
   computed: {
     // ?modal=login
-    loginModal() {
-      return this.$route.query.modal
-    },
+    // loginModal() {
+    //   return this.$route.query.modal
+    // },
   },
 }
 </script>

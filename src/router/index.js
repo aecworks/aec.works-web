@@ -13,10 +13,10 @@ import Person from '../views/Person'
 Vue.use(VueRouter)
 
 const routes = [
-  // {
-  //   path: '/',
-  //   redirect: { name: 'PostList' }
-  // },
+  {
+    path: '/',
+    redirect: { name: 'PostList' }
+  },
   {
     path: '/companies',
     name: 'Companies',

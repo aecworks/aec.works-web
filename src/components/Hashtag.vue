@@ -7,7 +7,7 @@
 <script>
 export default {
   name: 'Hashtag',
-  props: {name: String},
+  props: { name: String },
   computed: {
     isActive() {
       return this.$route.query.hashtag === this.name
@@ -16,9 +16,9 @@ export default {
   methods: {
     handleClick(name) {
       // Toggle Hashtag
-      let query = Object.assign({}, this.$route.query);
+      let query = Object.assign({}, this.$route.query)
       if (query.hashtag) {
-          delete query.hashtag
+        delete query.hashtag
       } else {
         query.hashtag = name
       }
@@ -41,14 +41,22 @@ export default {
 .hashtag {
   padding: $padding-xs $padding-sm;
   display: inline-block;
-  border-radius: 3px;
-  border: 1px solid $dark;
   margin: 0.5rem 0.25rem;
+
+  @extend .border-thin;
   cursor: pointer;
   span {
     display: table;
     font-size: $font-size-h5;
   }
+
+  &:hover {
+    box-shadow: 0 0 !important;
+  }
+  &:active {
+    box-shadow: 0 0 !important;
+  }
+
   &.dark {
     @include shadow-color($dark);
   }
@@ -63,9 +71,6 @@ export default {
   }
   &.blue {
     @include shadow-color($blue);
-  }
-  &:hover {
-    @include shadow-color($dark);
   }
 }
 </style>

@@ -1,7 +1,13 @@
 <template>
   <div class="discussion">
     <Comment v-for="(comment, index) in comments" :key="comment.id" v-bind="{comment, index}" />
-    <input type="text" class="discussion-input form-text fill" placeholder="Comment" />
+    <textarea
+      type="text"
+      v-model="commentText"
+      class="discussion-input form-text fill-x"
+      placeholder="Comment"
+    />
+    <div v-if="commentText" class="button">Post</div>
   </div>
 </template>
 
@@ -16,6 +22,7 @@ export default {
   },
   data() {
     return {
+      commentText: '',
       comments: [],
       offset: 0,
     }
@@ -38,9 +45,15 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .discussion {
-  margin-bottom: 2rem;
+  margin-bottom: 10rem;
 }
 .discussion-input {
   margin-top: 2rem;
+  transition: height 200ms;
+  height: 2.5rem;
+  &:focus {
+    height: 8rem;
+  }
+  margin-bottom: 1rem;
 }
 </style>

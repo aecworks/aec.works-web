@@ -5,16 +5,10 @@
         <h2 class="page-title">{{post.title}}</h2>
       </div>
 
-      <div class="page-content">
-        <div class="post-content" v-html="post.body" />
-      </div>
+      <div class="post-content" v-html="post.body" />
 
       <div class="post-hashtags">
-        <Hashtag
-          v-for="name in post.hashtags"
-          :name="name"
-          :key="name"
-        />
+        <Hashtag v-for="name in post.hashtags" :name="name" :key="name" />
       </div>
 
       <div class="post-author">
@@ -44,9 +38,7 @@ export default {
   async created() {
     this.post = await api.getPost(this.id)
   },
-  methods: {
-
-  },
+  methods: {},
 }
 </script>
 

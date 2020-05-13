@@ -20,13 +20,6 @@ a:hover {
   color: $dark-gray;
 }
 
-.shadow {
-  box-shadow: 4px 3px $dark;
-}
-.shadow-yellow {
-  box-shadow: 4px 3px $yellow;
-}
-
 .marker {
   display: block;
   margin-top: 0.75rem;
@@ -36,17 +29,18 @@ a:hover {
   box-shadow: 4px 3px $yellow;
 }
 
-// .dark {
-//   color: $gray-300;
-//   // background-color: $gray-800;
+.border-thin {
+  border-radius: 3px;
+  border: 1px solid $dark;
+}
+.border-thick {
+  border-radius: 5px;
+  border: 2px solid $dark;
+}
 
-//   h1, h2, h3, h4, h5, a {
-//     color: $gray-100;
-//   }
-//   a:hover {
-//     color: $gray-300;
-//   }
-//   .is-active a {
-//     color: white;
-//   }
-// }
+.invert {
+  background-color: $dark;
+  h1, h2, h3, h4, h5, p {
+    color: white;
+  }
+}

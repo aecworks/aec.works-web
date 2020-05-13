@@ -27,7 +27,7 @@ export default {
     width: 30px;
     height: 30px;
     border-radius: 15px;
-    @extend .shadow-yellow;
+    @include shadow-color($yellow);
   }
 
   .profile-name {

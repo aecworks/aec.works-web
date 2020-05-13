@@ -6,18 +6,18 @@
     <p class="post-card-author">by {{ post.profile.name }}</p>
 
     <div class="post-card-hashtags">
-      <Hashtag
-            v-for="name in post.hashtags"
-            :name="name"
-            :key="name"
-      />
-    </div>
-    
-    <div class="flex flex-center post-card-footer">
-      <IconCounter :icon="'chat'" :count="post.commentCount" />
-      <IconCounter :icon="'clap'" :count="localClapCount || post.clapCount" @click="onClapClick(post)"/>
+      <Hashtag v-for="name in post.hashtags" :name="name" :key="name" />
     </div>
 
+    <div class="post-card-footer flex flex-center">
+      <IconCounter :icon="'chat'" :count="post.commentCount" />
+      <IconCounter
+        :icon="'clap'"
+        :count="localClapCount || post.clapCount"
+        @click="onClapClick(post)"
+      />
+      <label class="post-card-footer-timestamp">{{relativeTimestamp}}</label>
+    </div>
   </div>
 </template>
 
@@ -25,6 +25,7 @@
 import api from '@/api'
 import Hashtag from '@/components/Hashtag'
 import IconCounter from '@/components/IconCounter'
+import moment from 'moment'
 
 export default {
   name: 'PostCard',
@@ -32,12 +33,17 @@ export default {
   components: { Hashtag, IconCounter },
   data() {
     return {
-      localClapCount: null
+      localClapCount: null,
     }
+  },
+  computed: {
+    relativeTimestamp() {
+      return moment(this.post.createdAt).fromNow()
+    },
   },
   methods: {
     async onClapClick(post) {
-      const clapCount = await api.postPostClap(this.post.id)
+      const clapCount = await api.postPostClap(post.id)
       this.localClapCount = clapCount
     },
   },
@@ -53,26 +59,24 @@ export default {
 
   background-color: white;
   padding: $padding;
-  border: 2px $dark solid;
-  border-radius: 5px;
 
+  @extend .border-thick;
   @include shadow-color($dark);
-  
+
   width: 100%;
   @include for-large-up {
     width: 80%;
   }
 
-
   .post-card-title {
+    margin-bottom: 0.5rem;
+  }
+
+  .post-card-author {
     margin-bottom: 1rem;
   }
 
   .post-card-hashtags {
-    margin-bottom: 1rem;
-  }
-
-  .post-card-author {
     margin-bottom: 1rem;
   }
 
@@ -81,7 +85,9 @@ export default {
     > * {
       margin-right: 1rem;
     }
-
+    .post-card-footer-timestamp {
+      margin-left: auto;
+    }
   }
 }
 </style>

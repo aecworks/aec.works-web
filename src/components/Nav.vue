@@ -1,7 +1,7 @@
 <template>
   <div id="nav">
     <a href="/">
-      <img class="logo" src="@/assets/logo.svg" />
+      <img alt="AEC Guide Logo" class="logo" src="@/assets/logo.svg" />
     </a>
     <!-- <router-link to="/">Home</router-link> | -->
     <ul class="nav-links">

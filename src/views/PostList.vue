@@ -1,6 +1,5 @@
 <template>
   <div class="page">
-
     <div class="page-header">
       <div class="button">Add Post</div>
     </div>
@@ -21,7 +20,7 @@ import api from '@/api'
 import PostCard from '@/components/PostCard'
 
 export default {
-  name: 'CompanyList',
+  name: 'PostList',
   components: {
     PostCard,
   },
@@ -34,7 +33,7 @@ export default {
   async created() {
     this.fetchItems(0, this.$route.query.hashtag)
   },
-  beforeRouteUpdate (to, from, next) {
+  beforeRouteUpdate(to, from, next) {
     if (from.query.hashtag !== to.query.hashtag) {
       this.items = []
       this.fetchItems(0, to.query.hashtag)

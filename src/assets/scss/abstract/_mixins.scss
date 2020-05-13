@@ -13,6 +13,8 @@
 }
 
 
-@mixin shadow-color($color) {
-  box-shadow: 4px 3px $color;
+
+@mixin shadow-color($color, $x: 4px, $y: 3px) {
+  transition: box-shadow 150ms;
+  box-shadow: $x $y $color;
 }

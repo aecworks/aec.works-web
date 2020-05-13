@@ -3,13 +3,21 @@
     display: inline-block;
     padding: $padding-xs $padding-md;
     background-color: $yellow;
-    border: 1px solid $dark;
-    border-radius: 3px;
+
     font-size: $font-size-p;
-    @extend .shadow;
+
+    @extend .border-thin;
+    &:hover{
+        @include shadow-color($dark);
+    }
+
+    transition: box-shadow 200ms;
+    &:active {
+        box-shadow: 0 0 $dark;
+    }
 }
 
-
+// Requires div > span
 .button-text {
     cursor: pointer;
     span {
