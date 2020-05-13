@@ -1,23 +1,24 @@
 <template>
-  <Page>
-    <template #title>People</template>
-    <template #content>
+  <div class="page">
+    <div class="page-header">
+      <h2 class="page-title">People</h2>
+    </div>
+
+    <div class="page-content">
       <p v-for="profile in items" :key="profile.id">
-        <router-link :to="{ name: 'Person', params: { id: profile.id  }}">
-          {{ profile.email }}
-        </router-link>
+        <Profile :profile="profile" />
       </p>
-    </template>
-  </Page>
+    </div>
+  </div>
 </template>
 
 <script>
 import api from '../api'
-import Page from '@/components/Page'
+import Profile from '@/components/Profile'
 
 export default {
   name: 'Person',
-  components: { Page },
+  components: { Profile },
   props: ['id'],
   data() {
     return {
@@ -25,7 +26,7 @@ export default {
     }
   },
   async created() {
-    const { results: items  } = await api.getProfiles()
+    const { results: items } = await api.getProfiles()
     this.items = items
   },
   methods: {},

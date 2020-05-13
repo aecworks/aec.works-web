@@ -32,11 +32,23 @@ export default {
     }
   },
   async created() {
-    this.fetchItems(0)
+    this.fetchItems(0, this.$route.query.hashtag)
+  },
+  beforeRouteUpdate (to, from, next) {
+    if (from.query.hashtag !== to.query.hashtag) {
+      this.items = []
+      this.fetchItems(0, to.query.hashtag)
+    }
+    next()
   },
   methods: {
-    async fetchItems(offset) {
-      const { results: items } = await api.getPosts({ offset })
+    async fetchItems(offset, hashtag) {
+      const query = { offset }
+      if (hashtag) {
+        query.hashtag = hashtag
+      }
+
+      const { results: items } = await api.getPosts(query)
       this.items = [...this.items, ...items]
       this.offset = this.offset + items.length
     },

@@ -42,7 +42,7 @@ export default {
       this.items = [...this.items, ...items]
       this.offset = this.offset + items.length
     },
-    onVisible({ el, going }) {
+    onVisible({ going }) {
       if (going === 'in') {
         this.fetchItems(this.offset)
       }

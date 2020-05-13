@@ -36,13 +36,6 @@ a:hover {
   box-shadow: 4px 3px $yellow;
 }
 
-.avatar {
-  width: 30px;
-  height: 30px;
-  border-radius: 15px;
-  @extend .shadow-yellow;
-}
-
 // .dark {
 //   color: $gray-300;
 //   // background-color: $gray-800;

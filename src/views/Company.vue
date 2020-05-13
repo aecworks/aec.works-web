@@ -23,8 +23,6 @@
 
 <script>
 import api from '@/api'
-
-import CompanyCard from '@/components/CompanyCard'
 import Discussion from '@/components/Discussion'
 
 export default {

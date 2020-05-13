@@ -1,18 +1,30 @@
 <template>
   <div class="page">
     <div v-if="person">
-      <h3 class="page-title">{{ person.email }}</h3>
-      <p>{{ person.twitter }}</p>
-      <p>{{ person.location }}</p>
+      <div class="page-header">
+        <h2 class="page-title">{{ person.name }}</h2>
+      </div>
+
+      <div class="profile-content flex">
+        <div class="profile-bio">
+          <p>{{ person.bio }}</p>
+        </div>
+        <div class="profile-facts">
+          <h5>Location</h5>
+          <p class="small muted">{{ person.location }}</p>
+          <h5>Twitter</h5>
+          <p>{{ person.twitter }}</p>
+        </div>
+      </div>
 
       <a
         class="twitter-timeline"
-        data-width="600"
         data-height="400"
         data-dnt="true"
-        data-theme="dark"
+        data-theme="light"
         :href="`https://twitter.com/${person.twitter}`"
       >Tweets by {{person.twitter}}</a>
+        <!-- data-width="400" -->
     </div>
   </div>
 </template>
@@ -45,3 +57,32 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+#twitter-widget-0 {
+  width: 100% !important;
+  // text-align: right;
+}
+.profile-content{
+  margin-bottom: 2rem;
+  flex: 0;
+
+  @include for-large-down {
+    flex-wrap: wrap;
+  }
+
+  .profile-bio{
+    @include for-large-up {
+      padding-right: 2rem;
+    }
+  }
+  .profile-facts{
+    @include for-large-up {
+      flex-shrink: 0;
+      margin-left:auto;
+      text-align: right;
+    }
+  }
+}
+
+</style>

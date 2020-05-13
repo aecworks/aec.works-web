@@ -3,11 +3,19 @@
     <h3 class="post-card-title">
       <router-link :to="{ name: 'Post', params: { id: post.id }}">{{post.title}}</router-link>
     </h3>
-    <p class="post-card-author">{{ post.profile.name }}</p>
+    <p class="post-card-author">by {{ post.profile.name }}</p>
+
+    <div class="post-card-hashtags">
+      <Hashtag
+            v-for="name in post.hashtags"
+            :name="name"
+            :key="name"
+      />
+    </div>
     
     <div class="flex flex-center post-card-footer">
       <IconCounter :icon="'chat'" :count="post.commentCount" />
-      <IconCounter :icon="'clap'" :count="localClapCount || post.clapCount" @click="onClapClick"/>
+      <IconCounter :icon="'clap'" :count="localClapCount || post.clapCount" @click="onClapClick(post)"/>
     </div>
 
   </div>
@@ -15,22 +23,23 @@
 
 <script>
 import api from '@/api'
+import Hashtag from '@/components/Hashtag'
 import IconCounter from '@/components/IconCounter'
 
 export default {
   name: 'PostCard',
   props: ['post'],
-  components: { IconCounter },
+  components: { Hashtag, IconCounter },
   data() {
     return {
       localClapCount: null
     }
   },
   methods: {
-    async onClapClick() {
+    async onClapClick(post) {
       const clapCount = await api.postPostClap(this.post.id)
       this.localClapCount = clapCount
-    }
+    },
   },
 }
 </script>
@@ -56,6 +65,10 @@ export default {
 
 
   .post-card-title {
+    margin-bottom: 1rem;
+  }
+
+  .post-card-hashtags {
     margin-bottom: 1rem;
   }
 

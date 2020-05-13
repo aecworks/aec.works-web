@@ -1,5 +1,5 @@
 <template>
-  <div class="hashtag" :class="randomColor()">
+  <div class="hashtag" :class="pickColor()" @click="handleClick(name)">
     <span>#{{name}}</span>
   </div>
 </template>
@@ -7,9 +7,27 @@
 <script>
 export default {
   name: 'Hashtag',
-  props: ['name'],
+  props: {name: String},
+  computed: {
+    isActive() {
+      return this.$route.query.hashtag === this.name
+    },
+  },
   methods: {
-    randomColor() {
+    handleClick(name) {
+      // Toggle Hashtag
+      let query = Object.assign({}, this.$route.query);
+      if (query.hashtag) {
+          delete query.hashtag
+      } else {
+        query.hashtag = name
+      }
+      this.$router.replace({ query })
+    },
+    pickColor() {
+      if (this.isActive) {
+        return 'dark'
+      }
       const options = ['pink', 'yellow', 'green', 'blue']
       const choiceIndex = Math.floor(Math.random() * options.length)
       return options[choiceIndex]
@@ -30,6 +48,9 @@ export default {
   span {
     display: table;
     font-size: $font-size-h5;
+  }
+  &.dark {
+    @include shadow-color($dark);
   }
   &.pink {
     @include shadow-color($pink);
