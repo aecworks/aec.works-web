@@ -10,12 +10,19 @@
         </p>
       </div>
       <div class="login-form">
-        <form class="form" autocomplete="off">
+        <form class="form" autocomplete="off" @submit.prevent="onSubmit">
           <label>Username</label>
-          <input class="fill-x" type="text" name="username" :placeholder="usernames[0]" />
+          <input
+            class="fill-x"
+            type="text"
+            v-model="username"
+            name="username"
+            :placeholder="usernames[0]"
+          />
           <label>Password</label>
-          <input class="fill-x" type="text" name="username" placeholder="****" />
+          <input class="fill-x" type="text" v-model="password" name="username" placeholder="****" />
           <div class="button">Login</div>
+          <input type="submit" value="Submit" />
         </form>
         <br />
         <p>Don't have an account?</p>
@@ -26,7 +33,7 @@
 </template>
 
 <script>
-// import api from '@/api'
+import { login } from '@/api/auth'
 import Modal from '@/components/Modal'
 
 export default {
@@ -35,6 +42,8 @@ export default {
   props: [],
   data() {
     return {
+      username: '',
+      password: '',
       usernames: [
         'herpes_free_since_03',
         'king_0f_dairy_queen',
@@ -47,8 +56,11 @@ export default {
       ],
     }
   },
-  created() {},
-  methods: {},
+  methods: {
+    onSubmit() {
+      login(this.username, this.password)
+    },
+  },
 }
 </script>
 

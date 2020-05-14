@@ -1,10 +1,7 @@
 <template>
   <div class="page">
-
     <div class="page-header">
-      <h2 class="page-title">
-        Companies
-      </h2>
+      <h2 class="page-title">Companies</h2>
     </div>
 
     <div class="page-content">

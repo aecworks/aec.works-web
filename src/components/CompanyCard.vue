@@ -1,20 +1,19 @@
 <template>
   <div class="company-card" @click="onClick">
+    <div class="company-card-body">
+      <h3 class="company-card-title">{{ company.name }}</h3>
+      <p class="company-card-description">{{company.description || "-"}}</p>
+      <!-- <p class="company-card-description">{{company.location || "-"}}</p> -->
+    </div>
     <div class="company-card-icon-container">
       <div class="company-card-icon">
         <img :src="getImageUrl(company.logo)" />
       </div>
     </div>
-    <div class="company-card-body">
-      <h3 class="company-card-title">{{ company.name }}</h3>
-      <p class="company-card-description">{{company.location || "-"}}</p>
-    </div>
   </div>
 </template>
 
 <script>
-import { API_URL } from '@/api'
-
 export default {
   name: 'CompanyCard',
   props: ['company'],
@@ -45,6 +44,22 @@ export default {
   // flex: 1;
   justify-content: right;
 
+  .company-card-body {
+    height: 4rem;
+    width: 300px;
+    // flex-direction: column;
+    // display: flex;
+
+    .company-card-title {
+      line-height: 2rem;
+      margin-top: 0;
+    }
+
+    .company-card-description {
+      @extend .muted;
+    }
+  }
+
   .company-card-icon-container {
     width: 200px;
     margin-right: 1.5rem;
@@ -73,21 +88,6 @@ export default {
       // object-fit: fill;
       // object-fit: scale-down;
       object-position: center;
-    }
-  }
-
-  .company-card-body {
-    height: 4rem;
-    // flex-direction: column;
-    // display: flex;
-
-    .company-card-title {
-      line-height: 2rem;
-      margin-top: 0;
-    }
-
-    .company-card-description {
-      @extend .muted;
     }
   }
 }
