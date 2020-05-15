@@ -4,10 +4,10 @@
     <router-view />
 
     <p>
-      <a href="#" @click="showLoginModal = true">Login</a>
+      <router-link :to="{query: { login: '1' }}">Login</router-link>
     </p>
 
-    <Login v-if="showLoginModal" @closed="showLoginModal = false" />
+    <Login v-if="showLoginModal" @closed="$router.replace({query:{}})" />
   </div>
 </template>
 
@@ -23,14 +23,15 @@ export default {
   },
   data() {
     return {
-      showLoginModal: false,
+      // showLoginModal: false,
     }
   },
+  methods: {},
   computed: {
     // ?modal=login
-    // loginModal() {
-    //   return this.$route.query.modal
-    // },
+    showLoginModal() {
+      return this.$route.query.login
+    },
   },
 }
 </script>

@@ -1,6 +1,9 @@
 import { API_URL } from "./config"
 
-const getToken = () => localStorage.getItem("token")
+const redirectToAuth = () => window.history.pushState("", "", "/#/?login=1");
+const getToken = () => {
+  return localStorage.getItem("token") || redirectToAuth()
+}
 const setToken = (token) => localStorage.setItem("token", token)
 const clearToken = () => localStorage.removeItem("token")
 

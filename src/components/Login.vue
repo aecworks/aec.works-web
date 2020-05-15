@@ -27,6 +27,9 @@
         <br />
         <p>Don't have an account?</p>
         <div class="button">Signup</div>
+        <a
+          href="https://github.com/login/oauth/authorize?scope=user:email&client_id=6d6767eb4dcc89d70f99"
+        >Github</a>
       </div>
     </div>
   </Modal>

@@ -15,7 +15,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: { name: 'PostList' }
+    // redirect: { name: 'PostList' }
   },
   {
     path: '/companies',
