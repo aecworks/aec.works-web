@@ -22,7 +22,7 @@ export default {
       } else {
         query.hashtag = name
       }
-      this.$router.replace({ query })
+      this.$router.replace({ name: 'PostList', query })
     },
     pickColor() {
       if (this.isActive) {

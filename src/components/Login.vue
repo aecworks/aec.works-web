@@ -3,7 +3,7 @@
   <Modal @clickOutside="$emit('closed')">
     <div class="login-container fill-y">
       <div class="login-info invert">
-        <img alt="AEC Guide Logo" class="logo" src="@/assets/logo.svg" />
+        <img alt="AEC Guide Logo" class="logo" src="@/assets/images/logo.svg" />
         <p>
           Welcome to our AEC Community. To keep things in order, users must be signed in
           to contribute and dicuss.
@@ -11,32 +11,37 @@
       </div>
       <div class="login-form">
         <form class="form" autocomplete="off" @submit.prevent="onSubmit">
-          <label>Username</label>
+          <label>Email</label>
           <input
             class="fill-x"
             type="text"
-            v-model="username"
-            name="username"
-            :placeholder="usernames[0]"
+            v-model="email"
+            name="email"
+            placeholder="name@domain.com"
           />
           <label>Password</label>
           <input class="fill-x" type="text" v-model="password" name="username" placeholder="****" />
-          <div class="button">Login</div>
-          <input type="submit" value="Submit" />
+          <button class="button" type="submit">Login</button>
         </form>
-        <br />
-        <p>Don't have an account?</p>
-        <div class="button">Signup</div>
-        <a
-          href="https://github.com/login/oauth/authorize?scope=user:email&client_id=6d6767eb4dcc89d70f99"
-        >Github</a>
+        <div class="login-form-social">
+          <div class="button dark icon" @click="githubLogin()">
+            <span class="icon">
+              <img alt="Github Logo" class="button-icon" src="@/assets/images/github.svg" />
+            </span>
+            Login with Github
+          </div>
+        </div>
+        <!-- TODO Signup -->
+        <!-- <p>Don't have an account?</p> -->
+        <!-- <div class="button">Signup</div> -->
       </div>
     </div>
   </Modal>
 </template>
 
 <script>
-import { login } from '@/api/auth'
+import { loginWithCredentials, loginWithGithubCallback, githubAuthUrl } from '@/api/auth'
+import { popQuery } from '@/utils'
 import Modal from '@/components/Modal'
 
 export default {
@@ -45,23 +50,35 @@ export default {
   props: [],
   data() {
     return {
-      username: '',
+      email: '',
       password: '',
-      usernames: [
-        'herpes_free_since_03',
-        'king_0f_dairy_queen',
-        'shaquille_oatmeal',
-        'intelligent_zombie',
-        'average_student',
-        'butt_smasher',
-        'forgotmypants',
-        'how_you_doing',
-      ],
+      errors: [],
+    }
+  },
+  mounted() {
+    const { code, error } = this.$route.query
+    if (code) {
+      const success = loginWithGithubCallback(code)
+      if (success) {
+        popQuery(this.$router, this.$route.query, 'login')
+        popQuery(this.$router, this.$route.query, 'code')
+      }
+    }
+    if (error) {
+      this.errors.push(error)
+      // this.$router.replace({query: null})
     }
   },
   methods: {
-    onSubmit() {
-      login(this.username, this.password)
+    async onSubmit() {
+      const success = loginWithCredentials(this.email, this.password)
+      if (success) {
+        popQuery(this.$router, this.$route.query, 'login')
+      }
+    },
+    githubLogin() {
+      // Send User to Github Auth
+      window.location.href = githubAuthUrl()
     },
   },
 }
@@ -84,6 +101,12 @@ export default {
   }
   .login-form {
     flex-basis: 50%;
+
+    display: flex;
+    flex-direction: column;
+    .login-form-social {
+      margin-top: auto;
+    }
   }
 }
 </style>

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-// import api from '../api'
+import { loginWithGithubCallback, hasToken } from '../api/auth'
 
 import CompanyList from '../views/CompanyList'
 import Company from '../views/Company'
@@ -9,13 +9,14 @@ import PostList from '../views/PostList'
 import Post from '../views/Post'
 import PersonList from '../views/PersonList'
 import Person from '../views/Person'
+import ErrorView from '../views/ErrorView'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    // redirect: { name: 'PostList' }
+    redirect: { name: 'PostList' }
   },
   {
     path: '/companies',
@@ -51,10 +52,35 @@ const routes = [
     name: 'Person',
     component: Person,
     props: true,
-  }
+  },
+  {
+    path: '/auth/github/callback',
+    name: 'githubCallback',
+
+    //   component: ErrorView,
+    //   beforeEnter: (to, from, next) => {
+    //     const { code, state, error } = to.query
+
+    //     if (error) {
+    //       throw Error(error)
+    //     }
+
+    //     loginWithGithubCallback(code)
+
+    //     if (hasToken()) {
+    //       const path = decodeURIComponent(state)
+    //       next({ path: path })
+    //     } else {
+    //       next()
+    //     }
+
+    //   }
+  },
+
 ]
 
 const router = new VueRouter({
+  mode: "history",
   routes
 })
 

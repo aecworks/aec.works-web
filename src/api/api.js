@@ -1,15 +1,22 @@
 import { API_URL } from "./config"
-import { getToken, clearToken } from "./auth"
+import { getToken, refreshJwtToken, clearToken, redirectToAuth, hasToken } from "./auth"
+
 
 const request = async (urlPath, options = {}) => {
   const query = options.queryParams || {}
   const queryParams = new URLSearchParams(query).toString()
-  const url = API_URL + urlPath + (queryParams ? `?${queryParams}` : "")
+  const queryValue = queryParams ? `?${queryParams}` : ""
+  const url = `${API_URL}/${urlPath}` + queryValue
 
+  const jwt = getToken()
+  if (!jwt) return redirectToAuth()
+
+  // Headers
   const defaultHeaders = {
     "Content-Type": "application/json",
-    "Authorization": `Token ${getToken()}`
+    "Authorization": `JWT ${jwt.access}`
   }
+
   const optionHeaders = options.headers || {}
   const headers = new Headers({
     ...defaultHeaders,
@@ -21,12 +28,18 @@ const request = async (urlPath, options = {}) => {
     ...options
   })
 
+
   const response = await fetch(request)
-  if (response.status == 401) {
-    clearToken()
-    throw Error("Invalid Token")
+  if (response.status == 401 || response.status == 403) {
+    const didRefresh = await refreshJwtToken()
+    if (didRefresh) {
+      return request(urlPath, options)
+    } else {
+      clearToken()
+      redirectToAuth()
+    }
   }
-  return await response.json()
+  return response.json()
 }
 
 export default {
@@ -43,4 +56,5 @@ export default {
     return request(`community/comments/`, { queryParams: { ...queryParams, parent_id: commentId } })
   },
   postPostClap: async (id) => request(`community/posts/${id}/clap/`, { method: 'POST' }),
+  isLoggedIn: () => hasToken
 }

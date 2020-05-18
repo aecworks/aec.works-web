@@ -15,7 +15,24 @@
     &:active {
         box-shadow: 0 0 $dark;
     }
+
+    &.dark {
+        color: white;
+        background-color: $dark;
+    }
+
+    &.icon {
+        span {
+            vertical-align: middle;
+            margin-right: .25rem;
+        }
+        img{
+            height: 1rem;
+        }
+    }
 }
+
+
 
 // Requires div > span
 .button-text {

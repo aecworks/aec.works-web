@@ -1,7 +1,7 @@
 <template>
   <div id="nav">
     <a href="/">
-      <img alt="AEC Guide Logo" class="logo" src="@/assets/logo.svg" />
+      <img alt="AEC Guide Logo" class="logo" src="@/assets/images/logo.svg" />
     </a>
     <!-- <router-link to="/">Home</router-link> | -->
     <ul class="nav-links">
@@ -14,6 +14,11 @@
         :to="route.path"
       >{{route.text}}</router-link>
     </ul>
+    <!-- TEMPORARY -->
+    <br />
+    <br />
+    <router-link :to="{query: { login: '1' }}">Login</router-link>
+    <!-- TEMPORARY -->
   </div>
 </template>
 

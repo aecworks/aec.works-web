@@ -3,10 +3,6 @@
     <Nav />
     <router-view />
 
-    <p>
-      <router-link :to="{query: { login: '1' }}">Login</router-link>
-    </p>
-
     <Login v-if="showLoginModal" @closed="$router.replace({query:{}})" />
   </div>
 </template>

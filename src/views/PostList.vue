@@ -31,7 +31,9 @@ export default {
     }
   },
   async created() {
-    this.fetchItems(0, this.$route.query.hashtag)
+    if (api.isLoggedIn) {
+      this.fetchItems(0, this.$route.query.hashtag)
+    }
   },
   beforeRouteUpdate(to, from, next) {
     if (from.query.hashtag !== to.query.hashtag) {
