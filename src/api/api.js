@@ -2,7 +2,8 @@ import { API_URL } from "./config"
 import { getToken, refreshJwtToken, clearToken, redirectToAuth, hasToken } from "./auth"
 
 
-const request = async (urlPath, options = {}) => {
+const buildRequest = (urlPath, options = {}) => {
+
   const query = options.queryParams || {}
   const queryParams = new URLSearchParams(query).toString()
   const queryValue = queryParams ? `?${queryParams}` : ""
@@ -27,12 +28,19 @@ const request = async (urlPath, options = {}) => {
     headers,
     ...options
   })
+  return request
+}
 
 
-  const response = await fetch(request)
+const request = async (urlPath, options = {}) => {
+  const req = buildRequest(urlPath, options)
+  const response = await fetch(req)
+
   if (response.status == 401 || response.status == 403) {
+
     const didRefresh = await refreshJwtToken()
     if (didRefresh) {
+      debugger
       return request(urlPath, options)
     } else {
       clearToken()
@@ -40,7 +48,11 @@ const request = async (urlPath, options = {}) => {
     }
   }
   return response.json()
+
 }
+
+
+
 
 export default {
   getPosts: async (queryParams) => request(`community/posts/`, { queryParams }),

@@ -18,7 +18,7 @@ const setToken = (token) => {
   localStorage.setItem("token", JSON.stringify(token))
 }
 
-const clearToken = () => localStorage.removeItem("token")
+export const clearToken = () => localStorage.removeItem("token")
 
 const postRequest = async (url, bodyObj) => {
   const headers = new Headers({
