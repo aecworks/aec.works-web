@@ -10,7 +10,7 @@
         </p>
       </div>
       <div class="login-form">
-        <form class="form" autocomplete="off" @submit.prevent="onSubmit">
+        <form class="form" autocomplete="off" @submit.prevent="handleFormSubmit">
           <label>Email</label>
           <input
             class="fill-x"
@@ -24,7 +24,7 @@
           <button class="button" type="submit">Login</button>
         </form>
         <div class="login-form-social">
-          <div class="button dark icon" @click="githubLogin()">
+          <div class="button dark icon" @click="redirectGithubLogin()">
             <span class="icon">
               <img alt="Github Logo" class="button-icon" src="@/assets/images/github.svg" />
             </span>
@@ -35,6 +35,7 @@
         <!-- <p>Don't have an account?</p> -->
         <!-- <div class="button">Signup</div> -->
       </div>
+      <p v-for="err in errors" :key="err">{{err}}</p>
     </div>
   </Modal>
 </template>
@@ -56,27 +57,31 @@ export default {
     }
   },
   mounted() {
-    const { code, error } = this.$route.query
-    if (code) {
-      const success = loginWithGithubCallback(code)
+    this.handleGithubCallback(this.$route.query)
+  },
+  methods: {
+    async handleFormSubmit() {
+      const success = loginWithCredentials(this.email, this.password)
       if (success) {
+        this.$store.dispatch('getProfile')
+      }
+      popQuery(this.$router, this.$route.query, 'login')
+    },
+    async handleGithubCallback({ code, error }) {
+      if (code) {
+        const success = await loginWithGithubCallback(code)
+        if (success) {
+          this.$store.dispatch('getProfile')
+        }
         popQuery(this.$router, this.$route.query, 'login')
         popQuery(this.$router, this.$route.query, 'code')
       }
-    }
-    if (error) {
-      this.errors.push(error)
-      // this.$router.replace({query: null})
-    }
-  },
-  methods: {
-    async onSubmit() {
-      const success = loginWithCredentials(this.email, this.password)
-      if (success) {
-        popQuery(this.$router, this.$route.query, 'login')
+      if (error) {
+        this.errors.push(error)
+        // this.$router.replace({query: null})
       }
     },
-    githubLogin() {
+    redirectGithubLogin() {
       // Send User to Github Auth
       window.location.href = githubAuthUrl()
     },

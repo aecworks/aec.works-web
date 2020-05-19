@@ -17,6 +17,7 @@
     <!-- TEMPORARY -->
     <br />
     <br />
+    {{ profile.email }}
     <router-link :to="{query: { login: '1' }}">Login</router-link>
     <!-- TEMPORARY -->
   </div>
@@ -33,6 +34,11 @@ export default {
         { text: 'people', path: '/people' },
       ],
     }
+  },
+  computed: {
+    profile() {
+      return this.$store.state.users.profile || {}
+    },
   },
   methods: {
     isActive(route) {

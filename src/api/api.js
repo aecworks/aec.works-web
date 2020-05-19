@@ -57,10 +57,14 @@ const request = async (urlPath, options = {}) => {
 export default {
   getPosts: async (queryParams) => request(`community/posts/`, { queryParams }),
   getPost: async (id) => request(`community/posts/${id}/`),
+
   getCompany: async (id) => request(`community/companies/${id}/`),
   getCompanies: async (queryParams) => request(`community/companies/`, { queryParams }),
+
   getProfiles: async (queryParams) => request(`users/profiles/`, { queryParams }),
-  getProfile: async (id) => request(`users/profiles/${id}/`),
+  // getProfileById: async (id) => request(`users/profiles/${id}/`),
+  getProfile: async () => request(`users/profiles/me/`),
+
   getCommentsByThreadId: async (threadId, queryParams) => {
     return request(`community/comments/`, { queryParams: { ...queryParams, thread_id: threadId } })
   },

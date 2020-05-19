@@ -7,7 +7,6 @@ import PostList from '../views/PostList'
 import Post from '../views/Post'
 import PersonList from '../views/PersonList'
 import Person from '../views/Person'
-import Login from '../components/Login'
 
 Vue.use(VueRouter)
 
@@ -16,11 +15,6 @@ const routes = [
     path: '/',
     redirect: { name: 'PostList' }
   },
-  // {
-  //   path: '/login',
-  //   name: 'Login',
-  //   component: Login,
-  // },
   {
     path: '/companies',
     name: 'Companies',
