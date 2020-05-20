@@ -28,7 +28,7 @@
         </div>
       </div>
       <div></div>
-      <Discussion :threadId="company.commentThread" />
+      <Discussion :threadId="company.thread" />
     </div>
   </div>
 </template>

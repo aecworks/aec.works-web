@@ -4,7 +4,7 @@
       <div v-if="comment.level != 0" class="comment-prefix" :class="{'not-first': index !== 0}" />
       <div>
         <h4>
-          {{comment.profile.name}}
+          {{comment.profile.name || "No One"}}
           <span class="comment-timestamp">{{relativeTimestamp}}</span>
         </h4>
 
@@ -18,7 +18,12 @@
         </div>
       </div>
     </div>
-    <Comment v-for="(comment, index) in comments" :key="comment.id" v-bind="{comment, index}" />
+    <Comment
+      v-for="(comment, index) in comments"
+      :key="comment.id"
+      v-bind="{comment, index}"
+      v-waypoint="{ active: index + 1=== comments.length, callback: onVisible }"
+    />
   </div>
 </template>
 
@@ -35,7 +40,7 @@ export default {
     return {
       comments: [],
       offset: 0,
-      expanded: false,
+      // expanded: false, TODO
     }
   },
   async created() {
@@ -56,6 +61,11 @@ export default {
       const { results: comments } = await api.getCommentsByParentId(this.comment.id, { offset })
       this.comments = [...this.comments, ...comments]
       this.offset = this.offset + comments.length
+    },
+    onVisible({ going }) {
+      if (going === 'in') {
+        this.fetchItems(this.offset)
+      }
     },
   },
 }

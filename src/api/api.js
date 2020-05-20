@@ -49,12 +49,14 @@ class Api {
     const makeRequest = async () => {
       return await this._fetch(method, urlPath, options)
     }
-
     let response = await makeRequest()
 
     if (this._is_auth_failure(response) && this.jwt.isSet()) {
       this._getRefreshJwt(this.jwt.get().refresh)
       response = await makeRequest()
+      if (this._is_auth_failure(response)) {
+        this.jwt.clear()
+      }
     }
     return response
 
@@ -113,11 +115,15 @@ class Api {
 
 
   getCommentsByThreadId (threadId, query) {
-    return this.get(`community/comments/`, { query: { ...query, thread_id: threadId } })
+    return this._get(`community/comments/`, { query: { ...query, "thread_id": threadId } })
   }
 
   getCommentsByParentId (commentId, query) {
-    return this.get(`community/comments/`, { query: { ...query, parentId: commentId } })
+    return this._get(`community/comments/`, { query: { ...query, "parent_id": commentId } })
+  }
+
+  postComment (threadId, text) {
+    return this._post(`community/comments/`, { body: { threadId, text } })
   }
 
   getCompany (id) {

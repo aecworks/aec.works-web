@@ -74,7 +74,7 @@ export default {
         if (!error) {
           this.$store.dispatch('getProfile')
         }
-        popQuery(this.$router, this.$route.query, 'login')
+        // popQuery(this.$router, this.$route.query, 'login')
         popQuery(this.$router, this.$route.query, 'code')
       }
       if (error) {

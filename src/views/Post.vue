@@ -15,7 +15,7 @@
         <Profile :profile="post.profile" />
       </div>
 
-      <Discussion :threadId="post.commentThread" />
+      <Discussion :threadId="post.thread" />
     </div>
   </div>
 </template>
@@ -29,7 +29,9 @@ import Profile from '@/components/Profile'
 export default {
   name: 'Post',
   components: { Discussion, Hashtag, Profile },
-  props: ['id'],
+  props: {
+    id: { required: true, type: String },
+  },
   data() {
     return {
       post: null,

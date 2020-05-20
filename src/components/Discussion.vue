@@ -1,28 +1,31 @@
 <template>
   <div class="discussion">
-    <Comment v-for="(comment, index) in comments" :key="comment.id" v-bind="{comment, index}" />
-    <textarea
-      type="text"
-      v-model="commentText"
-      class="discussion-input form-text fill-x"
-      placeholder="Comment"
+    <Comment
+      v-for="(comment, index) in comments"
+      :key="comment.id"
+      v-bind="{comment, index}"
+      v-waypoint="{ active: index + 1=== comments.length, callback: onVisible }"
     />
-    <div v-if="commentText" class="button">Post</div>
+    <CommentReply v-bind="{threadId}" @replied="handleReply" />
   </div>
 </template>
 
 <script>
 import api from '@/api'
 import Comment from '@/components/Comment'
+import CommentReply from '@/components/CommentReply'
+
 export default {
   name: 'Discussion',
-  props: ['threadId'],
+  props: {
+    threadId: { required: true, type: Number },
+  },
   components: {
     Comment,
+    CommentReply,
   },
   data() {
     return {
-      commentText: '',
       comments: [],
       offset: 0,
     }
@@ -33,10 +36,23 @@ export default {
     }
   },
   methods: {
-    async fetchItems(offset) {
-      const { results: comments } = await api.getCommentsByThreadId(this.threadId, { offset })
+    async fetchItems(offset, limit = 3) {
+      const { results: comments } = await api.getCommentsByThreadId(this.threadId, {
+        offset,
+        limit,
+      })
       this.comments = [...this.comments, ...comments]
-      // this.offset = this.offset + items.length
+      this.offset = this.offset + comments.length
+    },
+    handleReply() {
+      setTimeout(() => {
+        this.fetchItems(this.offset, 1)
+      }, 1000)
+    },
+    onVisible({ going }) {
+      if (going === 'in') {
+        this.fetchItems(this.offset)
+      }
     },
   },
 }
@@ -46,14 +62,5 @@ export default {
 <style lang="scss" scoped>
 .discussion {
   margin-bottom: 10rem;
-}
-.discussion-input {
-  margin-top: 2rem;
-  transition: height 200ms;
-  height: 2.5rem;
-  &:focus {
-    height: 8rem;
-  }
-  margin-bottom: 1rem;
 }
 </style>
