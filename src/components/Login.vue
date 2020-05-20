@@ -41,7 +41,8 @@
 </template>
 
 <script>
-import { loginWithCredentials, loginWithGithubCallback, githubAuthUrl } from '@/api/auth'
+import api from '../api'
+import { githubAuthUrl } from '../api/github'
 import { popQuery } from '@/utils'
 import Modal from '@/components/Modal'
 
@@ -61,16 +62,16 @@ export default {
   },
   methods: {
     async handleFormSubmit() {
-      const success = loginWithCredentials(this.email, this.password)
-      if (success) {
+      const error = api.login(this.email, this.password)
+      if (!error) {
         this.$store.dispatch('getProfile')
       }
       popQuery(this.$router, this.$route.query, 'login')
     },
     async handleGithubCallback({ code, error }) {
       if (code) {
-        const success = await loginWithGithubCallback(code)
-        if (success) {
+        const error = await api.githubLogin(code)
+        if (!error) {
           this.$store.dispatch('getProfile')
         }
         popQuery(this.$router, this.$route.query, 'login')
@@ -78,11 +79,10 @@ export default {
       }
       if (error) {
         this.errors.push(error)
-        // this.$router.replace({query: null})
+        this.$router.replace({ query: null })
       }
     },
     redirectGithubLogin() {
-      // Send User to Github Auth
       window.location.href = githubAuthUrl()
     },
   },

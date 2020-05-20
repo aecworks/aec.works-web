@@ -1,76 +1,154 @@
-import { API_URL } from "./config"
-import { getToken, refreshJwtToken, clearToken, redirectToAuth, hasToken } from "./auth"
+import jwt from "./jwt"
 
-
-const buildRequest = (urlPath, options = {}) => {
-
-  const query = options.queryParams || {}
-  const queryParams = new URLSearchParams(query).toString()
-  const queryValue = queryParams ? `?${queryParams}` : ""
-  const url = `${API_URL}/${urlPath}` + queryValue
-
-  const jwt = getToken()
-  if (!jwt) return redirectToAuth()
-
-  // Headers
-  const defaultHeaders = {
-    "Content-Type": "application/json",
-    "Authorization": `JWT ${jwt.access}`
+class Api {
+  API_HOST = `127.0.0.1:8000`
+  API_URL = `http://${this.API_HOST}`
+  DEFAULT_HEADERS = {
+    "Content-Type": "application/json"
   }
 
-  const optionHeaders = options.headers || {}
-  const headers = new Headers({
-    ...defaultHeaders,
-    ...optionHeaders
-  })
-  const request = new Request(url, {
-    method: 'GET',
-    headers,
-    ...options
-  })
-  return request
-}
+  constructor() {
+    this.jwt = jwt
+  }
 
+  _buildHeaders (optionHeaders = {}) {
+    const headers = {
+      ...this.DEFAULT_HEADERS,
+      ...optionHeaders,
+    }
+    if (this.jwt.isSet()) {
+      headers["Authorization"] = `JWT ${this.jwt.get().access}`
+    }
+    return headers
+  }
 
-const request = async (urlPath, options = {}) => {
-  const req = buildRequest(urlPath, options)
-  const response = await fetch(req)
+  _buildUrl (urlPath, query) {
+    const url = `${this.API_URL}/${urlPath}`
+    if (!query) return url
 
-  if (response.status == 401 || response.status == 403) {
+    const queryParams = new URLSearchParams(query || {}).toString()
+    return `${url}?${queryParams}`
+  }
 
-    const didRefresh = await refreshJwtToken()
-    if (didRefresh) {
-      debugger
-      return request(urlPath, options)
+  _is_auth_failure (response) {
+    return (response.status == 401 || response.status == 403)
+  }
+
+  async _fetch (method, urlPath, options = {}) {
+    const { body, headers, query } = options
+    const url = this._buildUrl(urlPath, query)
+    const request = new Request(url, {
+      method,
+      headers: this._buildHeaders(headers),
+      body: JSON.stringify(body)
+    })
+    return fetch(request)
+  }
+
+  async _fetch_with_retry (method, urlPath, options) {
+    const makeRequest = async () => {
+      return await this._fetch(method, urlPath, options)
+    }
+
+    let response = await makeRequest()
+
+    if (this._is_auth_failure(response) && this.jwt.isSet()) {
+      this._getRefreshJwt(this.jwt.get().refresh)
+      response = await makeRequest()
+    }
+    return response
+
+  }
+
+  async _get (urlPath, options) {
+    const response = await this._fetch_with_retry("GET", urlPath, options)
+    return response.json()
+  }
+
+  async _post (urlPath, options) {
+    const response = await this._fetch_with_retry("POST", urlPath, options)
+    return response.json()
+  }
+
+  async _getJwt (email, password) {
+    this.jwt.clear()
+    const response = await this._fetch("POST", "auth/jwt/create/", { body: { email, password } })
+    return response
+  }
+
+  async _getRefreshJwt (refresh) {
+    const response = await this._fetch("POST", "auth/jwt/refresh/", { body: { refresh } })
+    return response
+  }
+
+  async _getJwtWithGithubCode (code) {
+    this.jwt.clear()
+    const response = await this._fetch("POST", "users/github/login/", { query: { code } })
+    return response
+  }
+
+  async _handleTokenResponse (response) {
+    if (response.status == 200) {
+      const token = await response.json()
+      this.jwt.set(token)
     } else {
-      clearToken()
-      redirectToAuth()
+      const errorReponse = await response.json()
+      return errorReponse
     }
   }
-  return response.json()
+
+  async login (email, password) {
+    const response = await this._getJwt(email, password)
+    return this._handleTokenResponse(response)
+  }
+
+  async githubLogin (code) {
+    const response = await this._getJwtWithGithubCode(code)
+    return this._handleTokenResponse(response)
+  }
+
+  logout () {
+    this.jwt.clear()
+  }
+
+
+  getCommentsByThreadId (threadId, query) {
+    return this.get(`community/comments/`, { query: { ...query, thread_id: threadId } })
+  }
+
+  getCommentsByParentId (commentId, query) {
+    return this.get(`community/comments/`, { query: { ...query, parentId: commentId } })
+  }
+
+  getCompany (id) {
+    return this._get(`community/companies/${id}/`)
+  }
+
+  getCompanies (query) {
+    return this._get(`community/companies/`, { query })
+  }
+
+  getPost (id) {
+    return this._get(`community/posts/${id}/`)
+  }
+
+  getPosts (query) {
+    return this._get(`community/posts/`, { query })
+  }
+
+  getProfile () {
+    return this._get(`users/profiles/me/`)
+  }
+
+  getProfiles (query) {
+    return this._get(`users/profiles/`, { query })
+  }
+
+  postPostClap (id) {
+    return this._post(`community/posts/${id}/clap/`)
+  }
 
 }
 
 
-
-
-export default {
-  getPosts: async (queryParams) => request(`community/posts/`, { queryParams }),
-  getPost: async (id) => request(`community/posts/${id}/`),
-
-  getCompany: async (id) => request(`community/companies/${id}/`),
-  getCompanies: async (queryParams) => request(`community/companies/`, { queryParams }),
-
-  getProfiles: async (queryParams) => request(`users/profiles/`, { queryParams }),
-  // getProfileById: async (id) => request(`users/profiles/${id}/`),
-  getProfile: async () => request(`users/profiles/me/`),
-
-  getCommentsByThreadId: async (threadId, queryParams) => {
-    return request(`community/comments/`, { queryParams: { ...queryParams, thread_id: threadId } })
-  },
-  getCommentsByParentId: async (commentId, queryParams) => {
-    return request(`community/comments/`, { queryParams: { ...queryParams, parent_id: commentId } })
-  },
-  postPostClap: async (id) => request(`community/posts/${id}/clap/`, { method: 'POST' }),
-  isLoggedIn: () => hasToken
-}
+export default new Api()
