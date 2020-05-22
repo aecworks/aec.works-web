@@ -43,8 +43,12 @@ export default {
   },
   methods: {
     async onClapClick(post) {
-      const clapCount = await api.postPostClap(post.id)
-      this.localClapCount = clapCount
+      if (!this.$store.getters.isLoggedIn) {
+        this.$router.push({ query: { login: 1 } })
+      } else {
+        const clapCount = await api.postPostClap(post.id)
+        this.localClapCount = clapCount
+      }
     },
   },
 }

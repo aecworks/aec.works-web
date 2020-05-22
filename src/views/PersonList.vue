@@ -6,7 +6,7 @@
 
     <div class="page-content">
       <p v-for="profile in items" :key="profile.id">
-        <Profile :profile="profile" />
+        <Avatar :profile="profile" />
       </p>
     </div>
   </div>
@@ -14,11 +14,11 @@
 
 <script>
 import api from '../api'
-import Profile from '@/components/Profile'
+import Avatar from '@/components/Avatar'
 
 export default {
   name: 'Person',
-  components: { Profile },
+  components: { Avatar },
   props: ['id'],
   data() {
     return {

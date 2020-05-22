@@ -12,7 +12,7 @@
       </div>
 
       <div class="post-author">
-        <Profile :profile="post.profile" />
+        <Avatar :profile="post.profile" />
       </div>
 
       <Discussion :threadId="post.thread" />
@@ -24,13 +24,13 @@
 import api from '@/api'
 import Discussion from '@/components/Discussion'
 import Hashtag from '@/components/Hashtag'
-import Profile from '@/components/Profile'
+import Avatar from '@/components/Avatar'
 
 export default {
   name: 'Post',
-  components: { Discussion, Hashtag, Profile },
+  components: { Discussion, Hashtag, Avatar },
   props: {
-    id: { required: true, type: String },
+    id: { required: true },
   },
   data() {
     return {

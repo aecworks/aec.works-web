@@ -69,17 +69,16 @@ export default {
       popQuery(this.$router, this.$route.query, 'login')
     },
     async handleGithubCallback({ code, error }) {
-      if (code) {
+      if (error) {
+        this.errors.push(error)
+      } else if (code) {
         const error = await api.githubLogin(code)
         if (!error) {
           this.$store.dispatch('getProfile')
+        } else {
+          popQuery(this.$router, this.$route.query, 'login')
+          popQuery(this.$router, this.$route.query, 'code')
         }
-        // popQuery(this.$router, this.$route.query, 'login')
-        popQuery(this.$router, this.$route.query, 'code')
-      }
-      if (error) {
-        this.errors.push(error)
-        this.$router.replace({ query: null })
       }
     },
     redirectGithubLogin() {

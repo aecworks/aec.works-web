@@ -7,6 +7,7 @@ import PostList from '../views/PostList'
 import Post from '../views/Post'
 import PersonList from '../views/PersonList'
 import Person from '../views/Person'
+import Profile from '../views/Profile'
 
 Vue.use(VueRouter)
 
@@ -51,10 +52,11 @@ const routes = [
     props: true,
   },
   {
-    path: '/auth/github/callback',
-    name: 'githubCallback',
+    path: '/profile',
+    name: 'Profile',
+    component: Profile,
+    props: true,
   },
-
 ]
 
 const router = new VueRouter({

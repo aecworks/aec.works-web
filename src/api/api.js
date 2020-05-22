@@ -1,7 +1,7 @@
 import jwt from "./jwt"
 
 class Api {
-  API_HOST = `127.0.0.1:8000`
+  API_HOST = `localhost:8000`
   API_URL = `http://${this.API_HOST}`
   DEFAULT_HEADERS = {
     "Content-Type": "application/json"
