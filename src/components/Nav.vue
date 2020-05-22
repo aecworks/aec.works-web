@@ -1,9 +1,10 @@
 <template>
   <div id="nav" :class="{ 'expanded': navExpanded }">
+    <!-- NAV HEADER -->
     <div class="flex fill-x">
       <div class="fill-x">
         <a href="/" class="hidden-sm">
-          <img alt="AEC Guide Logo" class="logo hidden-sm" src="@/assets/images/logo.svg" />
+          <img alt="AEC Works Logo" class="logo hidden-sm" src="@/assets/images/logo.svg" />
         </a>
       </div>
       <div class="hidden-lg">
@@ -19,21 +20,25 @@
         </button>
       </div>
     </div>
+    <!-- NAV HEADER -->
 
-    <!-- <router-link to="/">Home</router-link> | -->
     <ul class="nav-links">
-      <router-link
+      <li
         v-for="route in routes"
         :key="route.text"
-        tag="li"
         class="nav-item"
         :class="{'active': isActive(route)}"
-        :to="route.path"
-      >{{route.text}}</router-link>
+      >
+        <router-link tag="a" :to="route.path">{{route.text}}</router-link>
+      </li>
     </ul>
     <ul class="profile-links">
-      <router-link class="nav-item" tag="li" :to="{ name: 'Profile' }">profile</router-link>
-      <router-link class="nav-item" tag="li" :to="{ query: { login: '1' }}">login</router-link>
+      <li class="nav-item">
+        <router-link class="nav-item" tag="a" :to="{ name: 'Profile' }">profile</router-link>
+      </li>
+      <li class="nav-item">
+        <router-link class="nav-item" tag="a" :to="{ query: { login: '1' }}">login</router-link>
+      </li>
     </ul>
   </div>
 </template>
@@ -93,6 +98,10 @@ export default {
     @include for-large-up {
       padding-top: 2rem;
     }
+  }
+
+  .profile-links {
+    margin-top: 5rem;
   }
 
   .nav-item {
