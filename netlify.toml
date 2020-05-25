@@ -1,0 +1,29 @@
+[redirects]]
+  from = "/apps/*"
+  to = "/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/support"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "https://api.aec.works/sitemaps/sitemap.xml"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/sitemaps/*"
+  to = "https://api.aec.works/sitemaps/:splat"
+  query = {p = ":p"}
+  status = 200
+  force = true
+
+
+
+
+[build.environment]
+  VUE_APP_API_URL = "https://api.aec.works"
