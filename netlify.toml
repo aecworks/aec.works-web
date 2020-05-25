@@ -1,4 +1,12 @@
-[redirects]]
+[build.environment]
+  VUE_APP_API_URL = "https://api.aec.works"
+
+[build]
+  base = "."
+  publish = "./dist"
+  command = "yarn build"
+
+[[redirects]]
   from = "/apps/*"
   to = "/"
   status = 200
@@ -21,12 +29,3 @@
   query = {p = ":p"}
   status = 200
   force = true
-
-
-[build.environment]
-  VUE_APP_API_URL = "https://api.aec.works"
-
-[build]
-  base = "."
-  publish = "./dist"
-  command = "yarn build"
