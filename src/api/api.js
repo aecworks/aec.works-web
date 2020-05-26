@@ -1,8 +1,11 @@
 import jwt from "./jwt"
 
+// http://localhost:8000
+const API_URL = process.env.VUE_APP_API_URL
+if (!API_URL) throw Error("VUE_API_URL not defined")
+
 class Api {
-  API_HOST = `localhost:8000`
-  API_URL = `http://${this.API_HOST}`
+  API_URL = API_URL
   DEFAULT_HEADERS = {
     "Content-Type": "application/json"
   }
