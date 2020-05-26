@@ -7,7 +7,7 @@
   VUE_APP_API_URL = "https://api.aec.works"
 
 [context.staging.environment]
-  VUE_APP_API_URL = "https://staging-api.aec.works"
+  VUE_APP_API_URL = "https://aecworks-api-staging.herokuapp.com"
 
 
 
