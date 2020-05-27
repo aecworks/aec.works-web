@@ -1,22 +1,41 @@
 <template>
-  <div class="company-card" @click="onClick">
-    <div class="company-card-body">
-      <h3 class="company-card-title">{{ company.name }}</h3>
-      <p class="company-card-description">{{company.description || "-"}}</p>
-      <!-- <p class="company-card-description">{{company.location || "-"}}</p> -->
-    </div>
+  <div class="company-card-container flex flex-down">
     <div class="company-card-icon-container">
       <div class="company-card-icon">
         <img :src="getImageUrl(company.logo)" />
+      </div>
+    </div>
+
+    <div class="company-card" @click="onClick">
+      <div class="company-card-title flex">
+        <h3>{{ company.name }}</h3>
+        <h4 class="company-location">{{company.location || "-"}}</h4>
+      </div>
+
+      <div class="company-card-description">
+        <p>{{company.description || "-"}}</p>
+      </div>
+      <div class="company-card-hashtags">
+        <Hashtag v-for="name in company.hashtags" :name="name" :key="name" />
+      </div>
+
+      <div class="company-card-footer flex flex-center">
+        <IconCounter :icon="'chat'" :count="5" />
+        <IconCounter :icon="'clap'" :count="2" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Hashtag from '@/components/Hashtag'
+import IconCounter from '@/components/IconCounter'
+import moment from 'moment'
+
 export default {
   name: 'CompanyCard',
   props: ['company'],
+  components: { Hashtag, IconCounter },
   methods: {
     onClick() {
       this.$router.push({
@@ -36,58 +55,65 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.company-card {
-  position: relative;
-  padding-bottom: 3rem;
-  cursor: pointer;
-  display: flex;
-  // flex: 1;
-  justify-content: right;
+$logosize: 5rem;
 
-  .company-card-body {
-    height: 4rem;
-    width: 300px;
-    // flex-direction: column;
-    // display: flex;
+.company-card-container {
+  align-items: flex-start;
+
+  .company-card-icon-container {
+    display: inline-block;
+    line-height: 0;
+
+    .company-card-icon {
+      display: inline-block;
+      height: $logosize;
+      overflow: hidden;
+      max-width: $logosize * 2;
+
+      @include shadow-color($dark);
+      @extend .border-thick;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+      margin-bottom: -3px;
+
+      img {
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+    }
+  }
+
+  .company-card {
+    display: inline-block;
+    width: 10rem;
+    margin-bottom: 2rem;
+    padding: $padding;
+    background-color: white;
+
+    @extend .border-thick;
+    border-top-left-radius: 0;
+    @include shadow-color($dark);
+
+    width: 100%;
+    @include for-large-up {
+      width: 80%;
+    }
 
     .company-card-title {
-      line-height: 2rem;
-      margin-top: 0;
+      margin-bottom: 0.5rem;
+      .company-location {
+        margin-left: auto;
+        @extend .muted;
+      }
+    }
+
+    .company-card-hashtags {
+      margin-bottom: 1rem;
     }
 
     .company-card-description {
       @extend .muted;
-    }
-  }
-
-  .company-card-icon-container {
-    width: 200px;
-    margin-right: 1.5rem;
-    // display: flex;
-    // justify-content: right;
-  }
-  .company-card-icon {
-    display: inline-block;
-    float: right;
-    height: 75px;
-
-    overflow: hidden;
-    flex-shrink: 0;
-    max-width: 150px;
-
-    // border-radius: 3px;
-    // border: 3px solid white;
-    // box-shadow: 0.5rem 0.5em black;
-    @extend .border-thin;
-    @include shadow-color($dark);
-
-    img {
-      // width: 100%;
-      height: 100%;
-      object-fit: cover;
-      // object-fit: fill;
-      // object-fit: scale-down;
-      object-position: center;
     }
   }
 }

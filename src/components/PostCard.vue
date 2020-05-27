@@ -60,8 +60,6 @@ export default {
   display: inline-block;
   width: 10rem;
   margin-bottom: 2rem;
-
-  background-color: white;
   padding: $padding;
 
   @extend .border-thick;
