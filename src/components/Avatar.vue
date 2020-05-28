@@ -14,7 +14,7 @@ export default {
   props: ['profile'],
   methods: {
     onClick() {
-      this.$router.push({ name: 'Person', params: { id: this.profile.id } })
+      this.$router.push({ name: 'Person', params: { slug: this.profile.slug } })
     },
   },
 }

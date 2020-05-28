@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="page-header">
-      <h2 class="page-title">Companies</h2>
+      <div class="button">Add</div>
     </div>
 
     <div class="page-content">

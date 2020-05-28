@@ -29,13 +29,13 @@ const routes = [
     props: true,
   },
   {
-    path: '/companies/:id',
+    path: '/companies/:slug',
     name: 'Company',
     component: Company,
     props: true,
   },
   {
-    path: '/posts/:id',
+    path: '/posts/:slug',
     name: 'Post',
     component: Post,
     props: true,
@@ -46,7 +46,7 @@ const routes = [
     component: PersonList,
   },
   {
-    path: '/people/:id',
+    path: '/people/:slug',
     name: 'Person',
     component: Person,
     props: true,

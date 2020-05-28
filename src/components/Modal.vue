@@ -53,7 +53,7 @@ export default {
     @extend .border-thick;
     @include shadow-color($dark);
 
-    height: 400px;
+    // height: 400px;
     width: 90%;
 
     @include for-large-up {

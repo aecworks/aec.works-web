@@ -10,8 +10,8 @@ export default {
     }
   },
   actions: {
-    async getProfile ({ commit }) {
-      const profile = await api.getProfile()
+    async getMyProfile ({ commit }) {
+      const profile = await api.getMyProfile()
       commit('setProfile', profile)
     }
   },

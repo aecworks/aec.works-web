@@ -1,7 +1,8 @@
 <template>
   <div class="page">
     <div class="page-header">
-      <h2 class="page-title">People</h2>
+      <!-- <h2 class="page-title">People</h2> -->
+      <h2 class="page-title">WIP</h2>
     </div>
 
     <div class="page-content">

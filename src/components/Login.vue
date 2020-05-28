@@ -4,10 +4,9 @@
     <div class="login-container fill-y">
       <div class="login-info invert">
         <img alt="AEC Guide Logo" class="logo" src="@/assets/images/logo.svg" />
-        <p>
-          Welcome to our AEC Community. To keep things in order, users must be signed in
-          to contribute and dicuss.
-        </p>
+        <p>Welcome to our AEC Community</p>
+        <p>Sign in to contribute and participate.</p>
+        <p class="muted">Terms.</p>
       </div>
       <div class="login-form">
         <form class="form" autocomplete="off" @submit.prevent="handleFormSubmit">
@@ -34,8 +33,10 @@
         <!-- TODO Signup -->
         <!-- <p>Don't have an account?</p> -->
         <!-- <div class="button">Signup</div> -->
+
+        <!-- TODO FORMAT -->
+        <p v-for="err in errors" :key="err">{{err}}</p>
       </div>
-      <p v-for="err in errors" :key="err">{{err}}</p>
     </div>
   </Modal>
 </template>
@@ -71,14 +72,20 @@ export default {
     async handleGithubCallback({ code, error }) {
       if (error) {
         this.errors.push(error)
-      } else if (code) {
+        return
+      }
+
+      if (code) {
         const error = await api.githubLogin(code)
-        if (!error) {
-          this.$store.dispatch('getProfile')
+        if (error) {
+          this.errors = error
         } else {
+          this.$store.dispatch('getMyProfile')
           popQuery(this.$router, this.$route.query, 'login')
           popQuery(this.$router, this.$route.query, 'code')
         }
+      } else {
+        throw 'unexpected github response'
       }
     },
     redirectGithubLogin() {
@@ -91,12 +98,20 @@ export default {
 <style lang="scss" scoped>
 .login-container {
   display: flex;
+  flex-direction: column;
+
+  @include for-large-up {
+    flex-direction: row;
+  }
+
   > * {
     padding: 3rem 1.5rem;
   }
-  .login-info {
-    flex-basis: 50%;
 
+  .login-info {
+    @include for-large-up {
+      flex-basis: 50%;
+    }
     display: flex;
     flex-direction: column;
     .logo {
@@ -104,12 +119,14 @@ export default {
     }
   }
   .login-form {
-    flex-basis: 50%;
+    @include for-large-up {
+      flex-basis: 50%;
+    }
 
     display: flex;
     flex-direction: column;
     .login-form-social {
-      margin-top: auto;
+      margin-top: 1rem;
     }
   }
 }

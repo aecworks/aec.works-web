@@ -35,7 +35,9 @@ import api from '@/api'
 export default {
   name: 'Person',
   components: {},
-  props: ['id'],
+  props: {
+    slug: { required: true, type: String },
+  },
   data() {
     return {
       errors: [],
@@ -47,7 +49,7 @@ export default {
   },
   methods: {
     async fetchData() {
-      const response = await api.getProfile(this.id)
+      const response = await api.getProfile(this.slug)
       if (!response.message) {
         this.person = response
       } else {
