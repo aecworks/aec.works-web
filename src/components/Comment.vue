@@ -45,12 +45,13 @@ export default {
   },
   async created() {
     if (this.hasReplies) {
+      // TODO Fetch on Demand
       this.fetchItems(0)
     }
   },
   computed: {
     hasReplies() {
-      return this.comment.repliesCount > 0
+      return this.comment.replyCount > 0
     },
     relativeTimestamp() {
       return moment(this.comment.createdAt).fromNow()

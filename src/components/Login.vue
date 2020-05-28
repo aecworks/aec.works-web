@@ -3,7 +3,7 @@
   <Modal @clickOutside="$emit('closed')">
     <div class="login-container fill-y">
       <div class="login-info invert">
-        <img alt="AEC Guide Logo" class="logo hidden-sm" src="@/assets/images/logo.svg" />
+        <img alt="AEC Guide Logo" class="logo" src="@/assets/images/logo.svg" />
         <p>Welcome to our AEC Community</p>
         <p>Sign in to contribute and participate.</p>
         <p class="muted">Terms.</p>
@@ -80,7 +80,7 @@ export default {
         if (error) {
           this.errors = error
         } else {
-          this.$store.dispatch('getProfile')
+          this.$store.dispatch('getMyProfile')
           popQuery(this.$router, this.$route.query, 'login')
           popQuery(this.$router, this.$route.query, 'code')
         }

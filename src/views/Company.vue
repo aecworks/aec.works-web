@@ -40,7 +40,9 @@ import Discussion from '@/components/Discussion'
 export default {
   name: 'Company',
   components: { Discussion },
-  props: ['id'],
+  props: {
+    slug: { required: true, type: String },
+  },
   data() {
     return {
       errors: [],
@@ -52,7 +54,7 @@ export default {
   },
   methods: {
     async fetchData() {
-      const company = await api.getCompany(this.id)
+      const company = await api.getCompany(this.slug)
       this.company = company
     },
   },

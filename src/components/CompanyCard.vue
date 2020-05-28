@@ -40,7 +40,7 @@ export default {
     onClick() {
       this.$router.push({
         name: 'Company',
-        params: { id: this.company.id },
+        params: { slug: this.company.slug },
       })
     },
     getImageUrl(logo) {

@@ -1,7 +1,7 @@
 <template>
   <div class="post-card">
     <h3 class="post-card-title">
-      <router-link :to="{ name: 'Post', params: { id: post.id }}">{{post.title}}</router-link>
+      <router-link :to="{ name: 'Post', params: { slug: post.slug }}">{{post.title}}</router-link>
     </h3>
     <p class="post-card-author">by {{ post.profile.name }}</p>
 
@@ -10,7 +10,7 @@
     </div>
 
     <div class="post-card-footer flex flex-center">
-      <IconCounter :icon="'chat'" :count="post.commentCount" />
+      <IconCounter :icon="'chat'" :count="post.threadSize" />
       <IconCounter
         :icon="'clap'"
         :count="localClapCount || post.clapCount"
@@ -46,7 +46,7 @@ export default {
       if (!this.$store.getters.isLoggedIn) {
         this.$router.push({ query: { login: 1 } })
       } else {
-        const clapCount = await api.postPostClap(post.id)
+        const clapCount = await api.postPostClap(post.slug)
         this.localClapCount = clapCount
       }
     },

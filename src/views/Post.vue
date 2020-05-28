@@ -30,7 +30,7 @@ export default {
   name: 'Post',
   components: { Discussion, Hashtag, Avatar },
   props: {
-    id: { required: true },
+    slug: { required: true, type: String },
   },
   data() {
     return {
@@ -38,7 +38,7 @@ export default {
     }
   },
   async created() {
-    this.post = await api.getPost(this.id)
+    this.post = await api.getPost(this.slug)
   },
   methods: {},
 }

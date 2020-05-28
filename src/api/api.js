@@ -129,32 +129,36 @@ class Api {
     return this._post(`community/comments/`, { body: { threadId, text } })
   }
 
-  getCompany (id) {
-    return this._get(`community/companies/${id}/`)
+  getCompany (slug) {
+    return this._get(`community/companies/${slug}/`)
   }
 
   getCompanies (query) {
     return this._get(`community/companies/`, { query })
   }
 
-  getPost (id) {
-    return this._get(`community/posts/${id}/`)
+  getPost (slug) {
+    return this._get(`community/posts/${slug}/`)
   }
 
   getPosts (query) {
     return this._get(`community/posts/`, { query })
   }
 
-  getProfile () {
+  getMyProfile () {
     return this._get(`users/profiles/me/`)
+  }
+
+  getProfile (slug) {
+    return this._get(`users/profiles/${slug}/`)
   }
 
   getProfiles (query) {
     return this._get(`users/profiles/`, { query })
   }
 
-  postPostClap (id) {
-    return this._post(`community/posts/${id}/clap/`)
+  postPostClap (slug) {
+    return this._post(`community/posts/${slug}/clap/`)
   }
 
 }
