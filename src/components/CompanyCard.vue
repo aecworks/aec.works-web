@@ -30,7 +30,7 @@
 <script>
 import Hashtag from '@/components/Hashtag'
 import IconCounter from '@/components/IconCounter'
-import moment from 'moment'
+// import moment from 'moment'
 
 export default {
   name: 'CompanyCard',

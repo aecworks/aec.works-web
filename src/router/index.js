@@ -5,6 +5,7 @@ import CompanyList from '../views/CompanyList'
 import Company from '../views/Company'
 import PostList from '../views/PostList'
 import Post from '../views/Post'
+import PostCompose from '../views/PostCompose'
 import PersonList from '../views/PersonList'
 import Person from '../views/Person'
 import Profile from '../views/Profile'
@@ -33,6 +34,11 @@ const routes = [
     name: 'Company',
     component: Company,
     props: true,
+  },
+  {
+    path: '/posts/compose',
+    name: 'Post Compose',
+    component: PostCompose,
   },
   {
     path: '/posts/:slug',
