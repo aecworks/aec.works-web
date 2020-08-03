@@ -22,7 +22,7 @@ export default {
       editorContent: null,
       editorInstance: null,
       editorOpts: {
-        placeholder: 'Your words go here',
+        placeholder: 'Your words go here - select text to format it',
         modules: {
           toolbar: [
             [{ header: [1, 2, false] }],
@@ -64,13 +64,20 @@ export default {
     initializeEditor() {
       const container = document.getElementById('editor')
       container.innerHTML = this.value
+      this.container = container
       this.editorInstance = new Quill(container, this.editorOpts)
       this.editorInstance.on('text-change', this.onEditorContentChange)
       this.setEditorContent()
+      this.setEditorSize()
     },
     onEditorContentChange() {
       this.setEditorContent()
+      this.setEditorSize()
       this.$emit('input', this.editorContent)
+    },
+    setEditorSize() {
+      this.container.style.height = 'auto'
+      this.container.style.height = this.scrollHeight + 'px'
     },
     setEditorContent() {
       this.editorContent = this.editorInstance.getText().trim()
@@ -85,9 +92,14 @@ export default {
 <style lang="scss">
 #editor {
   width: 100%;
-  height: 100%;
+  // padding: $padding;
 
+  .ql-editor {
+    border-left: 1px solid $yellow;
+  }
+  // Editor Placeholder
   .ql-editor.ql-blank::before {
+    // left: 0;
     font-size: $font-size-p;
   }
 }

@@ -5,7 +5,7 @@
         type="text"
         v-model="commentText"
         class="comment-reply-input fill-x"
-        placeholder="This is dope!"
+        placeholder="This is dope"
       />
       <button v-if="commentText" class="button" type="submit">Post</button>
     </form>

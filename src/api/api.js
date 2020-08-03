@@ -55,7 +55,7 @@ class Api {
     let response = await makeRequest()
 
     if (this._is_auth_failure(response) && this.jwt.isSet()) {
-      this._getRefreshJwt(this.jwt.get().refresh)
+      await this._loginWithRefreshToken(this.jwt.get().refresh)
       response = await makeRequest()
       if (this._is_auth_failure(response)) {
         this.jwt.clear()
@@ -72,6 +72,12 @@ class Api {
 
   async _post (urlPath, options) {
     const response = await this._fetch_with_retry("POST", urlPath, options)
+    return response.json()
+  }
+
+
+  async _patch (urlPath, options) {
+    const response = await this._fetch_with_retry("PATCH", urlPath, options)
     return response.json()
   }
 
@@ -95,25 +101,35 @@ class Api {
   async _handleTokenResponse (response) {
     if (response.status == 200) {
       const token = await response.json()
-      this.jwt.set(token)
+      // Refresh only return access so merge
+      this.jwt.set({ ...this.jwt.get(), ...token })
     } else {
       const errorReponse = await response.json()
       return errorReponse
     }
   }
 
-  async login (email, password) {
+  async _loginWithRefreshToken (refresh) {
+    const response = await this._getRefreshJwt(refresh)
+    return this._handleTokenResponse(response)
+  }
+
+  async loginWithCredentials (email, password) {
     const response = await this._getJwt(email, password)
     return this._handleTokenResponse(response)
   }
 
-  async githubLogin (code) {
+  async loginWithGithubCode (code) {
     const response = await this._getJwtWithGithubCode(code)
     return this._handleTokenResponse(response)
   }
 
   logout () {
     this.jwt.clear()
+  }
+
+  isAuthenticated () {
+    return this.jwt.isSet()
   }
 
 
@@ -143,6 +159,14 @@ class Api {
 
   getPosts (query) {
     return this._get(`community/posts/`, { query })
+  }
+
+  postPost (title, body, hashtags) {
+    return this._post(`community/posts/`, { body: { title, body, hashtags } })
+  }
+
+  patchPost (slug, title, body, hashtags) {
+    return this._patch(`community/posts/${slug}/`, { body: { title, body, hashtags } })
   }
 
   getMyProfile () {

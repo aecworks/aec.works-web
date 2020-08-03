@@ -63,7 +63,7 @@ export default {
   },
   methods: {
     async handleFormSubmit() {
-      const error = api.login(this.email, this.password)
+      const error = api.loginWithCredentials(this.email, this.password)
       if (!error) {
         this.$store.dispatch('getProfile')
       }
@@ -76,7 +76,7 @@ export default {
       }
 
       if (code) {
-        const error = await api.githubLogin(code)
+        const error = await api.loginWithGithubCode(code)
         if (error) {
           this.errors = error
         } else {
@@ -84,8 +84,6 @@ export default {
           popQuery(this.$router, this.$route.query, 'login')
           popQuery(this.$router, this.$route.query, 'code')
         }
-      } else {
-        throw 'unexpected github response'
       }
     },
     redirectGithubLogin() {

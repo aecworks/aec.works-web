@@ -1,7 +1,8 @@
 <template>
   <div class="page">
     <div class="page-header">
-      <div class="button">Add</div>
+      <!-- <div class="button">Add</div> -->
+      <router-link tag="div" class="button" :to="{name: 'PostCompose'}">Add</router-link>
     </div>
 
     <div class="page-content">

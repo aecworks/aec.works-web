@@ -29,7 +29,7 @@
         class="nav-item"
         :class="{'active': isActive(route)}"
       >
-        <router-link tag="a" :to="route.path">{{route.text}}</router-link>
+        <router-link tag="a" :to="{name: route.name}">{{route.text}}</router-link>
       </li>
     </ul>
     <ul class="profile-links">
@@ -50,9 +50,9 @@ export default {
     return {
       navExpanded: false,
       routes: [
-        { text: 'feed', path: '/posts' },
-        { text: 'companies', path: '/companies' },
-        { text: 'people', path: '/people' },
+        { text: 'feed', name: 'PostList' },
+        { text: 'companies', name: 'CompanyList' },
+        { text: 'people', name: 'PersonList' },
       ],
     }
   },

@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     async onClapClick(post) {
-      if (!this.$store.getters.isLoggedIn) {
+      if (!api.isAuthenticated()) {
         this.$router.push({ query: { login: 1 } })
       } else {
         const clapCount = await api.postPostClap(post.slug)

@@ -15,6 +15,9 @@
         <Avatar :profile="post.profile" />
       </div>
 
+      <div class="post-actions">
+        <button class="button" @click="handleEdit">Edit</button>
+      </div>
       <Discussion :threadId="post.thread" />
     </div>
   </div>
@@ -40,14 +43,36 @@ export default {
   async created() {
     this.post = await api.getPost(this.slug)
   },
-  methods: {},
+  computed: {
+    isAuthor() {
+      const profile = this.$store.state.users.profile
+      return profile && profile.id === this.post.profile.id
+    },
+  },
+  methods: {
+    handleEdit() {
+      this.$router.push({ name: 'PostEdit', params: { slug: this.slug } })
+    },
+  },
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .post-content {
   font-family: $font-family-serif;
   margin-bottom: 2rem;
+
+  // HACK
+  img {
+    max-width: 100% !important;
+  }
+  // Editor Tweaks
+  h1 {
+    font-size: $font-size-h3;
+  }
+  h2 {
+    font-size: $font-size-h4;
+  }
 }
 .post-hashtags {
   margin-bottom: 4rem;
