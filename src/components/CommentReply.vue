@@ -6,6 +6,8 @@
         v-model="commentText"
         class="comment-reply-input fill-x"
         placeholder="This is dope"
+        @input="handleInput"
+        ref="textareaElement"
       />
       <button v-if="commentText" class="button" type="submit">Post</button>
     </form>
@@ -25,6 +27,14 @@ export default {
   },
   computed: {},
   methods: {
+    handleInput() {
+      this.$refs.textareaElement.style.height = 'auto'
+      const el = this.$refs.textareaElement
+      el.style.height = el.scrollHeight + 5 + 'px'
+      if (!this.$refs.textareaElement.textLength) {
+        el.style.height = ''
+      }
+    },
     handleFormSubmit() {
       api.postComment(this.threadId, this.commentText)
       this.commentText = ''
@@ -41,9 +51,6 @@ export default {
     margin-top: 2rem;
     transition: height 200ms;
     height: 2.5rem;
-    &:focus {
-      height: 8rem;
-    }
     margin-bottom: 1rem;
   }
 }

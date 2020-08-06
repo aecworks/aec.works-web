@@ -1,5 +1,5 @@
 <template>
-  <div @click="onClick()" class="profile flex flex-center">
+  <div @click="handleClick()" class="profile flex flex-center">
     <img
       class="profile-avatar"
       src="https://pbs.twimg.com/profile_images/1160338085235707904/NMNIRutH_400x400.jpg"
@@ -14,7 +14,7 @@ export default {
   props: ['profile'],
   methods: {
     onClick() {
-      this.$router.push({ name: 'Person', params: { slug: this.profile.slug } })
+      this.$router.push({ name: 'Person', params: { slug: this.profile.id } })
     },
   },
 }

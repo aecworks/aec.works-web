@@ -8,7 +8,7 @@
     <div class="page-content">
       <PostCard
         v-for="(post, index) in items"
-        :key="post.id"
+        :key="post.slug"
         v-bind="{post}"
         v-waypoint="{ active: index + 1=== items.length, callback: onVisible }"
       />

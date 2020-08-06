@@ -17,6 +17,7 @@ $gutter: 38px;
   width: 100%;
 
   @include for-large-up {
+    padding-left: 2rem;
     position: relative;
     flex-shrink: 0;
     height: 100%;

@@ -1,7 +1,12 @@
 <template>
   <div class="page">
     <div class="page-header">
-      <h2 class="page-title">Edit Post</h2>
+      <h2
+        class="page-title"
+        v-html="postTitle"
+        @focusout="handleUpdatePostTitle"
+        contenteditable="true"
+      ></h2>
     </div>
     <div class="post-editor">
       <Editor v-model="body" />
@@ -27,12 +32,16 @@ export default {
   data() {
     return {
       body: '',
+      postTitle: '',
     }
   },
   async created() {
     if (this.isEditing) {
-      const { body } = await api.getPost(this.slug)
+      const { body, title } = await api.getPost(this.slug)
       this.body = body
+      this.postTitle = title
+    } else {
+      this.postTitle = 'Your title here'
     }
   },
   computed: {
@@ -46,11 +55,14 @@ export default {
       const hashtags = this.body.match(/#[a-z]+/gi) || []
       let post
       if (this.isEditing) {
-        post = await api.patchPost(this.slug, 'Test Title', this.body, hashtags)
+        post = await api.patchPost(this.slug, this.postTitle, this.body, hashtags)
       } else {
-        post = await api.postPost('Test Title', this.body, hashtags)
+        post = await api.postPost(this.postTitle, this.body, hashtags)
       }
       this.$router.push({ name: 'Post', params: { slug: post.slug } })
+    },
+    handleUpdatePostTitle(e) {
+      this.postTitle = e.target.innerText
     },
   },
 }

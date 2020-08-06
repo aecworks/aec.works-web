@@ -6,9 +6,11 @@
       </div>
     </div>
 
-    <div class="company-card" @click="onClick">
+    <div class="company-card">
       <div class="company-card-title flex">
-        <h3>{{ company.name }}</h3>
+        <h3>
+          <router-link :to="{ name: 'Company', params: { slug: company.slug }}">{{company.name}}</router-link>
+        </h3>
         <h4 class="company-location">{{company.location || "-"}}</h4>
       </div>
 
@@ -36,11 +38,17 @@ export default {
   name: 'CompanyCard',
   props: ['company'],
   components: { Hashtag, IconCounter },
+  // created() {
+  //   window.addEventListener('scroll', this.handleScroll)
+  // },
+  // destroyed() {
+  //   window.removeEventListener('scroll', this.handleScroll)
+  // },
   methods: {
-    onClick() {
-      this.$router.push({
-        name: 'Company',
-        params: { slug: this.company.slug },
+    handleScroll(e) {
+      document.querySelectorAll('.company-card-icon').forEach(el => {
+        // let { y } = el.getBoundingClientRect()
+        // let scale = y * 2 + window.screen.height
       })
     },
     getImageUrl(logo) {

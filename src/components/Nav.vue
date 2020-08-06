@@ -33,11 +33,12 @@
       </li>
     </ul>
     <ul class="profile-links">
-      <li class="nav-item">
+      <!-- Show Profile -->
+      <!-- <li class="nav-item">
         <router-link class="nav-item" tag="a" :to="{ name: 'Profile' }">profile</router-link>
-      </li>
+      </li>-->
       <li class="nav-item">
-        <router-link class="nav-item" tag="a" :to="{ query: { login: '1' }}">login</router-link>
+        <router-link tag="a" :to="{ query: { login: '1' }}">login</router-link>
       </li>
     </ul>
   </div>
@@ -85,6 +86,9 @@ export default {
       .nav-item {
         display: block;
       }
+      .profile-links {
+        margin-bottom: 1rem;
+      }
     }
   }
 
@@ -101,13 +105,18 @@ export default {
   }
 
   .profile-links {
-    margin-top: 5rem;
+    @include for-large-up {
+      margin-top: 5rem;
+    }
   }
 
   .nav-item {
-    margin-bottom: 0.5rem;
-    text-align: center;
+    text-align: right;
+    margin-top: 1rem;
+    margin-right: 3rem;
+
     @include for-large-up {
+      margin-top: 0.5rem;
       text-align: left;
     }
     &.active {

@@ -16,7 +16,7 @@
       </div>
 
       <div class="post-actions">
-        <button class="button" @click="handleEdit">Edit</button>
+        <button v-if="isAuthor" class="button" @click="handleEdit">Edit</button>
       </div>
       <Discussion :threadId="post.thread" />
     </div>
