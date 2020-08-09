@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+import api from '../api'
 import CompanyList from '../views/CompanyList'
 import Company from '../views/Company'
 import PostList from '../views/PostList'
 import Post from '../views/Post'
+import PostEdit from '../views/PostEdit'
 import PersonList from '../views/PersonList'
 import Person from '../views/Person'
 import Profile from '../views/Profile'
@@ -18,7 +20,7 @@ const routes = [
   },
   {
     path: '/companies',
-    name: 'Companies',
+    name: 'CompanyList',
     component: CompanyList,
     props: true,
   },
@@ -33,6 +35,19 @@ const routes = [
     name: 'Company',
     component: Company,
     props: true,
+  },
+  {
+    path: '/posts/compose',
+    name: 'PostCompose',
+    component: PostEdit,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/posts/:slug/edit',
+    name: 'PostEdit',
+    component: PostEdit,
+    props: true,
+    meta: { requiresAuth: true }
   },
   {
     path: '/posts/:slug',
@@ -65,5 +80,21 @@ const router = new VueRouter({
 })
 
 
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    if (!api.isAuthenticated()) {
+      next({
+        path: from.path,
+        query: { login: 1 }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
 
 export default router

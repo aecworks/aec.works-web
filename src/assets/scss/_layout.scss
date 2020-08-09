@@ -1,11 +1,17 @@
-$nav-width: 112px;
-$content-width: 600px;
-$gutter: 38px;
+$nav-width: 100px;
+$page-weidth: 500px;
+$sidebar-width: 200px;
+
 
 #app {
   display: flex;
   height: 100%;
   width:100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  position: relative;
+
   flex-direction: column;
   @include for-large-up {
     justify-content: center;
@@ -17,6 +23,8 @@ $gutter: 38px;
   width: 100%;
 
   @include for-large-up {
+    padding: 4rem 0  4rem 2rem;
+
     position: relative;
     flex-shrink: 0;
     height: 100%;
@@ -24,12 +32,34 @@ $gutter: 38px;
   }
 }
 
-.page {
-  width: 100%;
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 2rem;
 
   @include for-large-up {
-    width: $content-width;
+    flex-direction: row;
+    position: relative;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  @include for-large-up {
     min-width: 0;
+  }
+
+  .page {
+    @include for-large-up {
+      width: $page-weidth;
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+  }
+  .sidebar {
+    @include for-large-up {
+      padding: 0;
+      width: $sidebar-width;
+    }
   }
 }
 

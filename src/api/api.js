@@ -1,6 +1,6 @@
 import jwt from "./jwt"
+import { buildUrl } from "./utils"
 
-// http://localhost:8000
 const API_URL = process.env.VUE_APP_API_URL
 if (!API_URL) throw Error("VUE_API_URL not defined")
 
@@ -14,23 +14,15 @@ class Api {
     this.jwt = jwt
   }
 
-  _buildHeaders (optionHeaders = {}) {
-    const headers = {
+  _buildHeaders (headers = {}) {
+    const mergedHeaders = {
       ...this.DEFAULT_HEADERS,
-      ...optionHeaders,
+      ...headers,
     }
     if (this.jwt.isSet()) {
-      headers["Authorization"] = `JWT ${this.jwt.get().access}`
+      mergedHeaders["Authorization"] = `JWT ${this.jwt.get().access}`
     }
-    return headers
-  }
-
-  _buildUrl (urlPath, query) {
-    const url = `${this.API_URL}/${urlPath}`
-    if (!query) return url
-
-    const queryParams = new URLSearchParams(query || {}).toString()
-    return `${url}?${queryParams}`
+    return mergedHeaders
   }
 
   _is_auth_failure (response) {
@@ -39,7 +31,7 @@ class Api {
 
   async _fetch (method, urlPath, options = {}) {
     const { body, headers, query } = options
-    const url = this._buildUrl(urlPath, query)
+    const url = buildUrl(this.API_URL, urlPath, query)
     const request = new Request(url, {
       method,
       headers: this._buildHeaders(headers),
@@ -55,7 +47,7 @@ class Api {
     let response = await makeRequest()
 
     if (this._is_auth_failure(response) && this.jwt.isSet()) {
-      this._getRefreshJwt(this.jwt.get().refresh)
+      await this._loginWithRefreshToken(this.jwt.get().refresh)
       response = await makeRequest()
       if (this._is_auth_failure(response)) {
         this.jwt.clear()
@@ -72,6 +64,12 @@ class Api {
 
   async _post (urlPath, options) {
     const response = await this._fetch_with_retry("POST", urlPath, options)
+    return response.json()
+  }
+
+
+  async _patch (urlPath, options) {
+    const response = await this._fetch_with_retry("PATCH", urlPath, options)
     return response.json()
   }
 
@@ -95,27 +93,39 @@ class Api {
   async _handleTokenResponse (response) {
     if (response.status == 200) {
       const token = await response.json()
-      this.jwt.set(token)
+      // Refresh only return access so merge
+      this.jwt.set({ ...this.jwt.get(), ...token })
     } else {
       const errorReponse = await response.json()
       return errorReponse
     }
   }
 
-  async login (email, password) {
+  async _loginWithRefreshToken (refresh) {
+    const response = await this._getRefreshJwt(refresh)
+    return this._handleTokenResponse(response)
+  }
+
+  /**
+   * @param  {String} email
+   * @param  {String} password
+   */
+  async loginWithCredentials (email, password) {
     const response = await this._getJwt(email, password)
     return this._handleTokenResponse(response)
   }
 
-  async githubLogin (code) {
+  /**
+   * @param  {String} code
+   */
+  async loginWithGithubCode (code) {
     const response = await this._getJwtWithGithubCode(code)
     return this._handleTokenResponse(response)
   }
 
-  logout () {
-    this.jwt.clear()
+  isAuthenticated () {
+    return this.jwt.isSet()
   }
-
 
   getCommentsByThreadId (threadId, query) {
     return this._get(`community/comments/`, { query: { ...query, "thread_id": threadId } })
@@ -137,12 +147,28 @@ class Api {
     return this._get(`community/companies/`, { query })
   }
 
+  patchCompany (slug, company) {
+    return this._patch(`community/companies/${slug}/`, { body: company })
+  }
+
+  getHashtags (query) {
+    return this._get(`community/hashtags/`, { query })
+  }
+
   getPost (slug) {
     return this._get(`community/posts/${slug}/`)
   }
 
   getPosts (query) {
     return this._get(`community/posts/`, { query })
+  }
+
+  postPost (title, body, hashtags) {
+    return this._post(`community/posts/`, { body: { title, body, hashtags } })
+  }
+
+  patchPost (slug, title, body, hashtags) {
+    return this._patch(`community/posts/${slug}/`, { body: { title, body, hashtags } })
   }
 
   getMyProfile () {

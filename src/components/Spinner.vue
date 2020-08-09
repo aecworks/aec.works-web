@@ -1,22 +1,13 @@
 <template>
-  <div class="discussion">
-    <Comment
-      v-for="(comment, index) in comments"
-      :key="comment.id"
-      v-bind="{comment, index}"
-      v-waypoint="{ active: index + 1=== comments.length, callback: onVisible }"
-    />
-    <Loader v-if="isLoading" />
-    <CommentReply v-bind="{threadId}" @replied="handleReply" />
+  <div class="lds-ellipsis">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
   </div>
 </template>
 
 <script>
-import api from '@/api'
-import Comment from '@/components/Comment'
-import CommentReply from '@/components/CommentReply'
-import Loader from '@/components/Loader'
-
 export default {
   name: 'Discussion',
   props: {
@@ -25,13 +16,11 @@ export default {
   components: {
     Comment,
     CommentReply,
-    Loader,
   },
   data() {
     return {
       comments: [],
       offset: 0,
-      isLoading: false,
     }
   },
   async created() {
@@ -48,12 +37,9 @@ export default {
       this.comments = [...this.comments, ...comments]
       this.offset = this.offset + comments.length
     },
-    async handleReply() {
-      this.isLoading = true
+    handleReply() {
       setTimeout(() => {
-        this.fetchItems(this.offset, 1).then(() => {
-          this.isLoading = false
-        })
+        this.fetchItems(this.offset, 1)
       }, 1000)
     },
     onVisible({ going }) {
@@ -68,7 +54,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .discussion {
-  margin-top: 5rem;
   margin-bottom: 10rem;
 }
 </style>

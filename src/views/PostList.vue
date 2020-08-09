@@ -1,16 +1,22 @@
 <template>
+  <div class="content">
   <div class="page">
     <div class="page-header">
-      <div class="button">Add</div>
+      <!-- <div class="button">Add</div> -->
+      <router-link tag="div" class="button" :to="{name: 'PostCompose'}">Add</router-link>
     </div>
 
     <div class="page-content">
       <PostCard
         v-for="(post, index) in items"
-        :key="post.id"
+        :key="post.slug"
         v-bind="{post}"
         v-waypoint="{ active: index + 1=== items.length, callback: onVisible }"
       />
+    </div>
+  </div>
+  <div class="sidebar">
+      <HashtagList />
     </div>
   </div>
 </template>
@@ -18,11 +24,13 @@
 <script>
 import api from '@/api'
 import PostCard from '@/components/PostCard'
+import HashtagList from '@/components/HashtagList'
 
 export default {
   name: 'PostList',
   components: {
     PostCard,
+    HashtagList
   },
   data() {
     return {

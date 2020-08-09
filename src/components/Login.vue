@@ -4,12 +4,13 @@
     <div class="login-container fill-y">
       <div class="login-info invert">
         <img alt="AEC Guide Logo" class="logo" src="@/assets/images/logo.svg" />
-        <p>Welcome to our AEC Community</p>
-        <p>Sign in to contribute and participate.</p>
-        <p class="muted">Terms.</p>
+        <p>Login to join the conversation.</p>
+        <p>Authenticated users can comment, clap, and edit content.</p>
+        <!-- <p>Sign in to contribute and participate.</p> -->
+        <!-- <p class="muted">Terms of Use</p> -->
       </div>
       <div class="login-form">
-        <form class="form" autocomplete="off" @submit.prevent="handleFormSubmit">
+        <!-- <form class="form" autocomplete="off" @submit.prevent="handleFormSubmit">
           <label>Email</label>
           <input
             class="fill-x"
@@ -21,7 +22,7 @@
           <label>Password</label>
           <input class="fill-x" type="text" v-model="password" name="username" placeholder="****" />
           <button class="button" type="submit">Login</button>
-        </form>
+        </form>-->
         <div class="login-form-social">
           <div class="button dark icon" @click="redirectGithubLogin()">
             <span class="icon">
@@ -30,6 +31,7 @@
             Login with Github
           </div>
         </div>
+
         <!-- TODO Signup -->
         <!-- <p>Don't have an account?</p> -->
         <!-- <div class="button">Signup</div> -->
@@ -63,7 +65,7 @@ export default {
   },
   methods: {
     async handleFormSubmit() {
-      const error = api.login(this.email, this.password)
+      const error = api.loginWithCredentials(this.email, this.password)
       if (!error) {
         this.$store.dispatch('getProfile')
       }
@@ -76,7 +78,7 @@ export default {
       }
 
       if (code) {
-        const error = await api.githubLogin(code)
+        const error = await api.loginWithGithubCode(code)
         if (error) {
           this.errors = error
         } else {
@@ -84,8 +86,6 @@ export default {
           popQuery(this.$router, this.$route.query, 'login')
           popQuery(this.$router, this.$route.query, 'code')
         }
-      } else {
-        throw 'unexpected github response'
       }
     },
     redirectGithubLogin() {
@@ -125,8 +125,10 @@ export default {
 
     display: flex;
     flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
     .login-form-social {
-      margin-top: 1rem;
     }
   }
 }

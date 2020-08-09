@@ -7,15 +7,19 @@
     margin-top: 1rem;
   }
 }
-input[type=text], textarea {
-     padding: $padding-sm $padding;
-     font-size: $font-size-p;
+input[type=text], textarea{
+  font-size: $font-size-p;
+  font-family: $font-family;
+  padding: $padding-sm $padding;
 
-     @extend .border-thick;
+  @extend .border-thick;
 
-     &:focus {
-      @include shadow-color($dark);
-     }
+  &:focus {
+  @include shadow-color($dark);
+  }
+  &::placeholder {
+    font-family: $font-family;
+  }
 }
 
 

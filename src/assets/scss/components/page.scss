@@ -1,12 +1,11 @@
 .page {
-    position: relative;
-    padding: 7rem 4rem;
 
     .page-header {
       margin-bottom: 3rem;
     }
 
     .page-title {
+      width:100%;
       display: inline-block;
       &::after {
         content: '';
@@ -14,13 +13,9 @@
         margin-top: 0.75rem;
         width: 3rem;
         height: 0.25rem;
-        background-color: $yellow;
+        // background-color: $yellow;
+        background-color: $cream;
       }
     }
 
-    .page-icon {
-      position: absolute;
-      right: 0;
-      width: 4rem;
-    }
   }

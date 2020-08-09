@@ -9,6 +9,6 @@ body {
 }
 
 
-button:focus, input:focus, textarea:focus, select:focus{
+*:focus {
   outline: none;
 }

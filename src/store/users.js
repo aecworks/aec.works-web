@@ -1,4 +1,4 @@
-import api from "@/api"
+import api from "../api"
 
 export default {
   state: () => ({
@@ -16,8 +16,8 @@ export default {
     }
   },
   getters: {
-    isLoggedIn (state) {
-      return state.profile !== null
-    }
+    // isLoggedIn () {
+    //   return api.isAuthenticated()
+    // }
   }
 }

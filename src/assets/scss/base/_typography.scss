@@ -22,6 +22,7 @@ p {
 }
 
 label {
+    display: block;
     font-size: $font-size-h4;
     margin: $padding-md, $padding-xs;
     display: inline-block;;
