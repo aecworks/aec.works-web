@@ -1,28 +1,28 @@
 <template>
-  <div class="hashtag" :class="pickColor()" @click="handleClick(name)">
-    <span>#{{name}}</span>
+  <div class="hashtag" :class="pickColor()" @click="handleClick(slug)">
+    <span>#{{slug}}</span>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Hashtag',
-  props: { name: String },
+  props: { slug: String },
   computed: {
     isActive() {
-      return this.$route.query.hashtag === this.name
+      return this.$route.query.hashtag === this.slug
     },
   },
   methods: {
     handleClick(name) {
       // Toggle Hashtag
       let query = Object.assign({}, this.$route.query)
-      if (query.hashtag) {
+      if (query.hashtag && query.hashtag == name) {
         delete query.hashtag
       } else {
         query.hashtag = name
       }
-      this.$router.replace({ name: 'PostList', query })
+      this.$router.replace({ query })
     },
     pickColor() {
       if (this.isActive) {
@@ -41,7 +41,7 @@ export default {
 .hashtag {
   padding: $padding-xs $padding-sm;
   display: inline-block;
-  margin: 0.5rem 0.25rem;
+  margin: 0.25rem 0.25rem;
 
   @extend .border-thin;
   cursor: pointer;
@@ -58,7 +58,9 @@ export default {
   }
 
   &.dark {
-    @include shadow-color($dark);
+    background-color: $dark;
+    color: $cream;
+    // @include shadow-color($dark);
   }
   &.pink {
     @include shadow-color($pink);

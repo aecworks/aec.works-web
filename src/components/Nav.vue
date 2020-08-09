@@ -32,15 +32,12 @@
         <router-link tag="a" :to="{name: route.name}">{{route.text}}</router-link>
       </li>
     </ul>
-    <ul class="profile-links">
-      <!-- Show Profile -->
-      <!-- <li class="nav-item">
-        <router-link class="nav-item" tag="a" :to="{ name: 'Profile' }">profile</router-link>
-      </li>-->
-      <li class="nav-item">
-        <router-link tag="a" :to="{ query: { login: '1' }}">login</router-link>
-      </li>
-    </ul>
+    <div class="nav-profile-info">
+      <span v-if="profile">Hello {{ profile.name.split(" ")[0] }}!</span>
+      <!-- <router-link class="nav-item" tag="a" :to="{ name: 'Profile' }">profile</router-link> -->
+      <!-- <router-link tag="a" :to="{ query: { login: '1' }}">login</router-link> -->
+      <router-link tag="a" :to="{ name: 'logout' }">logout</router-link>
+    </div>
   </div>
 </template>
 
@@ -53,18 +50,18 @@ export default {
       routes: [
         { text: 'feed', name: 'PostList' },
         { text: 'companies', name: 'CompanyList' },
-        { text: 'people', name: 'PersonList' },
+        // { text: 'people', name: 'PersonList' },
       ],
     }
   },
   computed: {
     profile() {
-      return this.$store.state.users.profile || {}
+      return this.$store.state.users.profile || null
     },
   },
   methods: {
     isActive(route) {
-      return this.$route.path.includes(route.path)
+      return this.$route.name === route.name
     },
   },
 }
@@ -75,7 +72,6 @@ export default {
   border-bottom: 3px solid $yellow;
   @include for-large-up {
     border-bottom: none;
-    padding-top: 6rem;
   }
 
   @include for-large-down {
@@ -104,8 +100,11 @@ export default {
     }
   }
 
-  .profile-links {
+  .nav-profile-info {
+    font-size: $font-size-h5;
+    display: none;
     @include for-large-up {
+      display: inherit;
       margin-top: 5rem;
     }
   }
@@ -121,6 +120,7 @@ export default {
     }
     &.active {
       font-weight: $font-weight-bold;
+      color: red;
     }
   }
 }

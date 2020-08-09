@@ -1,7 +1,7 @@
 <template>
   <div class="company-card-container flex flex-down">
-    <div class="company-card-icon-container">
-      <div class="company-card-icon">
+    <div class="company-card-image">
+      <div class="company-card-image-container">
         <img :src="getImageUrl(company.logo)" />
       </div>
     </div>
@@ -18,7 +18,7 @@
         <p>{{company.description || "-"}}</p>
       </div>
       <div class="company-card-hashtags">
-        <Hashtag v-for="name in company.hashtags" :name="name" :key="name" />
+        <Hashtag v-for="slug in company.hashtags" :slug="slug" :key="slug" />
       </div>
 
       <div class="company-card-footer flex flex-center">
@@ -45,12 +45,12 @@ export default {
   //   window.removeEventListener('scroll', this.handleScroll)
   // },
   methods: {
-    handleScroll(e) {
-      document.querySelectorAll('.company-card-icon').forEach(el => {
-        // let { y } = el.getBoundingClientRect()
-        // let scale = y * 2 + window.screen.height
-      })
-    },
+    // handleScroll(e) {
+    //   document.querySelectorAll('.company-card-image-container').forEach(el => {
+    //     // let { y } = el.getBoundingClientRect()
+    //     // let scale = y * 2 + window.screen.height
+    //   })
+    // },
     getImageUrl(logo) {
       if (logo) {
         return logo
@@ -63,20 +63,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$logosize: 5rem;
-
 .company-card-container {
   align-items: flex-start;
 
-  .company-card-icon-container {
+  .company-card-image {
     display: inline-block;
     line-height: 0;
+    width: 100%;
 
-    .company-card-icon {
+    .company-card-image-container {
       display: inline-block;
-      height: $logosize;
       overflow: hidden;
-      max-width: $logosize * 2;
+      @include for-large-up {
+        height: 5rem;
+      }
+      max-width: 100%;
 
       @include shadow-color($dark);
       @extend .border-thick;
@@ -85,8 +86,9 @@ $logosize: 5rem;
       margin-bottom: -3px;
 
       img {
-        height: 100%;
-        object-fit: cover;
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: center;
         object-position: center;
       }
     }
@@ -94,7 +96,7 @@ $logosize: 5rem;
 
   .company-card {
     display: inline-block;
-    width: 10rem;
+    width: 100%;
     margin-bottom: 2rem;
     padding: $padding;
     background-color: white;
@@ -103,9 +105,8 @@ $logosize: 5rem;
     border-top-left-radius: 0;
     @include shadow-color($dark);
 
-    width: 100%;
     @include for-large-up {
-      width: 80%;
+      width: 100%;
     }
 
     .company-card-title {

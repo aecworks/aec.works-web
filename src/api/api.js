@@ -1,6 +1,6 @@
 import jwt from "./jwt"
+import { buildUrl } from "./utils"
 
-// http://localhost:8000
 const API_URL = process.env.VUE_APP_API_URL
 if (!API_URL) throw Error("VUE_API_URL not defined")
 
@@ -14,23 +14,15 @@ class Api {
     this.jwt = jwt
   }
 
-  _buildHeaders (optionHeaders = {}) {
-    const headers = {
+  _buildHeaders (headers = {}) {
+    const mergedHeaders = {
       ...this.DEFAULT_HEADERS,
-      ...optionHeaders,
+      ...headers,
     }
     if (this.jwt.isSet()) {
-      headers["Authorization"] = `JWT ${this.jwt.get().access}`
+      mergedHeaders["Authorization"] = `JWT ${this.jwt.get().access}`
     }
-    return headers
-  }
-
-  _buildUrl (urlPath, query) {
-    const url = `${this.API_URL}/${urlPath}`
-    if (!query) return url
-
-    const queryParams = new URLSearchParams(query || {}).toString()
-    return `${url}?${queryParams}`
+    return mergedHeaders
   }
 
   _is_auth_failure (response) {
@@ -39,7 +31,7 @@ class Api {
 
   async _fetch (method, urlPath, options = {}) {
     const { body, headers, query } = options
-    const url = this._buildUrl(urlPath, query)
+    const url = buildUrl(this.API_URL, urlPath, query)
     const request = new Request(url, {
       method,
       headers: this._buildHeaders(headers),
@@ -114,24 +106,26 @@ class Api {
     return this._handleTokenResponse(response)
   }
 
+  /**
+   * @param  {String} email
+   * @param  {String} password
+   */
   async loginWithCredentials (email, password) {
     const response = await this._getJwt(email, password)
     return this._handleTokenResponse(response)
   }
 
+  /**
+   * @param  {String} code
+   */
   async loginWithGithubCode (code) {
     const response = await this._getJwtWithGithubCode(code)
     return this._handleTokenResponse(response)
   }
 
-  logout () {
-    this.jwt.clear()
-  }
-
   isAuthenticated () {
     return this.jwt.isSet()
   }
-
 
   getCommentsByThreadId (threadId, query) {
     return this._get(`community/comments/`, { query: { ...query, "thread_id": threadId } })
@@ -151,6 +145,14 @@ class Api {
 
   getCompanies (query) {
     return this._get(`community/companies/`, { query })
+  }
+
+  patchCompany (slug, company) {
+    return this._patch(`community/companies/${slug}/`, { body: company })
+  }
+
+  getHashtags (query) {
+    return this._get(`community/hashtags/`, { query })
   }
 
   getPost (slug) {

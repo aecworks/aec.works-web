@@ -8,12 +8,13 @@
           <span class="comment-timestamp">{{relativeTimestamp}}</span>
         </h4>
 
-        <p>{{comment.text}}</p>
+        <p class="comment-text">{{comment.text}}</p>
+
         <div class="flex flex-center comment-footer">
           <div class="button-text">
             <span>Reply</span>
           </div>
-          <IconCounter :icon="'chat'" :count="comment.repliesCount" />
+          <IconCounter :icon="'chat'" :count="comment.replyCount" />
           <IconCounter :icon="'clap'" :count="comment.clapCount" />
         </div>
       </div>
@@ -77,6 +78,7 @@ export default {
 .comment {
   display: flex;
   margin-bottom: 2rem;
+
   .comment-prefix {
     flex-shrink: 0;
     height: 1rem;
@@ -88,6 +90,10 @@ export default {
       border: none;
     }
   }
+}
+.comment-text {
+  margin-top: 0.5rem;
+  margin-bottom: 1.25rem;
 }
 .comment-timestamp {
   @extend .muted;

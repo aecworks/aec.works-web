@@ -3,10 +3,12 @@
     <h3 class="post-card-title">
       <router-link :to="{ name: 'Post', params: { slug: post.slug }}">{{post.title}}</router-link>
     </h3>
-    <p class="post-card-author">by {{ post.profile.name }}</p>
+    <label class="post-card-author">by {{ post.profile.name }}</label>
+
+    <p class="post-card-body" v-html="post.body.slice(0, 120) + '...'"></p>
 
     <div class="post-card-hashtags">
-      <Hashtag v-for="name in post.hashtags" :name="name" :key="name" />
+      <Hashtag v-for="slug in post.hashtags" :slug="slug" :key="slug" />
     </div>
 
     <div class="post-card-footer flex flex-center">
@@ -67,7 +69,7 @@ export default {
 
   width: 100%;
   @include for-large-up {
-    width: 80%;
+    width: 100%;
   }
 
   .post-card-title {
@@ -78,17 +80,20 @@ export default {
     margin-bottom: 1rem;
   }
 
+  .post-card-body {
+    // font-style: italic;
+  }
+
   .post-card-hashtags {
     margin-bottom: 1rem;
   }
 
   .post-card-footer {
     display: flex;
-    > * {
-      margin-right: 1rem;
-    }
+
     .post-card-footer-timestamp {
       margin-left: auto;
+      margin-right: 0;
     }
   }
 }

@@ -4,10 +4,10 @@
       <textarea
         type="text"
         v-model="commentText"
-        class="comment-reply-input fill-x"
-        placeholder="This is dope"
         @input="handleInput"
         ref="textareaElement"
+        class="comment-reply-input fill-x"
+        placeholder="Much thoughts here"
       />
       <button v-if="commentText" class="button" type="submit">Post</button>
     </form>

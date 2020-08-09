@@ -68,6 +68,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .discussion {
+  margin-top: 5rem;
   margin-bottom: 10rem;
 }
 </style>

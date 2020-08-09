@@ -1,4 +1,5 @@
 <template>
+  <div class="content">
   <div class="page">
     <div class="page-header">
       <!-- <div class="button">Add</div> -->
@@ -14,16 +15,22 @@
       />
     </div>
   </div>
+  <div class="sidebar">
+      <HashtagList />
+    </div>
+  </div>
 </template>
 
 <script>
 import api from '@/api'
 import PostCard from '@/components/PostCard'
+import HashtagList from '@/components/HashtagList'
 
 export default {
   name: 'PostList',
   components: {
     PostCard,
+    HashtagList
   },
   data() {
     return {

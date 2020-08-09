@@ -1,25 +1,32 @@
 <template>
-  <div class="page">
-    <div v-if="post">
-      <div class="page-header">
-        <h2 class="page-title">{{post.title}}</h2>
-      </div>
+  <div class="content">
+    <div class="page">
+      <div v-if="post">
+        <div class="page-header">
+          <h2 class="page-title">{{post.title}}</h2>
+        </div>
 
-      <div class="post-content" v-html="post.body" />
+        <div class="post-content" v-html="post.body" />
 
-      <div class="post-hashtags">
-        <Hashtag v-for="name in post.hashtags" :name="name" :key="name" />
-      </div>
+        <div class="post-author">
+          <label>- {{post.profile.name}}</label>
+          <Avatar v-if="false" :profile="post.profile" />
+        </div>
 
-      <div class="post-author">
-        <Avatar :profile="post.profile" />
-      </div>
+        <div class="post-hashtags">
+          <Hashtag v-for="slug in post.hashtags" :slug="slug" :key="slug" />
+        </div>
 
-      <div class="post-actions">
-        <button v-if="isAuthor" class="button" @click="handleEdit">Edit</button>
+        <IconCounter :icon="'clap'" :count="post.clapCount" />
+        <!-- @click="onClapClick(post)" -->
+
+        <div class="post-actions">
+          <button v-if="isAuthor" class="button" @click="handleEdit">Edit</button>
+        </div>
+        <Discussion :threadId="post.thread" />
       </div>
-      <Discussion :threadId="post.thread" />
     </div>
+    <div class="sidebar">Share</div>
   </div>
 </template>
 
@@ -28,10 +35,11 @@ import api from '@/api'
 import Discussion from '@/components/Discussion'
 import Hashtag from '@/components/Hashtag'
 import Avatar from '@/components/Avatar'
+import IconCounter from '@/components/IconCounter'
 
 export default {
   name: 'Post',
-  components: { Discussion, Hashtag, Avatar },
+  components: { Discussion, Hashtag, Avatar, IconCounter },
   props: {
     slug: { required: true, type: String },
   },
@@ -46,7 +54,7 @@ export default {
   computed: {
     isAuthor() {
       const profile = this.$store.state.users.profile
-      return profile && profile.id === this.post.profile.id
+      return profile && profile.slug && profile.slug === this.post.profile.slug
     },
   },
   methods: {

@@ -29,7 +29,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .icon-counter {
-  // margin-right: 1rem;
+  margin-right: 1rem;
   display: flex;
   align-items: center;
   img {

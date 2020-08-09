@@ -1,18 +1,20 @@
 <template>
-  <div class="page">
-    <div class="page-header">
-      <h2
-        class="page-title"
-        v-html="postTitle"
-        @focusout="handleUpdatePostTitle"
-        contenteditable="true"
-      ></h2>
-    </div>
-    <div class="post-editor">
-      <Editor v-model="body" />
-    </div>
-    <div class="post-editor-actions">
-      <button class="button" @click="handleSave">Save</button>
+  <div class="content">
+    <div class="page">
+      <div class="page-header">
+        <h2
+          class="page-title"
+          v-html="postTitle"
+          @focusout="handleUpdatePostTitle"
+          contenteditable="true"
+        ></h2>
+      </div>
+      <div class="post-editor">
+        <Editor v-model="body" />
+      </div>
+      <div class="post-editor-actions">
+        <button class="button" @click="handleSave">Save</button>
+      </div>
     </div>
   </div>
 </template>

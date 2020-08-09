@@ -4,7 +4,7 @@
       class="profile-avatar"
       src="https://pbs.twimg.com/profile_images/1160338085235707904/NMNIRutH_400x400.jpg"
     />
-    <h4 class="profile-name">{{profile.name}}</h4>
+    <span class="profile-name">{{profile.name}}</span>
   </div>
 </template>
 
@@ -24,9 +24,9 @@ export default {
 .profile {
   cursor: pointer;
   .profile-avatar {
-    width: 30px;
-    height: 30px;
-    border-radius: 15px;
+    width: 32px;
+    height: 32px;
+    @extend .border-thin;
     @include shadow-color($yellow);
   }
 

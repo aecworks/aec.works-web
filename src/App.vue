@@ -2,7 +2,6 @@
   <div id="app" class="app-wrapper">
     <Nav />
     <router-view />
-
     <Login v-if="showLoginModal" @closed="$router.replace({query:{}})" />
   </div>
 </template>
@@ -10,6 +9,7 @@
 <script>
 import Nav from '@/components/Nav'
 import Login from '@/components/Login'
+import api from '@/api'
 
 export default {
   name: 'App',
@@ -22,7 +22,11 @@ export default {
       // showLoginModal: false,
     }
   },
-  methods: {},
+  created() {
+    if (api.isAuthenticated()) {
+      this.$store.dispatch('getMyProfile')
+    }
+  },
   computed: {
     // ?modal=login
     showLoginModal() {
