@@ -1,35 +1,35 @@
 <template>
-  <div class="company-card-container flex flex-down">
-    <div class="company-card-image">
-      <div class="company-card-image-container">
-        <img :src="getImageUrl(company.logo)" />
-      </div>
-    </div>
+  <Card @click="handleClick(company)">
+    <template v-slot:logo>
+      <img class="company-logo" v-if="company.logo" :src="getImageUrl(company.logo)" />
+    </template>
+    <template v-slot:cover>
+      <img v-if="company.cover" :src="getImageUrl(company.cover)" />
+    </template>
+    <template v-slot:default>
+      <!-- Company Name -->
+      <h3 class="mt-1">{{company.name}}</h3>
 
-    <div class="company-card">
-      <div class="company-card-title flex">
-        <h3>
-          <router-link :to="{ name: 'Company', params: { slug: company.slug }}">{{company.name}}</router-link>
-        </h3>
-        <h4 class="company-location">{{company.location || "-"}}</h4>
-      </div>
+      <!-- Company Description -->
+      <p class="mt-1">{{company.description || "-"}}</p>
 
-      <div class="company-card-description">
-        <p>{{company.description || "-"}}</p>
-      </div>
-      <div class="company-card-hashtags">
+      <!-- Company Hashtags -->
+      <div class="mt-1">
         <Hashtag v-for="slug in company.hashtags" :slug="slug" :key="slug" />
       </div>
 
-      <div class="company-card-footer flex flex-center">
+      <!-- Footer -->
+      <div class="flex mt-1">
         <IconCounter :icon="'chat'" :count="5" />
         <IconCounter :icon="'clap'" :count="2" />
+        <span class="small flex-right">{{company.location}}</span>
       </div>
-    </div>
-  </div>
+    </template>
+  </Card>
 </template>
 
 <script>
+import Card from './Card.vue'
 import Hashtag from '@/components/Hashtag'
 import IconCounter from '@/components/IconCounter'
 // import moment from 'moment'
@@ -37,7 +37,7 @@ import IconCounter from '@/components/IconCounter'
 export default {
   name: 'CompanyCard',
   props: ['company'],
-  components: { Hashtag, IconCounter },
+  components: { Hashtag, IconCounter, Card },
   // created() {
   //   window.addEventListener('scroll', this.handleScroll)
   // },
@@ -45,12 +45,10 @@ export default {
   //   window.removeEventListener('scroll', this.handleScroll)
   // },
   methods: {
-    // handleScroll(e) {
-    //   document.querySelectorAll('.company-card-image-container').forEach(el => {
-    //     // let { y } = el.getBoundingClientRect()
-    //     // let scale = y * 2 + window.screen.height
-    //   })
-    // },
+    handleClick(company) {
+      console.log('test')
+      this.$router.push({ name: 'Company', params: { slug: company.slug } })
+    },
     getImageUrl(logo) {
       if (logo) {
         return logo
@@ -63,67 +61,75 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.company-card-container {
-  align-items: flex-start;
-
-  .company-card-image {
-    display: inline-block;
-    line-height: 0;
-    width: 100%;
-
-    .company-card-image-container {
-      display: inline-block;
-      overflow: hidden;
-      @include for-large-up {
-        height: 5rem;
-      }
-      max-width: 100%;
-
-      @include shadow-color($dark);
-      @extend .border-thick;
-      border-bottom-right-radius: 0;
-      border-bottom-left-radius: 0;
-      margin-bottom: -3px;
-
-      img {
-        max-height: 100%;
-        max-width: 100%;
-        object-fit: center;
-        object-position: center;
-      }
-    }
-  }
-
-  .company-card {
-    display: inline-block;
-    width: 100%;
-    margin-bottom: 2rem;
-    padding: $padding;
-    background-color: white;
-
-    @extend .border-thick;
-    border-top-left-radius: 0;
-    @include shadow-color($dark);
-
-    @include for-large-up {
-      width: 100%;
-    }
-
-    .company-card-title {
-      margin-bottom: 0.5rem;
-      .company-location {
-        margin-left: auto;
-        @extend .muted;
-      }
-    }
-
-    .company-card-hashtags {
-      margin-bottom: 1rem;
-    }
-
-    .company-card-description {
-      @extend .muted;
-    }
-  }
+.company-logo {
+  position: absolute;
+  right: 30px;
+  bottom: -30px;
+  width: 60px;
+  height: 60px;
+  @extend .border-thick;
 }
+// .company-card-container {
+//   align-items: flex-start;
+
+//   .company-card-image {
+//     display: inline-block;
+//     line-height: 0;
+//     width: 100%;
+
+//     .company-card-image-container {
+//       display: inline-block;
+//       overflow: hidden;
+//       @include for-large-up {
+//         height: 5rem;
+//       }
+//       max-width: 100%;
+
+//       @include shadow-color($dark);
+//       @extend .border-thick;
+//       border-bottom-right-radius: 0;
+//       border-bottom-left-radius: 0;
+//       margin-bottom: -3px;
+
+//       img {
+//         max-height: 100%;
+//         max-width: 100%;
+//         object-fit: center;
+//         object-position: center;
+//       }
+//     }
+//   }
+
+//   .company-card {
+//     display: inline-block;
+//     width: 100%;
+//     margin-bottom: 2rem;
+//     padding: $padding;
+//     background-color: white;
+
+//     @extend .border-thick;
+//     border-top-left-radius: 0;
+//     @include shadow-color($dark);
+
+//     @include for-large-up {
+//       width: 100%;
+//     }
+
+//     .company-card-title {
+//       margin-bottom: 0.5rem;
+//       .company-location {
+//         margin-left: auto;
+//         @extend .muted;
+//       }
+//     }
+
+//     .company-card-hashtags {
+//       margin-bottom: 1rem;
+//     }
+
+//     .company-card-description {
+//       @extend .muted;
+//     }
+//   }
+// }
 </style>

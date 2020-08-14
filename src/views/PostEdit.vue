@@ -2,33 +2,35 @@
   <div class="content">
     <div class="page">
       <div class="page-header">
-        <h2
+        <input
           class="page-title"
-          v-html="postTitle"
-          @focusout="handleUpdatePostTitle"
-          contenteditable="true"
-        ></h2>
+          :class="{'empty': postTitle === ''}"
+          v-model="postTitle"
+          placeholder="Your Title"
+        />
       </div>
       <div class="post-editor">
         <Editor v-model="body" />
       </div>
       <div class="post-editor-actions">
-        <button class="button" @click="handleSave">Save</button>
+        <Button text="Save" @click="handleSave" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Button from '../components/forms/Button.vue'
 import api from '../api'
 import Editor from '@/components/Editor'
 
 export default {
   name: 'PostEdit',
-  components: { Editor },
+  components: { Editor, Button },
   props: {
     slug: {
       required: false,
+      type: String,
     },
   },
   data() {
@@ -42,8 +44,6 @@ export default {
       const { body, title } = await api.getPost(this.slug)
       this.body = body
       this.postTitle = title
-    } else {
-      this.postTitle = 'Your title here'
     }
   },
   computed: {
@@ -63,20 +63,33 @@ export default {
       }
       this.$router.push({ name: 'Post', params: { slug: post.slug } })
     },
-    handleUpdatePostTitle(e) {
+    handleInput(e) {
       this.postTitle = e.target.innerText
     },
+    // handleTitleFocus() {},
   },
 }
 </script>
 
 <style lang="scss" scoped>
+.page-title {
+  font-size: $font-size-h2;
+  border: none;
+  border-left: 1px solid $yellow;
+  padding-left: 1rem;
+
+  &.empty {
+    color: $light-gray;
+    &::after {
+      content: 'Title';
+    }
+  }
+}
 .post-editor {
-  margin-top: $padding;
+  border-left: 1px solid $yellow;
 }
 .post-editor-actions {
   margin-top: $padding-4xl;
-  font-family: $font-family-serif;
   margin-bottom: 2rem;
 }
 </style>

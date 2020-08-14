@@ -33,15 +33,16 @@
       </li>
     </ul>
     <div class="nav-profile-info">
-      <span v-if="profile">Hello {{ profile.name.split(" ")[0] }}!</span>
-      <!-- <router-link class="nav-item" tag="a" :to="{ name: 'Profile' }">profile</router-link> -->
-      <!-- <router-link tag="a" :to="{ query: { login: '1' }}">login</router-link> -->
-      <router-link tag="a" :to="{ name: 'logout' }">logout</router-link>
+      <!-- <Avatar :profile="profile" /> -->
+      <span v-if="profile">{{ profile.name }}</span>
+      <a v-if="profile" href="#" @click="handleLogout">Logout</a>
     </div>
   </div>
 </template>
 
 <script>
+import { USERS } from '@/store/users'
+
 export default {
   name: 'Nav',
   data() {
@@ -62,6 +63,9 @@ export default {
   methods: {
     isActive(route) {
       return this.$route.name === route.name
+    },
+    handleLogout() {
+      this.$store.dispatch(USERS.LOGOUT)
     },
   },
 }

@@ -1,19 +1,22 @@
 $nav-width: 100px;
-$page-weidth: 500px;
 $sidebar-width: 200px;
+
+$page-width-max: 500px;
+$page-width-min: 400px;
+// 800px total width to match mixins break
 
 
 #app {
   display: flex;
+  flex-direction: column;
   height: 100%;
   width:100%;
   margin: 0;
-  padding: 0;
   overflow-x: hidden;
   position: relative;
 
-  flex-direction: column;
   @include for-large-up {
+    padding: 4rem 4rem;
     justify-content: center;
     flex-direction: row;
   }
@@ -23,8 +26,6 @@ $sidebar-width: 200px;
   width: 100%;
 
   @include for-large-up {
-    padding: 4rem 0  4rem 2rem;
-
     position: relative;
     flex-shrink: 0;
     height: 100%;
@@ -32,16 +33,19 @@ $sidebar-width: 200px;
   }
 }
 
+.section {
+  display: flex;
+}
+
 .content {
   display: flex;
   flex-direction: column;
-  padding: 2rem 2rem;
+  padding: 1rem 2rem;
+  // flex-wrap: wrap-reverse;
 
   @include for-large-up {
     flex-direction: row;
     position: relative;
-    padding-top: 4rem;
-    padding-bottom: 4rem;
   }
 
   @include for-large-up {
@@ -49,50 +53,21 @@ $sidebar-width: 200px;
   }
 
   .page {
+    width: 100%;
+    max-width: $page-width-max;
     @include for-large-up {
-      width: $page-weidth;
-      padding-left: 3rem;
-      padding-right: 3rem;
+      min-width: $page-width-min;
+      max-width: $page-width-max;
     }
   }
+
   .sidebar {
+    width: 100%;
     @include for-large-up {
       padding: 0;
       width: $sidebar-width;
+      // padding-left: 2rem;
     }
   }
 }
-
-// .sidebar-api-nav {
-//   $sidebar-api-nav-width: 400px;
-//   transition: margin 200ms ease-in-out;
-//   z-index: 2;
-//   min-width: 100%;
-//   margin-left: 0;
-//   height: 75px;
-//   @include for-large-up {
-//     box-sizing: padding-box;
-//     min-width: $sidebar-api-nav-width;
-//     max-width: $sidebar-api-nav-width;
-//     height: 100%;
-//   }
-//   &.collapsed {
-//     margin-left: -$sidebar-api-nav-width;
-//   }
-// }
-
-// .col-main-wrapper {
-//   position: relative;
-//   width:100%;
-//   overflow-y: auto;
-// }
-
-// .document-container {
-//   @include for-large-up {
-//     max-width: 800px;
-//     min-width: 0;
-//   }
-
-// }
-
 

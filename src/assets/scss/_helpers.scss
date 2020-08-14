@@ -1,4 +1,27 @@
 
+.mb-1 {
+  margin-bottom: 1rem !important;
+}
+.mb-2 {
+  margin-bottom: 2rem !important;
+}
+.mb-3 {
+  margin-bottom: 3rem !important;
+}
+
+.mt {
+  margin-top: 0.5rem !important;
+}
+.mt-1 {
+  margin-top: 1rem !important;
+}
+.mt-2 {
+  margin-top: 2rem !important;
+}
+.mt-3 {
+  margin-top: 3rem !important;
+}
+
 .center {
   display: block;
   margin: auto;
@@ -24,6 +47,9 @@
   margin: 0;
 }
 
+.pointer {
+  cursor: pointer;
+}
 
 .fill-y {
   height: 100%
@@ -54,6 +80,11 @@
     justify-content: space-between
   }
 }
+.flex-right {
+  margin-left: auto;
+  margin-right: 0;
+}
+
 
 .no-select {
   -webkit-touch-callout: none;

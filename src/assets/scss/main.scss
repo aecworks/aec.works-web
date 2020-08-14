@@ -5,14 +5,13 @@
 @import 'base/reset';
 @import 'base/base';
 @import 'base/typography';
-@import 'base/helpers';
 
-@import 'components/icons';
 @import 'components/buttons';
 @import 'components/forms';
 @import 'components/page';
 
 
+@import 'helpers';
 @import 'layout';
 @import 'theme';
 @import 'vendor/hamburger';

@@ -1,7 +1,7 @@
 <template>
-  <div class="icon-counter" @click="$emit('click')">
+  <div class="icon" @click="$emit('click')">
     <img :src="iconPath" />
-    <span class="count">{{count}}</span>
+    <span class="small">{{count}}</span>
   </div>
 </template>
 
@@ -11,7 +11,10 @@ export default {
   props: {
     count: Number,
     onClick: Function,
-    icon: String,
+    icon: {
+      required: true,
+      type: String,
+    },
   },
   data() {
     return {
@@ -28,7 +31,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-.icon-counter {
+.icon {
   margin-right: 1rem;
   display: flex;
   align-items: center;

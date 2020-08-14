@@ -123,6 +123,10 @@ class Api {
     return this._handleTokenResponse(response)
   }
 
+  clearToken () {
+    this.jwt.clear()
+  }
+
   isAuthenticated () {
     return this.jwt.isSet()
   }
@@ -147,8 +151,12 @@ class Api {
     return this._get(`community/companies/`, { query })
   }
 
-  patchCompany (slug, company) {
-    return this._patch(`community/companies/${slug}/`, { body: company })
+  getCompanyRevisions (slug) {
+    return this._get(`community/companies/${slug}/revisions/`)
+  }
+
+  postCompanyRevision (slug, company) {
+    return this._post(`community/companies/${slug}/revisions/`, { body: company })
   }
 
   getHashtags (query) {

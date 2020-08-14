@@ -1,18 +1,19 @@
 .form {
   input{
     display: block;
-    margin-bottom: .75rem;
+    margin-bottom: 1rem;
   }
   .button {
     margin-top: 1rem;
   }
 }
+
 input[type=text], textarea{
   font-size: $font-size-p;
   font-family: $font-family;
   padding: $padding-sm $padding;
 
-  @extend .border-thick;
+  @extend .border-thin;
 
   &:focus {
   @include shadow-color($dark);
@@ -22,7 +23,6 @@ input[type=text], textarea{
   }
 }
 
-
 // .form-radio
 // {
 //      -webkit-appearance: none;
@@ -30,13 +30,13 @@ input[type=text], textarea{
 //      appearance: none;
 //      display: inline-block;
 //      position: relative;
-//      color: $gray-900;
+//      color: $light-gray;
 //      top: 10px;
 //      height: 23px;
 //      width: 23px;
 //      background-color: $gray-100;
-//      // border: 1px solid $gray-300;
-//      border: 1px solid $gray-300;
+//      // border: 1px solid $dark-gray;
+//      border: 1px solid $dark-gray;
 //      border-radius: 50px;
 //      cursor: pointer;
 //      margin-right: 7px;
@@ -47,7 +47,7 @@ input[type=text], textarea{
 //      }
 
 //      &:checked{
-//           // background-color: $gray-300;
+//           // background-color: $dark-gray;
 //      }
 
 //      &:checked::before{

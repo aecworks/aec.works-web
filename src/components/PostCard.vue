@@ -1,30 +1,36 @@
 <template>
-  <div class="post-card">
-    <h3 class="post-card-title">
-      <router-link :to="{ name: 'Post', params: { slug: post.slug }}">{{post.title}}</router-link>
-    </h3>
-    <label class="post-card-author">by {{ post.profile.name }}</label>
+  <Card :showImage="false">
+    <template v-slot>
+      <h2>
+        <router-link :to="{ name: 'Post', params: { slug: post.slug }}">{{post.title}}</router-link>
+      </h2>
 
-    <p class="post-card-body" v-html="post.body.slice(0, 120) + '...'"></p>
+      <p class="mt-1 post-text" v-html="post.body.slice(0, 120) + '...'"></p>
 
-    <div class="post-card-hashtags">
-      <Hashtag v-for="slug in post.hashtags" :slug="slug" :key="slug" />
-    </div>
+      <div>
+        <Hashtag v-for="slug in post.hashtags" :slug="slug" :key="slug" />
+      </div>
 
-    <div class="post-card-footer flex flex-center">
-      <IconCounter :icon="'chat'" :count="post.threadSize" />
-      <IconCounter
-        :icon="'clap'"
-        :count="localClapCount || post.clapCount"
-        @click="onClapClick(post)"
-      />
-      <label class="post-card-footer-timestamp">{{relativeTimestamp}}</label>
-    </div>
-  </div>
+      <Avatar class="mt-1" :profile="post.profile" />
+
+      <div class="flex mt-2">
+        <IconCounter :icon="'chat'" :count="post.threadSize" />
+        <IconCounter
+          :icon="'clap'"
+          :count="localClapCount || post.clapCount"
+          @click="onClapClick(post)"
+        />
+        <span class="small flex-right">{{relativeTimestamp}}</span>
+      </div>
+    </template>
+  </Card>
 </template>
 
 <script>
+import Card from './Card.vue'
+import Avatar from './Avatar.vue'
 import api from '@/api'
+import { waitForLogin } from '@/mixins'
 import Hashtag from '@/components/Hashtag'
 import IconCounter from '@/components/IconCounter'
 import moment from 'moment'
@@ -32,7 +38,7 @@ import moment from 'moment'
 export default {
   name: 'PostCard',
   props: ['post'],
-  components: { Hashtag, IconCounter },
+  components: { Hashtag, IconCounter, Avatar, Card },
   data() {
     return {
       localClapCount: null,
@@ -45,12 +51,9 @@ export default {
   },
   methods: {
     async onClapClick(post) {
-      if (!api.isAuthenticated()) {
-        this.$router.push({ query: { login: 1 } })
-      } else {
-        const clapCount = await api.postPostClap(post.slug)
-        this.localClapCount = clapCount
-      }
+      await waitForLogin()
+      const clapCount = await api.postPostClap(post.slug)
+      this.localClapCount = clapCount
     },
   },
 }
@@ -58,43 +61,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-.post-card {
-  display: inline-block;
-  width: 10rem;
-  margin-bottom: 2rem;
-  padding: $padding;
-
-  @extend .border-thick;
-  @include shadow-color($dark);
-
-  width: 100%;
-  @include for-large-up {
-    width: 100%;
-  }
-
-  .post-card-title {
-    margin-bottom: 0.5rem;
-  }
-
-  .post-card-author {
-    margin-bottom: 1rem;
-  }
-
-  .post-card-body {
-    // font-style: italic;
-  }
-
-  .post-card-hashtags {
-    margin-bottom: 1rem;
-  }
-
-  .post-card-footer {
-    display: flex;
-
-    .post-card-footer-timestamp {
-      margin-left: auto;
-      margin-right: 0;
-    }
-  }
-}
 </style>

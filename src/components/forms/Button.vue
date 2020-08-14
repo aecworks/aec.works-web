@@ -1,0 +1,37 @@
+<template>
+  <div :class="cls" @click="handleClick">
+    <span>{{text}}</span>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Button',
+  props: {
+    text: {
+      required: true,
+    },
+    kind: {
+      required: false,
+    },
+  },
+  data() {
+    return {}
+  },
+  computed: {
+    cls() {
+      if (this.kind) return `button-${this.kind}`
+      else return 'button'
+    },
+  },
+  methods: {
+    handleClick() {
+      this.$emit('click')
+    },
+  },
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style lang="scss" scoped>
+</style>

@@ -11,9 +11,7 @@
         <p class="comment-text">{{comment.text}}</p>
 
         <div class="flex flex-center comment-footer">
-          <div class="button-text">
-            <span>Reply</span>
-          </div>
+          <Button kind="text" text="Reply" />
           <IconCounter :icon="'chat'" :count="comment.replyCount" />
           <IconCounter :icon="'clap'" :count="comment.clapCount" />
         </div>
@@ -29,6 +27,7 @@
 </template>
 
 <script>
+import Button from './forms/Button.vue'
 import api from '@/api'
 import IconCounter from '@/components/IconCounter'
 import moment from 'moment'
@@ -36,7 +35,7 @@ import moment from 'moment'
 export default {
   name: 'Comment',
   props: ['comment', 'index'],
-  components: { IconCounter },
+  components: { IconCounter, Button },
   data() {
     return {
       comments: [],

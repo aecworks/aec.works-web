@@ -1,14 +1,10 @@
-
-
-export class Hashtag {
-  constructor({ slug }) {
-    this.slug = slug
-  }
-}
-
-export class Profile {
-  constructor({ name, id }) {
-    this.name = name
-    this.id = id
-  }
+var myMixin = {
+    created: function() {
+        this.hello()
+    },
+    methods: {
+        hello: function() {
+            console.log('hello from mixin!')
+        }
+    }
 }

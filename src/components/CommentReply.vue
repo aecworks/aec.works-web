@@ -1,6 +1,6 @@
 <template>
   <div class="comment-reply">
-    <form class="form" @submit.prevent="handleFormSubmit">
+    <form ref="form" class="form">
       <textarea
         type="text"
         v-model="commentText"
@@ -9,25 +9,39 @@
         class="comment-reply-input fill-x"
         placeholder="Much thoughts here"
       />
-      <button v-if="commentText" class="button" type="submit">Post</button>
+      <Button v-if="commentText" text="Post" @click="handleSubmitClick" />
     </form>
   </div>
 </template>
 
 <script>
+import Button from './forms/Button.vue'
 import api from '@/api'
+import { waitForLogin } from '@/mixins'
+
+const DRAFT_COMMENT = 'draft_comment'
 
 export default {
   name: 'CommentReply',
   props: ['threadId', 'parentId'],
+  components: {
+    Button,
+  },
   data() {
     return {
       commentText: '',
     }
   },
   computed: {},
+  created() {
+    const draft = localStorage.getItem(DRAFT_COMMENT)
+    if (draft) {
+      this.commentText = draft
+    }
+  },
   methods: {
-    handleInput() {
+    async handleInput() {
+      localStorage.setItem(DRAFT_COMMENT, this.commentText)
       this.$refs.textareaElement.style.height = 'auto'
       const el = this.$refs.textareaElement
       el.style.height = el.scrollHeight + 5 + 'px'
@@ -35,10 +49,12 @@ export default {
         el.style.height = ''
       }
     },
-    handleFormSubmit() {
+    async handleSubmitClick() {
+      await waitForLogin()
       api.postComment(this.threadId, this.commentText)
       this.commentText = ''
       this.$emit('replied')
+      localStorage.clear(DRAFT_COMMENT)
     },
   },
 }

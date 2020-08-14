@@ -15,7 +15,13 @@ code {
 
 p {
     font-size: $font-size-p;
+    font-family: $font-family-serif;
     margin-bottom: 16px;
+    &.sans {
+        font-family: $font-family;
+    }
+}
+p, span {
     &.small {
         font-size: $font-size-h4;
     }
@@ -24,8 +30,12 @@ p {
 label {
     display: block;
     font-size: $font-size-h4;
-    margin: $padding-md, $padding-xs;
-    display: inline-block;;
+    font-weight: 600;
+    margin-bottom: .25rem;
+}
+label + span {
+    display: block;
+    margin-bottom: 1rem;
 }
 
 h1,h2,h3,h4,h5 {

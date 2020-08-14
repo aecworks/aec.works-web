@@ -4,12 +4,11 @@
     <div class="login-container fill-y">
       <div class="login-info invert">
         <img alt="AEC Guide Logo" class="logo" src="@/assets/images/logo.svg" />
-        <p>Login to join the conversation.</p>
-        <p>Authenticated users can comment, clap, and edit content.</p>
-        <!-- <p>Sign in to contribute and participate.</p> -->
-        <!-- <p class="muted">Terms of Use</p> -->
+        <p class="center">Login to join the conversation.</p>
+        <p class="center small">Terms of Use</p>
       </div>
       <div class="login-form">
+        <!-- USE GITHUB ONLY -->
         <!-- <form class="form" autocomplete="off" @submit.prevent="handleFormSubmit">
           <label>Email</label>
           <input
@@ -48,6 +47,7 @@ import api from '../api'
 import { githubAuthUrl } from '../api/github'
 import { popQuery } from '@/utils'
 import Modal from '@/components/Modal'
+import { USERS } from '@/store/users'
 
 export default {
   name: 'Login',
@@ -67,7 +67,7 @@ export default {
     async handleFormSubmit() {
       const error = api.loginWithCredentials(this.email, this.password)
       if (!error) {
-        this.$store.dispatch('getProfile')
+        this.$store.dispatch(USERS.GET_PROFILE)
       }
       popQuery(this.$router, this.$route.query, 'login')
     },
@@ -82,7 +82,7 @@ export default {
         if (error) {
           this.errors = error
         } else {
-          this.$store.dispatch('getMyProfile')
+          this.$store.dispatch(USERS.GET_PROFILE)
           popQuery(this.$router, this.$route.query, 'login')
           popQuery(this.$router, this.$route.query, 'code')
         }

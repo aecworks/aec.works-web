@@ -1,27 +1,36 @@
 <template>
   <div class="content">
-  <div class="page">
-    <div class="page-header">
-      <!-- <div class="button">Add</div> -->
-      <router-link tag="div" class="button" :to="{name: 'PostCompose'}">Add</router-link>
-    </div>
+    <div class="page">
+      <div class="page-header">
+        <Button text="Add" @click="$router.push({name: 'PostNew'})" />
+      </div>
 
-    <div class="page-content">
-      <PostCard
-        v-for="(post, index) in items"
-        :key="post.slug"
-        v-bind="{post}"
-        v-waypoint="{ active: index + 1=== items.length, callback: onVisible }"
-      />
+      <div class="page-content">
+        <Loader v-if="isLoading" />
+        <PostCard
+          v-for="(post, index) in items"
+          :key="post.slug"
+          v-bind="{post}"
+          v-waypoint="{ active: index + 1=== items.length, callback: onVisible }"
+        />
+      </div>
     </div>
-  </div>
-  <div class="sidebar">
+    <div class="sidebar">
+      <TextInput
+        icon="search"
+        v-model="searchQuery"
+        @input="handleSearchInput"
+        placeholder="search"
+      />
       <HashtagList />
     </div>
   </div>
 </template>
 
 <script>
+import TextInput from '../components/forms/TextInput.vue'
+import Button from '../components/forms/Button.vue'
+import Loader from '../components/Loader.vue'
 import api from '@/api'
 import PostCard from '@/components/PostCard'
 import HashtagList from '@/components/HashtagList'
@@ -30,16 +39,22 @@ export default {
   name: 'PostList',
   components: {
     PostCard,
-    HashtagList
+    HashtagList,
+    Loader,
+    Button,
+    TextInput,
   },
   data() {
     return {
       items: [],
       offset: 0,
+      isLoading: true,
+      searchQuery: '',
     }
   },
   async created() {
-    this.fetchItems(0, this.$route.query.hashtag)
+    await this.fetchItems(0, this.$route.query.hashtag)
+    this.isLoading = false
   },
   beforeRouteUpdate(to, from, next) {
     if (from.query.hashtag !== to.query.hashtag) {
@@ -49,11 +64,10 @@ export default {
     next()
   },
   methods: {
-    async fetchItems(offset, hashtag) {
-      const query = { offset }
-      if (hashtag) {
-        query.hashtag = hashtag
-      }
+    async fetchItems(offset, hashtag, searchQuery) {
+      let query = { offset, search: searchQuery }
+      // Remove null/undefined
+      query = Object.entries(query).reduce((a, [k, v]) => (v ? ((a[k] = v), a) : a), {})
 
       const { results: items } = await api.getPosts(query)
       this.items = [...this.items, ...items]
@@ -63,6 +77,10 @@ export default {
       if (going === 'in') {
         this.fetchItems(this.offset)
       }
+    },
+    handleSearchInput() {
+      this.items = []
+      this.fetchItems(0, this.$route.query.hashtag, this.searchQuery)
     },
   },
 }

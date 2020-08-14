@@ -92,11 +92,7 @@ export default {
 <style lang="scss">
 #editor {
   width: 100%;
-  // padding: $padding;
 
-  .ql-editor {
-    border-left: 1px solid $yellow;
-  }
   // Editor Placeholder
   .ql-editor.ql-blank::before {
     // left: 0;
