@@ -10,8 +10,11 @@
 
         <p class="comment-text">{{comment.text}}</p>
 
+        <Loader v-if="isLoading" />
+        <CommentReply v-if="isReplying" v-bind="{ parentId: comment.id }" @replied="handleReplied" />
+
         <div class="flex flex-center comment-footer">
-          <Button kind="text" text="Reply" />
+          <Button kind="text" text="Reply" @click="isReplying = true" />
           <IconCounter :icon="'chat'" :count="comment.replyCount" />
           <IconCounter :icon="'clap'" :count="comment.clapCount" />
         </div>
@@ -27,6 +30,8 @@
 </template>
 
 <script>
+import Loader from './Loader.vue'
+import CommentReply from './CommentReply.vue'
 import Button from './forms/Button.vue'
 import api from '@/api'
 import IconCounter from '@/components/IconCounter'
@@ -35,11 +40,13 @@ import moment from 'moment'
 export default {
   name: 'Comment',
   props: ['comment', 'index'],
-  components: { IconCounter, Button },
+  components: { IconCounter, Button, CommentReply, Loader },
   data() {
     return {
       comments: [],
       offset: 0,
+      isReplying: false,
+      isLoading: false,
       // expanded: false, TODO
     }
   },
@@ -62,6 +69,15 @@ export default {
       const { results: comments } = await api.getCommentsByParentId(this.comment.id, { offset })
       this.comments = [...this.comments, ...comments]
       this.offset = this.offset + comments.length
+    },
+    handleReplied() {
+      this.isRep = true
+      this.isLoading = true
+      setTimeout(() => {
+        this.fetchItems(this.offset, 1).then(() => {
+          this.isLoading = false
+        })
+      }, 1000)
     },
     onVisible({ going }) {
       if (going === 'in') {

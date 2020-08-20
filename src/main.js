@@ -8,16 +8,14 @@ import 'quill/dist/quill.bubble.css';
 import 'quill/dist/quill.snow.css';
 
 import VueWaypoint from 'vue-waypoint'
-import VueFormulate from '@braid/vue-formulate'
+// import VueFormulate from '@braid/vue-formulate'
 
 Vue.use(VueWaypoint)
-Vue.use(VueFormulate)
+// Vue.use(VueFormulate)
 
-if (localStorage.getItem("run")) {
-  new Vue({
-    router,
-    store,
-    render: h => h(App)
-  }).$mount('#app')
-}
+new Vue({
+  router,
+  store,
+  render: h => h(App)
+}).$mount('#app')
 

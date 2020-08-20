@@ -51,10 +51,11 @@ export default {
     },
     async handleSubmitClick() {
       await waitForLogin()
-      api.postComment(this.threadId, this.commentText)
+      let parent = {}
+      api.postComment(this.commentText, this.threadId, this.parentId)
       this.commentText = ''
       this.$emit('replied')
-      localStorage.clear(DRAFT_COMMENT)
+      localStorage.removeItem(DRAFT_COMMENT)
     },
   },
 }

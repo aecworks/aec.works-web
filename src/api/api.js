@@ -139,8 +139,8 @@ class Api {
     return this._get(`community/comments/`, { query: { ...query, "parent_id": commentId } })
   }
 
-  postComment (threadId, text) {
-    return this._post(`community/comments/`, { body: { threadId, text } })
+  postComment (text, threadId, parentId) {
+    return this._post(`community/comments/`, { body: { text, threadId, parentId } })
   }
 
   getCompany (slug) {
