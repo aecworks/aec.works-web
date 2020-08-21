@@ -1,10 +1,6 @@
 <template>
   <div class="content">
     <div class="page">
-      <div class="page-header">
-        <Button text="Add" @click="$router.push({name: 'PostNew'})" />
-      </div>
-
       <div class="page-content">
         <Loader v-if="isLoading" />
         <PostCard
@@ -16,6 +12,7 @@
       </div>
     </div>
     <div class="sidebar">
+      <Button text="Add" @click="$router.push({name: 'PostNew'})" />
       <TextInput
         icon="search"
         v-model="searchQuery"

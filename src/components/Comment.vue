@@ -2,7 +2,7 @@
   <div>
     <div class="comment">
       <div v-if="comment.level != 0" class="comment-prefix" :class="{'not-first': index !== 0}" />
-      <div>
+      <div class="fill-x">
         <h4>
           {{comment.profile.name || "No One"}}
           <span class="comment-timestamp">{{relativeTimestamp}}</span>
@@ -71,7 +71,7 @@ export default {
       this.offset = this.offset + comments.length
     },
     handleReplied() {
-      this.isRep = true
+      this.isReplying = false
       this.isLoading = true
       setTimeout(() => {
         this.fetchItems(this.offset, 1).then(() => {

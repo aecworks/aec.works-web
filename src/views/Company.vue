@@ -41,10 +41,8 @@
           >
             <img src="@/assets/images/money.svg" />
           </a>
-        </div>
-
-        <div class="mt-2">
-          <IconCounter icon="pencil" value="Edit" @click="handleEdit" />Edit
+          <label>Contribute</label>
+          <Button text="Edit" @click="handleEdit" />
         </div>
       </div>
     </div>
@@ -53,10 +51,10 @@
 </template>
 
 <script>
+import Button from '../components/forms/Button.vue'
 import api from '@/api'
 import Discussion from '@/components/Discussion'
 import Hashtag from '@/components/Hashtag'
-import IconCounter from '../components/IconCounter.vue'
 import { waitForLogin } from '@/mixins'
 
 export default {
@@ -64,7 +62,7 @@ export default {
   components: {
     Discussion,
     Hashtag,
-    IconCounter,
+    Button,
   },
   props: {
     slug: { required: true, type: String },

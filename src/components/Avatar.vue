@@ -1,7 +1,7 @@
 <template>
   <div class="profile flex flex-center">
     <img class="profile-avatar" :src="avatarImg" />
-    <span @click="onClick()" class="small profile-name">{{profile.name}}</span>
+    <span @click="handleClick()" class="small profile-name">{{profile.name}}</span>
   </div>
 </template>
 
@@ -15,8 +15,8 @@ export default {
     },
   },
   methods: {
-    onClick() {
-      this.$router.push({ name: 'Person', params: { slug: this.profile.id } })
+    handleClick() {
+      this.$router.push({ name: 'Person', params: { slug: this.profile.slug } })
     },
   },
 }

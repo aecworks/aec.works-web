@@ -1,9 +1,6 @@
 <template>
   <div class="content">
     <div class="page">
-      <div class="page-header">
-        <Button text="Add" @click="handleAdd" />
-      </div>
       <div class="page-content">
         <Loader v-if="isLoading" />
         <CompanyCard
@@ -21,6 +18,7 @@
         @input="handleSearchInput"
         placeholder="search"
       />
+      <Button text="Add" kind="text" @click="handleAdd" />
       <HashtagList class="mt-2" />
     </div>
   </div>

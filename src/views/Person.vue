@@ -1,4 +1,5 @@
 <template>
+  <div class="content ">
   <div class="page">
     <div v-if="person">
       <div class="page-header">
@@ -9,6 +10,7 @@
         <div class="profile-bio">
           <p>{{ person.bio }}</p>
         </div>
+
         <div class="profile-facts">
           <label>Location</label>
           <p class="small muted">{{ person.location }}</p>
@@ -26,6 +28,7 @@
       >Tweets by {{person.twitter}}</a>
       <!-- data-width="400" -->
     </div>
+  </div>
   </div>
 </template>
 

@@ -1,8 +1,6 @@
-$nav-width: 100px;
-$sidebar-width: 200px;
-
-$page-width-max: 500px;
-$page-width-min: 400px;
+$page-width-max: 600px;
+$page-width-max: 600px;
+$sidebar-width: 250px;
 // 800px total width to match mixins break
 
 
@@ -10,53 +8,30 @@ $page-width-min: 400px;
   display: flex;
   flex-direction: column;
   height: 100%;
-  width:100%;
+  width: 100%;
   margin: 0;
-  overflow-x: hidden;
   position: relative;
-
-  @include for-large-up {
-    padding: 4rem 4rem;
-    justify-content: center;
-    flex-direction: row;
-  }
+  overflow-x: hidden;
 }
 
 #nav {
   width: 100%;
-
-  @include for-large-up {
-    position: relative;
-    flex-shrink: 0;
-    height: 100%;
-    width: $nav-width;
-  }
-}
-
-.section {
-  display: flex;
 }
 
 .content {
   display: flex;
-  flex-direction: column;
-  padding: 1rem 2rem;
-  // flex-wrap: wrap-reverse;
+  flex-direction: column-reverse;
+  padding: 0 2rem;
 
   @include for-large-up {
     flex-direction: row;
     position: relative;
-  }
-
-  @include for-large-up {
     min-width: 0;
   }
 
   .page {
     width: 100%;
-    max-width: $page-width-max;
     @include for-large-up {
-      min-width: $page-width-min;
       max-width: $page-width-max;
     }
   }
@@ -64,9 +39,14 @@ $page-width-min: 400px;
   .sidebar {
     width: 100%;
     @include for-large-up {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 5rem;
+      left: $page-width-max;
       padding: 0;
       width: $sidebar-width;
-      // padding-left: 2rem;
+      margin-left: 2rem;
+      // margin-left: auto;
     }
   }
 }
