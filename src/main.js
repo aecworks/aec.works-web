@@ -8,7 +8,7 @@ import 'quill/dist/quill.bubble.css';
 import 'quill/dist/quill.snow.css';
 
 import VueWaypoint from 'vue-waypoint'
-// import VueFormulate from '@braid/vue-formulate'
+import { debounce } from './utils'
 
 Vue.use(VueWaypoint)
 // Vue.use(VueFormulate)
@@ -19,3 +19,10 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
+
+
+window.addEventListener('scroll', debounce(() => {
+  const dist = document.defaultView.scrollY
+  document.querySelector('.sidebar').style.marginTop = `${dist}px`
+}))
+// window.removeEventListener('scroll')

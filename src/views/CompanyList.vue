@@ -18,28 +18,25 @@
         @input="handleSearchInput"
         placeholder="search"
       />
-      <Button text="Add" kind="text" @click="handleAdd" />
-      <HashtagList class="mt-2" />
+      <Icon icon="pencil" @click="handleAdd" clickable>Add Company</Icon>
     </div>
   </div>
 </template>
 
 <script>
+import Icon from '../components/Icon.vue'
 import Loader from '../components/Loader.vue'
 import TextInput from '../components/forms/TextInput.vue'
 import api from '@/api'
-import Button from '@/components/forms/Button'
 import CompanyCard from '@/components/CompanyCard'
-import HashtagList from '@/components/HashtagList'
 
 export default {
   name: 'CompanyList',
   components: {
     CompanyCard,
-    HashtagList,
-    Button,
     TextInput,
     Loader,
+    Icon,
   },
   data() {
     return {
@@ -53,6 +50,10 @@ export default {
     this.fetchItems(0, this.$route.query.hashtag)
     this.isLoading = false
   },
+  // mounted() {
+  // },
+  // destroyed() {
+  // },
   beforeRouteUpdate(to, from, next) {
     if (from.query.hashtag !== to.query.hashtag) {
       this.items = []

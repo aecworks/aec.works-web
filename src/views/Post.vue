@@ -15,29 +15,43 @@
       <Discussion :threadId="post.thread" />
     </div>
     <div class="sidebar">
-      <IconCounter
-        :icon="'clap'"
-        :count="localClapCount || post.clapCount"
-        @click="onClapClick(post)"
-      />Share
-      <div class="post-actions">
-        <button v-if="isAuthor" class="button" @click="handleEdit">Edit</button>
+      <div>
+        <Icon icon="clap" @click="handleClap(post)" clickable>{{localClapCount || post.clapCount}}</Icon>
+      </div>
+      <div>
+        <Icon icon="chat">{{post.threadSize || 0}}</Icon>
+      </div>
+
+      <label class="mt-2">Share</label>
+      <div>
+        <Icon icon="twitter" clickable>
+          <!-- Tweet -->
+        </Icon>
+        <!-- </div> -->
+        <!-- <div> -->
+        <Icon icon="linkedin" clickable>
+          <!-- LinkedIn -->
+        </Icon>
+      </div>
+      <div class="mt-2" v-if="isAuthor">
+        <label>Author</label>
+        <Icon icon="pencil" @click="handleEdit" clickable>Edit</Icon>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Icon from '../components/Icon.vue'
 import api from '@/api'
 import { waitForLogin } from '@/mixins'
 import Discussion from '@/components/Discussion'
 import Hashtag from '@/components/Hashtag'
 import Avatar from '@/components/Avatar'
-import IconCounter from '@/components/IconCounter'
 
 export default {
   name: 'Post',
-  components: { Discussion, Hashtag, Avatar, IconCounter },
+  components: { Discussion, Hashtag, Avatar, Icon },
   props: {
     slug: { required: true, type: String },
   },
@@ -60,7 +74,7 @@ export default {
     handleEdit() {
       this.$router.push({ name: 'PostEdit', params: { slug: this.slug } })
     },
-    async onClapClick(post) {
+    async handleClap(post) {
       await waitForLogin()
       const clapCount = await api.postPostClap(post.slug)
       this.localClapCount = clapCount

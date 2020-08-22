@@ -5,7 +5,6 @@
         <h1 class="page-title">{{ company.name }}</h1>
 
         <div class="mt">
-          <p class="small muted">{{company.location || "Somewhere" }}</p>
           <p class="sans">{{ company.description || "..." }}</p>
         </div>
         <div>
@@ -18,31 +17,39 @@
       </div>
 
       <div class="sidebar" v-if="company">
-        <div class="company-icon">
-          <img :src="company.logo || defaultLogo" />
-        </div>
-
         <div class="company-facts">
-          <label>Website</label>
-          <span>
-            <a :href="company.website">{{company.website || "-" | cleanUrl}}</a>
-          </span>
+          <div class="company-info-item">
+            <label>Website</label>
+            <span>
+              <a :href="company.website">{{company.website || "-" | cleanUrl}}</a>
+            </span>
+          </div>
 
-          <label>Social</label>
-          <a
-            v-if="company.twitterHandle"
-            :href="`https://www.twitter.com/${company.twitterHandle}`"
-          >
-            <img src="@/assets/images/twitter.svg" />
-          </a>
-          <a
-            v-if="company.crunchbaseId"
-            :href="`https://www.crunchbase.com/organization/${company.crunchbaseId}`"
-          >
-            <img src="@/assets/images/money.svg" />
-          </a>
+          <div class="company-info-item">
+            <label>Location</label>
+            <span>{{company.location || "Somewhere" }}</span>
+          </div>
+
+          <div class="company-info-item">
+            <label>Social</label>
+            <span>
+              <a
+                v-if="company.twitterHandle"
+                :href="`https://www.twitter.com/${company.twitterHandle}`"
+              >
+                <img src="@/assets/images/twitter.svg" />
+              </a>
+              <a
+                v-if="company.crunchbaseId"
+                :href="`https://www.crunchbase.com/organization/${company.crunchbaseId}`"
+              >
+                <img src="@/assets/images/money.svg" />
+              </a>
+            </span>
+          </div>
+
           <label>Contribute</label>
-          <Button text="Edit" @click="handleEdit" />
+          <Icon icon="pencil" @click="handleEdit" clickable>Edit</Icon>
         </div>
       </div>
     </div>
@@ -51,7 +58,7 @@
 </template>
 
 <script>
-import Button from '../components/forms/Button.vue'
+import Icon from '../components/Icon.vue'
 import api from '@/api'
 import Discussion from '@/components/Discussion'
 import Hashtag from '@/components/Hashtag'
@@ -62,7 +69,7 @@ export default {
   components: {
     Discussion,
     Hashtag,
-    Button,
+    Icon,
   },
   props: {
     slug: { required: true, type: String },
@@ -107,6 +114,15 @@ export default {
 }
 
 .company-facts {
+  .company-info-item {
+    margin-bottom: 1rem;
+    label {
+      @extend .small;
+    }
+    span {
+      @extend .small;
+    }
+  }
   margin-top: 1rem;
   @include for-large-up {
     text-align: right;

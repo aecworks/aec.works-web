@@ -12,34 +12,34 @@
       </div>
     </div>
     <div class="sidebar">
-      <Button text="Add" @click="$router.push({name: 'PostNew'})" />
       <TextInput
         icon="search"
         v-model="searchQuery"
         @input="handleSearchInput"
         placeholder="search"
       />
-      <HashtagList />
+
+      <label class="mt-2">Contribute</label>
+      <Icon icon="pencil" @click="handleAdd" clickable>Add Company</Icon>
+      <label class="mt-2">Recent Comments</label>
     </div>
   </div>
 </template>
 
 <script>
+import Icon from '../components/Icon.vue'
 import TextInput from '../components/forms/TextInput.vue'
-import Button from '../components/forms/Button.vue'
 import Loader from '../components/Loader.vue'
 import api from '@/api'
 import PostCard from '@/components/PostCard'
-import HashtagList from '@/components/HashtagList'
 
 export default {
   name: 'PostList',
   components: {
     PostCard,
-    HashtagList,
     Loader,
-    Button,
     TextInput,
+    Icon,
   },
   data() {
     return {
@@ -78,6 +78,9 @@ export default {
     handleSearchInput() {
       this.items = []
       this.fetchItems(0, this.$route.query.hashtag, this.searchQuery)
+    },
+    handleAdd() {
+      this.$router.push({ name: 'PostNew' })
     },
   },
 }

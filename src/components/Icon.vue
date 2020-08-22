@@ -1,7 +1,9 @@
 <template>
   <div class="icon" :class="{'pointer': clickable}" @click="$emit('click')">
-    <img :src="iconPath" />
-    <slot></slot>
+    <div class="flex">
+      <img :src="iconPath" />
+      <slot></slot>
+    </div>
   </div>
 </template>
 
@@ -29,9 +31,7 @@ export default {
 
 <style lang="scss" scoped>
 .icon {
-  margin-right: 1rem;
-  display: flex;
-  align-items: center;
+  display: inline-block;
   img {
     margin-right: 0.4rem;
   }

@@ -1,17 +1,19 @@
 <template>
-  <div id="nav" class="flex" :class="{ 'expanded': navExpanded }">
-    <a href="/" class>
-      <img alt="AEC Works Logo" class="logo" src="@/assets/images/logo-black.svg" />
-    </a>
-    <ul class="nav-list">
-      <li v-for="route in routes" :key="route.text" class="nav-item">
-        <router-link
-          tag="a"
-          :class="{'active': isActive(route)}"
-          :to="{name: route.name}"
-        >{{route.text}}</router-link>
-      </li>
-    </ul>
+  <div id="nav-container" :class="{ 'expanded': navExpanded }">
+    <div id="nav" class="flex">
+      <a href="/" class>
+        <img alt="AEC Works Logo" class="logo" src="@/assets/images/logo-black.svg" />
+      </a>
+      <ul class="nav-list">
+        <li v-for="route in routes" :key="route.text" class="nav-item">
+          <router-link
+            tag="a"
+            :class="{'active': isActive(route)}"
+            :to="{name: route.name}"
+          >{{route.text}}</router-link>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -32,7 +34,7 @@ export default {
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll)
-    this.header = document.getElementById('nav')
+    this.header = document.getElementById('nav-container')
     this.sticky = this.header.offsetTop
   },
   computed: {
@@ -59,37 +61,21 @@ export default {
 </script>
 
 <style lang="scss">
-#nav {
+#nav-container {
   z-index: 1;
   background-color: white;
-  border-bottom: 1px solid white;
-  margin-top: 32px;
 
-  height: 150px;
-  padding: 30px 30px;
+  border-bottom: 1px solid white;
+  transition: border 400ms;
 
   .logo {
-    transition: margin-left 300ms;
     height: 64px;
-    margin-left: 0;
     margin-right: 1.5rem;
   }
 
-  transition: border 400ms;
-
   &.sticky {
-    height: 75px;
-    margin-top: 0;
-    position: fixed;
-    top: 0;
     border-bottom: 1px solid $light-gray;
-    padding: 10px 10px;
-    .logo {
-      margin-left: -200px;
-    }
-    .nav-list {
-      margin-left: 0;
-    }
+    box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.25);
   }
 
   .nav-list {
@@ -117,6 +103,6 @@ export default {
   }
 }
 .sticky + .content {
-  padding-top: 185px;
+  // padding-top: 100px;
 }
 </style>

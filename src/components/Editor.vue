@@ -25,8 +25,8 @@ export default {
         placeholder: 'Your words go here - select text to format it',
         modules: {
           toolbar: [
-            [{ header: [1, 2, false] }],
-            [{ font: [] }],
+            // [{ header: [1, 2, false] }],
+            // [{ font: [] }],
             ['bold'],
             // ['blockquote', 'code-block'],
             // [{ list: 'ordered' }, { list: 'bullet' }, { align: [] }],

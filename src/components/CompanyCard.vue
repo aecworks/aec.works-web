@@ -23,7 +23,7 @@
 
       <!-- Footer -->
       <div class="flex mt-1">
-        <Icon :icon="'chat'">
+        <Icon :icon="'chat'" class="mr-1">
           <span class="small">5</span>
         </Icon>
         <Icon :icon="'clap'" clickable>
