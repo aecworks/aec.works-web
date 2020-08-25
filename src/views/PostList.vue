@@ -20,7 +20,7 @@
       />
 
       <label class="mt-2">Contribute</label>
-      <Icon icon="pencil" @click="handleAdd" clickable>Add Company</Icon>
+      <Icon icon="pencil" @click="handleAdd" clickable>Write</Icon>
       <label class="mt-2">Recent Comments</label>
     </div>
   </div>

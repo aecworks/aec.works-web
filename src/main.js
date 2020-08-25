@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import './filters'
 
 import 'quill/dist/quill.core.css';
 import 'quill/dist/quill.bubble.css';
@@ -19,10 +20,8 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
-
-
-window.addEventListener('scroll', debounce(() => {
-  const dist = document.defaultView.scrollY
-  document.querySelector('.sidebar').style.marginTop = `${dist}px`
-}))
+// window.addEventListener('scroll', debounce(() => {
+//   const dist = document.defaultView.scrollY
+//   document.querySelector('.sidebar').style.marginTop = `${dist}px`
+// }))
 // window.removeEventListener('scroll')

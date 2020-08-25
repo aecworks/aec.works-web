@@ -1,4 +1,4 @@
-$content-width-max: 1200px;
+$content-width-max: 900px;
 $page-width-max: 600px;
 $sidebar-width: 300px;
 $navbar-height: 100px;
@@ -24,8 +24,10 @@ $navbar-height: 100px;
   display: flex;
   justify-content: center;
   #nav {
-    width: $page-width-max + $sidebar-width;
-    max-width: $content-width-max;
+    // width: $page-width-max + $sidebar-width;
+    // max-width: $content-width-max;
+    width: $content-width-max;
+    padding: 0 1.5rem;
   }
 }
 

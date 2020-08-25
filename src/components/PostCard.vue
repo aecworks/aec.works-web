@@ -14,8 +14,8 @@
       <Avatar class="mt-1" :profile="post.profile" />
 
       <div class="flex mt-2">
-        <Icon :icon="'chat'">
-          <span class="small">{{post.threadSize}}</span>
+        <Icon :icon="'chat'" class="mr-1">
+          <span class="small">{{post.threadSize || 0}}</span>
         </Icon>
         <Icon :icon="'clap'" @click="handleClapClick(post)" clickable>
           <span class="small">{{localClapCount || post.clapCount}}</span>

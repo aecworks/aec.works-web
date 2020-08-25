@@ -2,10 +2,10 @@
   <!-- <Card @click="handleClick(company)"> -->
   <Card>
     <template v-slot:logo>
-      <img class="company-logo" v-if="company.logo" :src="getImageUrl(company.logo)" />
+      <img class="company-logo" v-if="company.logoUrl" :src="getImageUrl(company.logoUrl)" />
     </template>
     <template v-slot:cover>
-      <img v-if="company.cover" :src="getImageUrl(company.cover)" />
+      <img v-if="company.coverUrl" :src="getImageUrl(company.coverUrl)" />
     </template>
     <template v-slot:default>
       <!-- Company Name -->
@@ -44,12 +44,6 @@ export default {
   name: 'CompanyCard',
   props: ['company'],
   components: { Hashtag, Card, Icon },
-  // created() {
-  //   window.addEventListener('scroll', this.handleScroll)
-  // },
-  // destroyed() {
-  //   window.removeEventListener('scroll', this.handleScroll)
-  // },
   methods: {
     handleClick(company) {
       this.$router.push({ name: 'Company', params: { slug: company.slug } })

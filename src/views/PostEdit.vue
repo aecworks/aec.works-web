@@ -12,7 +12,7 @@
       <div class="post-editor">
         <Editor v-model="body" />
       </div>
-      <div class="post-editor-actions">
+      <div class="post-editor-actions mt-3">
         <Button text="Save" @click="handleSave" />
       </div>
     </div>
@@ -73,7 +73,10 @@ export default {
 
 <style lang="scss" scoped>
 .page-title {
-  font-size: $font-size-h2;
+  @extend h1;
+  // font-size: $font-size-h1;
+  // font-family: $font-family-serif;
+  // font-weight: $font-weight-bold;
   border: none;
   border-left: 1px solid $yellow;
   padding-left: 1rem;

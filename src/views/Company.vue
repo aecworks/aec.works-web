@@ -14,6 +14,8 @@
         <div class="mt-2">
           <Hashtag v-for="slug in company.hashtags" :slug="slug" :key="slug" />
         </div>
+
+        <Discussion v-if="company && company.thread" :threadId="company.thread" />
       </div>
 
       <div class="sidebar" v-if="company">
@@ -53,7 +55,7 @@
         </div>
       </div>
     </div>
-    <Discussion v-if="company && company.thread" :threadId="company.thread" />
+    <!-- <Discussion v-if="company && company.thread" :threadId="company.thread" /> -->
   </div>
 </template>
 
