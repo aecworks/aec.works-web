@@ -14,12 +14,12 @@
       <Avatar class="mt-1" :profile="post.profile" />
 
       <div class="flex mt-2">
-        <IconCounter :icon="'chat'" :count="post.threadSize" />
-        <IconCounter
-          :icon="'clap'"
-          :count="localClapCount || post.clapCount"
-          @click="onClapClick(post)"
-        />
+        <Icon :icon="'chat'" class="mr-1">
+          <span class="small">{{post.threadSize || 0}}</span>
+        </Icon>
+        <Icon :icon="'clap'" @click="handleClapClick(post)" clickable>
+          <span class="small">{{localClapCount || post.clapCount}}</span>
+        </Icon>
         <span class="small flex-right">{{relativeTimestamp}}</span>
       </div>
     </template>
@@ -27,18 +27,18 @@
 </template>
 
 <script>
+import Icon from './Icon.vue'
 import Card from './Card.vue'
 import Avatar from './Avatar.vue'
 import api from '@/api'
 import { waitForLogin } from '@/mixins'
 import Hashtag from '@/components/Hashtag'
-import IconCounter from '@/components/IconCounter'
 import moment from 'moment'
 
 export default {
   name: 'PostCard',
   props: ['post'],
-  components: { Hashtag, IconCounter, Avatar, Card },
+  components: { Hashtag, Avatar, Card, Icon },
   data() {
     return {
       localClapCount: null,
@@ -50,7 +50,9 @@ export default {
     },
   },
   methods: {
-    async onClapClick(post) {
+    async handleClapClick(post) {
+      const sound = new Audio(require('@/assets/sounds/effect.mp3'))
+      if (Math.random() > 0.8) sound.play()
       await waitForLogin()
       const clapCount = await api.postPostClap(post.slug)
       this.localClapCount = clapCount
@@ -60,5 +62,5 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
+<style lang="scss">
 </style>

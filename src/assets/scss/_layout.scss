@@ -1,72 +1,66 @@
-$nav-width: 100px;
-$sidebar-width: 200px;
-
-$page-width-max: 500px;
-$page-width-min: 400px;
+$content-width-max: 900px;
+$page-width-max: 600px;
+$sidebar-width: 300px;
+$navbar-height: 100px;
 // 800px total width to match mixins break
 
 
 #app {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  width:100%;
-  margin: 0;
-  overflow-x: hidden;
-  position: relative;
-
-  @include for-large-up {
-    padding: 4rem 4rem;
-    justify-content: center;
-    flex-direction: row;
-  }
-}
-
-#nav {
   width: 100%;
-
-  @include for-large-up {
-    position: relative;
-    flex-shrink: 0;
-    height: 100%;
-    width: $nav-width;
-  }
+  margin: 0;
+  position: relative;
+  overflow-x: hidden;
+  align-items: center;
+  // height: 100%;
 }
 
-.section {
+#nav-container {
+  position: fixed;
+  height: $navbar-height;
+  width: 100%;
+  padding: 1rem 0;
   display: flex;
+  justify-content: center;
+  #nav {
+    // width: $page-width-max + $sidebar-width;
+    // max-width: $content-width-max;
+    width: $content-width-max;
+    padding: 0 1.5rem;
+  }
 }
 
 .content {
   display: flex;
-  flex-direction: column;
-  padding: 1rem 2rem;
-  // flex-wrap: wrap-reverse;
+  flex-direction: column-reverse;
+  padding: 0 1.5rem;
+  padding-top: $navbar-height + 30px;
+  width: 100%;
 
   @include for-large-up {
     flex-direction: row;
     position: relative;
-  }
-
-  @include for-large-up {
     min-width: 0;
+    max-width: $content-width-max;
   }
 
   .page {
     width: 100%;
-    max-width: $page-width-max;
     @include for-large-up {
-      min-width: $page-width-min;
       max-width: $page-width-max;
     }
   }
 
   .sidebar {
+    margin-top: 0;
+    transition: margin-top 200ms;
     width: 100%;
     @include for-large-up {
-      padding: 0;
+      top: 5rem;
+      left: $page-width-max;
       width: $sidebar-width;
-      // padding-left: 2rem;
+      margin-left: 2rem;
     }
   }
 }

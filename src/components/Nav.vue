@@ -1,41 +1,18 @@
 <template>
-  <div id="nav" :class="{ 'expanded': navExpanded }">
-    <!-- NAV HEADER -->
-    <div class="flex fill-x">
-      <div class="fill-x">
-        <a href="/" class="hidden-sm">
-          <img alt="AEC Works Logo" class="logo hidden-sm" src="@/assets/images/logo.svg" />
-        </a>
-      </div>
-      <div class="hidden-lg">
-        <button
-          class="hamburger hamburger--squeeze"
-          :class="{'is-active': navExpanded}"
-          @click="navExpanded = !navExpanded"
-          type="button"
-        >
-          <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-          </span>
-        </button>
-      </div>
-    </div>
-    <!-- NAV HEADER -->
-
-    <ul class="nav-links">
-      <li
-        v-for="route in routes"
-        :key="route.text"
-        class="nav-item"
-        :class="{'active': isActive(route)}"
-      >
-        <router-link tag="a" :to="{name: route.name}">{{route.text}}</router-link>
-      </li>
-    </ul>
-    <div class="nav-profile-info">
-      <!-- <Avatar :profile="profile" /> -->
-      <span v-if="profile">{{ profile.name }}</span>
-      <a v-if="profile" href="#" @click="handleLogout">Logout</a>
+  <div id="nav-container" :class="{ 'expanded': navExpanded }">
+    <div id="nav" class="flex">
+      <a href="/" class>
+        <img alt="AEC Works Logo" class="logo" src="@/assets/images/logo-black.svg" />
+      </a>
+      <ul class="nav-list">
+        <li v-for="route in routes" :key="route.text" class="nav-item">
+          <router-link
+            tag="a"
+            :class="{'active': isActive(route)}"
+            :to="{name: route.name}"
+          >{{route.text}}</router-link>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -55,6 +32,11 @@ export default {
       ],
     }
   },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll)
+    this.header = document.getElementById('nav-container')
+    this.sticky = this.header.offsetTop
+  },
   computed: {
     profile() {
       return this.$store.state.users.profile || null
@@ -67,65 +49,60 @@ export default {
     handleLogout() {
       this.$store.dispatch(USERS.LOGOUT)
     },
+    handleScroll(event) {
+      if (window.pageYOffset > this.sticky) {
+        this.header.classList.add('sticky')
+      } else {
+        this.header.classList.remove('sticky')
+      }
+    },
   },
 }
 </script>
 
-<style lang="scss" scoped>
-#nav {
-  border-bottom: 3px solid $yellow;
-  @include for-large-up {
-    border-bottom: none;
-  }
+<style lang="scss">
+#nav-container {
+  z-index: 1;
+  background-color: white;
 
-  @include for-large-down {
-    .nav-item {
-      display: none;
-    }
-    &.expanded {
-      .nav-item {
-        display: block;
-      }
-      .profile-links {
-        margin-bottom: 1rem;
-      }
-    }
-  }
+  border-bottom: 1px solid white;
+  transition: border 400ms;
 
   .logo {
-    @include for-large-up {
-      height: 4rem;
-    }
+    height: 64px;
+    margin-right: 1.5rem;
   }
 
-  .nav-links {
-    @include for-large-up {
-      padding-top: 2rem;
-    }
+  &.sticky {
+    border-bottom: 1px solid $light-gray;
+    box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.25);
   }
 
-  .nav-profile-info {
-    font-size: $font-size-h5;
-    display: none;
-    @include for-large-up {
-      display: inherit;
-      margin-top: 5rem;
+  .nav-list {
+    align-items: center;
+    .nav-item {
+      height: 100%;
+      display: inline-block;
+      line-height: 50px;
+      padding: 0 2rem;
+      a {
+        font-family: $font-family;
+        text-decoration: none;
+        font-weight: $font-weight-bold;
+        padding-bottom: 2px;
+        transition: border 200ms;
+        border-bottom: 2px solid transparent;
+        &.active {
+          border-bottom: 2px solid $dark;
+        }
+        &:hover:not(.active) {
+          border-bottom: 2px solid $light-gray;
+        }
+      }
     }
   }
-
-  .nav-item {
-    text-align: right;
-    margin-top: 1rem;
-    margin-right: 3rem;
-
-    @include for-large-up {
-      margin-top: 0.5rem;
-      text-align: left;
-    }
-    &.active {
-      font-weight: $font-weight-bold;
-      color: red;
-    }
-  }
+}
+.sticky + .content {
+  // padding-top: 100px;
 }
 </style>

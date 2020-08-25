@@ -33,10 +33,6 @@ label {
     font-weight: 600;
     margin-bottom: .25rem;
 }
-label + span {
-    display: block;
-    margin-bottom: 1rem;
-}
 
 h1,h2,h3,h4,h5 {
     font-weight: $font-weight-bold;

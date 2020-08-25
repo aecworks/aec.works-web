@@ -30,12 +30,16 @@ class Api {
   }
 
   async _fetch (method, urlPath, options = {}) {
-    const { body, headers, query } = options
+    let { body, headers, query } = options
     const url = buildUrl(this.API_URL, urlPath, query)
+
+    if (body && !body.arrayBuffer) {
+      body = JSON.stringify(body)
+    }
     const request = new Request(url, {
       method,
       headers: this._buildHeaders(headers),
-      body: JSON.stringify(body)
+      body: body
     })
     return fetch(request)
   }
@@ -67,6 +71,10 @@ class Api {
     return response.json()
   }
 
+  async _put (urlPath, options) {
+    const response = await this._fetch_with_retry("PUT", urlPath, options)
+    return response.json()
+  }
 
   async _patch (urlPath, options) {
     const response = await this._fetch_with_retry("PATCH", urlPath, options)
@@ -157,6 +165,14 @@ class Api {
 
   postCompanyRevision (slug, company) {
     return this._post(`community/companies/${slug}/revisions/`, { body: company })
+  }
+
+  postCompanyRevisionApprove (revisionId) {
+    return this._post(`community/revisions/${revisionId}/approve`)
+  }
+
+  putImage (filename, image) {
+    return this._put(`images/upload/${filename}`, { body: image })
   }
 
   getHashtags (query) {

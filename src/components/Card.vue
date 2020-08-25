@@ -1,6 +1,6 @@
 <template>
-  <div class="c-card">
-    <div v-if="showImage" class="c-card__image" href="#" @click="handleCardClick">
+  <div class="c-card" @click="handleCardClick">
+    <div v-if="showImage" class="c-card__image" href="#">
       <div class="c-card__image__logo">
         <slot name="logo" />
       </div>
@@ -51,26 +51,26 @@ export default {
     flex-direction: column;
   }
   .c-card__image {
-    cursor: pointer;
     display: flex;
     position: relative;
-    border-bottom: 2px solid $dark;
+    // border-bottom: 2px solid $dark;
 
     .c-card__image__cover {
       min-height: 100px;
+      max-height: 200px;
       background-color: $light-gray;
       width: 100%;
 
       // Match Card Radius
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
+      border-top-left-radius: 2px;
+      border-top-right-radius: 2px;
 
       overflow: hidden;
       img {
         display: block; // Remove gap below image
-        max-height: 100%;
-        max-width: 100%;
-        object-fit: center;
+        // max-height: 100%;
+        // max-width: 100%;
+        object-fit: fill;
         object-position: center;
       }
     }

@@ -2,10 +2,14 @@
     cursor: pointer;
     display: inline-block;
     padding: $padding-xs $padding-md;
-    background-color: $yellow;
     font-size: $font-size-p;
 
-    margin-right: 1rem;
+    // .dark {
+    background-color: $yellow;
+    color: dark;
+    // }
+
+    // margin-right: 1rem;
 
     @extend .border-thin;
     &:hover{

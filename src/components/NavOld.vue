@@ -1,0 +1,133 @@
+<template>
+  <div id="nav" :class="{ 'expanded': navExpanded }">
+    <!-- NAV HEADER -->
+    <div class="flex fill-x">
+      <a href="/" class="hidden-sm">
+        <img alt="AEC Works Logo" class="logo hidden-sm" src="@/assets/images/logo.svg" />
+      </a>
+
+      <ul class="nav-links flex">
+        <li
+          v-for="route in routes"
+          :key="route.text"
+          class="nav-item"
+          :class="{'active': isActive(route)}"
+        >
+          <router-link tag="a" :to="{name: route.name}">{{route.text}}</router-link>
+        </li>
+      </ul>
+      <div class="nav-profile-info">
+        <!-- <Avatar :profile="profile" /> -->
+        <span v-if="profile">{{ profile.name }}</span>
+        <a v-if="profile" href="#" @click="handleLogout">Logout</a>
+      </div>
+    </div>
+
+    <!-- <div class="hidden-lg">
+        <button
+          class="hamburger hamburger--squeeze"
+          :class="{'is-active': navExpanded}"
+          @click="navExpanded = !navExpanded"
+          type="button"
+        >
+          <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+          </span>
+        </button>
+    </div>-->
+    <!-- NAV HEADER -->
+  </div>
+</template>
+
+<script>
+import { USERS } from '@/store/users'
+
+export default {
+  name: 'Nav',
+  data() {
+    return {
+      navExpanded: false,
+      routes: [
+        { text: 'feed', name: 'PostList' },
+        { text: 'companies', name: 'CompanyList' },
+        // { text: 'people', name: 'PersonList' },
+      ],
+    }
+  },
+  computed: {
+    profile() {
+      return this.$store.state.users.profile || null
+    },
+  },
+  methods: {
+    isActive(route) {
+      return this.$route.name === route.name
+    },
+    handleLogout() {
+      this.$store.dispatch(USERS.LOGOUT)
+    },
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+#nav {
+  border-bottom: 3px solid $yellow;
+  @include for-large-up {
+    border-bottom: none;
+  }
+
+  @include for-large-down {
+    .nav-item {
+      display: none;
+    }
+    &.expanded {
+      .nav-item {
+        display: block;
+      }
+      .profile-links {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+
+  .logo {
+    @include for-large-up {
+      height: 4rem;
+    }
+  }
+  .nav-links {
+    display: block;
+    // @include for-large-up {
+    //   padding-top: 2rem;
+    // }
+    .nav-item {
+      display: inline-block;
+    }
+  }
+
+  .nav-profile-info {
+    font-size: $font-size-h5;
+    display: none;
+    @include for-large-up {
+      display: inherit;
+      margin-top: 5rem;
+    }
+  }
+
+  .nav-item {
+    // text-align: right;
+    // margin-top: 1rem;
+    // margin-right: 3rem;
+
+    // @include for-large-up {
+    //   margin-top: 0.5rem;
+    //   text-align: left;
+    // }
+    &.active {
+      font-weight: $font-weight-bold;
+      color: red;
+    }
+  }
+}
+</style>
