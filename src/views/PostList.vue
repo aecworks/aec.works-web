@@ -62,7 +62,8 @@ export default {
   },
   methods: {
     async fetchItems(offset, hashtag, searchQuery) {
-      let query = { offset, search: searchQuery }
+      // ?offset=0&hashtag=abc&search=xxx
+      let query = { offset, hashtag, search: searchQuery }
       // Remove null/undefined
       query = Object.entries(query).reduce((a, [k, v]) => (v ? ((a[k] = v), a) : a), {})
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="hashtag" :class="pickColor()" @click="handleClick(slug)">
+  <div class="hashtag" :class="[clickable ? 'pointer' : '', pickColor()]" @click="$emit('click')">
     <span>#{{slug}}</span>
   </div>
 </template>
@@ -7,23 +7,19 @@
 <script>
 export default {
   name: 'Hashtag',
-  props: { slug: String },
+  props: {
+    slug: String,
+    clickable: {
+      type: Boolean,
+      default: false,
+    },
+  },
   computed: {
     isActive() {
       return this.$route.query.hashtag === this.slug
     },
   },
   methods: {
-    handleClick(name) {
-      // Toggle Hashtag
-      let query = Object.assign({}, this.$route.query)
-      if (query.hashtag && query.hashtag == name) {
-        delete query.hashtag
-      } else {
-        query.hashtag = name
-      }
-      this.$router.replace({ query })
-    },
     pickColor() {
       if (this.isActive) {
         return 'dark'
@@ -44,17 +40,18 @@ export default {
   margin: 0.25rem 0.25rem;
 
   @extend .border-thin;
-  cursor: pointer;
   span {
     display: table;
     font-size: $font-size-h5;
   }
 
-  &:hover {
-    box-shadow: 0 0 !important;
-  }
-  &:active {
-    box-shadow: 0 0 !important;
+  &.clickable {
+    &:hover {
+      box-shadow: 0 0 !important;
+    }
+    &:active {
+      box-shadow: 0 0 !important;
+    }
   }
 
   &.dark {

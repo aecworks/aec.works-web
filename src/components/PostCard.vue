@@ -8,7 +8,13 @@
       <p class="mt-1 post-text" v-html="post.body.slice(0, 120) + '...'"></p>
 
       <div>
-        <Hashtag v-for="slug in post.hashtags" :slug="slug" :key="slug" />
+        <Hashtag
+          v-for="name in post.hashtags"
+          :slug="name"
+          :key="name"
+          @click="handleHashtagClick(name)"
+          clickable
+        />
       </div>
 
       <Avatar class="mt-1" :profile="post.profile" />
@@ -34,6 +40,7 @@ import api from '@/api'
 import { waitForLogin } from '@/mixins'
 import Hashtag from '@/components/Hashtag'
 import moment from 'moment'
+import { toggleHashtag } from '@/mixins'
 
 export default {
   name: 'PostCard',
@@ -50,6 +57,9 @@ export default {
     },
   },
   methods: {
+    async handleHashtagClick(name) {
+      toggleHashtag(name)
+    },
     async handleClapClick(post) {
       const sound = new Audio(require('@/assets/sounds/effect.mp3'))
       if (Math.random() > 0.8) sound.play()

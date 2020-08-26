@@ -5,7 +5,8 @@
       <div class="login-info invert">
         <img alt="AEC Guide Logo" class="logo" src="@/assets/images/logo.svg" />
         <p class="center">Login to join the conversation.</p>
-        <p class="center small">Terms of Use</p>
+        <p class="center small mt-1">Terms of Use</p>
+        <p class="center small mt-1">Everyone is welcome. Be nice.</p>
       </div>
       <div class="login-form">
         <!-- USE GITHUB ONLY -->
