@@ -26,7 +26,8 @@ export default {
       }
       const options = ['pink', 'yellow', 'green', 'blue']
       const choiceIndex = Math.floor(Math.random() * options.length)
-      return options[choiceIndex]
+      // return options[choiceIndex]
+      return ''
     },
   },
 }

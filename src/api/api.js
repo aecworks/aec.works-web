@@ -211,6 +211,10 @@ class Api {
     return this._post(`community/posts/${slug}/clap/`)
   }
 
+  postCompanyClap (slug) {
+    return this._post(`community/companies/${slug}/clap/`)
+  }
+
 }
 
 

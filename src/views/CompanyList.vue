@@ -18,7 +18,8 @@
         @input="handleSearchInput"
         placeholder="search"
       />
-      <Icon icon="pencil" @click="handleAdd" clickable>Add Company</Icon>
+      <!-- TODO -->
+      <Icon v-if="true" icon="pencil" @click="handleAdd" clickable>Add Company</Icon>
     </div>
   </div>
 </template>

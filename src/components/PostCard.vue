@@ -26,21 +26,20 @@
         <Icon :icon="'clap'" @click="handleClapClick(post)" clickable>
           <span class="small">{{localClapCount || post.clapCount}}</span>
         </Icon>
-        <span class="small flex-right">{{relativeTimestamp}}</span>
+        <span class="small flex-right">{{post.createdAt | fromNow}}</span>
       </div>
     </template>
   </Card>
 </template>
 
 <script>
-import Icon from './Icon.vue'
-import Card from './Card.vue'
-import Avatar from './Avatar.vue'
 import api from '@/api'
 import { waitForLogin } from '@/mixins'
-import Hashtag from '@/components/Hashtag'
-import moment from 'moment'
 import { toggleHashtag } from '@/mixins'
+import Avatar from '@/components/Avatar.vue'
+import Card from '@/components/Card.vue'
+import Hashtag from '@/components/Hashtag'
+import Icon from '@/components/Icon.vue'
 
 export default {
   name: 'PostCard',
@@ -51,11 +50,7 @@ export default {
       localClapCount: null,
     }
   },
-  computed: {
-    relativeTimestamp() {
-      return moment(this.post.createdAt).fromNow()
-    },
-  },
+  computed: {},
   methods: {
     async handleHashtagClick(name) {
       toggleHashtag(name)

@@ -23,7 +23,7 @@
           </div>
         </div>
         <label>Hashtags</label>
-        <input type="text" class="fill-x" v-model="company.hashtags" />
+        <input type="text" class="fill-x" @input="handleHashtagEdit" :value="company.hashtags" />
         <label>Logo</label>
         <!-- <input type="text" class="fill-x" v-model="company.logoUrl" /> -->
         <input id="image-file" type="file" @change="handleLogoUpload($event)" />
@@ -117,6 +117,9 @@ export default {
       } else {
         this.$router.push({ name: 'CompanyList' })
       }
+    },
+    handleHashtagEdit(e) {
+      this.company.hashtags = e.target.value.split(',')
     },
     async handleFileUploadEvent(event) {
       const file = event.target.files[0]
