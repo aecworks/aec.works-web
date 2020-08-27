@@ -1,0 +1,41 @@
+<template>
+  <div class="corner-ribbon top-right blue">
+    <span class="small">{{text}}</span>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Ribbon',
+  props: {
+    text: String,
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+// https://codepen.io/eode9/pen/twkKm
+
+.corner-ribbon {
+  color: $dark;
+  background: $orange;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  width: 200px;
+  position: absolute;
+  top: 25px;
+  left: -50px;
+  text-align: center;
+  line-height: 40px;
+  letter-spacing: 1px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.corner-ribbon.top-right {
+  top: 25px;
+  right: -50px;
+  left: auto;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+</style>
