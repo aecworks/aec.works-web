@@ -30,6 +30,12 @@
             </span>
             Login with Github
           </div>
+          <div class="button dark blue icon" @click="redirectLinkedInLogin()">
+            <span class="icon">
+              <img alt="Github Logo" class="button-icon" src="@/assets/images/github.svg" />
+            </span>
+            Login with LinkedIn
+          </div>
         </div>
 
         <!-- TODO Signup -->
@@ -45,7 +51,7 @@
 
 <script>
 import api from '../api'
-import { githubAuthUrl } from '../api/github'
+import { githubAuthUrl, linkedinAuthUrl } from '../api/github'
 import { popQuery } from '@/utils'
 import Modal from '@/components/Modal'
 import { USERS } from '@/store/users'
@@ -73,6 +79,7 @@ export default {
       popQuery(this.$router, this.$route.query, 'login')
     },
     async handleGithubCallback({ code, error }) {
+      debugger
       if (error) {
         this.errors.push(error)
         return
@@ -91,6 +98,9 @@ export default {
     },
     redirectGithubLogin() {
       window.location.href = githubAuthUrl()
+    },
+    redirectLinkedInLogin() {
+      window.location.href = linkedinAuthUrl()
     },
   },
 }
