@@ -18,15 +18,22 @@
         @input="handleSearchInput"
         placeholder="search"
       />
+      <label class="mt-2">Hot This Week</label>
+      <Hashtag slug="PropTech" clickable />
+      <Hashtag slug="ADU" clickable />
+      <Hashtag slug="Housing" clickable />
 
       <label class="mt-2">Contribute</label>
       <Icon icon="pencil" @click="handleAdd" clickable>Write</Icon>
       <label class="mt-2">Recent Comments</label>
+      <!-- <Avatar v-for="post in items" :profile="post.profile" :key="post.id"></Avatar> -->
     </div>
   </div>
 </template>
 
 <script>
+import Hashtag from '../components/Hashtag.vue'
+import Avatar from '../components/Avatar.vue'
 import Icon from '../components/Icon.vue'
 import TextInput from '../components/forms/TextInput.vue'
 import Loader from '../components/Loader.vue'
@@ -40,6 +47,7 @@ export default {
     Loader,
     TextInput,
     Icon,
+    Hashtag,
   },
   data() {
     return {

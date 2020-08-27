@@ -1,6 +1,7 @@
 <template>
   <div class="corner-ribbon top-right blue">
-    <span class="small">{{text}}</span>
+    <h5 class="small">{{text}}</h5>
+    <!-- <h5 class="small">{{text}} 👋</h5> -->
   </div>
 </template>
 
@@ -17,8 +18,11 @@ export default {
 // https://codepen.io/eode9/pen/twkKm
 
 .corner-ribbon {
+  h5 {
+    font-weight: $font-weight-normal;
+  }
   color: $dark;
-  background: $orange;
+  background: $cream;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
   width: 200px;
   position: absolute;

@@ -2,57 +2,64 @@
   <div class="content flex flex-down">
     <div class="flex">
       <div class="page" v-if="company">
-        <h1 class="page-title">{{ company.name }}</h1>
-
-        <div class="mt">
-          <p class="sans">{{ company.description || "..." }}</p>
-        </div>
-        <div>
-          <!-- <img :src="company.cover || defaultLogo" /> -->
+        <div class="flex flex-center">
+          <h1 class="page-title">{{ company.name }}</h1>
+          <span class="small muted flex-right">{{company.location || "Somewhere" }}</span>
         </div>
 
-        <div class="mt-2">
-          <Hashtag v-for="slug in company.hashtags" :slug="slug" :key="slug" />
+        <div class="flex">
+          <div>
+            <div class="mt">
+              <p class="sans">{{ company.description || "..." }}</p>
+
+              <label class="mt-2">Website</label>
+              <a :href="company.website">{{company.website || "-" | cleanUrl}}</a>
+
+              <label class="mt-2">Social Media</label>
+              <span>
+                <a
+                  v-if="company.twitterHandle"
+                  :href="`https://www.twitter.com/${company.twitterHandle}`"
+                >
+                  <img src="@/assets/images/twitter.svg" />
+                </a>
+                <a
+                  v-if="company.crunchbaseId"
+                  :href="`https://www.crunchbase.com/organization/${company.crunchbaseId}`"
+                >
+                  <img src="@/assets/images/money.svg" />
+                </a>
+              </span>
+            </div>
+
+            <div class="mt-2">
+              <Hashtag v-for="slug in company.hashtags" :slug="slug" :key="slug" />
+            </div>
+          </div>
         </div>
 
         <Discussion v-if="company && company.thread" :threadId="company.thread" />
       </div>
 
       <div class="sidebar" v-if="company">
-        <div class="company-facts">
-          <div class="company-info-item">
-            <label>Website</label>
-            <span>
-              <a :href="company.website">{{company.website || "-" | cleanUrl}}</a>
-            </span>
-          </div>
-
-          <div class="company-info-item">
-            <label>Location</label>
-            <span>{{company.location || "Somewhere" }}</span>
-          </div>
-
-          <div class="company-info-item">
-            <label>Social</label>
-            <span>
-              <a
-                v-if="company.twitterHandle"
-                :href="`https://www.twitter.com/${company.twitterHandle}`"
-              >
-                <img src="@/assets/images/twitter.svg" />
-              </a>
-              <a
-                v-if="company.crunchbaseId"
-                :href="`https://www.crunchbase.com/organization/${company.crunchbaseId}`"
-              >
-                <img src="@/assets/images/money.svg" />
-              </a>
-            </span>
-          </div>
-
-          <label>Contribute</label>
-          <Icon icon="pencil" @click="handleEdit" clickable>Edit</Icon>
+        <div>
+          <Icon
+            icon="clap"
+            @click="handleClap(company)"
+            clickable
+          >{{localClapCount || company.clapCount}}</Icon>
         </div>
+        <div>
+          <Icon icon="chat">{{company.threadSize || 0}}</Icon>
+        </div>
+
+        <label class="mt-2">Share</label>
+        <div>
+          <Icon icon="twitter" clickable></Icon>
+          <Icon icon="linkedin" clickable></Icon>
+        </div>
+        <label class="mt-2">Contribute</label>
+        <Icon icon="pencil" @click="handleEdit" clickable>Edit</Icon>
       </div>
     </div>
     <!-- <Discussion v-if="company && company.thread" :threadId="company.thread" /> -->
@@ -80,7 +87,7 @@ export default {
     return {
       errors: [],
       company: null,
-      defaultLogo: 'https://api.adorable.io/avatars/285/abott@adorable.png',
+      localClapCount: null,
     }
   },
   created() {
@@ -94,6 +101,11 @@ export default {
     handleEdit() {
       this.$router.push({ name: 'CompanyEdit', params: { slug: this.slug } })
     },
+    async handleClap(company) {
+      await waitForLogin()
+      const clapCount = await api.postCompanyClap(company.slug)
+      this.localClapCount = clapCount
+    },
   },
   filters: {
     cleanUrl(value) {
@@ -105,7 +117,7 @@ export default {
 
 <style lang="scss">
 .company-icon {
-  text-align: right;
+  // text-align: right;
   img {
     height: 64px;
   }
@@ -127,7 +139,7 @@ export default {
   }
   margin-top: 1rem;
   @include for-large-up {
-    text-align: right;
+    // text-align: right;
   }
 }
 </style>

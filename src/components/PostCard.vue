@@ -29,7 +29,7 @@
         <span class="small flex-right">{{post.createdAt | fromNow}}</span>
       </div>
 
-      <Ribbon :text="post.banner" />
+      <Ribbon :text="post.banner" v-if="post.banner" />
     </template>
   </Card>
 </template>
