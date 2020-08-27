@@ -1,8 +1,5 @@
 $hamburger-layer-width : 25px;
 $hamburger-layer-height : 2px;
-$hamburger-layer-color: $gray-300;
-$hamburger-hover-opacity: $gray-950;
-// $hamburger-active-layer-color: white;
-
+$hamburger-layer-color: $dark-gray;
 
 @import 'node_modules/hamburgers/_sass/hamburgers/hamburgers';

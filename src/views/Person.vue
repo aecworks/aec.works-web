@@ -1,30 +1,35 @@
 <template>
-  <div class="page">
-    <div v-if="person">
-      <div class="page-header">
-        <h2 class="page-title">{{ person.name }}</h2>
-      </div>
-
-      <div class="profile-content flex">
-        <div class="profile-bio">
-          <p>{{ person.bio }}</p>
+  <div class="content">
+    <div class="page">
+      <div v-if="profile">
+        <div class="page-header">
+          <h2 class="page-title">{{ profile.name }}</h2>
         </div>
-        <div class="profile-facts">
-          <label>Location</label>
-          <p class="small muted">{{ person.location }}</p>
-          <label>Twitter</label>
-          <p>{{ person.twitter }}</p>
-        </div>
-      </div>
 
-      <a
-        class="twitter-timeline"
-        data-height="400"
-        data-dnt="true"
-        data-theme="light"
-        :href="`https://twitter.com/${person.twitter}`"
-      >Tweets by {{person.twitter}}</a>
-      <!-- data-width="400" -->
+        <div class="profile-content flex">
+          <div class="profile-bio">
+            <p>{{ profile.bio }}</p>
+          </div>
+
+          <div class="profile-facts">
+            <!-- {{profile.avatarUrl}} -->
+            <img class="profile-image" :src="profile.avatarUrl" />
+            <label>Location</label>
+            <p class="small muted">{{ profile.location }}</p>
+            <label>Twitter</label>
+            <p>{{ profile.twitter }}</p>
+          </div>
+        </div>
+
+        <a
+          class="twitter-timeline"
+          data-height="400"
+          data-dnt="true"
+          data-theme="light"
+          :href="`https://twitter.com/${profile.twitter}`"
+        >Tweets by {{profile.twitter}}</a>
+        <!-- data-width="400" -->
+      </div>
     </div>
   </div>
 </template>
@@ -41,7 +46,7 @@ export default {
   data() {
     return {
       errors: [],
-      person: null,
+      profile: null,
     }
   },
   created() {
@@ -51,7 +56,7 @@ export default {
     async fetchData() {
       const response = await api.getProfile(this.slug)
       if (!response.message) {
-        this.person = response
+        this.profile = response
       } else {
         this.errors.push(response.message)
       }
@@ -84,6 +89,9 @@ export default {
       margin-left: auto;
       text-align: right;
     }
+  }
+  .profile-image {
+    height: 100px;
   }
 }
 </style>

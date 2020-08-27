@@ -1,98 +1,67 @@
-$nav-width: 100px;
-$page-weidth: 500px;
-$sidebar-width: 200px;
+$content-width-max: 900px;
+$page-width-max: 600px;
+$sidebar-width: 300px;
+$navbar-height: 100px;
+// 800px total width to match mixins break
 
 
 #app {
   display: flex;
-  height: 100%;
-  width:100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  position: relative;
-
   flex-direction: column;
-  @include for-large-up {
-    justify-content: center;
-    flex-direction: row;
-  }
+  width: 100%;
+  margin: 0;
+  position: relative;
+  overflow-x: hidden;
+  align-items: center;
+  // height: 100%;
 }
 
-#nav {
+#nav-container {
+  position: fixed;
+  height: $navbar-height;
   width: 100%;
-
-  @include for-large-up {
-    padding: 4rem 0  4rem 2rem;
-
-    position: relative;
-    flex-shrink: 0;
-    height: 100%;
-    width: $nav-width;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: center;
+  #nav {
+    // width: $page-width-max + $sidebar-width;
+    // max-width: $content-width-max;
+    width: $content-width-max;
+    padding: 0 1.5rem;
   }
 }
 
 .content {
   display: flex;
-  flex-direction: column;
-  padding: 2rem 2rem;
+  flex-direction: column-reverse;
+  padding: 0 1.5rem;
+  padding-top: $navbar-height + 30px;
+  width: 100%;
 
   @include for-large-up {
     flex-direction: row;
     position: relative;
-    padding-top: 4rem;
-    padding-bottom: 4rem;
-  }
-
-  @include for-large-up {
     min-width: 0;
+    max-width: $content-width-max;
   }
 
   .page {
+    width: 100%;
     @include for-large-up {
-      width: $page-weidth;
-      padding-left: 3rem;
-      padding-right: 3rem;
+      max-width: $page-width-max;
     }
   }
+
   .sidebar {
+    margin-top: 0;
+    transition: margin-top 200ms;
+    width: 100%;
     @include for-large-up {
-      padding: 0;
+      top: 5rem;
+      left: $page-width-max;
       width: $sidebar-width;
+      margin-left: 2rem;
     }
   }
 }
-
-// .sidebar-api-nav {
-//   $sidebar-api-nav-width: 400px;
-//   transition: margin 200ms ease-in-out;
-//   z-index: 2;
-//   min-width: 100%;
-//   margin-left: 0;
-//   height: 75px;
-//   @include for-large-up {
-//     box-sizing: padding-box;
-//     min-width: $sidebar-api-nav-width;
-//     max-width: $sidebar-api-nav-width;
-//     height: 100%;
-//   }
-//   &.collapsed {
-//     margin-left: -$sidebar-api-nav-width;
-//   }
-// }
-
-// .col-main-wrapper {
-//   position: relative;
-//   width:100%;
-//   overflow-y: auto;
-// }
-
-// .document-container {
-//   @include for-large-up {
-//     max-width: 800px;
-//     min-width: 0;
-//   }
-
-// }
-
 

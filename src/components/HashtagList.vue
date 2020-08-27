@@ -2,7 +2,7 @@
   <div>
     <ul class="hashtag-list">
       <li class="hashtag-item" v-for="hashtag in hashtags" :key="hashtag.slug">
-        <Hashtag :slug="hashtag.slug" />
+        <Hashtag v-if="false" :slug="hashtag.slug" />
       </li>
     </ul>
   </div>

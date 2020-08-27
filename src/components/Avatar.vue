@@ -1,10 +1,7 @@
 <template>
-  <div @click="handleClick()" class="profile flex flex-center">
-    <img
-      class="profile-avatar"
-      src="https://pbs.twimg.com/profile_images/1160338085235707904/NMNIRutH_400x400.jpg"
-    />
-    <span class="profile-name">{{profile.name}}</span>
+  <div class="profile flex flex-center">
+    <img class="profile-avatar" :src="avatarImg" />
+    <span @click="handleClick()" class="small profile-name">{{profile.name}}</span>
   </div>
 </template>
 
@@ -12,9 +9,14 @@
 export default {
   name: 'Hashtag',
   props: ['profile'],
+  computed: {
+    avatarImg() {
+      return this.profile.avatarUrl || require('@/assets/images/avatar.svg')
+    },
+  },
   methods: {
-    onClick() {
-      this.$router.push({ name: 'Person', params: { slug: this.profile.id } })
+    handleClick() {
+      this.$router.push({ name: 'Person', params: { slug: this.profile.slug } })
     },
   },
 }
@@ -22,16 +24,21 @@ export default {
 
 <style lang="scss" scoped>
 .profile {
-  cursor: pointer;
   .profile-avatar {
-    width: 32px;
-    height: 32px;
-    @extend .border-thin;
-    @include shadow-color($yellow);
+    width: 34px;
+    height: 34px;
+    border-radius: 17px;
+    border: 1px solid $yellow;
+    padding: 3px;
   }
 
   .profile-name {
-    margin-left: 1rem;
+    cursor: pointer;
+    margin-left: 0.75rem;
+    font-family: $font-family-serif;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 </style>

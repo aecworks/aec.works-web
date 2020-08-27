@@ -1,15 +1,15 @@
 export class Profile {
     constructor(
-        slug,
-        name,
-        avatarUrl
+        slug: String,
+        name: String,
+        avatarUrl: String
     ) { }
 }
 
 export class Company {
     constructor(
-        slug,
-        thread
+        slug: String,
+        thread: Number
     ) { }
     // createdBy: {
     //     slug: "",

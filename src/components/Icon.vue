@@ -1,7 +1,9 @@
 <template>
-  <div class="icon" @click="$emit('click')">
-    <img :src="iconPath" />
-    <span class="small">{{count}}</span>
+  <div class="icon" :class="{'pointer': clickable}" @click="$emit('click')">
+    <div class="flex">
+      <img :src="iconPath" />
+      <slot></slot>
+    </div>
   </div>
 </template>
 
@@ -9,17 +11,15 @@
 export default {
   name: 'IconCounter',
   props: {
-    count: Number,
     onClick: Function,
+    clickable: {
+      type: Boolean,
+      default: false,
+    },
     icon: {
       required: true,
       type: String,
     },
-  },
-  data() {
-    return {
-      comments: [],
-    }
   },
   computed: {
     iconPath() {
@@ -29,14 +29,11 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .icon {
-  margin-right: 1rem;
-  display: flex;
-  align-items: center;
+  display: inline-block;
   img {
-    margin-right: 0.3rem;
+    margin-right: 0.4rem;
   }
 }
 </style>

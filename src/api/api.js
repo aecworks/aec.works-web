@@ -30,12 +30,16 @@ class Api {
   }
 
   async _fetch (method, urlPath, options = {}) {
-    const { body, headers, query } = options
+    let { body, headers, query } = options
     const url = buildUrl(this.API_URL, urlPath, query)
+
+    if (body && !body.arrayBuffer) {
+      body = JSON.stringify(body)
+    }
     const request = new Request(url, {
       method,
       headers: this._buildHeaders(headers),
-      body: JSON.stringify(body)
+      body: body
     })
     return fetch(request)
   }
@@ -67,6 +71,10 @@ class Api {
     return response.json()
   }
 
+  async _put (urlPath, options) {
+    const response = await this._fetch_with_retry("PUT", urlPath, options)
+    return response.json()
+  }
 
   async _patch (urlPath, options) {
     const response = await this._fetch_with_retry("PATCH", urlPath, options)
@@ -123,6 +131,10 @@ class Api {
     return this._handleTokenResponse(response)
   }
 
+  clearToken () {
+    this.jwt.clear()
+  }
+
   isAuthenticated () {
     return this.jwt.isSet()
   }
@@ -135,8 +147,8 @@ class Api {
     return this._get(`community/comments/`, { query: { ...query, "parent_id": commentId } })
   }
 
-  postComment (threadId, text) {
-    return this._post(`community/comments/`, { body: { threadId, text } })
+  postComment (text, threadId, parentId) {
+    return this._post(`community/comments/`, { body: { text, threadId, parentId } })
   }
 
   getCompany (slug) {
@@ -147,8 +159,20 @@ class Api {
     return this._get(`community/companies/`, { query })
   }
 
-  patchCompany (slug, company) {
-    return this._patch(`community/companies/${slug}/`, { body: company })
+  getCompanyRevisions (slug) {
+    return this._get(`community/companies/${slug}/revisions/`)
+  }
+
+  postCompanyRevision (slug, company) {
+    return this._post(`community/companies/${slug}/revisions/`, { body: company })
+  }
+
+  postCompanyRevisionApprove (revisionId) {
+    return this._post(`community/revisions/${revisionId}/approve`)
+  }
+
+  putImage (filename, image) {
+    return this._put(`images/upload/${filename}`, { body: image })
   }
 
   getHashtags (query) {
@@ -185,6 +209,10 @@ class Api {
 
   postPostClap (slug) {
     return this._post(`community/posts/${slug}/clap/`)
+  }
+
+  postCompanyClap (slug) {
+    return this._post(`community/companies/${slug}/clap/`)
   }
 
 }

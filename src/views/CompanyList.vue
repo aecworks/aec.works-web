@@ -1,10 +1,8 @@
 <template>
   <div class="content">
     <div class="page">
-      <div class="page-header">
-        <div class="button">Add</div>
-      </div>
       <div class="page-content">
+        <Loader v-if="isLoading" />
         <CompanyCard
           v-for="(company, index) in items"
           :key="company.id"
@@ -14,33 +12,49 @@
       </div>
     </div>
     <div class="sidebar">
-      <input class="fill-x" type="text" v-model="search" @input="handleSearchInput" />
-      <HashtagList />
+      <TextInput
+        icon="search"
+        v-model="searchQuery"
+        @input="handleSearchInput"
+        placeholder="search"
+      />
+      <!-- TODO -->
+      <Icon v-if="true" icon="pencil" @click="handleAdd" clickable>Add Company</Icon>
     </div>
   </div>
 </template>
 
 <script>
+import Icon from '../components/Icon.vue'
+import Loader from '../components/Loader.vue'
+import TextInput from '../components/forms/TextInput.vue'
 import api from '@/api'
 import CompanyCard from '@/components/CompanyCard'
-import HashtagList from '@/components/HashtagList'
 
 export default {
   name: 'CompanyList',
   components: {
     CompanyCard,
-    HashtagList,
+    TextInput,
+    Loader,
+    Icon,
   },
   data() {
     return {
       items: [],
       offset: 0,
-      search: '',
+      isLoading: true,
+      searchQuery: '',
     }
   },
   async created() {
     this.fetchItems(0, this.$route.query.hashtag)
+    this.isLoading = false
   },
+  // mounted() {
+  // },
+  // destroyed() {
+  // },
   beforeRouteUpdate(to, from, next) {
     if (from.query.hashtag !== to.query.hashtag) {
       this.items = []
@@ -49,8 +63,8 @@ export default {
     next()
   },
   methods: {
-    async fetchItems(offset, hashtag, search) {
-      let query = { offset, hashtag, search }
+    async fetchItems(offset, hashtag, searchQuery) {
+      let query = { offset, hashtag, search: searchQuery }
       // Remove null/undefined
       query = Object.entries(query).reduce((a, [k, v]) => (v ? ((a[k] = v), a) : a), {})
 
@@ -60,12 +74,15 @@ export default {
     },
     onVisible({ going }) {
       if (going === 'in') {
-        this.fetchItems(this.offset)
+        this.fetchItems(this.offset, this.$route.query.hashtag, this.searchQuery)
       }
     },
     handleSearchInput() {
       this.items = []
-      this.fetchItems(0, this.$route.query.hashtag, this.search)
+      this.fetchItems(0, this.$route.query.hashtag, this.searchQuery)
+    },
+    handleAdd() {
+      this.$router.push({ name: 'CompanyNew' })
     },
   },
 }

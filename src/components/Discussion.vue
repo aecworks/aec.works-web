@@ -7,7 +7,7 @@
       v-waypoint="{ active: index + 1=== comments.length, callback: onVisible }"
     />
     <Loader v-if="isLoading" />
-    <CommentReply v-bind="{threadId}" @replied="handleReply" />
+    <CommentReply v-bind="{threadId}" @replied="handleReplied" />
   </div>
 </template>
 
@@ -48,7 +48,7 @@ export default {
       this.comments = [...this.comments, ...comments]
       this.offset = this.offset + comments.length
     },
-    async handleReply() {
+    async handleReplied() {
       this.isLoading = true
       setTimeout(() => {
         this.fetchItems(this.offset, 1).then(() => {

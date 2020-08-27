@@ -10,6 +10,7 @@
 import Nav from '@/components/Nav'
 import Login from '@/components/Login'
 import api from '@/api'
+import { USERS } from '@/store/users'
 
 export default {
   name: 'App',
@@ -18,17 +19,14 @@ export default {
     Login,
   },
   data() {
-    return {
-      // showLoginModal: false,
-    }
+    return {}
   },
   created() {
     if (api.isAuthenticated()) {
-      this.$store.dispatch('getMyProfile')
+      this.$store.dispatch(USERS.GET_PROFILE)
     }
   },
   computed: {
-    // ?modal=login
     showLoginModal() {
       return this.$route.query.login
     },

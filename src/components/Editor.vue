@@ -25,8 +25,8 @@ export default {
         placeholder: 'Your words go here - select text to format it',
         modules: {
           toolbar: [
-            [{ header: [1, 2, false] }],
-            [{ font: [] }],
+            // [{ header: [1, 2, false] }],
+            // [{ font: [] }],
             ['bold'],
             // ['blockquote', 'code-block'],
             // [{ list: 'ordered' }, { list: 'bullet' }, { align: [] }],
@@ -92,11 +92,7 @@ export default {
 <style lang="scss">
 #editor {
   width: 100%;
-  // padding: $padding;
 
-  .ql-editor {
-    border-left: 1px solid $yellow;
-  }
   // Editor Placeholder
   .ql-editor.ql-blank::before {
     // left: 0;

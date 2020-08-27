@@ -2,8 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import api from '../api'
-import CompanyList from '../views/CompanyList'
 import Company from '../views/Company'
+import CompanyEdit from '../views/CompanyEdit'
+import CompanyList from '../views/CompanyList'
 import PostList from '../views/PostList'
 import Post from '../views/Post'
 import PostEdit from '../views/PostEdit'
@@ -31,14 +32,27 @@ const routes = [
     props: true,
   },
   {
+    path: '/companies/new',
+    name: 'CompanyNew',
+    component: CompanyEdit,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/companies/:slug/edit',
+    name: 'CompanyEdit',
+    component: CompanyEdit,
+    props: true,
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/companies/:slug',
     name: 'Company',
     component: Company,
     props: true,
   },
   {
-    path: '/posts/compose',
-    name: 'PostCompose',
+    path: '/posts/new',
+    name: 'PostNew',
     component: PostEdit,
     meta: { requiresAuth: true }
   },

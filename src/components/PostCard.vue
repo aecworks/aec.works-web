@@ -1,100 +1,71 @@
 <template>
-  <div class="post-card">
-    <h3 class="post-card-title">
-      <router-link :to="{ name: 'Post', params: { slug: post.slug }}">{{post.title}}</router-link>
-    </h3>
-    <label class="post-card-author">by {{ post.profile.name }}</label>
+  <Card :showImage="false">
+    <template v-slot>
+      <h2>
+        <router-link :to="{ name: 'Post', params: { slug: post.slug }}">{{post.title}}</router-link>
+      </h2>
 
-    <p class="post-card-body" v-html="post.body.slice(0, 120) + '...'"></p>
+      <p class="mt-1 post-text" v-html="post.body.slice(0, 120) + '...'"></p>
 
-    <div class="post-card-hashtags">
-      <Hashtag v-for="slug in post.hashtags" :slug="slug" :key="slug" />
-    </div>
+      <div>
+        <Hashtag
+          v-for="name in post.hashtags"
+          :slug="name"
+          :key="name"
+          @click="handleHashtagClick(name)"
+          clickable
+        />
+      </div>
 
-    <div class="post-card-footer flex flex-center">
-      <IconCounter :icon="'chat'" :count="post.threadSize" />
-      <IconCounter
-        :icon="'clap'"
-        :count="localClapCount || post.clapCount"
-        @click="onClapClick(post)"
-      />
-      <label class="post-card-footer-timestamp">{{relativeTimestamp}}</label>
-    </div>
-  </div>
+      <Avatar class="mt-1" :profile="post.profile" />
+
+      <div class="flex mt-2">
+        <Icon :icon="'chat'" class="mr-1">
+          <span class="small">{{post.threadSize || 0}}</span>
+        </Icon>
+        <Icon :icon="'clap'" @click="handleClapClick(post)" clickable>
+          <span class="small">{{localClapCount || post.clapCount}}</span>
+        </Icon>
+        <span class="small flex-right">{{post.createdAt | fromNow}}</span>
+      </div>
+    </template>
+  </Card>
 </template>
 
 <script>
 import api from '@/api'
+import { waitForLogin } from '@/mixins'
+import { toggleHashtag } from '@/mixins'
+import Avatar from '@/components/Avatar.vue'
+import Card from '@/components/Card.vue'
 import Hashtag from '@/components/Hashtag'
-import IconCounter from '@/components/IconCounter'
-import moment from 'moment'
+import Icon from '@/components/Icon.vue'
 
 export default {
   name: 'PostCard',
   props: ['post'],
-  components: { Hashtag, IconCounter },
+  components: { Hashtag, Avatar, Card, Icon },
   data() {
     return {
       localClapCount: null,
     }
   },
-  computed: {
-    relativeTimestamp() {
-      return moment(this.post.createdAt).fromNow()
-    },
-  },
+  computed: {},
   methods: {
-    async onClapClick(post) {
-      if (!api.isAuthenticated()) {
-        this.$router.push({ query: { login: 1 } })
-      } else {
-        const clapCount = await api.postPostClap(post.slug)
-        this.localClapCount = clapCount
-      }
+    async handleHashtagClick(name) {
+      toggleHashtag(name)
+    },
+    async handleClapClick(post) {
+      const sound = new Audio(require('@/assets/sounds/effect.mp3'))
+      if (Math.random() > 0.8) sound.play()
+      await waitForLogin()
+      const clapCount = await api.postPostClap(post.slug)
+      this.localClapCount = clapCount
     },
   },
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
-.post-card {
-  display: inline-block;
-  width: 10rem;
-  margin-bottom: 2rem;
-  padding: $padding;
-
-  @extend .border-thick;
-  @include shadow-color($dark);
-
-  width: 100%;
-  @include for-large-up {
-    width: 100%;
-  }
-
-  .post-card-title {
-    margin-bottom: 0.5rem;
-  }
-
-  .post-card-author {
-    margin-bottom: 1rem;
-  }
-
-  .post-card-body {
-    // font-style: italic;
-  }
-
-  .post-card-hashtags {
-    margin-bottom: 1rem;
-  }
-
-  .post-card-footer {
-    display: flex;
-
-    .post-card-footer-timestamp {
-      margin-left: auto;
-      margin-right: 0;
-    }
-  }
-}
+<style lang="scss">
 </style>

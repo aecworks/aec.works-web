@@ -1,23 +1,30 @@
 import api from "../api"
 
+export const USERS = {
+  SET_PROFILE: "SET_PROFILE",
+  GET_PROFILE: "GET_PROFILE",
+  LOGOUT: "LOGOUT",
+}
+
 export default {
   state: () => ({
     profile: null,
   }),
   mutations: {
-    setProfile (state, profile) {
+    [USERS.SET_PROFILE] (state, profile) {
       state.profile = profile
     }
   },
   actions: {
-    async getMyProfile ({ commit }) {
+    async [USERS.GET_PROFILE] ({ commit }) {
       const profile = await api.getMyProfile()
-      commit('setProfile', profile)
+      commit(USERS.SET_PROFILE, profile)
+    },
+    [USERS.LOGOUT] ({ commit }) {
+      api.clearToken()
+      commit(USERS.SET_PROFILE, null)
     }
   },
   getters: {
-    // isLoggedIn () {
-    //   return api.isAuthenticated()
-    // }
   }
 }

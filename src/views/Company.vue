@@ -1,61 +1,78 @@
 <template>
-  <div class="content">
-    <div class="page" v-if="company">
-      <div class="page-header">
-        <h2 class="page-title editable" data-field="name">
-          {{ company.name }}
-          <div class="title-edit" @click="handleStartEdit">
-            <img v-if="!editing" src="@/assets/images/pencil.svg" />
-            <label v-if="editing" @click="handleDoneEdit">Save</label>
-            <label v-if="editing">Cancel</label>
-          </div>
-        </h2>
+  <div class="content flex flex-down">
+    <div class="flex">
+      <div class="page" v-if="company">
+        <h1 class="page-title">{{ company.name }}</h1>
 
-        <div class="company-description">
-          <p
-            class="editable"
-            data-field="description"
-            contenteditable="false"
-          >{{ company.description }}</p>
+        <div class="mt">
+          <p class="sans">{{ company.description || "..." }}</p>
+        </div>
+        <div>
+          <!-- <img :src="company.cover || defaultLogo" /> -->
         </div>
 
-        <div class="company-hashtags">
+        <div class="mt-2">
           <Hashtag v-for="slug in company.hashtags" :slug="slug" :key="slug" />
         </div>
-      </div>
-      <Discussion :threadId="company.thread" />
-    </div>
 
-    <div class="sidebar" v-if="company">
-      <div class="company-icon">
-        <img src="https://pbs.twimg.com/profile_images/1150588363503570944/tfnBg-3D_400x400.png" />
+        <Discussion v-if="company && company.thread" :threadId="company.thread" />
       </div>
-      <div class="company-facts">
-        <label>Website</label>
-        <a :href="company.website">
-          <p class="editable small" data-field="website">{{company.website | cleanUrl}}</p>
-        </a>
-        <label>Employees</label>
-        <p class="editable small" data-field="employee_count">{{ company.employee_count || "-" }}</p>
-        <label>Founded</label>
-        <p class="editable small" data-field="founded_date">{{ company.founded_date || "-" }}</p>
-        <label>Twitter</label>
-        <p class="editable small" data-field="twitter">{{ company.twitter || "-" }}</p>
-        <label>Headquarter</label>
-        <p class="editable small" data-field="headquarter">{{ company.headquarter || "-"}}</p>
+
+      <div class="sidebar" v-if="company">
+        <div class="company-facts">
+          <div class="company-info-item">
+            <label>Website</label>
+            <span>
+              <a :href="company.website">{{company.website || "-" | cleanUrl}}</a>
+            </span>
+          </div>
+
+          <div class="company-info-item">
+            <label>Location</label>
+            <span>{{company.location || "Somewhere" }}</span>
+          </div>
+
+          <div class="company-info-item">
+            <label>Social</label>
+            <span>
+              <a
+                v-if="company.twitterHandle"
+                :href="`https://www.twitter.com/${company.twitterHandle}`"
+              >
+                <img src="@/assets/images/twitter.svg" />
+              </a>
+              <a
+                v-if="company.crunchbaseId"
+                :href="`https://www.crunchbase.com/organization/${company.crunchbaseId}`"
+              >
+                <img src="@/assets/images/money.svg" />
+              </a>
+            </span>
+          </div>
+
+          <label>Contribute</label>
+          <Icon icon="pencil" @click="handleEdit" clickable>Edit</Icon>
+        </div>
       </div>
     </div>
+    <!-- <Discussion v-if="company && company.thread" :threadId="company.thread" /> -->
   </div>
 </template>
 
 <script>
+import Icon from '../components/Icon.vue'
+import api from '@/api'
 import Discussion from '@/components/Discussion'
 import Hashtag from '@/components/Hashtag'
-import api from '@/api'
+import { waitForLogin } from '@/mixins'
 
 export default {
   name: 'Company',
-  components: { Discussion, Hashtag },
+  components: {
+    Discussion,
+    Hashtag,
+    Icon,
+  },
   props: {
     slug: { required: true, type: String },
   },
@@ -63,7 +80,7 @@ export default {
     return {
       errors: [],
       company: null,
-      editing: null,
+      defaultLogo: 'https://api.adorable.io/avatars/285/abott@adorable.png',
     }
   },
   created() {
@@ -74,22 +91,8 @@ export default {
       const company = await api.getCompany(this.slug)
       this.company = company
     },
-    handleStartEdit(e) {
-      this.editing = !this.editing
-      document.querySelectorAll('.editable').forEach(node => {
-        node.contentEditable = true
-        node.classList.toggle('editing')
-      })
-    },
-    handleDoneEdit(e) {
-      const payload = {}
-      document.querySelectorAll('.editable').forEach(node => {
-        const value = node.textContent
-        if (value !== '-') {
-          payload[node.dataset.field] = node.textContent
-        }
-      })
-      api.patchCompany(this.company.slug, payload)
+    handleEdit() {
+      this.$router.push({ name: 'CompanyEdit', params: { slug: this.slug } })
     },
   },
   filters: {
@@ -101,33 +104,10 @@ export default {
 </script>
 
 <style lang="scss">
-// #twitter-widget-0 {
-//   width: 100% !important;
-//   // text-align: right;
-// }
-
-.editing {
-}
-.editing {
-  border-left: 1px solid $yellow;
-  padding-left: 0.5rem;
-  color: $dark;
-  background-color: $cream;
-}
-
-.title-edit {
-  display: inline-block;
-  float: right;
-  cursor: pointer;
-}
-
 .company-icon {
-  // position: absolute;
-  // right: 0;
-  // float: right;
   text-align: right;
   img {
-    height: 50px;
+    height: 64px;
   }
 }
 
@@ -135,20 +115,19 @@ export default {
   flex-wrap: wrap;
 }
 
-.company-description {
-  margin-top: 2rem;
-  @include for-large-up {
-    padding-right: 2rem;
-  }
-}
 .company-facts {
+  .company-info-item {
+    margin-bottom: 1rem;
+    label {
+      @extend .small;
+    }
+    span {
+      @extend .small;
+    }
+  }
   margin-top: 1rem;
   @include for-large-up {
     text-align: right;
-  }
-  label {
-    color: $dark;
-    font-weight: 600;
   }
 }
 </style>
