@@ -28,11 +28,14 @@
         </Icon>
         <span class="small flex-right">{{post.createdAt | fromNow}}</span>
       </div>
+
+      <Ribbon :text="post.banner" v-if="post.banner" />
     </template>
   </Card>
 </template>
 
 <script>
+import Ribbon from './Ribbon.vue'
 import api from '@/api'
 import { waitForLogin } from '@/mixins'
 import { toggleHashtag } from '@/mixins'
@@ -44,7 +47,7 @@ import Icon from '@/components/Icon.vue'
 export default {
   name: 'PostCard',
   props: ['post'],
-  components: { Hashtag, Avatar, Card, Icon },
+  components: { Hashtag, Avatar, Card, Icon, Ribbon },
   data() {
     return {
       localClapCount: null,

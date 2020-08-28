@@ -36,6 +36,8 @@ export default {
 
 <style lang="scss" scoped>
 .c-card {
+  overflow: hidden;
+  position: relative;
   display: flex;
   flex-direction: column;
   margin-bottom: 2rem;
@@ -56,9 +58,10 @@ export default {
     // border-bottom: 2px solid $dark;
 
     .c-card__image__cover {
-      min-height: 100px;
+      // min-height: 50px;
+      min-height: 50px;
+      background-color: $cream;
       max-height: 200px;
-      background-color: $light-gray;
       width: 100%;
 
       // Match Card Radius

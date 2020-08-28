@@ -24,14 +24,8 @@
 
       <label class="mt-2">Share</label>
       <div>
-        <Icon icon="twitter" clickable>
-          <!-- Tweet -->
-        </Icon>
-        <!-- </div> -->
-        <!-- <div> -->
-        <Icon icon="linkedin" clickable>
-          <!-- LinkedIn -->
-        </Icon>
+        <Icon icon="twitter" clickable></Icon>
+        <Icon icon="linkedin" clickable></Icon>
       </div>
       <div class="mt-2" v-if="isAuthor">
         <label>Author</label>

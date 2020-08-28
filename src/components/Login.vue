@@ -24,11 +24,17 @@
           <button class="button" type="submit">Login</button>
         </form>-->
         <div class="login-form-social">
-          <div class="button dark icon" @click="redirectGithubLogin()">
+          <div class="button dark icon" @click="oauthRedirect('github')">
             <span class="icon">
               <img alt="Github Logo" class="button-icon" src="@/assets/images/github.svg" />
             </span>
             Login with Github
+          </div>
+          <div class="button linkedin icon" @click="oauthRedirect('linkedin')">
+            <span class="icon">
+              <img alt="Linkedin Logo" class="button-icon" src="@/assets/images/linkedin-login.svg" />
+            </span>
+            Login with LinkedIn
           </div>
         </div>
 
@@ -37,7 +43,9 @@
         <!-- <div class="button">Signup</div> -->
 
         <!-- TODO FORMAT -->
-        <p v-for="err in errors" :key="err">{{err}}</p>
+        <div v-for="err in errors" :key="err">
+          <span class="small muted">{{err}}</span>
+        </div>
       </div>
     </div>
   </Modal>
@@ -45,7 +53,7 @@
 
 <script>
 import api from '../api'
-import { githubAuthUrl } from '../api/github'
+import { githubAuthUrl, linkedinAuthUrl } from '../api/oauth'
 import { popQuery } from '@/utils'
 import Modal from '@/components/Modal'
 import { USERS } from '@/store/users'
@@ -62,7 +70,7 @@ export default {
     }
   },
   mounted() {
-    this.handleGithubCallback(this.$route.query)
+    this.handleOauthCallback(this.$route.query)
   },
   methods: {
     async handleFormSubmit() {
@@ -72,25 +80,44 @@ export default {
       }
       popQuery(this.$router, this.$route.query, 'login')
     },
-    async handleGithubCallback({ code, error }) {
+    async handleOauthCallback(query) {
+      const { code, error, provider } = query
+
       if (error) {
         this.errors.push(error)
         return
       }
 
       if (code) {
-        const error = await api.loginWithGithubCode(code)
-        if (error) {
-          this.errors = error
+        const loginError = await api.loginWithOauthCode(provider, code)
+
+        if (loginError) {
+          this.errors.push(loginError)
         } else {
           this.$store.dispatch(USERS.GET_PROFILE)
+          popQuery(this.$router, this.$route.query, 'state')
+          popQuery(this.$router, this.$route.query, 'provider')
           popQuery(this.$router, this.$route.query, 'login')
           popQuery(this.$router, this.$route.query, 'code')
         }
       }
     },
-    redirectGithubLogin() {
-      window.location.href = githubAuthUrl()
+    buildState(provider) {
+      return JSON.stringify({
+        provider: provider,
+        route: { path: this.$route.path, query: this.$route.query },
+      })
+    },
+    oauthRedirect(provider) {
+      const state = this.buildState(provider)
+      switch (provider) {
+        case 'github':
+          window.location.href = githubAuthUrl(state)
+          break
+        case 'linkedin':
+          window.location.href = linkedinAuthUrl(state)
+          break
+      }
     },
   },
 }
@@ -130,6 +157,9 @@ export default {
     align-items: center;
     justify-content: center;
     .login-form-social {
+      .button {
+        margin-bottom: 1rem;
+      }
     }
   }
 }

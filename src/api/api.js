@@ -92,12 +92,6 @@ class Api {
     return response
   }
 
-  async _getJwtWithGithubCode (code) {
-    this.jwt.clear()
-    const response = await this._fetch("POST", "users/github/login/", { query: { code } })
-    return response
-  }
-
   async _handleTokenResponse (response) {
     if (response.status == 200) {
       const token = await response.json()
@@ -126,8 +120,9 @@ class Api {
   /**
    * @param  {String} code
    */
-  async loginWithGithubCode (code) {
-    const response = await this._getJwtWithGithubCode(code)
+  async loginWithOauthCode (provider, code) {
+    this.jwt.clear()
+    const response = await this._fetch("POST", `users/login/${provider}/`, { query: { code } })
     return this._handleTokenResponse(response)
   }
 

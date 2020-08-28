@@ -4,13 +4,20 @@
       <a href="/" class>
         <img alt="AEC Works Logo" class="logo" src="@/assets/images/logo-black.svg" />
       </a>
-      <ul class="nav-list">
+      <ul class="nav-list flex fill-x">
         <li v-for="route in routes" :key="route.text" class="nav-item">
           <router-link
             tag="a"
             :class="{'active': isActive(route)}"
             :to="{name: route.name}"
           >{{route.text}}</router-link>
+        </li>
+        <li class="nav-item flex-right" v-if="profile">
+          <router-link
+            tag="a"
+            :to="{name: 'Person', params: { slug: profile.slug }}"
+          >{{profile.name}}</router-link>
+          <a href="#" @click="handleLogout()">logout</a>
         </li>
       </ul>
     </div>
@@ -28,6 +35,7 @@ export default {
       routes: [
         { text: 'feed', name: 'PostList' },
         { text: 'companies', name: 'CompanyList' },
+        // { text: 'profile', name: 'Profile' },
         // { text: 'people', name: 'PersonList' },
       ],
     }
@@ -80,6 +88,7 @@ export default {
 
   .nav-list {
     align-items: center;
+
     .nav-item {
       height: 100%;
       display: inline-block;

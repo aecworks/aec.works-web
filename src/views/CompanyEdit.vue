@@ -25,11 +25,11 @@
         <label>Hashtags</label>
         <input type="text" class="fill-x" @input="handleHashtagEdit" :value="company.hashtags" />
         <label>Logo</label>
-        <!-- <input type="text" class="fill-x" v-model="company.logoUrl" /> -->
+        <input type="text" class="fill-x" v-model="company.logoUrl" />
         <input id="image-file" type="file" @change="handleLogoUpload($event)" />
         <!-- <img :src="company.logoUrl" /> -->
         <label>Cover</label>
-        <!-- <input type="text" class="fill-x" v-model="company.coverUrl" /> -->
+        <input type="text" class="fill-x" v-model="company.coverUrl" />
         <input id="image-file" type="file" @change="handleCoverUpload($event)" />
         <!-- <img :src="company.coverUrl" /> -->
 

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import api from '../api'
+// import { handleOauthCallback } from '../api/oauth'
 import Company from '../views/Company'
 import CompanyEdit from '../views/CompanyEdit'
 import CompanyList from '../views/CompanyList'
@@ -81,10 +82,16 @@ const routes = [
     props: true,
   },
   {
-    path: '/profile',
-    name: 'Profile',
-    component: Profile,
-    props: true,
+    path: '/auth/:provider',
+    name: 'Auth',
+    redirect: (to) => {
+      const { code, error, state } = to.query
+      const { provider, route } = JSON.parse(state)
+      return {
+        path: route.path,
+        query: { ...route.query, code, error, provider, login: 1 },
+      }
+    },
   },
 ]
 
@@ -110,5 +117,6 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
+
 
 export default router
