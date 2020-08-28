@@ -13,7 +13,11 @@
           >{{route.text}}</router-link>
         </li>
         <li class="nav-item flex-right" v-if="profile">
-          <router-link tag="a" :to="{name: 'Profile'}">{{profile.name}}</router-link>
+          <router-link
+            tag="a"
+            :to="{name: 'Person', params: { slug: profile.slug }}"
+          >{{profile.name}}</router-link>
+          <a href="#" @click="handleLogout()">logout</a>
         </li>
       </ul>
     </div>

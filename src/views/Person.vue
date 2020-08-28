@@ -9,37 +9,58 @@
         <div class="profile-content flex">
           <div class="profile-bio">
             <p>{{ profile.bio }}</p>
+
+            <label class="mt-2">Location</label>
+            <p class="small muted">{{ profile.location }}</p>
+
+            <!-- TODO Make Social Media Component -->
+            <label>Twitter</label>
+            <p>{{ profile.twitter }}</p>
           </div>
 
           <div class="profile-facts">
             <!-- {{profile.avatarUrl}} -->
             <img class="profile-image" :src="profile.avatarUrl" />
-            <label>Location</label>
-            <p class="small muted">{{ profile.location }}</p>
-            <label>Twitter</label>
-            <p>{{ profile.twitter }}</p>
           </div>
         </div>
 
-        <a
+        <label>Twitter</label>
+        Tweets here
+        <!-- TODO: Twitter Integration -->
+        <!-- <a
           class="twitter-timeline"
           data-height="400"
           data-dnt="true"
           data-theme="light"
           :href="`https://twitter.com/${profile.twitter}`"
-        >Tweets by {{profile.twitter}}</a>
+        >Tweets by {{profile.twitter}}</a>-->
         <!-- data-width="400" -->
+
+        <hr />
+        <div class="profile-controls" v-if="isSelf">
+          <label class="mt-1">Notifications</label>
+          <input type="checkbox" /> Email
+          <input type="checkbox" /> Text
+        </div>
+      </div>
+    </div>
+    <div class="sidebar">
+      <label class="mt-2">Share</label>
+      <div>
+        <Icon icon="twitter" clickable></Icon>
+        <Icon icon="linkedin" clickable></Icon>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Icon from '../components/Icon.vue'
 import api from '@/api'
 
 export default {
   name: 'Person',
-  components: {},
+  components: { Icon },
   props: {
     slug: { required: true, type: String },
   },
@@ -51,6 +72,14 @@ export default {
   },
   created() {
     this.fetchData()
+  },
+  computed: {
+    storeProfile() {
+      return this.$store.state.users.profile || null
+    },
+    isSelf() {
+      return this.storeProfile.slug === this.slug
+    },
   },
   methods: {
     async fetchData() {

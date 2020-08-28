@@ -2,13 +2,15 @@
   <div class="content" v-if="profile">
     <div class="page-header">
       <h2 class="page-title">{{profile.name}}</h2>
-
+      <p>{{profile.name}}</p>
       <div>
+        <div>
+          <img :src="profile.avatarUrl" />
+        </div>
+
         <label class="mt-1">Notifications</label>
         <input type="checkbox" /> Email
         <input type="checkbox" /> Text
-        <label class="mt-1">Sign In As</label>
-        <span>Github | Revoke</span>
       </div>
     </div>
   </div>
