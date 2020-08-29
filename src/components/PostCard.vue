@@ -2,7 +2,8 @@
   <Card :showImage="false">
     <template v-slot>
       <h2>
-        <router-link :to="{ name: 'Post', params: { slug: post.slug }}">{{post.title}}</router-link>
+        <a href @click="goToPost(post)">{{post.title}}</a>
+        <!-- <router-link :to="{ name: 'Post', params: { slug: post.slug }}">{{post.title}}</router-link> -->
       </h2>
 
       <p class="mt-1 post-text" v-html="post.body.slice(0, 120) + '...'"></p>
@@ -20,7 +21,7 @@
       <Avatar class="mt-1" :profile="post.profile" />
 
       <div class="flex mt-2">
-        <Icon :icon="'chat'" class="mr-1">
+        <Icon :icon="'chat'" class="mr-1" @click="handleChatIconClick(post)" clickable>
           <span class="small">{{post.threadSize || 0}}</span>
         </Icon>
         <Icon :icon="'clap'" @click="handleClapClick(post)" clickable>
@@ -57,6 +58,12 @@ export default {
   methods: {
     async handleHashtagClick(name) {
       toggleHashtag(name)
+    },
+    goToPost(post) {
+      this.$router.push({ name: 'Post', params: { slug: post.slug } })
+    },
+    handleChatIconClick(post) {
+      this.goToPost(post) // TODO: Anchor Comments
     },
     async handleClapClick(post) {
       const sound = new Audio(require('@/assets/sounds/effect.mp3'))

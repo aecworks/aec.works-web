@@ -120,9 +120,9 @@ class Api {
   /**
    * @param  {String} code
    */
-  async loginWithOauthCode (provider, code) {
+  async loginWithOauthCode (provider, code, redirectUri) {
     this.jwt.clear()
-    const response = await this._fetch("POST", `users/login/${provider}/`, { query: { code } })
+    const response = await this._fetch("POST", `users/login/${provider}/`, { query: { code, redirect_uri: redirectUri } })
     return this._handleTokenResponse(response)
   }
 
@@ -166,8 +166,8 @@ class Api {
     return this._post(`community/revisions/${revisionId}/approve`)
   }
 
-  putImage (filename, image) {
-    return this._put(`images/upload/${filename}`, { body: image })
+  putImage (file) {
+    return this._put(`images/upload/${file.name}`, { body: file, headers: { 'Content-Type': file.type } })
   }
 
   getHashtags (query) {

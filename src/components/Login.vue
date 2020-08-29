@@ -1,7 +1,12 @@
 
 <template>
   <Modal @clickOutside="$emit('closed')">
-    <div class="login-container fill-y">
+    <div class="login-container">
+      <div class="login-loader flex flex-center flex-center-vertical" v-if="isLoading">
+        <div>
+          <Loader />
+        </div>
+      </div>
       <div class="login-info invert">
         <img alt="AEC Guide Logo" class="logo" src="@/assets/images/logo.svg" />
         <p class="center">Login to join the conversation.</p>
@@ -23,7 +28,7 @@
           <input class="fill-x" type="text" v-model="password" name="username" placeholder="****" />
           <button class="button" type="submit">Login</button>
         </form>-->
-        <div class="login-form-social">
+        <div class="login-form-social flex flex-down">
           <div class="button dark icon" @click="oauthRedirect('github')">
             <span class="icon">
               <img alt="Github Logo" class="button-icon" src="@/assets/images/github.svg" />
@@ -52,21 +57,23 @@
 </template>
 
 <script>
+import Loader from './Loader.vue'
 import api from '../api'
-import { githubAuthUrl, linkedinAuthUrl } from '../api/oauth'
-import { popQuery } from '@/utils'
+import { oauthLoginUrl, callbackUrl } from '../api/oauth'
+import { popQueries } from '@/utils'
 import Modal from '@/components/Modal'
 import { USERS } from '@/store/users'
 
 export default {
   name: 'Login',
-  components: { Modal },
+  components: { Modal, Loader },
   props: [],
   data() {
     return {
       email: '',
       password: '',
       errors: [],
+      isLoading: false,
     }
   },
   mounted() {
@@ -78,7 +85,7 @@ export default {
       if (!error) {
         this.$store.dispatch(USERS.GET_PROFILE)
       }
-      popQuery(this.$router, this.$route.query, 'login')
+      popQueries(this.$router, this.$route.query, ['login'])
     },
     async handleOauthCallback(query) {
       const { code, error, provider } = query
@@ -89,16 +96,16 @@ export default {
       }
 
       if (code) {
-        const loginError = await api.loginWithOauthCode(provider, code)
+        this.isLoading = true
+        const redirectUri = callbackUrl(provider)
+        const loginError = await api.loginWithOauthCode(provider, code, redirectUri)
+        this.isLoading = false
 
         if (loginError) {
           this.errors.push(loginError)
         } else {
           this.$store.dispatch(USERS.GET_PROFILE)
-          popQuery(this.$router, this.$route.query, 'state')
-          popQuery(this.$router, this.$route.query, 'provider')
-          popQuery(this.$router, this.$route.query, 'login')
-          popQuery(this.$router, this.$route.query, 'code')
+          popQueries(this.$router, this.$route.query, ['state', 'provider', 'login', 'code'])
         }
       }
     },
@@ -109,15 +116,9 @@ export default {
       })
     },
     oauthRedirect(provider) {
+      this.isLoading = true
       const state = this.buildState(provider)
-      switch (provider) {
-        case 'github':
-          window.location.href = githubAuthUrl(state)
-          break
-        case 'linkedin':
-          window.location.href = linkedinAuthUrl(state)
-          break
-      }
+      window.location.href = oauthLoginUrl(provider, state)
     },
   },
 }
@@ -127,6 +128,7 @@ export default {
 .login-container {
   display: flex;
   flex-direction: column;
+  position: relative;
 
   @include for-large-up {
     flex-direction: row;
@@ -136,9 +138,17 @@ export default {
     padding: 3rem 1.5rem;
   }
 
+  .login-loader {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: $cream;
+    opacity: 1;
+  }
+
   .login-info {
     @include for-large-up {
-      flex-basis: 50%;
+      // flex-basis: 50%;
     }
     display: flex;
     flex-direction: column;
@@ -148,11 +158,11 @@ export default {
   }
   .login-form {
     @include for-large-up {
-      flex-basis: 50%;
+      // flex-basis: 25%;
     }
 
     display: flex;
-    flex-direction: column;
+    // flex-direction: column;
 
     align-items: center;
     justify-content: center;

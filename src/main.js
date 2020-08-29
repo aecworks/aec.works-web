@@ -19,9 +19,3 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
-
-// window.addEventListener('scroll', debounce(() => {
-//   const dist = document.defaultView.scrollY
-//   document.querySelector('.sidebar').style.marginTop = `${dist}px`
-// }))
-// window.removeEventListener('scroll')

@@ -1,36 +1,35 @@
-export const githubAuthUrl = (state) => {
-  const CLIENT_ID = process.env.VUE_APP_GITHUB_CLIENT_ID
-  console.assert(CLIENT_ID, "github client id not configured")
 
-  const SCOPE = "user:email"
+const GITHUB_CLIENT_ID = process.env.VUE_APP_GITHUB_CLIENT_ID
+const LINKEDIN_CLIENT_ID = process.env.VUE_APP_LINKEDIN_CLIENT_ID
 
-  const options = {
-    client_id: CLIENT_ID,
-    scope: SCOPE,
-    redirect_uri: 'http://localhost:8080/auth/github',
-    state: state
-  }
+console.assert(LINKEDIN_CLIENT_ID, "linkedin client id not configured")
+console.assert(GITHUB_CLIENT_ID, "github client id not configured")
 
-  const queryParams = new URLSearchParams(options).toString()
-  return `https://github.com/login/oauth/authorize?${queryParams}`
 
+export const callbackUrl = (provider) => {
+  return `${window.location.origin}/auth/${provider}`
 }
 
-export const linkedinAuthUrl = (state) => {
-  const CLIENT_ID = process.env.VUE_APP_LINKEDIN_CLIENT_ID
-  console.assert(CLIENT_ID, "github client id not configured")
-
-  const SCOPE = "r_emailaddress r_liteprofile"
-
-  const options = {
-    response_type: "code",
-    client_id: CLIENT_ID,
-    scope: SCOPE,
-    redirect_uri: 'http://localhost:8080/auth/linkedin',
-    state: state
+const providerOptions = {
+  github: {
+    url: "https://github.com/login/oauth/authorize",
+    authParams: {
+      client_id: GITHUB_CLIENT_ID,
+      scope: "user:email",
+    }
+  },
+  linkedin: {
+    url: "https://www.linkedin.com/oauth/v2/authorization",
+    authParams: {
+      client_id: LINKEDIN_CLIENT_ID,
+      scope: "r_emailaddress r_liteprofile",
+      response_type: "code",
+    }
   }
-
-  const queryParams = new URLSearchParams(options).toString()
-  return `https://www.linkedin.com/oauth/v2/authorization?${queryParams}`
 }
 
+export const oauthLoginUrl = (provider, state) => {
+  const { url, authParams } = providerOptions[provider]
+  const queryParams = new URLSearchParams({ ...authParams, state, redirect_uri: callbackUrl(provider) }).toString()
+  return `${url}?${queryParams}`
+}

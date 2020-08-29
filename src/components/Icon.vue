@@ -30,9 +30,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$icon-height: 18px;
 .icon {
   display: inline-block;
+  line-height: $icon-height;
   img {
+    height: $icon-height;
     margin-right: 0.4rem;
   }
 }

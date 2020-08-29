@@ -43,9 +43,11 @@ export default {
   margin-bottom: 2rem;
   width: 100%;
 
-  // @extend .border-thick;
   @extend .border-thin;
   @include shadow-color($dark);
+  // &:hover {
+  //   @include shadow-color($dark);
+  // }
 
   .c-card__content {
     padding: $padding;

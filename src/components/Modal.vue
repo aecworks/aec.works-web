@@ -8,8 +8,6 @@
 </template>
 
 <script>
-// import api from '@/api'
-
 export default {
   name: 'Modal',
   components: {},
@@ -53,11 +51,10 @@ export default {
     @extend .border-thick;
     @include shadow-color($dark);
 
-    // height: 400px;
-    width: 90%;
-
     @include for-large-up {
-      width: 600px;
+      width: initial;
+      height: initial;
+      // width: 600px;
     }
   }
 }

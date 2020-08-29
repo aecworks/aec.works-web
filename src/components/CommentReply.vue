@@ -7,7 +7,7 @@
         @input="handleInput"
         ref="textareaElement"
         class="comment-reply-input fill-x"
-        placeholder="Much thoughts here"
+        placeholder="Comment"
       />
       <Button v-if="commentText" text="Post" @click="handleSubmitClick" />
     </form>
