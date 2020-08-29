@@ -5,11 +5,12 @@
 
 [build.environment]
   VUE_APP_API_URL = "https://api.aec.works"
+  VUE_APP_LINKEDIN_CLIENT_ID="86y7rl9l2go7sl"
+  VUE_APP_GITHUB_CLIENT_ID="6d6767eb4dcc89d70f99"
 
 [context.staging.environment]
   VUE_APP_API_URL = "https://aecworks-api-staging.herokuapp.com"
-
-
+  VUE_APP_LINKEDIN_CLIENT_ID="86y7rl9l2go7sl"
 
 [[redirects]]
   from = "/sitemap.xml"
