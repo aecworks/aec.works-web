@@ -42,7 +42,8 @@
           @done="handleCropDone"
         />
 
-        <img :src="company.coverUrl" />
+        <!-- COVER -->
+        <!-- <img :src="company.coverUrl" /> -->
 
         <Button text="Create Revision" class="mt-2" @click="handleSave" />
         <Button text="Cancel" @click="handleCancel" />
