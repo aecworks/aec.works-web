@@ -25,7 +25,8 @@
         </div>
 
         <label>Hashtags</label>
-        <input type="text" class="fill-x" @input="handleHashtagEdit" :value="company.hashtags" />
+        <span class="muted small mb-1">Comma Separated List</span>
+        <input type="text" class="mt-1 fill-x" @input="handleHashtagEdit" :value="company.hashtags" />
 
         <label class="mt-1">Logo</label>
         <div class="flex flex-down">
@@ -129,10 +130,9 @@ export default {
         website: '',
         twitterHandle: '',
         crunchbaseId: '',
-        hashtags: '',
         logoUrl: '',
         coverUrl: '',
-        text: '',
+        hashtags: [],
       },
     }
   },

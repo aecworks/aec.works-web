@@ -81,6 +81,12 @@ export default {
   bottom: -50px;
   width: 80px;
   height: 80px;
-  @extend .border-thick;
+  @extend .border-thin;
+  // Custom:
+  border-radius: 5px;
+  border-color: $dark-gray;
+  border-width: 1px;
+  box-shadow: 0 5px 10px -10px rgba(0, 0, 0, 0.25);
+  background-color: white;
 }
 </style>
