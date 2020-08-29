@@ -10,7 +10,6 @@ export const popQueries = (router, query, keys) => {
   router.replace({ query: queryCopy })
 }
 
-
 export const debounce = (func, wait = 100) => {
   let timeout
   return function (...args) {
@@ -28,9 +27,8 @@ export const fileToBase64 = (file) => new Promise((resolve, reject) => {
   reader.onerror = error => reject(error)
 })
 
-
 export const filePrompt = () => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const input = document.createElement('input');
     input.type = 'file';
     input.onchange = e => {
@@ -41,13 +39,11 @@ export const filePrompt = () => {
   })
 }
 
-
-
 export const subscribePaste = (callback) => {
   document.onpaste = function (event) {
-    var items = (event.clipboardData || event.originalEvent.clipboardData).items
+    const items = (event.clipboardData || event.originalEvent.clipboardData).items
     for (let index in items) {
-      var item = items[index]
+      const item = items[index]
       if (item.kind === 'file') {
         const file = item.getAsFile();
         if (file.type === "image/png" || file.type === "image/jpge") {

@@ -11,7 +11,9 @@
       <!-- Company Name -->
       <h2 class="mt-1">
         <!-- TODO throwing router error -->
-        <router-link :to="{ name: 'Company', params: { slug: company.slug } }">{{company.name}}</router-link>
+        <router-link
+          :to="{ name: 'Company', params: { slug: company.slug ||'?' } }"
+        >{{company.name}}</router-link>
       </h2>
 
       <!-- Company Description -->

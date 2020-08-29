@@ -11,7 +11,6 @@
 export default {
   name: 'IconCounter',
   props: {
-    onClick: Function,
     clickable: {
       type: Boolean,
       default: false,

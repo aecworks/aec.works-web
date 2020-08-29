@@ -40,7 +40,7 @@
           </div>
         </div>
 
-        <Discussion v-if="company && company.thread" :threadId="company.thread" />
+        <Discussion v-if="company && company.threadId" :threadId="company.threadId" />
       </div>
 
       <div class="sidebar" v-if="company">
@@ -64,7 +64,6 @@
         <Icon icon="pencil" @click="handleEdit" clickable>Edit</Icon>
       </div>
     </div>
-    <!-- <Discussion v-if="company && company.thread" :threadId="company.thread" /> -->
   </div>
 </template>
 
@@ -83,7 +82,7 @@ export default {
     Icon,
   },
   props: {
-    slug: { required: true, type: String },
+    slug: { required: false, type: String },
   },
   data() {
     return {

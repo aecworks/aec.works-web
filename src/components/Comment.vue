@@ -4,8 +4,10 @@
       <div v-if="comment.level != 0" class="comment-prefix" :class="{'not-first': index !== 0}" />
       <div class="fill-x">
         <h4>
-          {{comment.profile.name || "No One"}}
-          <span class="comment-timestamp">{{relativeTimestamp}}</span>
+          {{ comment.profile.name || "No One" }}
+          <span
+            class="comment-timestamp"
+          >{{ comment.createdAt | fromNow }}</span>
         </h4>
 
         <p class="comment-text">{{comment.text}}</p>
@@ -16,7 +18,12 @@
         <div class="flex flex-center comment-footer">
           <Button kind="text" text="Reply" @click="isReplying = true" />
           <IconCounter :icon="'chat'" :count="comment.replyCount" />
-          <IconCounter :icon="'clap'" :count="comment.clapCount" />
+          <IconCounter
+            :icon="'clap'"
+            :count="comment.clapCount || localClapCount"
+            @click="handleClap(comment)"
+            clickable
+          />
         </div>
       </div>
     </div>
@@ -35,7 +42,7 @@ import CommentReply from './CommentReply.vue'
 import Button from './forms/Button.vue'
 import api from '@/api'
 import IconCounter from '@/components/IconCounter'
-import moment from 'moment'
+import { waitForLogin } from '@/mixins'
 
 export default {
   name: 'Comment',
@@ -45,8 +52,10 @@ export default {
     return {
       comments: [],
       offset: 0,
+      count: 0,
       isReplying: false,
       isLoading: false,
+      localClapCount: 0,
       // expanded: false, TODO
     }
   },
@@ -60,15 +69,16 @@ export default {
     hasReplies() {
       return this.comment.replyCount > 0
     },
-    relativeTimestamp() {
-      return moment(this.comment.createdAt).fromNow()
+    hasMore() {
+      return this.count > this.comments.length
     },
   },
   methods: {
     async fetchItems(offset) {
-      const { results: comments } = await api.getCommentsByParentId(this.comment.id, { offset })
-      this.comments = [...this.comments, ...comments]
-      this.offset = this.offset + comments.length
+      const { results, count } = await api.getCommentsByParentId(this.comment.id, { offset })
+      this.comments = [...this.comments, ...results]
+      this.offset = this.offset + results.length
+      this.count = results
     },
     handleReplied() {
       this.isReplying = false
@@ -79,8 +89,14 @@ export default {
         })
       }, 1000)
     },
+    async handleClap({ id }) {
+      await waitForLogin()
+      const clapCount = await api.commentClap(id)
+      this.localClapCount = clapCount
+    },
     onVisible({ going }) {
-      if (going === 'in') {
+      // TODO: Make paginated loading util
+      if (going === 'in' && this.hasMore) {
         this.fetchItems(this.offset)
       }
     },

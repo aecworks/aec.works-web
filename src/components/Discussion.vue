@@ -31,6 +31,7 @@ export default {
     return {
       comments: [],
       offset: 0,
+      count: 0,
       isLoading: false,
     }
   },
@@ -39,14 +40,20 @@ export default {
       this.fetchItems(0)
     }
   },
+  computed: {
+    hasMore() {
+      return this.count > this.comments.length
+    },
+  },
   methods: {
-    async fetchItems(offset, limit = 3) {
-      const { results: comments } = await api.getCommentsByThreadId(this.threadId, {
+    async fetchItems(offset, limit = 5) {
+      const { results, count } = await api.getCommentsByThreadId(this.threadId, {
         offset,
         limit,
       })
-      this.comments = [...this.comments, ...comments]
-      this.offset = this.offset + comments.length
+      this.comments = [...this.comments, ...results]
+      this.offset = this.offset + results.length
+      this.count = count
     },
     async handleReplied() {
       this.isLoading = true
@@ -57,7 +64,8 @@ export default {
       }, 1000)
     },
     onVisible({ going }) {
-      if (going === 'in') {
+      // TODO: Make paginated loading util
+      if (going === 'in' && this.hasMore) {
         this.fetchItems(this.offset)
       }
     },

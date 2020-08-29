@@ -12,7 +12,7 @@
         <Hashtag v-for="slug in post.hashtags" :slug="slug" :key="slug" />
       </div>
 
-      <Discussion :threadId="post.thread" />
+      <Discussion :threadId="post.threadId" />
     </div>
     <div class="sidebar">
       <div>

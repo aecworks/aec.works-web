@@ -24,8 +24,9 @@
           </div>
         </div>
 
-        <label>Twitter</label>
-        Tweets here
+        <span class="muted">[ profile settings will come here ]</span>
+        <!-- <label>Twitter</label>
+        Tweets here-->
         <!-- TODO: Twitter Integration -->
         <!-- <a
           class="twitter-timeline"

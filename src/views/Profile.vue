@@ -9,8 +9,9 @@
         </div>
 
         <label class="mt-1">Notifications</label>
-        <input type="checkbox" /> Email
-        <input type="checkbox" /> Text
+        <span class="muted">[ profile settings will come here ]</span>
+        <!-- <input type="checkbox" /> Email
+        <input type="checkbox" /> Text-->
       </div>
     </div>
   </div>

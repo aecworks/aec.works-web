@@ -11,14 +11,13 @@ import Post from '../views/Post'
 import PostEdit from '../views/PostEdit'
 import PersonList from '../views/PersonList'
 import Person from '../views/Person'
-import Profile from '../views/Profile'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    redirect: { name: 'PostList' }
+    redirect: { name: 'CompanyList' }
   },
   {
     path: '/companies',
@@ -36,6 +35,7 @@ const routes = [
     path: '/companies/new',
     name: 'CompanyNew',
     component: CompanyEdit,
+    props: false,
     meta: { requiresAuth: true }
   },
   {

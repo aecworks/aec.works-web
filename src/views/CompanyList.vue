@@ -72,17 +72,18 @@ export default {
       this.items = [...this.items, ...items]
       this.offset = this.offset + items.length
     },
-    onVisible({ going }) {
-      if (going === 'in') {
-        this.fetchItems(this.offset, this.$route.query.hashtag, this.searchQuery)
-      }
-    },
     handleSearchInput() {
       this.items = []
       this.fetchItems(0, this.$route.query.hashtag, this.searchQuery)
     },
     handleAdd() {
       this.$router.push({ name: 'CompanyNew' })
+    },
+    onVisible({ going }) {
+      // TODO: Make paginated loading util
+      if (going === 'in') {
+        this.fetchItems(this.offset, this.$route.query.hashtag, this.searchQuery)
+      }
     },
   },
 }

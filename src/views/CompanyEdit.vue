@@ -7,7 +7,7 @@
         <label>Name</label>
         <input type="text" class="fill-x" v-model="company.name" />
         <label>Description</label>
-        <input type="text" class="fill-x" v-model="company.description" />
+        <textarea type="text" class="fill-x" v-model="company.description" rows="3" />
         <label>Location</label>
         <input type="text" class="fill-x" v-model="company.location" />
         <label>Website</label>
@@ -44,8 +44,7 @@
 
         <!-- COVER -->
         <!-- <img :src="company.coverUrl" /> -->
-
-        <Button text="Create Revision" class="mt-2" @click="handleSave" />
+        <Button :text="isEditing ? 'Create Revision' : 'Create'" class="mt-2" @click="handleSave" />
         <Button text="Cancel" @click="handleCancel" />
       </form>
       <div class="mt-3">
@@ -87,7 +86,7 @@ export default {
   data() {
     return {
       croppingLogo: false,
-      errors: [],
+      errors: {},
       revisions: [],
       company: {
         name: '',
@@ -121,12 +120,20 @@ export default {
   methods: {
     async handleSave() {
       await waitForLogin()
-      const payload = { ...this.company, ...this.uploads }
-      delete payload.logo // Remove Logo Url
-      delete payload.cover // Remove Logo Url
-
-      await api.postCompanyRevision(this.company.slug, payload)
-      this.revisions = await api.getCompanyRevisions(this.slug)
+      if (this.isEditing) {
+        // Is Editing Company
+        await api.postCompanyRevision(this.company.slug, this.company)
+        this.revisions = await api.getCompanyRevisions(this.slug)
+      } else {
+        // Is Creating New
+        const response = await api.postCompany(this.company)
+        if (!response.errors) {
+          const company = response
+          this.$router.push({ name: 'Company', params: { slug: company.slug } })
+        } else {
+          this.errors = response.errors
+        }
+      }
     },
 
     handleCancel() {

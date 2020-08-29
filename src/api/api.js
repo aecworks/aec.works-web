@@ -158,6 +158,10 @@ class Api {
     return this._get(`community/companies/${slug}/revisions/`)
   }
 
+  postCompany (company) {
+    return this._post(`community/companies/`, { body: company })
+  }
+
   postCompanyRevision (slug, company) {
     return this._post(`community/companies/${slug}/revisions/`, { body: company })
   }
@@ -208,6 +212,9 @@ class Api {
 
   postCompanyClap (slug) {
     return this._post(`community/companies/${slug}/clap/`)
+  }
+  commentClap (id) {
+    return this._post(`community/comments/${id}/clap/`)
   }
 
 }

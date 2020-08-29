@@ -26,14 +26,12 @@
       <label class="mt-2">Contribute</label>
       <Icon icon="pencil" @click="handleAdd" clickable>Write</Icon>
       <label class="mt-2">Recent Comments</label>
-      <!-- <Avatar v-for="post in items" :profile="post.profile" :key="post.id"></Avatar> -->
     </div>
   </div>
 </template>
 
 <script>
 import Hashtag from '../components/Hashtag.vue'
-import Avatar from '../components/Avatar.vue'
 import Icon from '../components/Icon.vue'
 import TextInput from '../components/forms/TextInput.vue'
 import Loader from '../components/Loader.vue'
@@ -79,17 +77,18 @@ export default {
       this.items = [...this.items, ...items]
       this.offset = this.offset + items.length
     },
-    onVisible({ going }) {
-      if (going === 'in') {
-        this.fetchItems(this.offset)
-      }
-    },
     handleSearchInput() {
       this.items = []
       this.fetchItems(0, this.$route.query.hashtag, this.searchQuery)
     },
     handleAdd() {
       this.$router.push({ name: 'PostNew' })
+    },
+    onVisible({ going }) {
+      // TODO: Make paginated loading util
+      if (going === 'in') {
+        this.fetchItems(this.offset)
+      }
     },
   },
 }

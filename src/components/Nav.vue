@@ -11,6 +11,7 @@
             :class="{'active': isActive(route)}"
             :to="{name: route.name}"
           >{{route.text}}</router-link>
+          <span class="ml-1 muted small">{{route.muted}}</span>
         </li>
         <li class="nav-item flex-right" v-if="profile">
           <router-link
@@ -35,10 +36,8 @@ export default {
     return {
       navExpanded: false,
       routes: [
-        { text: 'feed', name: 'PostList' },
         { text: 'companies', name: 'CompanyList' },
-        // { text: 'profile', name: 'Profile' },
-        // { text: 'people', name: 'PersonList' },
+        { text: 'feed', name: 'PostList', muted: '( beta )' },
       ],
     }
   },
