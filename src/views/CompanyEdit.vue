@@ -24,16 +24,27 @@
         </div>
         <label>Hashtags</label>
         <input type="text" class="fill-x" @input="handleHashtagEdit" :value="company.hashtags" />
+
         <label>Logo</label>
         <input type="text" class="fill-x" v-model="company.logoUrl" />
-        <input id="image-file" type="file" @change="handleLogoUpload($event)" />
-        <!-- <img :src="company.logoUrl" /> -->
-        <label>Cover</label>
-        <input type="text" class="fill-x" v-model="company.coverUrl" />
-        <input id="image-file" type="file" @change="handleCoverUpload($event)" />
-        <!-- <img :src="company.coverUrl" /> -->
+        <!-- <input id="image-file" type="file" @change="handleLogoUpload($event)" /> -->
 
-        <Button text="Save" class="mr-1" @click="handleSave" />
+        <div class="company-logo flex flex-center">
+          <img :src="company.logoUrl" alt />
+          <div class="ml-1">
+            <Button text="Upload" kind="text" @click="handleLogoFileSet" />
+            <Button text="Remove" kind="text" @click="company.logoUrl=''" />
+          </div>
+        </div>
+        <Cropper
+          :imgUrl="company.logoUrl"
+          v-if="company.logoUrl && croppingLogo"
+          @done="handleCropDone"
+        />
+
+        <img :src="company.coverUrl" />
+
+        <Button text="Create Revision" class="mt-2" @click="handleSave" />
         <Button text="Cancel" @click="handleCancel" />
       </form>
       <div class="mt-3">
@@ -43,13 +54,12 @@
     </div>
     <div class="sidebar">
       <div class="revisions" v-for="rev in revisions" :key="rev.id">
-        <Avatar :profile="rev.createdBy" />
-        <span>{{rev.createdAt | calendar }}</span>
+        <h3 class="mb-2">Revisions</h3>
+        <h5>{{rev.createdAt | calendar }}</h5>
+        <span class="muted small">By {{rev.createdBy.name}}</span>
         <div>
-          <a @click="handleRevisionApprove(rev.id)" href="#">Apply</a>
-        </div>
-        <div>
-          <a @click="showRevision(rev.id)" href="#">Show</a>
+          <Button text="Show" kind="text" @click="showRevision(rev.id)" />
+          <Button text="Apply" kind="text" @click="handleRevisionApprove(rev.id)" />
         </div>
       </div>
     </div>
@@ -57,15 +67,16 @@
 </template>
 
 <script>
-import CompanyCard from '../components/CompanyCard.vue'
+import Cropper from '../components/Cropper.vue'
 import Button from '../components/forms/Button.vue'
-import Avatar from '../components/Avatar.vue'
+import CompanyCard from '../components/CompanyCard.vue'
 import api from '@/api'
 import { waitForLogin } from '@/mixins'
+import { filePrompt, fileToBase64 } from '@/utils'
 
 export default {
   name: 'Company',
-  components: { Avatar, Button, CompanyCard },
+  components: { Button, CompanyCard, Cropper },
   props: {
     slug: {
       required: false,
@@ -74,6 +85,7 @@ export default {
   },
   data() {
     return {
+      croppingLogo: false,
       errors: [],
       revisions: [],
       company: {
@@ -121,17 +133,16 @@ export default {
     handleHashtagEdit(e) {
       this.company.hashtags = e.target.value.split(',')
     },
-    async handleFileUploadEvent(event) {
-      const file = event.target.files[0]
-      return await api.putImage(file.name, file)
+    async handleLogoFileSet() {
+      const file = await filePrompt()
+      const dataUri = await fileToBase64(file)
+      this.company.logoUrl = dataUri
+      this.croppingLogo = true
     },
-    async handleLogoUpload(event) {
-      const image = await this.handleFileUploadEvent(event)
+    async handleCropDone(file) {
+      const image = await api.putImage(file, file, file.type)
       this.company.logoUrl = image.url
-    },
-    async handleCoverUpload(event) {
-      const image = await this.handleFileUploadEvent(event)
-      this.company.coverUrl = image.url
+      this.croppingLogo = false
     },
     async handleRevisionApprove(revisionId) {
       const revision = await api.postCompanyRevisionApprove(revisionId)
@@ -151,11 +162,11 @@ export default {
 </script>
 
 <style lang="scss">
-.company-icon {
-  text-align: right;
-  img {
-    height: 64px;
-  }
+.company-logo img {
+  width: 60px;
+  height: 60px;
+  @extend .border-thick;
+  background-color: white;
 }
 
 @include for-large-down {

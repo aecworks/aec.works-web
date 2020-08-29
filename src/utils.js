@@ -28,3 +28,36 @@ export const fileToBase64 = (file) => new Promise((resolve, reject) => {
   reader.onerror = error => reject(error)
 })
 
+
+// document.onpaste = function(event){
+//   var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+//   console.log(JSON.stringify(items)); // will give you the mime types
+//   for (index in items) {
+//     var item = items[index];
+//     if (item.kind === 'file') {
+//       var blob = item.getAsFile();
+//       var reader = new FileReader();
+//       reader.onload = function(event){
+//         console.log(event.target.result)}; // data url!
+//       reader.readAsDataURL(blob);
+//     }
+//   }
+// }
+export const filePrompt = () => {
+  return new Promise((resolve, reject) => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.onchange = e => {
+      const file = e.target.files[0];
+      resolve(file)
+      // var reader = new FileReader();
+      // reader.readAsDataURL(file); // this is reading as data url
+      // reader.onload = readerEvent => {
+      //     var content = readerEvent.target.result; // this is the content!
+      //     document.querySelector('#content').style.backgroundImage = 'url('+ content +')';
+      // }
+    }
+    input.click();
+  })
+}
+

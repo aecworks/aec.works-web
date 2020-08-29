@@ -166,8 +166,8 @@ class Api {
     return this._post(`community/revisions/${revisionId}/approve`)
   }
 
-  putImage (filename, image) {
-    return this._put(`images/upload/${filename}`, { body: image })
+  putImage (file) {
+    return this._put(`images/upload/${file.name}`, { body: file, headers: { 'Content-Type': file.type } })
   }
 
   getHashtags (query) {

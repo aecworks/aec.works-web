@@ -3,13 +3,10 @@
     display: inline-block;
     padding: $padding-xs $padding-md;
     font-size: $font-size-p;
+    margin-right: 1rem;
 
-    // .dark {
     background-color: $yellow;
     color: dark;
-    // }
-
-    // margin-right: 1rem;
 
     @extend .border-thin;
     &:hover{
@@ -47,6 +44,8 @@
 // Requires div > span
 .button-text {
     cursor: pointer;
+    display: inline-block;
+    margin-right: 1rem;
     span {
         border-bottom: 2px solid $yellow;
         padding-bottom: 1px;
@@ -54,6 +53,4 @@
             border-bottom-color: $dark;
         }
     }
-    // text-decoration: underline;
-    // text-decoration-color: $yellow;
 }
