@@ -17,6 +17,8 @@
             tag="a"
             :to="{name: 'Person', params: { slug: profile.slug }}"
           >{{profile.name}}</router-link>
+        </li>
+        <li class="nav-item" v-if="profile">
           <a href="#" @click="handleLogout()">logout</a>
         </li>
       </ul>

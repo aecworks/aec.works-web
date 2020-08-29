@@ -2,7 +2,7 @@
 <template>
   <Modal @clickOutside="$emit('closed')">
     <div class="login-container fill-y">
-      <div class="login-loader flex flex-center" v-if="isLoading">
+      <div class="login-loader flex flex-center flex-center-vertical" v-if="isLoading">
         <div>
           <Loader />
         </div>

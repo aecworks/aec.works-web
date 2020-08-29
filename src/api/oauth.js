@@ -7,7 +7,7 @@ console.assert(GITHUB_CLIENT_ID, "github client id not configured")
 
 
 export const callbackUrl = (provider) => {
-  return `http://localhost:8080/auth/${provider}`
+  return `${window.location.origin}/auth/${provider}`
 }
 
 const providerOptions = {

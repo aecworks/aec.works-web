@@ -68,6 +68,9 @@
 
   &.flex-center {
     align-items: center;
+    // justify-content: center;
+  }
+  &.flex-center-vertical {
     justify-content: center;
   }
 

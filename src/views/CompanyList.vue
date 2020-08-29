@@ -19,7 +19,7 @@
         placeholder="search"
       />
       <!-- TODO -->
-      <Icon v-if="true" icon="pencil" @click="handleAdd" clickable>Add Company</Icon>
+      <Icon v-if="true" class="mt-2" icon="pencil" @click="handleAdd" clickable>Add Company</Icon>
     </div>
   </div>
 </template>

@@ -16,20 +16,22 @@
               <a :href="company.website">{{company.website || "-" | cleanUrl}}</a>
 
               <label class="mt-2">Social Media</label>
-              <span>
+              <div class="mt">
                 <a
                   v-if="company.twitterHandle"
                   :href="`https://www.twitter.com/${company.twitterHandle}`"
                 >
-                  <img src="@/assets/images/twitter.svg" />
+                  <!-- <img src="@/assets/images/twitter.svg" /> -->
+                  <Icon icon="twitter" clickable></Icon>
                 </a>
                 <a
                   v-if="company.crunchbaseId"
                   :href="`https://www.crunchbase.com/organization/${company.crunchbaseId}`"
                 >
-                  <img src="@/assets/images/money.svg" />
+                  <!-- <img src="@/assets/images/money.svg" /> -->
+                  <Icon icon="money" clickable></Icon>
                 </a>
-              </span>
+              </div>
             </div>
 
             <div class="mt-2">

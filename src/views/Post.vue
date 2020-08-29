@@ -18,14 +18,16 @@
       <div>
         <Icon icon="clap" @click="handleClap(post)" clickable>{{localClapCount || post.clapCount}}</Icon>
       </div>
-      <div>
+      <div class="mt-1">
         <Icon icon="chat">{{post.threadSize || 0}}</Icon>
       </div>
 
       <label class="mt-2">Share</label>
-      <div>
-        <Icon icon="twitter" clickable></Icon>
-        <Icon icon="linkedin" clickable></Icon>
+      <div class="mt-1">
+        <div>
+          <Icon icon="twitter" clickable></Icon>
+          <Icon icon="linkedin" clickable></Icon>
+        </div>
       </div>
       <div class="mt-2" v-if="isAuthor">
         <label>Author</label>
