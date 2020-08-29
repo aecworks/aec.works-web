@@ -8,8 +8,6 @@
 </template>
 
 <script>
-// import api from '@/api'
-
 export default {
   name: 'Modal',
   components: {},

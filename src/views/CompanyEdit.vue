@@ -12,6 +12,7 @@
         <input type="text" class="fill-x" v-model="company.location" />
         <label>Website</label>
         <input type="text" class="fill-x" v-model="company.website" />
+
         <div class="flex">
           <div class="fill-x">
             <label>Twitter handle</label>
@@ -22,19 +23,18 @@
             <input type="text" class="fill-x" v-model="company.crunchbaseId" />
           </div>
         </div>
+
         <label>Hashtags</label>
         <input type="text" class="fill-x" @input="handleHashtagEdit" :value="company.hashtags" />
 
         <label>Logo</label>
-        <input type="text" class="fill-x" v-model="company.logoUrl" />
-        <!-- <input id="image-file" type="file" @change="handleLogoUpload($event)" /> -->
-
         <div class="company-logo flex flex-center">
           <img :src="company.logoUrl" alt />
           <div class="ml-1">
             <Button text="Upload" kind="text" @click="handleLogoFileSet" />
             <Button text="Remove" kind="text" @click="company.logoUrl=''" />
           </div>
+          <span class="small muted">PS: You can paste from clipboard</span>
         </div>
         <Cropper
           :imgUrl="company.logoUrl"
@@ -72,7 +72,7 @@ import Button from '../components/forms/Button.vue'
 import CompanyCard from '../components/CompanyCard.vue'
 import api from '@/api'
 import { waitForLogin } from '@/mixins'
-import { filePrompt, fileToBase64 } from '@/utils'
+import { filePrompt, fileToBase64, subscribePaste, unsubscribePaste } from '@/utils'
 
 export default {
   name: 'Company',
@@ -103,10 +103,14 @@ export default {
     }
   },
   async created() {
+    subscribePaste(this.handlePaste)
     if (this.isEditing) {
       this.company = await api.getCompany(this.slug)
       this.revisions = await api.getCompanyRevisions(this.slug)
     }
+  },
+  destroyed() {
+    unsubscribePaste()
   },
   computed: {
     isEditing() {
@@ -123,6 +127,7 @@ export default {
       await api.postCompanyRevision(this.company.slug, payload)
       this.revisions = await api.getCompanyRevisions(this.slug)
     },
+
     handleCancel() {
       if (this.isEditing) {
         this.$router.push({ name: 'Company', params: { slug: this.slug } })
@@ -130,25 +135,36 @@ export default {
         this.$router.push({ name: 'CompanyList' })
       }
     },
+
     handleHashtagEdit(e) {
       this.company.hashtags = e.target.value.split(',')
     },
+
+    async handlePaste(file) {
+      const dataUri = await fileToBase64(file)
+      this.company.logoUrl = dataUri
+      this.croppingLogo = true
+    },
+
     async handleLogoFileSet() {
       const file = await filePrompt()
       const dataUri = await fileToBase64(file)
       this.company.logoUrl = dataUri
       this.croppingLogo = true
     },
+
     async handleCropDone(file) {
       const image = await api.putImage(file, file, file.type)
       this.company.logoUrl = image.url
       this.croppingLogo = false
     },
+
     async handleRevisionApprove(revisionId) {
       const revision = await api.postCompanyRevisionApprove(revisionId)
       this.revisions = [...this.revisions.filter(({ id }) => id !== revisionId), revision]
       this.company = await api.getCompany(this.slug)
     },
+
     showRevision(revisionId) {
       this.company = this.revisions.find(({ id }) => id === revisionId)
     },
