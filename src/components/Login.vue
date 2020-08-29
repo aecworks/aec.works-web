@@ -1,7 +1,7 @@
 
 <template>
   <Modal @clickOutside="$emit('closed')">
-    <div class="login-container fill-y">
+    <div class="login-container">
       <div class="login-loader flex flex-center flex-center-vertical" v-if="isLoading">
         <div>
           <Loader />
@@ -28,7 +28,7 @@
           <input class="fill-x" type="text" v-model="password" name="username" placeholder="****" />
           <button class="button" type="submit">Login</button>
         </form>-->
-        <div class="login-form-social">
+        <div class="login-form-social flex flex-down">
           <div class="button dark icon" @click="oauthRedirect('github')">
             <span class="icon">
               <img alt="Github Logo" class="button-icon" src="@/assets/images/github.svg" />
@@ -148,7 +148,7 @@ export default {
 
   .login-info {
     @include for-large-up {
-      flex-basis: 50%;
+      // flex-basis: 50%;
     }
     display: flex;
     flex-direction: column;
@@ -158,11 +158,11 @@ export default {
   }
   .login-form {
     @include for-large-up {
-      flex-basis: 50%;
+      // flex-basis: 25%;
     }
 
     display: flex;
-    flex-direction: column;
+    // flex-direction: column;
 
     align-items: center;
     justify-content: center;

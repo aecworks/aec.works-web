@@ -54,8 +54,9 @@ export default {
     @include shadow-color($dark);
 
     @include for-large-up {
+      width: initial;
+      height: initial;
       // width: 600px;
-      // width: initial;
     }
   }
 }
