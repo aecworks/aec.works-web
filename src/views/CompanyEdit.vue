@@ -42,7 +42,7 @@
         <label class="mt-1">Cover</label>
         <div class="flex flex-down">
           <div class="company-cover">
-            <!-- <img :src="company.coverUrl" alt /> -->
+            <img :src="company.coverUrl" alt />
           </div>
           <div>
             <Button text="Upload" kind="text" @click="startCrop(imgFieldNames.coverUrl)" />
@@ -50,7 +50,12 @@
             <Button text="Remove" kind="text" @click="company.coverUrl=''" />
           </div>
         </div>
-        <Cropper :imgUrl="company[croppingField]" v-if="croppingField" @done="handleCropDone" />
+        <Cropper
+          v-if="croppingField"
+          :imgUrl="company[croppingField]"
+          :cropRatio="cropRatio"
+          @done="handleCropDone"
+        />
 
         <Modal v-if="pastingField" @clickOutside="endPaste">
           <div class="section flex flex-down flex-center">
@@ -67,7 +72,7 @@
       <div class="mt-3">
         <h3>Preview</h3>
         <!-- zindex moves it above crop after insertion -->
-        <CompanyCard style="z-index:-1;" :company="company" />
+        <CompanyCard :company="company" />
       </div>
     </div>
     <div class="sidebar">
@@ -109,6 +114,7 @@ export default {
         coverUrl: 'coverUrl',
         logoUrl: 'logoUrl',
       },
+      cropRatio: 1,
       croppingField: false,
       pastingField: null,
       errors: {},
@@ -190,6 +196,7 @@ export default {
       const file = await filePrompt()
       const dataUri = await fileToBase64(file)
       this.company[fieldName] = dataUri
+      this.cropRatio = fieldName == this.imgFieldNames.logoUrl ? 1 : 0.5
       this.croppingField = fieldName
     },
 

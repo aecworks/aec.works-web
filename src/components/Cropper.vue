@@ -20,15 +20,20 @@ import 'croppr/dist/croppr.css'
 export default {
   name: 'Crop',
   components: { Modal, Loader },
-  props: ['imgUrl'],
+  props: {
+    imgUrl: {
+      type: String,
+      required: true,
+    },
+    cropRatio: {
+      type: Number,
+      required: true,
+    },
+  },
   data() {
     return {
       isLoading: true,
       croppr: null,
-      ratio: {
-        type: Number,
-        required: true,
-      },
     }
   },
   mounted() {
@@ -39,9 +44,10 @@ export default {
         if (this.$refs.img.naturalWidth > 0 && this.$refs.img.naturalHeight > 0) {
           clearInterval(interval)
           this.isLoading = false
+          console.log(this.cropRatio)
           this.$nextTick(() => {
             this.croppr = new Croppr('#img-crop', {
-              aspectRatio: 1,
+              aspectRatio: this.cropRatio,
               minSize: [200, 200, 'px'],
               startSize: [100, 100, '%'],
             })
