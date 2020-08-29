@@ -120,9 +120,9 @@ class Api {
   /**
    * @param  {String} code
    */
-  async loginWithOauthCode (provider, code) {
+  async loginWithOauthCode (provider, code, redirectUri) {
     this.jwt.clear()
-    const response = await this._fetch("POST", `users/login/${provider}/`, { query: { code } })
+    const response = await this._fetch("POST", `users/login/${provider}/`, { query: { code, redirect_uri: redirectUri } })
     return this._handleTokenResponse(response)
   }
 

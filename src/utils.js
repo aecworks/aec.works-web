@@ -4,6 +4,12 @@ export const popQuery = (router, query, key) => {
   router.replace({ query: queryCopy })
 }
 
+export const popQueries = (router, query, keys) => {
+  const queryCopy = Object.assign({}, query)
+  keys.forEach(key => delete queryCopy[key])
+  router.replace({ query: queryCopy })
+}
+
 
 export const debounce = (func, wait = 100) => {
   let timeout
