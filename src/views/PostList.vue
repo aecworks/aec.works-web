@@ -3,6 +3,7 @@
     <div class="page">
       <div class="page-content">
         <Loader v-if="isLoading" />
+        <PostEditComponent v-if="isEditing" @cancel="isEditing = false" />
         <PostCard
           v-for="(post, index) in items"
           :key="post.slug"
@@ -31,6 +32,7 @@
 </template>
 
 <script>
+import PostEditComponent from '../components/PostEditComponent.vue'
 import Hashtag from '../components/Hashtag.vue'
 import Icon from '../components/Icon.vue'
 import TextInput from '../components/forms/TextInput.vue'
@@ -46,12 +48,14 @@ export default {
     TextInput,
     Icon,
     Hashtag,
+    PostEditComponent,
   },
   data() {
     return {
       items: [],
       offset: 0,
       isLoading: true,
+      isEditing: false,
       searchQuery: '',
     }
   },
@@ -82,7 +86,8 @@ export default {
       this.fetchItems(0, this.$route.query.hashtag, this.searchQuery)
     },
     handleAdd() {
-      this.$router.push({ name: 'PostNew' })
+      this.isEditing = true
+      // this.$router.push({ name: 'PostNew' })
     },
     onVisible({ going }) {
       // TODO: Make paginated loading util

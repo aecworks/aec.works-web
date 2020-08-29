@@ -23,6 +23,7 @@ export default {
       editorInstance: null,
       editorOpts: {
         placeholder: 'Your words go here - select text to format it',
+        bounds: document.body,
         modules: {
           toolbar: [
             // [{ header: [1, 2, false] }],
@@ -93,9 +94,12 @@ export default {
 #editor {
   width: 100%;
 
+  .ql-editor {
+    padding: 0;
+  }
   // Editor Placeholder
   .ql-editor.ql-blank::before {
-    // left: 0;
+    left: 0;
     font-size: $font-size-p;
   }
 }

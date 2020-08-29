@@ -1,12 +1,11 @@
 <template>
-  <Card :showImage="false">
+  <Card :showImage="false" :banner="post.banner">
     <template v-slot>
       <h2>
         <a href @click="goToPost(post)">{{post.title}}</a>
-        <!-- <router-link :to="{ name: 'Post', params: { slug: post.slug }}">{{post.title}}</router-link> -->
       </h2>
 
-      <p class="mt-1 post-text" v-html="post.body.slice(0, 120) + '...'"></p>
+      <p class="mt-1 post-text" v-html="truncatedBody"></p>
 
       <div>
         <Hashtag
@@ -29,14 +28,11 @@
         </Icon>
         <span class="small flex-right">{{post.createdAt | fromNow}}</span>
       </div>
-
-      <Ribbon :text="post.banner" v-if="post.banner" />
     </template>
   </Card>
 </template>
 
 <script>
-import Ribbon from './Ribbon.vue'
 import api from '@/api'
 import { waitForLogin } from '@/mixins'
 import { toggleHashtag } from '@/mixins'
@@ -48,13 +44,17 @@ import Icon from '@/components/Icon.vue'
 export default {
   name: 'PostCard',
   props: ['post'],
-  components: { Hashtag, Avatar, Card, Icon, Ribbon },
+  components: { Hashtag, Avatar, Card, Icon },
   data() {
     return {
       localClapCount: null,
     }
   },
-  computed: {},
+  computed: {
+    truncatedBody() {
+      return this.post.body.length < 100 ? this.post.body : this.post.body.slice(0, 120) + '...'
+    },
+  },
   methods: {
     async handleHashtagClick(name) {
       toggleHashtag(name)

@@ -21,11 +21,11 @@ export default {
   },
   methods: {
     pickColor() {
-      if (this.isActive) {
-        return 'dark'
-      }
-      const options = ['pink', 'yellow', 'green', 'blue']
-      const choiceIndex = Math.floor(Math.random() * options.length)
+      // if (this.isActive) {
+      //   return 'dark'
+      // }
+      // const options = ['pink', 'yellow', 'green', 'blue']
+      // const choiceIndex = Math.floor(Math.random() * options.length)
       // return options[choiceIndex]
       return ''
     },

@@ -1,5 +1,5 @@
 <template>
-  <div class="c-card" @click="handleCardClick">
+  <div class="c-card">
     <div v-if="showImage" class="c-card__image" href="#">
       <div class="c-card__image__logo">
         <slot name="logo" />
@@ -11,42 +11,47 @@
     <div class="c-card__content">
       <slot />
     </div>
+    <div class="c-card__ribbon">
+      <Ribbon :text="banner" v-if="banner" />
+    </div>
   </div>
 </template>
 
 <script>
+import Ribbon from './Ribbon.vue'
 export default {
   name: 'Card',
   props: {
+    banner: {
+      type: String,
+      default: '',
+    },
     showImage: {
       default: true,
     },
   },
-  components: {},
+  components: { Ribbon },
   data() {
     return {}
   },
-  methods: {
-    handleCardClick() {
-      this.$emit('click')
-    },
-  },
+  methods: {},
 }
 </script>
 
 <style lang="scss" scoped>
 .c-card {
-  overflow: hidden;
+  // overflow: hidden; // breaks editor in card
   position: relative;
   display: flex;
   flex-direction: column;
   margin-bottom: 2rem;
   width: 100%;
+  z-index: 1;
 
   @extend .border-thin;
   @include shadow-color($dark);
   // &:hover {
-  //   @include shadow-color($dark);
+  //   @include shadow-color($dark-gray);
   // }
 
   .c-card__content {
@@ -85,6 +90,16 @@ export default {
       width: 100%;
       background-color: $dark;
     }
+  }
+  .c-card__ribbon {
+    pointer-events: none;
+    z-index: 1;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
   }
 }
 </style>

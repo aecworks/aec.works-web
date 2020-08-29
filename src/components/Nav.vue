@@ -29,6 +29,7 @@
 
 <script>
 import { USERS } from '@/store/users'
+import { debounce } from '@/utils'
 
 export default {
   name: 'Nav',
@@ -43,7 +44,7 @@ export default {
     }
   },
   mounted() {
-    window.addEventListener('scroll', this.handleScroll)
+    window.addEventListener('scroll', debounce(this.handleScroll, 10))
     this.header = document.getElementById('nav-container')
     this.sticky = this.header.offsetTop
   },
@@ -75,7 +76,7 @@ export default {
   background-color: white;
   border-bottom: 1px solid white;
   transition: border 400ms;
-  z-index: 1;
+  z-index: 2;
 
   .logo {
     height: 64px;
