@@ -67,6 +67,18 @@
           </div>
         </Modal>
 
+        <div v-if="errors">
+          <h3 class="mt-2">Errors:</h3>
+          <ul>
+            <li v-for="(value, key) in errors" :key="key">
+              <span>
+                <strong>{{key}}:</strong>
+                {{value[0]}}
+              </span>
+            </li>
+          </ul>
+        </div>
+
         <Button :text="isEditing ? 'Create Revision' : 'Create'" class="mt-2" @click="handleSave" />
         <Button text="Cancel" @click="handleCancel" />
       </form>
@@ -121,7 +133,7 @@ export default {
       cropRatio: 1,
       croppingField: false,
       pastingField: null,
-      errors: {},
+      errors: null,
       revisions: [],
       company: {
         name: '',
