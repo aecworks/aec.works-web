@@ -32,10 +32,10 @@
           <div class="company-logo">
             <img :src="company.logoUrl" alt />
           </div>
-          <div>
+          <div class="mt">
             <Button text="Upload" kind="text" @click="startCrop(imgFieldNames.logoUrl)" />
             <Button text="Paste" kind="text" @click="startPaste(imgFieldNames.logoUrl)" />
-            <Button text="Remove" kind="text" @click="company.logoUrl=''" />
+            <Button text="Remove" v-if="company.logoUrl" kind="text" @click="company.logoUrl=''" />
           </div>
         </div>
 
@@ -44,10 +44,10 @@
           <div class="company-cover">
             <img :src="company.coverUrl" alt />
           </div>
-          <div>
+          <div class="mt">
             <Button text="Upload" kind="text" @click="startCrop(imgFieldNames.coverUrl)" />
             <Button text="Paste" kind="text" @click="startPaste(imgFieldNames.coverUrl)" />
-            <Button text="Remove" kind="text" @click="company.coverUrl=''" />
+            <Button text="Remove" v-if="company.coverUrl" kind="text" @click="company.coverUrl=''" />
           </div>
         </div>
         <Cropper
@@ -69,7 +69,10 @@
         <Button :text="isEditing ? 'Create Revision' : 'Create'" class="mt-2" @click="handleSave" />
         <Button text="Cancel" @click="handleCancel" />
       </form>
-      <div class="mt-3">
+
+      <hr class="mt-2" />
+
+      <div class="mt-2">
         <h3>Preview</h3>
         <!-- zindex moves it above crop after insertion -->
         <CompanyCard :company="company" />
@@ -226,6 +229,8 @@ export default {
 
 <style lang="scss">
 .company-logo img {
+  min-width: 60px;
+  min-height: 60px;
   width: 60px;
   height: 60px;
   @extend .border-thick;
@@ -233,7 +238,10 @@ export default {
 }
 
 .company-cover img {
-  max-height: 60px;
+  min-height: 60px;
+  height: 60px;
+  min-width: 120px;
+  width: 120px;
   @extend .border-thick;
   background-color: white;
 }

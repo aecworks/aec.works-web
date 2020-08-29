@@ -73,9 +73,9 @@ export default {
       overflow: hidden;
       img {
         display: block; // Remove gap below image
-        // max-height: 100%;
-        // max-width: 100%;
-        object-fit: fill;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
         object-position: center;
       }
     }

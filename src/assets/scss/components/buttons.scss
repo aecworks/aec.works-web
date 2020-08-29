@@ -7,6 +7,8 @@
 
     background-color: $yellow;
     color: dark;
+    // background-color: $dark;
+    // color: white;
 
     @extend .border-thin;
     &:hover{
