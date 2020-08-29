@@ -38,6 +38,7 @@ export default {
       routes: [
         { text: 'companies', name: 'CompanyList' },
         { text: 'feed', name: 'PostList', muted: '( beta )' },
+        { text: 'people', name: 'PersonList' },
       ],
     }
   },
@@ -93,7 +94,7 @@ export default {
       height: 100%;
       display: inline-block;
       line-height: 50px;
-      padding: 0 2rem;
+      padding: 0 1rem;
       a {
         font-family: $font-family;
         text-decoration: none;

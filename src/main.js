@@ -9,10 +9,9 @@ import 'quill/dist/quill.bubble.css';
 import 'quill/dist/quill.snow.css';
 
 import VueWaypoint from 'vue-waypoint'
-import { debounce } from './utils'
+// import { debounce } from './utils'
 
 Vue.use(VueWaypoint)
-// Vue.use(VueFormulate)
 
 new Vue({
   router,

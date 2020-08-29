@@ -1,14 +1,15 @@
 <template>
-  <div class="page">
-    <div class="page-header">
-      <!-- <h2 class="page-title">People</h2> -->
-      <h2 class="page-title">WIP</h2>
-    </div>
+  <div class="content">
+    <div class="page">
+      <div class="page-header">
+        <h1 class="page-title">People</h1>
+      </div>
 
-    <div class="page-content">
-      <p v-for="profile in items" :key="profile.id">
-        <Avatar :profile="profile" />
-      </p>
+      <div class="page-content">
+        <p v-for="profile in items" :key="profile.id">
+          <Avatar :profile="profile" />
+        </p>
+      </div>
     </div>
   </div>
 </template>

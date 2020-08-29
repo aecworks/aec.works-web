@@ -14,8 +14,11 @@
             <p class="small muted">{{ profile.location }}</p>
 
             <!-- TODO Make Social Media Component -->
-            <label>Twitter</label>
-            <p>{{ profile.twitter }}</p>
+            <label>Social</label>
+            <div class="mt">
+              <Icon icon="twitter" clickable></Icon>
+              <Icon icon="linkedin" clickable></Icon>
+            </div>
           </div>
 
           <div class="profile-facts">
@@ -24,7 +27,7 @@
           </div>
         </div>
 
-        <span class="muted">[ profile settings will come here ]</span>
+        <!-- <span class="muted">[ profile settings will come here ]</span> -->
         <!-- <label>Twitter</label>
         Tweets here-->
         <!-- TODO: Twitter Integration -->
@@ -37,9 +40,10 @@
         >Tweets by {{profile.twitter}}</a>-->
         <!-- data-width="400" -->
 
-        <hr />
+        <!-- <hr /> -->
         <div class="profile-controls" v-if="isSelf">
-          <label class="mt-1">Notifications</label>
+          <hr />
+          <label class="mt-1">Notifications (Future)</label>
           <input type="checkbox" /> Email
           <input type="checkbox" /> Text
         </div>
