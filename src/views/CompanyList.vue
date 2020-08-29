@@ -19,7 +19,9 @@
         placeholder="search"
       />
       <!-- TODO -->
-      <Icon v-if="true" class="mt-2" icon="pencil" @click="handleAdd" clickable>Add Company</Icon>
+      <div class="mb-1">
+        <Icon v-if="true" class="mt-2" icon="pencil" @click="handleAdd" clickable>Add Company</Icon>
+      </div>
     </div>
   </div>
 </template>

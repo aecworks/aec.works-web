@@ -3,53 +3,41 @@
     <div class="page">
       <div v-if="profile">
         <div class="page-header">
-          <h2 class="page-title">{{ profile.name }}</h2>
+          <h1 class="page-title">{{ profile.name }}</h1>
         </div>
 
         <div class="profile-content flex">
           <div class="profile-bio">
+            <div>
+              <img class="profile-image" :src="profile.avatarUrl" />
+            </div>
+
+            <label class="mt-2">Bio</label>
             <p>{{ profile.bio }}</p>
 
             <label class="mt-2">Location</label>
-            <p class="small muted">{{ profile.location }}</p>
+            <p>{{ profile.location }}</p>
 
             <!-- TODO Make Social Media Component -->
-            <label>Social</label>
+            <label class="mt-2">Social</label>
             <div class="mt">
               <Icon icon="twitter" clickable></Icon>
               <Icon icon="linkedin" clickable></Icon>
             </div>
           </div>
-
-          <div class="profile-facts">
-            <!-- {{profile.avatarUrl}} -->
-            <img class="profile-image" :src="profile.avatarUrl" />
-          </div>
         </div>
 
         <!-- <span class="muted">[ profile settings will come here ]</span> -->
-        <!-- <label>Twitter</label>
-        Tweets here-->
-        <!-- TODO: Twitter Integration -->
-        <!-- <a
-          class="twitter-timeline"
-          data-height="400"
-          data-dnt="true"
-          data-theme="light"
-          :href="`https://twitter.com/${profile.twitter}`"
-        >Tweets by {{profile.twitter}}</a>-->
-        <!-- data-width="400" -->
-
-        <!-- <hr /> -->
+        <!-- <label>Twitter</label> -->
         <div class="profile-controls" v-if="isSelf">
           <hr />
-          <label class="mt-1">Notifications (Future)</label>
+          <label class="mt-1">Notifications</label>
           <input type="checkbox" /> Email
           <input type="checkbox" /> Text
         </div>
       </div>
     </div>
-    <div class="sidebar">
+    <div class="sidebar hidden-sm">
       <label class="mt-2">Share</label>
       <div>
         <Icon icon="twitter" clickable></Icon>
@@ -126,6 +114,7 @@ export default {
   }
   .profile-image {
     height: 100px;
+    @extend .border-thin;
   }
 }
 </style>

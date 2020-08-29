@@ -18,16 +18,20 @@ $navbar-height: 100px;
 
 #nav-container {
   position: fixed;
+  left: 0;
+  right: 0;
   height: $navbar-height;
-  width: 100%;
   padding: 1rem 0;
-  display: flex;
-  justify-content: center;
+
   #nav {
-    // width: $page-width-max + $sidebar-width;
-    // max-width: $content-width-max;
-    width: $content-width-max;
+    width: 100%;
     padding: 0 1.5rem;
+    .nav-list {
+
+      // width: 100%;
+      white-space: nowrap;
+      overflow-x: scroll;
+    }
   }
 }
 

@@ -92,6 +92,10 @@
   &.flex-oposite {
     justify-content: space-between
   }
+  &.flex-no-shrink {
+    flex-shrink: 0;
+  }
+
 }
 .flex-right {
   margin-left: auto;

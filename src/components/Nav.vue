@@ -1,10 +1,10 @@
 <template>
   <div id="nav-container" :class="{ 'expanded': navExpanded }">
     <div id="nav" class="flex">
-      <a href="/" class>
+      <a href="/" class="flex-no-shrink">
         <img alt="AEC Works Logo" class="logo" src="@/assets/images/logo-black.svg" />
       </a>
-      <ul class="nav-list flex fill-x">
+      <ul class="nav-list">
         <li v-for="route in routes" :key="route.text" class="nav-item">
           <router-link
             tag="a"
@@ -13,7 +13,7 @@
           >{{route.text}}</router-link>
           <span class="ml-1 muted small">{{route.muted}}</span>
         </li>
-        <li class="nav-item flex-right" v-if="profile">
+        <li class="nav-item" v-if="profile">
           <router-link
             tag="a"
             :to="{name: 'Person', params: { slug: profile.slug }}"
@@ -79,7 +79,7 @@ export default {
   z-index: 2;
 
   .logo {
-    height: 64px;
+    height: 60px;
     margin-right: 1.5rem;
   }
 
@@ -89,7 +89,11 @@ export default {
   }
 
   .nav-list {
-    align-items: center;
+    margin-left: 2rem;
+    // align-items: center;
+    // @include for-large-up {
+    // overflow-x: scroll;
+    // }
 
     .nav-item {
       height: 100%;
