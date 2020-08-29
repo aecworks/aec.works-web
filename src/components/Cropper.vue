@@ -1,41 +1,59 @@
 
 <template>
-  <Modal @clickOutside="handleDone">
-    <div>
-      <img id="img-crop" ref="img" alt />
+  <Modal @clickOutside="handleDone" class="cropper-container">
+    <div v-if="isLoading" class="img-loader flex flex-center flex-center-vertical">
+      <Loader />
+    </div>
+    <div v-show="!isLoading">
+      <img id="img-crop" ref="img" />
     </div>
     <canvas id="canvas" style="display: none;" />
   </Modal>
 </template>
 
 <script>
+import Loader from './Loader.vue'
 import Modal from '@/components/Modal'
 import Croppr from 'croppr'
 import 'croppr/dist/croppr.css'
 
 export default {
   name: 'Crop',
-  components: { Modal },
+  components: { Modal, Loader },
   props: ['imgUrl'],
   data() {
     return {
-      isLoading: false,
+      isLoading: true,
       croppr: null,
+      ratio: {
+        type: Number,
+        required: true,
+      },
     }
   },
   mounted() {
     // https://jamesooi.design/Croppr.js/#install
     this.$refs.img.src = this.imgUrl
     this.$refs.img.onload = () => {
-      this.croppr = new Croppr('#img-crop', {
-        aspectRatio: 1,
-        minSize: [200, 200, 'px'],
-        startSize: [100, 100, '%'],
-      })
+      const interval = setInterval(() => {
+        if (this.$refs.img.naturalWidth > 0 && this.$refs.img.naturalHeight > 0) {
+          clearInterval(interval)
+          this.isLoading = false
+          this.$nextTick(() => {
+            this.croppr = new Croppr('#img-crop', {
+              aspectRatio: 1,
+              minSize: [200, 200, 'px'],
+              startSize: [100, 100, '%'],
+            })
+          })
+        }
+      }, 50)
     }
   },
   methods: {
     handleDone() {
+      this.isLoading = true
+
       const { x, y, width, height } = this.croppr.getValue()
 
       const image = new Image()
@@ -77,9 +95,20 @@ export default {
 <style lang="scss">
 #img-crop {
   display: block; // Remove gap below image
+  max-height: 600px;
+  max-width: 600px;
 }
 
 .croppr img {
   max-height: 600px;
+  max-width: 600px;
+}
+
+.img-loader {
+  // TODO: Combine with login modal loader
+  width: 200px;
+  height: 100px;
+  background-color: $cream;
+  opacity: 1;
 }
 </style>

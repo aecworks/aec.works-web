@@ -77,10 +77,10 @@ export default {
 <style lang="scss" scoped>
 .company-logo {
   position: absolute;
-  right: 30px;
-  bottom: -30px;
-  width: 60px;
-  height: 60px;
+  right: 50px;
+  bottom: -50px;
+  width: 80px;
+  height: 80px;
   @extend .border-thick;
 }
 </style>

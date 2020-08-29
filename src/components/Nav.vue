@@ -71,11 +71,10 @@ export default {
 
 <style lang="scss">
 #nav-container {
-  z-index: 1;
   background-color: white;
-
   border-bottom: 1px solid white;
   transition: border 400ms;
+  z-index: 1;
 
   .logo {
     height: 64px;

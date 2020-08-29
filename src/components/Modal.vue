@@ -28,10 +28,11 @@ export default {
 
 <style lang="scss" scoped>
 .modal-container {
+  z-index: 100;
+  position: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -39,8 +40,7 @@ export default {
 
   .modal-overlay {
     position: fixed;
-    z-index: 100;
-    background-color: white;
+    background-color: $cream;
     opacity: 0.75;
     width: 100%;
     height: 100%;

@@ -18,7 +18,7 @@
             <label>Twitter handle</label>
             <input type="text" class="fill-x" v-model="company.twitterHandle" />
           </div>
-          <div class="fill-x">
+          <div class="fill-x ml-2">
             <label>Crunchbase id</label>
             <input type="text" class="fill-x" v-model="company.crunchbaseId" />
           </div>
@@ -27,29 +27,47 @@
         <label>Hashtags</label>
         <input type="text" class="fill-x" @input="handleHashtagEdit" :value="company.hashtags" />
 
-        <label>Logo</label>
-        <div class="company-logo flex flex-center">
-          <img :src="company.logoUrl" alt />
-          <div class="ml-1">
-            <Button text="Upload" kind="text" @click="handleLogoFileSet" />
+        <label class="mt-1">Logo</label>
+        <div class="flex flex-down">
+          <div class="company-logo">
+            <img :src="company.logoUrl" alt />
+          </div>
+          <div>
+            <Button text="Upload" kind="text" @click="startCrop(imgFieldNames.logoUrl)" />
+            <Button text="Paste" kind="text" @click="startPaste(imgFieldNames.logoUrl)" />
             <Button text="Remove" kind="text" @click="company.logoUrl=''" />
           </div>
-          <span class="small muted">PS: You can paste from clipboard</span>
         </div>
-        <Cropper
-          :imgUrl="company.logoUrl"
-          v-if="company.logoUrl && croppingLogo"
-          @done="handleCropDone"
-        />
 
-        <!-- COVER -->
-        <!-- <img :src="company.coverUrl" /> -->
+        <label class="mt-1">Cover</label>
+        <div class="flex flex-down">
+          <div class="company-cover">
+            <!-- <img :src="company.coverUrl" alt /> -->
+          </div>
+          <div>
+            <Button text="Upload" kind="text" @click="startCrop(imgFieldNames.coverUrl)" />
+            <Button text="Paste" kind="text" @click="startPaste(imgFieldNames.coverUrl)" />
+            <Button text="Remove" kind="text" @click="company.coverUrl=''" />
+          </div>
+        </div>
+        <Cropper :imgUrl="company[croppingField]" v-if="croppingField" @done="handleCropDone" />
+
+        <Modal v-if="pastingField" @clickOutside="endPaste">
+          <div class="section flex flex-down flex-center">
+            <IconLarge class="mt-1" icon="paste" />
+            <p class="mt-1 muted small">
+              <code>ctrl+c</code>
+            </p>
+          </div>
+        </Modal>
+
         <Button :text="isEditing ? 'Create Revision' : 'Create'" class="mt-2" @click="handleSave" />
         <Button text="Cancel" @click="handleCancel" />
       </form>
       <div class="mt-3">
         <h3>Preview</h3>
-        <CompanyCard :company="company" />
+        <!-- zindex moves it above crop after insertion -->
+        <CompanyCard style="z-index:-1;" :company="company" />
       </div>
     </div>
     <div class="sidebar">
@@ -67,6 +85,8 @@
 </template>
 
 <script>
+import IconLarge from '../components/IconLarge.vue'
+import Modal from '../components/Modal.vue'
 import Cropper from '../components/Cropper.vue'
 import Button from '../components/forms/Button.vue'
 import CompanyCard from '../components/CompanyCard.vue'
@@ -75,8 +95,8 @@ import { waitForLogin } from '@/mixins'
 import { filePrompt, fileToBase64, subscribePaste, unsubscribePaste } from '@/utils'
 
 export default {
-  name: 'Company',
-  components: { Button, CompanyCard, Cropper },
+  name: 'CompanyEdit',
+  components: { Button, CompanyCard, Cropper, Modal, IconLarge },
   props: {
     slug: {
       required: false,
@@ -85,7 +105,12 @@ export default {
   },
   data() {
     return {
-      croppingLogo: false,
+      imgFieldNames: {
+        coverUrl: 'coverUrl',
+        logoUrl: 'logoUrl',
+      },
+      croppingField: false,
+      pastingField: null,
       errors: {},
       revisions: [],
       company: {
@@ -103,14 +128,10 @@ export default {
     }
   },
   async created() {
-    subscribePaste(this.handlePaste)
     if (this.isEditing) {
       this.company = await api.getCompany(this.slug)
       this.revisions = await api.getCompanyRevisions(this.slug)
     }
-  },
-  destroyed() {
-    unsubscribePaste()
   },
   computed: {
     isEditing() {
@@ -148,23 +169,34 @@ export default {
       this.company.hashtags = e.target.value.split(',')
     },
 
-    async handlePaste(file) {
-      const dataUri = await fileToBase64(file)
-      this.company.logoUrl = dataUri
-      this.croppingLogo = true
+    startPaste(fieldName) {
+      this.pastingField = fieldName
+      subscribePaste(this.handlePasted)
     },
 
-    async handleLogoFileSet() {
+    endPaste() {
+      this.pastingField = null
+      unsubscribePaste()
+    },
+
+    async handlePasted(file) {
+      const dataUri = await fileToBase64(file)
+      this.company[this.pastingField] = dataUri
+      this.croppingField = this.pastingField
+      this.endPaste()
+    },
+
+    async startCrop(fieldName) {
       const file = await filePrompt()
       const dataUri = await fileToBase64(file)
-      this.company.logoUrl = dataUri
-      this.croppingLogo = true
+      this.company[fieldName] = dataUri
+      this.croppingField = fieldName
     },
 
     async handleCropDone(file) {
       const image = await api.putImage(file, file, file.type)
-      this.company.logoUrl = image.url
-      this.croppingLogo = false
+      this.company[this.croppingField] = image.url
+      this.croppingField = null
     },
 
     async handleRevisionApprove(revisionId) {
@@ -189,6 +221,12 @@ export default {
 .company-logo img {
   width: 60px;
   height: 60px;
+  @extend .border-thick;
+  background-color: white;
+}
+
+.company-cover img {
+  max-height: 60px;
   @extend .border-thick;
   background-color: white;
 }

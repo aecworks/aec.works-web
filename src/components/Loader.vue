@@ -17,7 +17,6 @@ export default {
 <style lang="scss">
 .lds-ellipsis {
   transform: scale(0.5);
-  transform-origin: 0% 50%;
   display: inline-block;
   position: relative;
   width: 80px;
