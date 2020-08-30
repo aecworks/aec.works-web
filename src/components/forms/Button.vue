@@ -11,6 +11,9 @@ export default {
     text: {
       required: true,
     },
+    disabled: {
+      type: Boolean,
+    },
     kind: {
       required: false,
     },

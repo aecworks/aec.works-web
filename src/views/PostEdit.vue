@@ -1,6 +1,6 @@
 <template>
-  <div class="wrapper">
-    <div class="content">
+  <div class="content">
+    <div class="page">
       <div class="page-header">
         <input
           class="page-title"

@@ -1,11 +1,8 @@
-import jwt from "./jwt"
 import { buildUrl } from "./utils"
 import Cookies from 'js-cookie'
 
 
-const API_URL = "api"
-// const API_URL = process.env.VUE_APP_API_URL
-// if (!API_URL) throw Error("VUE_API_URL not defined")
+const API_URL = "/api"
 
 class Api {
   API_URL = API_URL
@@ -14,7 +11,15 @@ class Api {
   }
 
   constructor() {
-    this.jwt = jwt
+    this._isAuthenticated = false
+  }
+
+  setAuthentication (bool) {
+    this._isAuthenticated = bool
+  }
+
+  isAuthenticated () {
+    return this._isAuthenticated
   }
 
   _buildHeaders (headers = {}) {
@@ -23,9 +28,6 @@ class Api {
       ...this.DEFAULT_HEADERS,
       ...headers,
       'X-CSRFToken': csrftoken
-    }
-    if (this.jwt.isSet()) {
-      mergedHeaders["Authorization"] = `JWT ${this.jwt.get().access}`
     }
     return mergedHeaders
   }
@@ -46,72 +48,31 @@ class Api {
       headers: this._buildHeaders(headers),
       body: body
     })
-    return fetch(request)
-  }
-
-  async _fetch_with_retry (method, urlPath, options) {
-    const makeRequest = async () => {
-      return await this._fetch(method, urlPath, options)
-    }
-    let response = await makeRequest()
-
-    if (this._is_auth_failure(response) && this.jwt.isSet()) {
-      await this._loginWithRefreshToken(this.jwt.get().refresh)
-      response = await makeRequest()
-      if (this._is_auth_failure(response)) {
-        this.jwt.clear()
-      }
+    const response = await fetch(request)
+    if (this._is_auth_failure(response)) {
+      //
     }
     return response
-
   }
 
   async _get (urlPath, options) {
-    const response = await this._fetch_with_retry("GET", urlPath, options)
+    const response = await this._fetch("GET", urlPath, options)
     return response.json()
   }
 
   async _post (urlPath, options) {
-    const response = await this._fetch_with_retry("POST", urlPath, options)
+    const response = await this._fetch("POST", urlPath, options)
     return response.json()
   }
 
   async _put (urlPath, options) {
-    const response = await this._fetch_with_retry("PUT", urlPath, options)
+    const response = await this._fetch("PUT", urlPath, options)
     return response.json()
   }
 
   async _patch (urlPath, options) {
-    const response = await this._fetch_with_retry("PATCH", urlPath, options)
+    const response = await this._fetch("PATCH", urlPath, options)
     return response.json()
-  }
-
-  async _getJwt (email, password) {
-    this.jwt.clear()
-    const response = await this._fetch("POST", "auth/jwt/create/", { body: { email, password } })
-    return response
-  }
-
-  async _getRefreshJwt (refresh) {
-    const response = await this._fetch("POST", "auth/jwt/refresh/", { body: { refresh } })
-    return response
-  }
-
-  async _handleTokenResponse (response) {
-    if (response.status == 200) {
-      debugger
-      // const token = await response.json()
-      // Refresh only return access so merge
-      // this.jwt.set({ ...this.jwt.get(), ...token })
-    } else {
-      const errorReponse = await response.json()
-      return errorReponse
-    }
-  }
-
-  async _loginWithRefreshToken (refresh) {
-    const response = await this._getRefreshJwt(refresh)
-    return this._handleTokenResponse(response)
   }
 
   /**
@@ -120,24 +81,20 @@ class Api {
    */
   async loginWithCredentials (email, password) {
     const response = await this._getJwt(email, password)
-    return this._handleTokenResponse(response)
+    if (response.status !== 200) {
+      return await response.json()
+    }
+    // return this._handleTokenResponse(response)
   }
 
   /**
    * @param  {String} code
    */
   async loginWithOauthCode (provider, code, redirectUri) {
-    this.jwt.clear()
     const response = await this._fetch("POST", `users/login/${provider}/`, { query: { code, redirect_uri: redirectUri } })
-    return this._handleTokenResponse(response)
-  }
-
-  clearToken () {
-    this.jwt.clear()
-  }
-
-  isAuthenticated () {
-    return this.jwt.isSet()
+    if (!response.status === 200) {
+      return await response.json()
+    }
   }
 
   getCommentsByThreadId (threadId, query) {

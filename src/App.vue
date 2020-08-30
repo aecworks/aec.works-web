@@ -22,9 +22,7 @@ export default {
     return {}
   },
   created() {
-    if (api.isAuthenticated()) {
-      this.$store.dispatch(USERS.GET_PROFILE)
-    }
+    this.$store.dispatch(USERS.GET_PROFILE)
   },
   computed: {
     showLoginModal() {

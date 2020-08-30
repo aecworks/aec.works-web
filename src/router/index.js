@@ -106,15 +106,15 @@ router.beforeEach((to, from, next) => {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
     if (!api.isAuthenticated()) {
-      next({
+      return next({
         path: from.path,
         query: { login: 1 }
       })
     } else {
-      next()
+      return next()
     }
   } else {
-    next()
+    return next()
   }
 })
 
