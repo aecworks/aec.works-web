@@ -1,6 +1,6 @@
 <template>
-  <div class="content">
-    <div class="page">
+  <div class="wrapper">
+    <div class="content">
       <div class="page-header">
         <h1 class="page-title">People</h1>
       </div>
@@ -11,6 +11,7 @@
         </p>
       </div>
     </div>
+    <div class="sidebar"></div>
   </div>
 </template>
 

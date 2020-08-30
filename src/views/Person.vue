@@ -1,6 +1,6 @@
 <template>
-  <div class="content">
-    <div class="page">
+  <div class="wrapper">
+    <div class="content">
       <div v-if="profile">
         <div class="page-header">
           <h1 class="page-title">{{ profile.name }}</h1>

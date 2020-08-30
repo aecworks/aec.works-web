@@ -1,6 +1,6 @@
 <template>
-  <div class="content">
-    <div class="page">
+  <div class="wrapper">
+    <div class="content">
       <div class="page-content">
         <Loader v-if="isLoading" />
         <PostEditComponent v-if="isEditing" @cancel="isEditing = false" />

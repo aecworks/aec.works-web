@@ -1,6 +1,6 @@
 <template>
-  <div class="content sm-sidebar-down" v-if="post">
-    <div class="page">
+  <div class="wrapper sm-grid-sidebar-down" v-if="post">
+    <div class="content">
       <div class="page-header">
         <h1 class="page-title">{{post.title}}</h1>
         <Avatar class="mt-2" v-if="true" :profile="post.profile" />
@@ -11,8 +11,6 @@
       <div>
         <Hashtag v-for="slug in post.hashtags" :slug="slug" :key="slug" />
       </div>
-
-      <Discussion :threadId="post.threadId" />
     </div>
     <div class="sidebar">
       xxx
@@ -34,6 +32,9 @@
         <label>Author</label>
         <Icon icon="pencil" @click="handleEdit" clickable>Edit</Icon>
       </div>
+    </div>
+    <div class="footer">
+      <Discussion :threadId="post.threadId" />
     </div>
   </div>
 </template>
