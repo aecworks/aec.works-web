@@ -41,10 +41,12 @@ export default {
 .c-textinput {
   position: relative;
   .icon {
-    right: 1rem;
     position: absolute;
-    line-height: 2.2rem;
-    vertical-align: middle;
+    right: 1rem;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
   }
 }
 </style>

@@ -1,12 +1,9 @@
 <template>
   <div class="wrapper sm-grid-sidebar-down" v-if="post">
     <div class="content">
-      <div class="page-header">
-        <h1 class="page-title">{{post.title}}</h1>
-        <Avatar class="mt-2" v-if="true" :profile="post.profile" />
-      </div>
-
-      <p class="post-content" v-html="post.body" />
+      <h1>{{post.title}}</h1>
+      <Avatar v-if="true" :profile="post.profile" />
+      <p class="post-content mt-2" v-html="post.body" />
 
       <div>
         <Hashtag v-for="slug in post.hashtags" :slug="slug" :key="slug" />

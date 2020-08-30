@@ -2,7 +2,7 @@
   <div class="wrapper sm-grid-sidebar-down">
     <div class="content" v-if="company">
       <div class="flex flex-center">
-        <h1 class="page-title">
+        <h1>
           {{ company.name }}
           <span class="small muted ml">{{company.location || "Somewhere" }}</span>
         </h1>
