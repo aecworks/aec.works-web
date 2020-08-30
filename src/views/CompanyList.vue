@@ -1,15 +1,13 @@
 <template>
-  <div class="content">
-    <div class="page">
-      <div class="page-content">
-        <Loader v-if="isLoading" />
-        <CompanyCard
-          v-for="(company, index) in items"
-          :key="company.id"
-          v-bind="{company}"
-          v-waypoint="{ active: index + 1=== items.length, callback: onVisible }"
-        />
-      </div>
+  <div class="wrapper">
+    <div class="content">
+      <Loader v-if="isLoading" />
+      <CompanyCard
+        v-for="(company, index) in items"
+        :key="company.id"
+        v-bind="{company}"
+        v-waypoint="{ active: index + 1=== items.length, callback: onVisible }"
+      />
     </div>
     <div class="sidebar">
       <TextInput

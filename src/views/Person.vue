@@ -1,47 +1,44 @@
 <template>
-  <div class="content">
-    <div class="page">
-      <div v-if="profile">
-        <div class="page-header">
-          <h1 class="page-title">{{ profile.name }}</h1>
-        </div>
+  <div class="wrapper">
+    <div class="content">
+      <div v-if="profile" class="profile">
+        <div>
+          <div class="profile-image">
+            <img :src="profile.avatarUrl" />
+          </div>
+          <h2 class="mt-1">{{ profile.name }}</h2>
 
-        <div class="profile-content flex">
-          <div class="profile-bio">
-            <div>
-              <img class="profile-image" :src="profile.avatarUrl" />
-            </div>
+          <label class="mt-2">Location</label>
+          <p class="sans">{{ profile.location }}</p>
 
-            <label class="mt-2">Bio</label>
-            <p>{{ profile.bio }}</p>
+          <label class="mt-1">About</label>
+          <p class="sans">{{ profile.bio }}</p>
 
-            <label class="mt-2">Location</label>
-            <p>{{ profile.location }}</p>
-
-            <!-- TODO Make Social Media Component -->
-            <label class="mt-2">Social</label>
-            <div class="mt">
-              <Icon icon="twitter" clickable></Icon>
-              <Icon icon="linkedin" clickable></Icon>
-            </div>
+          <!-- TODO Make Social Media Component -->
+          <label class="mt-1">Social</label>
+          <div class="mt">
+            <Icon icon="twitter" clickable></Icon>
+            <Icon icon="linkedin" clickable></Icon>
           </div>
         </div>
-
-        <!-- <span class="muted">[ profile settings will come here ]</span> -->
-        <!-- <label>Twitter</label> -->
-        <div class="profile-controls" v-if="isSelf">
-          <hr />
-          <label class="mt-1">Notifications</label>
-          <input type="checkbox" /> Email
-          <input type="checkbox" /> Text
+        <div class="profile-activity">
+          <h2>Activity</h2>TODO
+          <h2 class="mt-2">Posts</h2>TODO
         </div>
       </div>
     </div>
     <div class="sidebar hidden-sm">
-      <label class="mt-2">Share</label>
+      <label>Share</label>
       <div>
         <Icon icon="twitter" clickable></Icon>
         <Icon icon="linkedin" clickable></Icon>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="mt-3" v-if="isSelf">
+        <label class="mt-1">Notifications</label>
+        <input type="checkbox" /> Email
+        <input type="checkbox" /> Text
       </div>
     </div>
   </div>
@@ -87,34 +84,31 @@ export default {
 }
 </script>
 
-<style lang="scss">
-#twitter-widget-0 {
-  width: 100% !important;
-  // text-align: right;
-}
-.profile-content {
-  margin-bottom: 2rem;
-  flex: 0;
-
+<style lang="scss" scoped>
+.profile {
+  display: flex;
   @include for-large-down {
-    flex-wrap: wrap;
+    text-align: center;
+    flex-direction: column;
   }
+}
 
-  .profile-bio {
-    @include for-large-up {
-      padding-right: 2rem;
-    }
+.profile-activity {
+  margin-top: 2rem;
+  @include for-large-up {
+    padding-left: 2rem;
   }
-  .profile-facts {
-    @include for-large-up {
-      flex-shrink: 0;
-      margin-left: auto;
-      text-align: right;
-    }
-  }
-  .profile-image {
-    height: 100px;
+}
+
+.profile-image {
+  img {
     @extend .border-thin;
+    @include shadow-color($dark);
+    height: 100px;
+
+    @include for-large-down {
+      margin: 0 auto;
+    }
   }
 }
 </style>

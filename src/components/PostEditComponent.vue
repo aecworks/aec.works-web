@@ -1,7 +1,7 @@
 <template>
   <Card :showImage="false">
     <input
-      class="page-title"
+      class="post-title"
       :class="{'empty': postTitle === ''}"
       v-model="postTitle"
       placeholder="Your Title"
@@ -61,7 +61,7 @@ export default {
       }
       this.$router.push({ name: 'Post', params: { slug: post.slug } })
     },
-    handleCancel(e) {
+    handleCancel() {
       this.$emit('cancel')
     },
     handleInput(e) {
@@ -72,7 +72,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.page-title {
+.post-title {
   @extend h2;
   border: none;
 

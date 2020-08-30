@@ -74,7 +74,7 @@ export default {
 #nav-container {
   background-color: white;
   border-bottom: 1px solid white;
-  transition: border 300ms, height 300mscss;
+  transition: border 150ms, height 150ms, padding 150ms;
   z-index: 2;
 
   .nav-logo {

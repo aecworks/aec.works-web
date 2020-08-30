@@ -1,17 +1,16 @@
 <template>
-  <div class="content">
-    <div class="page">
-      <div class="page-content">
-        <Loader v-if="isLoading" />
-        <PostEditComponent v-if="isEditing" @cancel="isEditing = false" />
-        <PostCard
-          v-for="(post, index) in items"
-          :key="post.slug"
-          v-bind="{post}"
-          v-waypoint="{ active: index + 1=== items.length, callback: onVisible }"
-        />
-      </div>
+  <div class="wrapper">
+    <div class="content">
+      <Loader v-if="isLoading" />
+      <PostEditComponent v-if="isEditing" @cancel="isEditing = false" />
+      <PostCard
+        v-for="(post, index) in items"
+        :key="post.slug"
+        v-bind="{post}"
+        v-waypoint="{ active: index + 1=== items.length, callback: onVisible }"
+      />
     </div>
+
     <div class="sidebar">
       <TextInput
         icon="search"

@@ -1,7 +1,7 @@
 <template>
-  <div class="content flex">
-    <div class="page">
-      <h1 class="page-title mb-1">{{ isEditing ? "Edit" : "New"}}</h1>
+  <div class="wrapper flex">
+    <div class="content">
+      <h1>{{ isEditing ? "Edit" : "New"}}</h1>
 
       <form class="form">
         <label>Name</label>

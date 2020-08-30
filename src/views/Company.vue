@@ -1,8 +1,8 @@
 <template>
-  <div class="content flex">
-    <div class="page" v-if="company">
+  <div class="wrapper sm-grid-sidebar-down">
+    <div class="content" v-if="company">
       <div class="flex flex-center">
-        <h1 class="page-title">
+        <h1>
           {{ company.name }}
           <span class="small muted ml">{{company.location || "Somewhere" }}</span>
         </h1>
@@ -40,8 +40,6 @@
           </div>
         </div>
       </div>
-
-      <Discussion v-if="company && company.threadId" :threadId="company.threadId" />
     </div>
 
     <div class="sidebar" v-if="company">
@@ -63,6 +61,10 @@
       </div>
       <label class="mt-2">Contribute</label>
       <Icon icon="pencil" @click="handleEdit" clickable>Edit</Icon>
+    </div>
+
+    <div class="footer">
+      <Discussion v-if="company && company.threadId" :threadId="company.threadId" />
     </div>
   </div>
 </template>

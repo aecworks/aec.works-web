@@ -1,16 +1,13 @@
 <template>
-  <div class="content">
-    <div class="page">
-      <div class="page-header">
-        <h1 class="page-title">People</h1>
-      </div>
+  <div class="wrapper">
+    <div class="content">
+      <h1>People</h1>
 
-      <div class="page-content">
-        <p v-for="profile in items" :key="profile.slug">
-          <Avatar :profile="profile" />
-        </p>
-      </div>
+      <p v-for="profile in items" :key="profile.slug">
+        <Avatar :profile="profile" />
+      </p>
     </div>
+    <div class="sidebar"></div>
   </div>
 </template>
 
