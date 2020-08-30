@@ -1,8 +1,8 @@
 <template>
   <div id="nav-container" :class="{ 'expanded': navExpanded }">
     <div id="nav" class="flex">
-      <a href="/" class="flex-no-shrink">
-        <img alt="AEC Works Logo" class="logo" src="@/assets/images/logo-black.svg" />
+      <a href="/" class="nav-logo hidden-sm">
+        <img alt="AEC Works Logo" src="@/assets/images/logo-black.svg" />
       </a>
       <ul class="nav-list">
         <li v-for="route in routes" :key="route.text" class="nav-item">
@@ -11,16 +11,15 @@
             :class="{'active': isActive(route)}"
             :to="{name: route.name}"
           >{{route.text}}</router-link>
-          <span class="ml-1 muted small">{{route.muted}}</span>
+          <span class="ml muted small">{{route.label}}</span>
         </li>
-        <li class="nav-item" v-if="profile">
-          <router-link
-            tag="a"
-            :to="{name: 'Person', params: { slug: profile.slug }}"
-          >{{profile.name}}</router-link>
-        </li>
-        <li class="nav-item" v-if="profile">
-          <a href="#" @click="handleLogout()">logout</a>
+        <li class="nav-item profile" v-if="profile">
+          <span class="nav-profile-avatar">
+            <router-link tag="a" :to="{name: 'Person', params: { slug: profile.slug }}">
+              <img :src="profile.avatarUrl" alt="avatar" />
+            </router-link>
+            <!-- <a class="ml-1" href="#" @click="handleLogout()">logout</a> -->
+          </span>
         </li>
       </ul>
     </div>
@@ -38,7 +37,7 @@ export default {
       navExpanded: false,
       routes: [
         { text: 'companies', name: 'CompanyList' },
-        { text: 'feed', name: 'PostList', muted: '( beta )' },
+        { text: 'feed', name: 'PostList', label: '( beta )' },
         { text: 'people', name: 'PersonList' },
       ],
     }
@@ -75,25 +74,47 @@ export default {
 #nav-container {
   background-color: white;
   border-bottom: 1px solid white;
-  transition: border 400ms;
+  transition: border 300ms, height 300mscss;
   z-index: 2;
 
-  .logo {
-    height: 60px;
-    margin-right: 1.5rem;
+  .nav-logo {
+    transition: transform 200ms;
+    img {
+      height: 60px;
+      margin-right: 1.5rem;
+    }
   }
-
   &.sticky {
     border-bottom: 1px solid $light-gray;
     box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.25);
+    height: 60px;
+    padding: 0.2rem 0;
+
+    .nav-logo {
+      animation-name: animatelogo;
+      animation-duration: 300ms;
+      transform: translateY(-75px);
+      width: 0;
+    }
+    @keyframes animatelogo {
+      0% {
+        transform: translateY(0);
+        width: 60px;
+      }
+      100% {
+        transform: translateY(-75px);
+        width: 0;
+      }
+    }
+    // img {
+    // }
   }
 
   .nav-list {
-    margin-left: 2rem;
-    // align-items: center;
-    // @include for-large-up {
-    // overflow-x: scroll;
-    // }
+    @include for-large-up {
+      width: 100%;
+      display: flex;
+    }
 
     .nav-item {
       height: 100%;
@@ -112,6 +133,25 @@ export default {
         }
         &:hover:not(.active) {
           border-bottom: 2px solid $light-gray;
+        }
+      }
+      &.profile {
+        @include for-large-up {
+          margin-left: auto;
+          margin-right: 0;
+        }
+        a:hover {
+          text-decoration: none;
+          border-bottom: none;
+        }
+      }
+      .nav-profile-avatar {
+        img {
+          vertical-align: middle;
+          display: inline-block;
+          @extend .border-thin;
+          border-radius: 12px;
+          height: 24px;
         }
       }
     }

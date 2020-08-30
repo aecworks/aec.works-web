@@ -13,7 +13,6 @@ $navbar-height: 100px;
   position: relative;
   overflow-x: hidden;
   align-items: center;
-  // height: 100%;
 }
 
 #nav-container {
@@ -22,13 +21,17 @@ $navbar-height: 100px;
   right: 0;
   height: $navbar-height;
   padding: 1rem 0;
+  display: flex;
+  justify-content: center;
 
   #nav {
     width: 100%;
     padding: 0 1.5rem;
-    .nav-list {
+    @include for-large-up {
+      max-width: $content-width-max;
+    }
 
-      // width: 100%;
+      .nav-list {
       white-space: nowrap;
       overflow-x: scroll;
     }

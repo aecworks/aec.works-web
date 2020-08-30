@@ -1,68 +1,68 @@
 <template>
-  <div class="content flex flex-down">
-    <div class="flex">
-      <div class="page" v-if="company">
-        <div class="flex flex-center">
-          <h1 class="page-title">{{ company.name }}</h1>
-          <span class="small muted flex-right">{{company.location || "Somewhere" }}</span>
-        </div>
+  <div class="content flex">
+    <div class="page" v-if="company">
+      <div class="flex flex-center">
+        <h1 class="page-title">
+          {{ company.name }}
+          <span class="small muted ml">{{company.location || "Somewhere" }}</span>
+        </h1>
+      </div>
 
-        <div class="flex">
-          <div>
+      <div class="flex">
+        <div>
+          <div class="mt-2">
+            <p class="sans">{{ company.description || "..." }}</p>
+
+            <label class="mt-2">Website</label>
+            <a :href="company.website">{{company.website || "-" | cleanUrl}}</a>
+
+            <label class="mt-2">Social Media</label>
             <div class="mt">
-              <p class="sans">{{ company.description || "..." }}</p>
-
-              <label class="mt-2">Website</label>
-              <a :href="company.website">{{company.website || "-" | cleanUrl}}</a>
-
-              <label class="mt-2">Social Media</label>
-              <div class="mt">
-                <a
-                  v-if="company.twitterHandle"
-                  :href="`https://www.twitter.com/${company.twitterHandle}`"
-                >
-                  <!-- <img src="@/assets/images/twitter.svg" /> -->
-                  <Icon icon="twitter" clickable></Icon>
-                </a>
-                <a
-                  v-if="company.crunchbaseId"
-                  :href="`https://www.crunchbase.com/organization/${company.crunchbaseId}`"
-                >
-                  <!-- <img src="@/assets/images/money.svg" /> -->
-                  <Icon icon="money" clickable></Icon>
-                </a>
-              </div>
-            </div>
-
-            <div class="mt-2">
-              <Hashtag v-for="slug in company.hashtags" :slug="slug" :key="slug" />
+              <a
+                v-if="company.twitterHandle"
+                :href="`https://www.twitter.com/${company.twitterHandle}`"
+              >
+                <!-- <img src="@/assets/images/twitter.svg" /> -->
+                <Icon icon="twitter" clickable></Icon>
+              </a>
+              <a
+                v-if="company.crunchbaseId"
+                :href="`https://www.crunchbase.com/organization/${company.crunchbaseId}`"
+              >
+                <!-- <img src="@/assets/images/money.svg" /> -->
+                <Icon icon="money" clickable></Icon>
+              </a>
             </div>
           </div>
-        </div>
 
-        <Discussion v-if="company && company.threadId" :threadId="company.threadId" />
+          <div class="mt-2">
+            <Hashtag v-for="slug in company.hashtags" :slug="slug" :key="slug" />
+          </div>
+        </div>
       </div>
 
-      <div class="sidebar" v-if="company">
-        <div>
-          <Icon
-            icon="clap"
-            @click="handleClap(company)"
-            clickable
-          >{{localClapCount || company.clapCount}}</Icon>
-        </div>
-        <div>
-          <Icon icon="chat">{{company.threadSize || 0}}</Icon>
-        </div>
+      <Discussion v-if="company && company.threadId" :threadId="company.threadId" />
+    </div>
 
-        <label class="mt-2">Share</label>
-        <div>
-          <Icon icon="twitter" clickable></Icon>
-          <Icon icon="linkedin" clickable></Icon>
-        </div>
-        <label class="mt-2">Contribute</label>
-        <Icon icon="pencil" @click="handleEdit" clickable>Edit</Icon>
+    <div class="sidebar" v-if="company">
+      <div>
+        <Icon
+          icon="clap"
+          @click="handleClap(company)"
+          clickable
+        >{{localClapCount || company.clapCount}}</Icon>
       </div>
+      <div>
+        <Icon icon="chat">{{company.threadSize || 0}}</Icon>
+      </div>
+
+      <label class="mt-2">Share</label>
+      <div>
+        <Icon icon="twitter" clickable></Icon>
+        <Icon icon="linkedin" clickable></Icon>
+      </div>
+      <label class="mt-2">Contribute</label>
+      <Icon icon="pencil" @click="handleEdit" clickable>Edit</Icon>
     </div>
   </div>
 </template>
@@ -118,7 +118,6 @@ export default {
 
 <style lang="scss">
 .company-icon {
-  // text-align: right;
   img {
     height: 64px;
   }

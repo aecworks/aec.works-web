@@ -117,4 +117,12 @@ export default {
   background-color: $cream;
   opacity: 1;
 }
+
+.croppr-handle {
+  border-color: $dark;
+  border-width: 2px;
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+}
 </style>

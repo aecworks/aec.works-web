@@ -6,7 +6,7 @@
       </div>
 
       <div class="page-content">
-        <p v-for="profile in items" :key="profile.id">
+        <p v-for="profile in items" :key="profile.slug">
           <Avatar :profile="profile" />
         </p>
       </div>

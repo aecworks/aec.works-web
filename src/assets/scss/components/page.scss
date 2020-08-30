@@ -8,6 +8,9 @@
     .page-title {
       // width:100%;
       display: inline-block;
+      span {
+        vertical-align: middle;
+      }
       // &::after {
       //   content: '';
       //   display: block;
