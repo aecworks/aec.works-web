@@ -41,16 +41,16 @@
             </span>
             Login with LinkedIn
           </div>
+          <div v-for="(value, name) in errors" :key="name">
+            <div>
+              <!-- <p class="small muted">{{value}}</p> -->
+            </div>
+          </div>
         </div>
 
         <!-- TODO Signup -->
         <!-- <p>Don't have an account?</p> -->
         <!-- <div class="button">Signup</div> -->
-
-        <!-- TODO FORMAT -->
-        <div v-for="err in errors" :key="err">
-          <span class="small muted">{{err}}</span>
-        </div>
       </div>
     </div>
   </Modal>
@@ -92,6 +92,7 @@ export default {
 
       if (error) {
         this.errors.push(error)
+        console.log(error)
         return
       }
 
@@ -102,7 +103,8 @@ export default {
         this.isLoading = false
 
         if (loginError) {
-          this.errors.push(loginError)
+          this.errors.push(loginError.errors)
+          console.log(loginError.errors)
         } else {
           this.$store.dispatch(USERS.GET_PROFILE)
           popQueries(this.$router, this.$route.query, ['state', 'provider', 'login', 'code'])
@@ -125,6 +127,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// TODO: Clean this mess up
+
 .login-container {
   display: flex;
   flex-direction: column;

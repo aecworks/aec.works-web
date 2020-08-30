@@ -1,8 +1,11 @@
 import jwt from "./jwt"
 import { buildUrl } from "./utils"
+import Cookies from 'js-cookie'
 
-const API_URL = process.env.VUE_APP_API_URL
-if (!API_URL) throw Error("VUE_API_URL not defined")
+
+const API_URL = "api"
+// const API_URL = process.env.VUE_APP_API_URL
+// if (!API_URL) throw Error("VUE_API_URL not defined")
 
 class Api {
   API_URL = API_URL
@@ -15,9 +18,11 @@ class Api {
   }
 
   _buildHeaders (headers = {}) {
+    const csrftoken = Cookies.get('csrftoken');
     const mergedHeaders = {
       ...this.DEFAULT_HEADERS,
       ...headers,
+      'X-CSRFToken': csrftoken
     }
     if (this.jwt.isSet()) {
       mergedHeaders["Authorization"] = `JWT ${this.jwt.get().access}`
@@ -94,9 +99,10 @@ class Api {
 
   async _handleTokenResponse (response) {
     if (response.status == 200) {
-      const token = await response.json()
+      debugger
+      // const token = await response.json()
       // Refresh only return access so merge
-      this.jwt.set({ ...this.jwt.get(), ...token })
+      // this.jwt.set({ ...this.jwt.get(), ...token })
     } else {
       const errorReponse = await response.json()
       return errorReponse

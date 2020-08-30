@@ -18,7 +18,7 @@
             <router-link tag="a" :to="{name: 'Person', params: { slug: profile.slug }}">
               <img :src="profile.avatarUrl" alt="avatar" />
             </router-link>
-            <!-- <a class="ml-1" href="#" @click="handleLogout()">logout</a> -->
+            <a class="ml-1" href="#" @click="handleLogout()">logout</a>
           </span>
         </li>
       </ul>

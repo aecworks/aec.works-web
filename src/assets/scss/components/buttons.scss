@@ -1,3 +1,5 @@
+// TODO - move/combine with Button component
+
 .button {
     cursor: pointer;
     display: inline-block;
@@ -7,8 +9,6 @@
 
     background-color: $yellow;
     color: dark;
-    // background-color: $dark;
-    // color: white;
 
     @extend .border-thin;
     &:hover{
@@ -36,6 +36,8 @@
             margin-right: .25rem;
         }
         img{
+            display: inline-block;
+            margin-right: 5px;
             height: 1rem;
         }
     }
