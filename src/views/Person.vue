@@ -1,10 +1,12 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper" v-if="profile">
     <div class="content">
-      <div v-if="profile" class="profile">
-        <div>
+      <div class="profile">
+        <div class="profile-data">
           <div class="profile-image">
-            <img :src="profile.avatarUrl" />
+            <img
+              :src="profile.avatarUrl || 'https://avatars.dicebear.com/api/male/john.svg?mood[]=happy'"
+            />
           </div>
           <h2 class="mt-1">{{ profile.name }}</h2>
 
@@ -92,7 +94,9 @@ export default {
     flex-direction: column;
   }
 }
-
+.profile-data {
+  width: 200px;
+}
 .profile-activity {
   margin-top: 2rem;
   @include for-large-up {

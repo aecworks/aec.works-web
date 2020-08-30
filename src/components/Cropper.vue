@@ -100,9 +100,9 @@ export default {
 
 <style lang="scss">
 #img-crop {
-  display: block; // Remove gap below image
   max-height: 600px;
   max-width: 600px;
+  display: block; // Remove gap below image
 }
 
 .croppr img {
@@ -118,11 +118,11 @@ export default {
   opacity: 1;
 }
 
-.croppr-handle {
-  border-color: $dark;
-  border-width: 2px;
-  width: 15px;
-  height: 15px;
-  border-radius: 15px;
-}
+// .croppr-handle {
+//   border-color: $dark;
+//   border-width: 2px;
+//   width: 15px;
+//   height: 15px;
+//   border-radius: 15px;
+// }
 </style>
