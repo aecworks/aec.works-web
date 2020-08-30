@@ -1,5 +1,5 @@
 <template>
-  <div class="content" v-if="post">
+  <div class="content sm-sidebar-down" v-if="post">
     <div class="page">
       <div class="page-header">
         <h1 class="page-title">{{post.title}}</h1>
@@ -15,6 +15,7 @@
       <Discussion :threadId="post.threadId" />
     </div>
     <div class="sidebar">
+      xxx
       <div>
         <Icon icon="clap" @click="handleClap(post)" clickable>{{localClapCount || post.clapCount}}</Icon>
       </div>

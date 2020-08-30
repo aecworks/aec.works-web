@@ -1,5 +1,5 @@
 <template>
-  <div class="content flex">
+  <div class="content grid-sidebar-down">
     <div class="page" v-if="company">
       <div class="flex flex-center">
         <h1 class="page-title">

@@ -1,18 +1,16 @@
 $content-width-max: 900px;
-$page-width-max: 600px;
-$sidebar-width: 300px;
+$page-width-max: 650px;
+$sidebar-width: 250px;
 $navbar-height: 100px;
 // 800px total width to match mixins break
 
-
 #app {
-  display: flex;
-  flex-direction: column;
   width: 100%;
   margin: 0;
   position: relative;
   overflow-x: hidden;
-  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 
 #nav-container {
@@ -28,10 +26,10 @@ $navbar-height: 100px;
     width: 100%;
     padding: 0 1.5rem;
     @include for-large-up {
+      padding: 0 2rem;
       max-width: $content-width-max;
     }
-
-      .nav-list {
+    .nav-list {
       white-space: nowrap;
       overflow-x: scroll;
     }
@@ -39,35 +37,61 @@ $navbar-height: 100px;
 }
 
 .content {
-  display: flex;
-  flex-direction: column-reverse;
-  padding: 0 1.5rem;
-  padding-top: $navbar-height + 30px;
-  width: 100%;
+  margin: 0 auto;
+  max-width: $content-width-max;
+  // Padding for Nav Height
+  padding: $navbar-height + 30px 2rem 0 2rem;
+  display: grid;
+
+
+
+  grid-template-rows: auto auto;
+  grid-template-columns: auto;
+  grid-template-areas:
+    "sidebar"
+    "page";
+
+  @include for-large-down {
+  &.grid-sidebar-down {
+      grid-template-areas:
+      "page"
+      "sidebar"
+      "footer";
+      ;
+    }
+  &.grid-sidebar-up {
+      grid-template-areas:
+      "sidebar"
+      "page"
+      "footer";
+      ;
+    }
+  }
 
   @include for-large-up {
-    flex-direction: row;
-    position: relative;
-    min-width: 0;
-    max-width: $content-width-max;
+    column-gap: 50px;
+    grid-template-rows: auto auto;
+    grid-template-columns: auto $sidebar-width;
+    grid-template-areas:
+      "page sidebar"
+      "footer .";
   }
 
   .page {
-    width: 100%;
+    grid-area: page;
     @include for-large-up {
       max-width: $page-width-max;
     }
   }
 
   .sidebar {
-    margin-top: 0;
-    transition: margin-top 200ms;
-    width: 100%;
+    grid-area: sidebar;
     @include for-large-up {
-      top: 5rem;
-      left: $page-width-max;
-      width: $sidebar-width;
-      margin-left: 2rem;
+    }
+  }
+  .footer {
+    grid-area: sidebar;
+    @include for-large-up {
     }
   }
 }

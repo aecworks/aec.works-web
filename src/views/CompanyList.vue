@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="content sm-grid-sidebar-up">
     <div class="page">
       <div class="page-content">
         <Loader v-if="isLoading" />
