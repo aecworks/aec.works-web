@@ -17,11 +17,14 @@ export default {
   },
   actions: {
     async [USERS.GET_PROFILE] ({ commit }) {
-      const profile = await api.getMyProfile()
-      commit(USERS.SET_PROFILE, profile)
+      const response = await api.getMyProfile()
+      if (!response.errors) {
+        commit(USERS.SET_PROFILE, response)
+        api.setAuthentication(true)
+      }
     },
     [USERS.LOGOUT] ({ commit }) {
-      api.clearToken()
+      api.setAuthentication(false)
       commit(USERS.SET_PROFILE, null)
     }
   },

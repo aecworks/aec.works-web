@@ -1,4 +1,3 @@
-
 <template>
   <Modal @clickOutside="$emit('closed')">
     <div class="login-container">
@@ -99,12 +98,12 @@ export default {
       if (code) {
         this.isLoading = true
         const redirectUri = callbackUrl(provider)
-        const loginError = await api.loginWithOauthCode(provider, code, redirectUri)
+        const responseErrors = await api.loginWithOauthCode(provider, code, redirectUri)
         this.isLoading = false
 
-        if (loginError) {
-          this.errors.push(loginError.errors)
-          console.log(loginError.errors)
+        if (responseErrors) {
+          this.errors.push(responseErrors)
+          console.log(responseErrors)
         } else {
           this.$store.dispatch(USERS.GET_PROFILE)
           popQueries(this.$router, this.$route.query, ['state', 'provider', 'login', 'code'])

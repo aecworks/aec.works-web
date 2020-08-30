@@ -10,7 +10,7 @@
       <Editor v-model="body" />
     </div>
     <div class="mt-2">
-      <Button text="Save" @click="handleSave" />
+      <Button text="Save" @click="handleSave" v-if="isValid" />
       <Button text="Cancel" @click="handleCancel" />
     </div>
   </Card>
@@ -47,6 +47,9 @@ export default {
   computed: {
     isEditing() {
       return Boolean(this.slug)
+    },
+    isValid() {
+      return this.body && this.postTitle
     },
   },
 
