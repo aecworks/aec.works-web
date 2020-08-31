@@ -91,7 +91,6 @@
 
       <div class="mt-2">
         <h3>Preview</h3>
-        <!-- zindex moves it above crop after insertion -->
         <CompanyCard :company="company" />
       </div>
     </div>
