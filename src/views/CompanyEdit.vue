@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper flex">
+  <div class="wrapper sm-grid-sidebar-down">
     <div class="content">
       <h1>{{ isEditing ? "Edit" : "New"}}</h1>
 

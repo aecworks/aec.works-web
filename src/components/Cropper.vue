@@ -99,15 +99,19 @@ export default {
 </script>
 
 <style lang="scss">
-#img-crop {
-  max-height: 600px;
-  max-width: 600px;
-  display: block; // Remove gap below image
+.croppr {
+  img {
+    max-height: 600px;
+    max-width: 600px;
+    @include for-large-down {
+      max-width: 400px;
+    }
+  }
 }
 
-.croppr img {
-  max-height: 600px;
-  max-width: 600px;
+#img-crop {
+  @extend .croppr;
+  display: block; // Remove gap below image
 }
 
 .img-loader {
