@@ -33,7 +33,7 @@
             <img :src="company.logoUrl  || defaultImageUrl" alt />
           </div>
           <div class="mt">
-            <Button text="Upload" kind="text" @click="startCrop(imgFieldNames.logoUrl)" />
+            <Button text="Upload" kind="text" @click="handleFileUploaded(imgFieldNames.logoUrl)" />
             <Button text="Paste" kind="text" @click="startPaste(imgFieldNames.logoUrl)" />
             <Button text="Remove" v-if="company.logoUrl" kind="text" @click="company.logoUrl=''" />
           </div>
@@ -45,7 +45,7 @@
             <img :src="company.coverUrl || defaultImageUrl" alt />
           </div>
           <div class="mt">
-            <Button text="Upload" kind="text" @click="startCrop(imgFieldNames.coverUrl)" />
+            <Button text="Upload" kind="text" @click="handleFileUploaded(imgFieldNames.coverUrl)" />
             <Button text="Paste" kind="text" @click="startPaste(imgFieldNames.coverUrl)" />
             <Button text="Remove" v-if="company.coverUrl" kind="text" @click="company.coverUrl=''" />
           </div>
@@ -193,7 +193,7 @@ export default {
 
     startPaste(fieldName) {
       this.pastingField = fieldName
-      subscribePaste(this.handlePasted)
+      subscribePaste(this.onPasteEvent)
     },
 
     endPaste() {
@@ -201,14 +201,15 @@ export default {
       unsubscribePaste()
     },
 
-    async handlePasted(file) {
+    async onPasteEvent(file) {
       const dataUri = await fileToBase64(file)
       this.company[this.pastingField] = dataUri
+      this.cropRatio = this.pastingField == this.imgFieldNames.logoUrl ? 1 : 0.5
       this.croppingField = this.pastingField
       this.endPaste()
     },
 
-    async startCrop(fieldName) {
+    async handleFileUploaded(fieldName) {
       const file = await filePrompt()
       const dataUri = await fileToBase64(file)
       this.company[fieldName] = dataUri

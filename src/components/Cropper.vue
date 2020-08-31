@@ -44,7 +44,6 @@ export default {
         if (this.$refs.img.naturalWidth > 0 && this.$refs.img.naturalHeight > 0) {
           clearInterval(interval)
           this.isLoading = false
-          console.log(this.cropRatio)
           this.$nextTick(() => {
             this.croppr = new Croppr('#img-crop', {
               aspectRatio: this.cropRatio,
