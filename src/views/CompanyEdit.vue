@@ -5,28 +5,29 @@
 
       <form class="form">
         <label>Name</label>
-        <input type="text" class="fill-x" v-model="company.name" />
+        <input type="text" class="input fill-x" v-model="company.name" />
         <label>Description</label>
-        <textarea type="text" class="fill-x" v-model="company.description" rows="3" />
+        <textarea type="text" class="input fill-x" v-model="company.description" rows="3" />
         <label>Location</label>
-        <input type="text" class="fill-x" v-model="company.location" />
+        <input type="text" class="input fill-x" v-model="company.location" />
         <label>Website</label>
-        <input type="text" class="fill-x" v-model="company.website" />
+        <input type="text" class="input fill-x" v-model="company.website" />
 
         <div class="flex">
           <div class="fill-x">
             <label>Twitter handle</label>
-            <input type="text" class="fill-x" v-model="company.twitterHandle" />
+            <input type="text" class="input fill-x" v-model="company.twitterHandle" />
           </div>
           <div class="fill-x ml-2">
             <label>Crunchbase id</label>
-            <input type="text" class="fill-x" v-model="company.crunchbaseId" />
+            <input type="text" class="input fill-x" v-model="company.crunchbaseId" />
           </div>
         </div>
 
         <label>Hashtags</label>
-        <span class="muted small mb-1">Comma Separated List</span>
-        <input type="text" class="mt-1 fill-x" @input="handleHashtagEdit" :value="company.hashtags" />
+        <HashtagInput @changed="handleTagChange" />
+        <!-- <span class="muted small mb-1">Comma Separated List</span> -->
+        <!-- <input type="text" class="mt-1 fill-x" @input="handleHashtagEdit" :value="company.hashtags" /> -->
 
         <label class="mt-1">Logo</label>
         <div class="flex flex-down">
@@ -106,18 +107,19 @@
 </template>
 
 <script>
-import IconLarge from '../components/IconLarge.vue'
-import Modal from '../components/Modal.vue'
-import Cropper from '../components/Cropper.vue'
+import HashtagInput from '../components/forms/HashtagInput.vue'
 import Button from '../components/forms/Button.vue'
 import CompanyCard from '../components/CompanyCard.vue'
+import Cropper from '../components/Cropper.vue'
+import IconLarge from '../components/IconLarge.vue'
+import Modal from '../components/Modal.vue'
 import api from '@/api'
 import { waitForLogin } from '@/mixins'
 import { filePrompt, fileToBase64, subscribePaste, unsubscribePaste } from '@/utils'
 
 export default {
   name: 'CompanyEdit',
-  components: { Button, CompanyCard, Cropper, Modal, IconLarge },
+  components: { Button, CompanyCard, Cropper, Modal, IconLarge, HashtagInput },
   props: {
     slug: {
       required: false,
@@ -225,6 +227,10 @@ export default {
       const revision = await api.postCompanyRevisionApprove(revisionId)
       this.revisions = [...this.revisions.filter(({ id }) => id !== revisionId), revision]
       this.company = await api.getCompany(this.slug)
+    },
+
+    handleTagChange(hashtags) {
+      this.company.hashtags = hashtags
     },
 
     showRevision(revisionId) {

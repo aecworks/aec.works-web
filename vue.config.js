@@ -6,7 +6,7 @@ module.exports = {
         target: "http://localhost:8000/",
         changeOrigin: true,
         pathRewrite: { "^/api": "/" },
-        logLevel: "debug"
+        logLevel: "info"
       }
     },
   },
@@ -18,6 +18,7 @@ module.exports = {
         @import "~@/assets/scss/abstract/_mixins.scss";
         @import '~@/assets/scss/theme.scss';
         @import '~@/assets/scss/components/buttons.scss';
+        @import '~@/assets/scss/components/forms.scss';
         @import '~@/assets/scss/base/typography.scss';
         `
       }

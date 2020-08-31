@@ -3,10 +3,10 @@
     <form ref="form" class="form">
       <textarea
         type="text"
+        class="input comment-reply-input fill-x"
         v-model="commentText"
         @input="handleInput"
         ref="textareaElement"
-        class="comment-reply-input fill-x"
         placeholder="Comment"
       />
       <Button v-if="commentText" text="Post" @click="handleSubmitClick" />
