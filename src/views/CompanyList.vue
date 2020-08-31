@@ -37,7 +37,7 @@ import TextInput from '../components/forms/TextInput.vue'
 import api from '@/api'
 import CompanyCard from '@/components/CompanyCard'
 import { toggleHashtag } from '../mixins'
-import { popQuery } from '@/utils'
+import { popQuery, debounce } from '@/utils'
 import { bus, EVENTS } from '@/events'
 
 export default {
@@ -60,11 +60,13 @@ export default {
     }
   },
   created() {
-    this.fetchItems(0)
     if (this.$route.query.hashtags) {
       this.initialQueryHashtags = this.$route.query.hashtags.split(',').filter(i => i.length)
-      debugger
     }
+    if (this.$route.query.search) {
+      this.searchQuery = this.$route.query.search
+    }
+    this.fetchItems(0)
   },
   computed: {
     hasMore() {
@@ -93,14 +95,14 @@ export default {
       this.isLoading = false
     },
 
-    handleSearchInput(query) {
+    handleSearchInput: debounce(function(query) {
       if (query) {
         this.$router.replace({ query: { ...this.$route.query, search: query } })
       } else {
         popQuery(this.$router, this.$route.query, 'search')
       }
       this.refetch()
-    },
+    }, 200),
 
     handleHashtagFilterChanged(tags) {
       if (tags.length) {
