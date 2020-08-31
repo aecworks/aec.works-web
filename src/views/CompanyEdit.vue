@@ -26,8 +26,6 @@
 
         <label>Hashtags</label>
         <HashtagInput @changed="handleTagChange" />
-        <!-- <span class="muted small mb-1">Comma Separated List</span> -->
-        <!-- <input type="text" class="mt-1 fill-x" @input="handleHashtagEdit" :value="company.hashtags" /> -->
 
         <label class="mt-1">Logo</label>
         <div class="flex flex-down">
@@ -93,8 +91,8 @@
       </div>
     </div>
     <div class="sidebar">
+      <h3 class="mb-2">Revisions</h3>
       <div class="revisions" v-for="rev in revisions" :key="rev.id">
-        <h3 class="mb-2">Revisions</h3>
         <h5>{{rev.createdAt | calendar }}</h5>
         <span class="muted small">By {{rev.createdBy.name}}</span>
         <div>

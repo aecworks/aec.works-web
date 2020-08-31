@@ -3,16 +3,18 @@
     <vue-tags-input
       :validation="validation"
       v-model="tag"
-      :tags="tags"
+      :tags.sync="tags"
       :autocomplete-items="filteredItems"
       :add-on-key="[13,188]"
       @tags-changed="handleTagChanged"
+      :max-tags="3"
     />
   </div>
 </template>
 
 <script>
 import api from '@/api'
+import { bus, EVENTS } from '@/events'
 
 import VueTagsInput from '@johmun/vue-tags-input'
 export default {
@@ -33,9 +35,17 @@ export default {
       ],
     }
   },
-  async mounted() {
+  async created() {
     const hashtagsResponse = await api.getHashtags()
     this.existingHashtags = hashtagsResponse.map(({ slug }) => ({ text: slug }))
+
+    // Listen on for external adds
+    bus.$on(EVENTS.HASHTAG_CLICKED, slug => {
+      if (!this.tags.find(t => t.text === slug)) {
+        this.tags.push({ text: slug })
+        this.handleTagChanged(this.tags)
+      }
+    })
   },
   methods: {
     handleTagChanged(newTags) {
@@ -79,6 +89,10 @@ export default {
 
 .vue-tags-input .ti-tag {
   background-color: $dark;
+}
+
+.vue-tags-input .ti-item.ti-selected-item {
+  background-color: $dark !important;
 }
 
 .vue-tags-input .ti-tags .ti-tag.ti-deletion-mark {

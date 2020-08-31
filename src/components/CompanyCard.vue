@@ -21,7 +21,13 @@
 
       <!-- Company Hashtags -->
       <div class="mt-1">
-        <Hashtag v-for="slug in company.hashtags" :slug="slug" :key="slug" />
+        <Hashtag
+          v-for="slug in company.hashtags"
+          :slug="slug"
+          :key="slug"
+          @click="$emit('hashtagClick', slug)"
+          clickable
+        />
       </div>
 
       <!-- Footer -->
