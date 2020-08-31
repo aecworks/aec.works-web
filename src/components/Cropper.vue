@@ -121,11 +121,11 @@ export default {
   opacity: 1;
 }
 
-// .croppr-handle {
-//   border-color: $dark;
-//   border-width: 2px;
-//   width: 15px;
-//   height: 15px;
-//   border-radius: 15px;
-// }
+.croppr-handle {
+  border-color: $dark;
+  border-width: 2px;
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+}
 </style>
