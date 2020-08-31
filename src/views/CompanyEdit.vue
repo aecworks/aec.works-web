@@ -54,7 +54,7 @@
           v-if="croppingField"
           :imgUrl="company[croppingField]"
           :cropRatio="cropRatio"
-          @done="handleCropDone"
+          @done="cropCompleted"
         />
 
         <Modal v-if="pastingField" @clickOutside="endPaste">
@@ -79,7 +79,7 @@
         </div>
 
         <Button :text="isEditing ? 'Create Revision' : 'Create'" class="mt-2" @click="handleSave" />
-        <Button text="Cancel" @click="handleCancel" />
+        <Button text="Cancel" @click="handleCancelEdit" />
       </form>
 
       <hr class="mt-2" />
@@ -179,7 +179,7 @@ export default {
       }
     },
 
-    handleCancel() {
+    handleCancelEdit() {
       if (this.isEditing) {
         this.$router.push({ name: 'Company', params: { slug: this.slug } })
       } else {
@@ -204,8 +204,7 @@ export default {
     async onPasteEvent(file) {
       const dataUri = await fileToBase64(file)
       this.company[this.pastingField] = dataUri
-      this.cropRatio = this.pastingField == this.imgFieldNames.logoUrl ? 1 : 0.5
-      this.croppingField = this.pastingField
+      this.startCrop(this.pastingField)
       this.endPaste()
     },
 
@@ -213,11 +212,24 @@ export default {
       const file = await filePrompt()
       const dataUri = await fileToBase64(file)
       this.company[fieldName] = dataUri
-      this.cropRatio = fieldName == this.imgFieldNames.logoUrl ? 1 : 0.5
-      this.croppingField = fieldName
+      this.startCrop(fieldName)
     },
 
-    async handleCropDone(file) {
+    startCrop(fieldName) {
+      this.cropRatio = fieldName == this.imgFieldNames.logoUrl ? 1 : 0.5
+      this.croppingField = fieldName
+      document.addEventListener('keyup', this.handleKeyUp)
+    },
+
+    handleKeyUp(e) {
+      if (e.key == 'Escape') {
+        document.removeEventListener('keyup', this.handleKeyUp)
+        this.company[this.croppingField] = null
+        this.croppingField = null
+      }
+    },
+
+    async cropCompleted(file) {
       const image = await api.putImage(file, file, file.type)
       this.company[this.croppingField] = image.url
       this.croppingField = null
