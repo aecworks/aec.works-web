@@ -29,8 +29,8 @@
 
         <label class="mt-1">Logo</label>
         <div class="flex flex-down">
-          <div class="company-logo">
-            <img :src="company.logoUrl" alt />
+          <div class="company-logo" :class="{ 'empty': !company.logoUrl }">
+            <img :src="company.logoUrl  || defaultImageUrl" alt />
           </div>
           <div class="mt">
             <Button text="Upload" kind="text" @click="startCrop(imgFieldNames.logoUrl)" />
@@ -41,8 +41,8 @@
 
         <label class="mt-1">Cover</label>
         <div class="flex flex-down">
-          <div class="company-cover">
-            <img :src="company.coverUrl" alt />
+          <div class="company-cover" :class="{ 'empty': !company.coverUrl }">
+            <img :src="company.coverUrl || defaultImageUrl" alt />
           </div>
           <div class="mt">
             <Button text="Upload" kind="text" @click="startCrop(imgFieldNames.coverUrl)" />
@@ -126,6 +126,7 @@ export default {
   },
   data() {
     return {
+      defaultImageUrl: require('@/assets/images/image.svg'),
       imgFieldNames: {
         coverUrl: 'coverUrl',
         logoUrl: 'logoUrl',
@@ -244,22 +245,44 @@ export default {
 </script>
 
 <style lang="scss">
-.company-logo img {
-  min-width: 60px;
-  min-height: 60px;
-  width: 60px;
+.company-logo {
   height: 60px;
-  @extend .border-thick;
-  background-color: white;
+  width: 60px;
+  overflow: hidden;
+  @extend .border-thin;
+
+  img {
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+  }
+
+  &.empty {
+    width: 60px;
+    img {
+      height: 50%;
+      object-fit: scale-down;
+      margin-top: 15px;
+    }
+  }
 }
 
-.company-cover img {
-  min-height: 60px;
-  height: 60px;
-  min-width: 120px;
+.company-cover {
+  @extend .company-logo;
   width: 120px;
-  @extend .border-thick;
-  background-color: white;
+  // overflow: hidden;
+  // @extend .border-thin;
+  // img {
+  //   display: block;
+  //   object-fit: cover;
+  //   object-position: center;
+  //   height: 100%;
+  //   width: 100%;
+  //   background-color: white;
+  // }
 }
 
 @include for-large-down {
