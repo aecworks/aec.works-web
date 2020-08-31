@@ -90,15 +90,20 @@ export default {
 .profile {
   display: flex;
   @include for-large-down {
+    flex-wrap: wrap;
     text-align: center;
     flex-direction: column;
+    justify-content: center;
+    align-content: center;
   }
 }
 .profile-data {
   width: 200px;
 }
 .profile-activity {
-  margin-top: 2rem;
+  @include for-large-down {
+    margin-top: 2rem;
+  }
   @include for-large-up {
     padding-left: 2rem;
   }

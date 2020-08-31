@@ -1,3 +1,5 @@
+// TODO Clean this up
+
 .form {
   input{
     display: block;
@@ -8,7 +10,7 @@
   }
 }
 
-input[type=text], textarea{
+.input{
   font-size: $font-size-p;
   font-family: $font-family;
   padding: $padding-sm $padding;

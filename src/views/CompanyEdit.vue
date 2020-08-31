@@ -1,37 +1,36 @@
 <template>
-  <div class="wrapper flex">
+  <div class="wrapper sm-grid-sidebar-down">
     <div class="content">
       <h1>{{ isEditing ? "Edit" : "New"}}</h1>
 
       <form class="form">
         <label>Name</label>
-        <input type="text" class="fill-x" v-model="company.name" />
+        <input type="text" class="input fill-x" v-model="company.name" />
         <label>Description</label>
-        <textarea type="text" class="fill-x" v-model="company.description" rows="3" />
+        <textarea type="text" class="input fill-x" v-model="company.description" rows="3" />
         <label>Location</label>
-        <input type="text" class="fill-x" v-model="company.location" />
+        <input type="text" class="input fill-x" v-model="company.location" />
         <label>Website</label>
-        <input type="text" class="fill-x" v-model="company.website" />
+        <input type="text" class="input fill-x" v-model="company.website" />
 
         <div class="flex">
           <div class="fill-x">
             <label>Twitter handle</label>
-            <input type="text" class="fill-x" v-model="company.twitterHandle" />
+            <input type="text" class="input fill-x" v-model="company.twitterHandle" />
           </div>
           <div class="fill-x ml-2">
             <label>Crunchbase id</label>
-            <input type="text" class="fill-x" v-model="company.crunchbaseId" />
+            <input type="text" class="input fill-x" v-model="company.crunchbaseId" />
           </div>
         </div>
 
         <label>Hashtags</label>
-        <span class="muted small mb-1">Comma Separated List</span>
-        <input type="text" class="mt-1 fill-x" @input="handleHashtagEdit" :value="company.hashtags" />
+        <HashtagInput @changed="handleTagChange" />
 
         <label class="mt-1">Logo</label>
         <div class="flex flex-down">
-          <div class="company-logo">
-            <img :src="company.logoUrl" alt />
+          <div class="company-logo" :class="{ 'empty': !company.logoUrl }">
+            <img :src="company.logoUrl  || defaultImageUrl" alt />
           </div>
           <div class="mt">
             <Button text="Upload" kind="text" @click="startCrop(imgFieldNames.logoUrl)" />
@@ -42,8 +41,8 @@
 
         <label class="mt-1">Cover</label>
         <div class="flex flex-down">
-          <div class="company-cover">
-            <img :src="company.coverUrl" alt />
+          <div class="company-cover" :class="{ 'empty': !company.coverUrl }">
+            <img :src="company.coverUrl || defaultImageUrl" alt />
           </div>
           <div class="mt">
             <Button text="Upload" kind="text" @click="startCrop(imgFieldNames.coverUrl)" />
@@ -92,8 +91,8 @@
       </div>
     </div>
     <div class="sidebar">
+      <h3 class="mb-2">Revisions</h3>
       <div class="revisions" v-for="rev in revisions" :key="rev.id">
-        <h3 class="mb-2">Revisions</h3>
         <h5>{{rev.createdAt | calendar }}</h5>
         <span class="muted small">By {{rev.createdBy.name}}</span>
         <div>
@@ -106,18 +105,19 @@
 </template>
 
 <script>
-import IconLarge from '../components/IconLarge.vue'
-import Modal from '../components/Modal.vue'
-import Cropper from '../components/Cropper.vue'
+import HashtagInput from '../components/forms/HashtagInput.vue'
 import Button from '../components/forms/Button.vue'
 import CompanyCard from '../components/CompanyCard.vue'
+import Cropper from '../components/Cropper.vue'
+import IconLarge from '../components/IconLarge.vue'
+import Modal from '../components/Modal.vue'
 import api from '@/api'
 import { waitForLogin } from '@/mixins'
 import { filePrompt, fileToBase64, subscribePaste, unsubscribePaste } from '@/utils'
 
 export default {
   name: 'CompanyEdit',
-  components: { Button, CompanyCard, Cropper, Modal, IconLarge },
+  components: { Button, CompanyCard, Cropper, Modal, IconLarge, HashtagInput },
   props: {
     slug: {
       required: false,
@@ -126,6 +126,7 @@ export default {
   },
   data() {
     return {
+      defaultImageUrl: require('@/assets/images/image.svg'),
       imgFieldNames: {
         coverUrl: 'coverUrl',
         logoUrl: 'logoUrl',
@@ -227,6 +228,10 @@ export default {
       this.company = await api.getCompany(this.slug)
     },
 
+    handleTagChange(hashtags) {
+      this.company.hashtags = hashtags
+    },
+
     showRevision(revisionId) {
       this.company = this.revisions.find(({ id }) => id === revisionId)
     },
@@ -240,22 +245,44 @@ export default {
 </script>
 
 <style lang="scss">
-.company-logo img {
-  min-width: 60px;
-  min-height: 60px;
-  width: 60px;
+.company-logo {
   height: 60px;
-  @extend .border-thick;
-  background-color: white;
+  width: 60px;
+  overflow: hidden;
+  @extend .border-thin;
+
+  img {
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+  }
+
+  &.empty {
+    width: 60px;
+    img {
+      height: 50%;
+      object-fit: scale-down;
+      margin-top: 15px;
+    }
+  }
 }
 
-.company-cover img {
-  min-height: 60px;
-  height: 60px;
-  min-width: 120px;
+.company-cover {
+  @extend .company-logo;
   width: 120px;
-  @extend .border-thick;
-  background-color: white;
+  // overflow: hidden;
+  // @extend .border-thin;
+  // img {
+  //   display: block;
+  //   object-fit: cover;
+  //   object-position: center;
+  //   height: 100%;
+  //   width: 100%;
+  //   background-color: white;
+  // }
 }
 
 @include for-large-down {

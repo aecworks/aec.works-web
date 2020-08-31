@@ -138,7 +138,7 @@ class Api {
   }
 
   getHashtags (query) {
-    return this._get(`community/hashtags/`, { query })
+    return this._get(`community/hashtags/`, { search: query || "" })
   }
 
   getPost (slug) {

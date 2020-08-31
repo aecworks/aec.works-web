@@ -13,19 +13,19 @@
 
     <div class="sidebar">
       <TextInput
+        v-if="false"
         icon="search"
         v-model="searchQuery"
         @input="handleSearchInput"
         placeholder="search"
       />
       <div class="hidden-sm">
-        <label class="mt-2">Hot This Week</label>
+        <label class>Hot This Week (WIP)</label>
         <Hashtag slug="PropTech" clickable />
         <Hashtag slug="ADU" clickable />
         <Hashtag slug="Housing" clickable />
       </div>
       <div class="mt-2 mb-2">
-        <!-- <label class="mt-2">Contribute</label> -->
         <Icon class="mt" icon="pencil" v-if="!isEditing" @click="handleAdd" clickable>Write</Icon>
       </div>
     </div>
@@ -55,6 +55,7 @@ export default {
     return {
       items: [],
       offset: 0,
+      count: 0,
       isLoading: true,
       isEditing: false,
       searchQuery: '',
@@ -71,6 +72,11 @@ export default {
     }
     next()
   },
+  computed: {
+    hasMore() {
+      return this.count > this.items.length
+    },
+  },
   methods: {
     async fetchItems(offset, hashtag, searchQuery) {
       // ?offset=0&hashtag=abc&search=xxx
@@ -78,9 +84,10 @@ export default {
       // Remove null/undefined
       query = Object.entries(query).reduce((a, [k, v]) => (v ? ((a[k] = v), a) : a), {})
 
-      const { results: items } = await api.getPosts(query)
-      this.items = [...this.items, ...items]
-      this.offset = this.offset + items.length
+      const { results, count } = await api.getPosts(query)
+      this.items = [...this.items, ...results]
+      this.offset = this.offset + results.length
+      this.count = count
     },
     handleSearchInput() {
       this.items = []
@@ -92,7 +99,7 @@ export default {
     },
     onVisible({ going }) {
       // TODO: Make paginated loading util
-      if (going === 'in') {
+      if (going === 'in' && this.hasMore) {
         this.fetchItems(this.offset)
       }
     },

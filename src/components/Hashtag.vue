@@ -1,5 +1,9 @@
 <template>
-  <div class="hashtag" :class="[clickable ? 'pointer' : '', pickColor()]" @click="$emit('click')">
+  <div
+    class="hashtag"
+    :class="[clickable ? 'clickable' : '', isActive ? 'active' : '']"
+    @click="$emit('click')"
+  >
     <span>#{{slug}}</span>
   </div>
 </template>
@@ -16,18 +20,12 @@ export default {
   },
   computed: {
     isActive() {
-      return this.$route.query.hashtag === this.slug
+      return this.$route.query.hashtags && this.$route.query.hashtags.indexOf(this.slug) !== -1
     },
   },
   methods: {
-    pickColor() {
-      // if (this.isActive) {
-      //   return 'dark'
-      // }
-      // const options = ['pink', 'yellow', 'green', 'blue']
-      // const choiceIndex = Math.floor(Math.random() * options.length)
-      // return options[choiceIndex]
-      return ''
+    handleClick() {
+      this.$emit('click', this.slug)
     },
   },
 }
@@ -47,18 +45,19 @@ export default {
   }
 
   &.clickable {
+    cursor: pointer;
     &:hover {
-      box-shadow: 0 0 !important;
+      @include shadow-color($dark);
     }
-    &:active {
-      box-shadow: 0 0 !important;
+    &.active:hover {
+      @include shadow-color($yellow);
     }
   }
 
-  &.dark {
+  &.dark,
+  &.active {
     background-color: $dark;
-    color: $cream;
-    // @include shadow-color($dark);
+    color: white;
   }
   &.pink {
     @include shadow-color($pink);
