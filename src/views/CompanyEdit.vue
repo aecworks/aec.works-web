@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper sm-grid-sidebar-down">
-    <div class="content">
+    <div class="content" v-if="company">
       <h1>{{ isEditing ? "Edit" : "New"}}</h1>
 
       <form class="form">
@@ -25,7 +25,11 @@
         </div>
 
         <label>Hashtags</label>
-        <HashtagInput @changed="handleTagChange" />
+        <HashtagInput
+          v-if="isReadyForHashtags"
+          @changed="handleTagChange"
+          :initialTags="company.hashtags"
+        />
 
         <label class="mt-1">Logo</label>
         <div class="flex flex-down">
@@ -137,6 +141,7 @@ export default {
       pastingField: null,
       errors: null,
       revisions: [],
+      isReadyForHashtags: false,
       company: {
         name: '',
         description: '',
@@ -155,6 +160,9 @@ export default {
       this.company = await api.getCompany(this.slug)
       this.revisions = await api.getCompanyRevisions(this.slug)
     }
+    /// Use this to hold back hashtag input otherwise it's initiated as blank
+    // TODO: Sync, when applying doe snot work
+    this.isReadyForHashtags = true
   },
   computed: {
     isEditing() {
@@ -243,7 +251,11 @@ export default {
     },
 
     showRevision(revisionId) {
-      this.company = this.revisions.find(({ id }) => id === revisionId)
+      this.isReadyForHashtags = false
+      this.$nextTick(() => {
+        this.company = this.revisions.find(({ id }) => id === revisionId)
+        this.isReadyForHashtags = true
+      })
     },
   },
   filters: {
