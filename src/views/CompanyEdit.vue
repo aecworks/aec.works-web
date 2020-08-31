@@ -55,6 +55,7 @@
           :imgUrl="company[croppingField]"
           :cropRatio="cropRatio"
           @done="cropCompleted"
+          @cancel="cropCanceled"
         />
 
         <Modal v-if="pastingField" @clickOutside="endPaste">
@@ -218,15 +219,11 @@ export default {
     startCrop(fieldName) {
       this.cropRatio = fieldName == this.imgFieldNames.logoUrl ? 1 : 0.5
       this.croppingField = fieldName
-      document.addEventListener('keyup', this.handleKeyUp)
     },
 
-    handleKeyUp(e) {
-      if (e.key == 'Escape') {
-        document.removeEventListener('keyup', this.handleKeyUp)
-        this.company[this.croppingField] = null
-        this.croppingField = null
-      }
+    cropCanceled() {
+      this.company[this.croppingField] = null
+      this.croppingField = null
     },
 
     async cropCompleted(file) {

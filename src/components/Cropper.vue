@@ -36,6 +36,12 @@ export default {
       croppr: null,
     }
   },
+  created() {
+    document.addEventListener('keyup', this.handleKeyUp)
+  },
+  destroyed() {
+    document.removeEventListener('keyup', this.handleKeyUp)
+  },
   mounted() {
     // https://jamesooi.design/Croppr.js/#install
     this.$refs.img.src = this.imgUrl
@@ -92,6 +98,14 @@ export default {
           1,
         )
       }.bind(this)
+    },
+    handleKeyUp(e) {
+      switch (e.key) {
+        case 'Escape':
+          return this.$emit('cancel')
+        case 'Enter':
+          return this.handleDone()
+      }
     },
   },
 }
