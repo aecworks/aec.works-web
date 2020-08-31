@@ -20,7 +20,13 @@ import VueTagsInput from '@johmun/vue-tags-input'
 export default {
   name: 'HashtagInput',
   components: { VueTagsInput },
-  props: {},
+  props: {
+    initialTags: {
+      type: Array,
+      required: false,
+      default: () => [],
+    },
+  },
   data() {
     return {
       tag: '',
@@ -35,6 +41,9 @@ export default {
       ],
     }
   },
+  mounted() {
+    this.tags = this.initialTags.map(slug => ({ text: slug }))
+  },
   async created() {
     const hashtagsResponse = await api.getHashtags()
     this.existingHashtags = hashtagsResponse.map(({ slug }) => ({ text: slug }))
@@ -43,8 +52,10 @@ export default {
     bus.$on(EVENTS.HASHTAG_CLICKED, slug => {
       if (!this.tags.find(t => t.text === slug)) {
         this.tags.push({ text: slug })
-        this.handleTagChanged(this.tags)
+      } else {
+        this.tags = this.tags.filter(t => t.text !== slug)
       }
+      this.handleTagChanged(this.tags)
     })
   },
   methods: {
@@ -88,7 +99,8 @@ export default {
 }
 
 .vue-tags-input .ti-tag {
-  background-color: $dark;
+  background-color: $dark !important;
+  padding: 0.25rem 0.55rem;
 }
 
 .vue-tags-input .ti-item.ti-selected-item {

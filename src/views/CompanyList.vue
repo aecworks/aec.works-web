@@ -18,7 +18,7 @@
         placeholder="search"
       />
       <label class="mt-1">Hashtags</label>
-      <HashtagInput @changed="handleHashtagFilterChanged" />
+      <HashtagInput @changed="handleHashtagFilterChanged" :initialTags="initialQueryHashtags" />
 
       <p class="mt-1 sans small muted">Showing {{count}} {{count === 1 ? "company" : "companies"}}</p>
 
@@ -56,19 +56,16 @@ export default {
       count: 0,
       isLoading: true,
       searchQuery: '',
+      initialQueryHashtags: [],
     }
   },
-  async created() {
+  created() {
     this.fetchItems(0)
-    this.isLoading = false
+    if (this.$route.query.hashtags) {
+      this.initialQueryHashtags = this.$route.query.hashtags.split(',').filter(i => i.length)
+      debugger
+    }
   },
-  // beforeRouteUpdate(to, from, next) {
-  // if (from.query.hashtag !== to.query.hashtag) {
-  //   this.items = []
-  //   this.fetchItems(0, [])
-  // }
-  //   // next()
-  // },
   computed: {
     hasMore() {
       return this.count > this.items.length
@@ -92,6 +89,8 @@ export default {
       this.items = [...this.items, ...results]
       this.offset = this.offset + results.length
       this.count = count
+
+      this.isLoading = false
     },
 
     handleSearchInput(query) {
