@@ -15,7 +15,7 @@ import VueWaypoint from 'vue-waypoint'
 Vue.use(VueWaypoint)
 api.getMyProfile().then(resp => {
   if (!resp.errors) api.setAuthentication(true)
-  store.dispatch(USERS.GET_PROFILE)
+  store.commit(USERS.SET_PROFILE, resp)
   new Vue({
     router,
     store,

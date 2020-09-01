@@ -121,7 +121,7 @@ export default {
       } else {
         popQuery(this.$router, this.$route.query, 'hashtags')
       }
-      this.refetch()
+      this.$nextTick(() => this.refetch())
     },
 
     handleHashtagClick(slug) {

@@ -20,9 +20,7 @@ export default {
   data() {
     return {}
   },
-  created() {
-    this.$store.dispatch(USERS.GET_PROFILE)
-  },
+  created() {},
   computed: {
     showLoginModal() {
       return this.$route.query.login
