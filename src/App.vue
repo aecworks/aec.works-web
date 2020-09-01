@@ -9,7 +9,6 @@
 <script>
 import Nav from '@/components/Nav'
 import Login from '@/components/Login'
-import api from '@/api'
 import { USERS } from '@/store/users'
 
 export default {

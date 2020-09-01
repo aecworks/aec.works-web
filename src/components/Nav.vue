@@ -29,6 +29,7 @@
 <script>
 import { USERS } from '@/store/users'
 import { debounce } from '@/utils'
+import api from '../api'
 
 export default {
   name: 'Nav',
@@ -56,10 +57,11 @@ export default {
     isActive(route) {
       return this.$route.name === route.name
     },
-    handleLogout() {
+    async handleLogout() {
+      await api.logout()
       this.$store.dispatch(USERS.LOGOUT)
     },
-    handleScroll(event) {
+    handleScroll() {
       if (window.pageYOffset > this.sticky) {
         this.header.classList.add('sticky')
       } else {

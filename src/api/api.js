@@ -88,7 +88,9 @@ class Api {
   }
 
   /**
+   * @param  {String} provider
    * @param  {String} code
+   * @param  {String} v
    */
   async loginWithOauthCode (provider, code, redirectUri) {
     const response = await this._fetch("POST", `users/login/${provider}/`, { query: { code, redirect_uri: redirectUri } })
@@ -96,6 +98,14 @@ class Api {
       return await response.json()
     }
   }
+
+  async logout () {
+    const response = await this._fetch("POST", `users/logout/`)
+    if (!response.status === 200) {
+      return await response.json()
+    }
+  }
+
 
   getCommentsByThreadId (threadId, query) {
     return this._get(`community/comments/`, { query: { ...query, "thread_id": threadId } })

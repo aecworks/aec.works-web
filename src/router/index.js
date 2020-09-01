@@ -23,13 +23,13 @@ const routes = [
     path: '/companies',
     name: 'CompanyList',
     component: CompanyList,
-    props: true,
+    props: (route) => ({ ...route.query, ...route.params })
   },
   {
     path: '/posts',
     name: 'PostList',
     component: PostList,
-    props: true,
+    props: (route) => ({ ...route.query, ...route.params })
   },
   {
     path: '/companies/new',

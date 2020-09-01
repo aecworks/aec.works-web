@@ -36,7 +36,6 @@ import Loader from '../components/Loader.vue'
 import TextInput from '../components/forms/TextInput.vue'
 import api from '@/api'
 import CompanyCard from '@/components/CompanyCard'
-import { toggleHashtag } from '../mixins'
 import { popQuery, debounce } from '@/utils'
 import { bus, EVENTS } from '@/events'
 
@@ -49,6 +48,16 @@ export default {
     Icon,
     HashtagInput,
   },
+  props: {
+    search: {
+      type: String,
+      default: '',
+    },
+    hashtags: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       items: [],
@@ -60,11 +69,11 @@ export default {
     }
   },
   created() {
-    if (this.$route.query.hashtags) {
-      this.initialQueryHashtags = this.$route.query.hashtags.split(',').filter(i => i.length)
+    if (this.hashtags) {
+      this.initialQueryHashtags = this.hashtags.split(',').filter(i => i.length)
     }
-    if (this.$route.query.search) {
-      this.searchQuery = this.$route.query.search
+    if (this.search) {
+      this.searchQuery = this.search
     }
     this.fetchItems(0)
   },
@@ -78,10 +87,11 @@ export default {
       this.items = []
       this.fetchItems(0)
     },
+
     async fetchItems(offset) {
       let query = {
         offset,
-        hashtags: this.$route.query.hashtags,
+        hashtags: this.hashtags,
         search: this.searchQuery,
       }
       // Remove null/undefined

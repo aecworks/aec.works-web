@@ -51,7 +51,6 @@ export default {
     },
     async handleSubmitClick() {
       await waitForLogin()
-      let parent = {}
       api.postComment(this.commentText, this.threadId, this.parentId)
       this.commentText = ''
       this.$emit('replied')
