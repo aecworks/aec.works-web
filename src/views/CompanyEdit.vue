@@ -97,10 +97,12 @@
     <div class="sidebar">
       <h3 class="mb-2">Revisions</h3>
       <div class="revisions" v-for="rev in revisions" :key="rev.id">
-        <h5>{{rev.createdAt | calendar }}</h5>
+        <label class="mb" v-if="rev.id == company.lastRevisionId">👇Applied 👇</label>
+        <label class="mb" v-if="rev.approvedBy && rev.id == company.id">👇Previwing 👇</label>
+        <h5>{{ rev.createdAt | calendar }}</h5>
         <span class="muted small">By {{rev.createdBy.name}}</span>
         <div>
-          <Button text="Show" kind="text" @click="showRevision(rev.id)" />
+          <Button text="Show" kind="text" @click="showRevision(rev)" />
           <Button text="Apply" kind="text" @click="handleRevisionApprove(rev.id)" />
         </div>
       </div>
@@ -151,6 +153,7 @@ export default {
         logoUrl: '',
         coverUrl: '',
         hashtags: [],
+        lastRevisionId: '',
       },
     }
   },
@@ -171,6 +174,7 @@ export default {
   methods: {
     async handleSave() {
       await waitForLogin()
+
       if (this.isEditing) {
         // Is Editing Company
         await api.postCompanyRevision(this.company.slug, this.company)
@@ -239,27 +243,26 @@ export default {
       this.croppingField = null
     },
 
-    async handleRevisionApprove(revisionId) {
-      const revision = await api.postCompanyRevisionApprove(revisionId)
-      this.revisions = [...this.revisions.filter(({ id }) => id !== revisionId), revision]
-      this.company = await api.getCompany(this.slug)
-    },
-
     handleTagChange(hashtags) {
       this.company.hashtags = hashtags
     },
 
-    showRevision(revisionId) {
+    async handleRevisionApprove(revisionId) {
+      await api.postCompanyRevisionApprove(revisionId)
+      this.revisions = await api.getCompanyRevisions(this.slug)
+      this.company = await api.getCompany(this.slug)
       this.isReadyForHashtags = false
       this.$nextTick(() => {
-        this.company = this.revisions.find(({ id }) => id === revisionId)
         this.isReadyForHashtags = true
       })
     },
-  },
-  filters: {
-    cleanUrl(value) {
-      return value.replace('https://', '').replace('http://', '')
+
+    showRevision(revision) {
+      this.isReadyForHashtags = false
+      this.$nextTick(() => {
+        this.company = { ...this.company, ...revision }
+        this.isReadyForHashtags = true
+      })
     },
   },
 }
@@ -294,16 +297,6 @@ export default {
 .company-cover {
   @extend .company-logo;
   width: 120px;
-  // overflow: hidden;
-  // @extend .border-thin;
-  // img {
-  //   display: block;
-  //   object-fit: cover;
-  //   object-position: center;
-  //   height: 100%;
-  //   width: 100%;
-  //   background-color: white;
-  // }
 }
 
 @include for-large-down {
@@ -313,7 +306,6 @@ export default {
 .revisions {
   margin-top: 2rem;
   @include for-large-up {
-    // text-align: right;
   }
 }
 </style>

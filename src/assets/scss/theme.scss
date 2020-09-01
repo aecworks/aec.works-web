@@ -44,3 +44,12 @@ a:hover {
     color: white;
   }
 }
+
+.pill {
+  display: inline-block;
+  padding: .125rem .25rem;
+  background-color: $green;
+  font-size: $font-size-h4;
+  border-radius: 4px;
+  border: 1px solid $dark;
+}

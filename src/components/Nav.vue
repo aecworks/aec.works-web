@@ -80,7 +80,8 @@ export default {
   z-index: 2;
 
   .nav-logo {
-    transition: transform 200ms;
+    transition: transform 200ms, width 200ms;
+    width: 80px;
     img {
       height: 60px;
       margin-right: 1.5rem;
@@ -101,15 +102,13 @@ export default {
     @keyframes animatelogo {
       0% {
         transform: translateY(0);
-        width: 60px;
+        width: 80px;
       }
       100% {
         transform: translateY(-75px);
         width: 0;
       }
     }
-    // img {
-    // }
   }
 
   .nav-list {
