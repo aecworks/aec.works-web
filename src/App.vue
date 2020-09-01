@@ -9,7 +9,6 @@
 <script>
 import Nav from '@/components/Nav'
 import Login from '@/components/Login'
-import { USERS } from '@/store/users'
 
 export default {
   name: 'App',
@@ -20,7 +19,6 @@ export default {
   data() {
     return {}
   },
-  created() {},
   computed: {
     showLoginModal() {
       return this.$route.query.login

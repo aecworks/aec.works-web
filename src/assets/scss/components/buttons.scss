@@ -8,6 +8,14 @@
     font-size: $font-size-p;
     margin-right: 1rem;
 
+    // No select
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
     background-color: $yellow;
     color: dark;
 

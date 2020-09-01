@@ -94,7 +94,7 @@
         <CompanyCard :company="company" />
       </div>
     </div>
-    <div class="sidebar">
+    <div class="sidebar mb-2">
       <h3 class="mb-2">Revisions</h3>
       <div class="revisions" v-for="rev in revisions" :key="rev.id">
         <label class="mb" v-if="rev.id == company.lastRevisionId">👇Applied 👇</label>
