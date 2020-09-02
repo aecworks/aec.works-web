@@ -13,5 +13,3 @@ if (!document.location.href.includes('localhost')) {
     integrations: [new VueIntegration({ Vue, attachProps: true })],
   })
 }
-
-throw Error('test error')
