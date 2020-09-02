@@ -70,7 +70,7 @@ export default {
       return this.$store.state.users.profile || null
     },
     isSelf() {
-      return this.storeProfile.slug === this.slug
+      return this.storeProfile && this.storeProfile.slug === this.slug
     },
   },
   methods: {
