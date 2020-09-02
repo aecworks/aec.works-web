@@ -7,16 +7,14 @@
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### Using Staging API
+
+```
+yarn run serve:staging
+```
+
+### With Local API Servers
 
 ```
 yarn run serve
 ```
-
-
-# Licences
-
-* Vue
-* [...packages.json]
-* https://twemoji.twitter.com/
-
