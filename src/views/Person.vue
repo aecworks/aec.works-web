@@ -31,9 +31,8 @@
     </div>
     <div class="sidebar hidden-sm">
       <label>Share</label>
-      <div>
-        <Icon icon="twitter" clickable></Icon>
-        <Icon icon="linkedin" clickable></Icon>
+      <div class="mt">
+        <IconShareTwitter />
       </div>
     </div>
     <div class="footer">
@@ -47,12 +46,13 @@
 </template>
 
 <script>
+import IconShareTwitter from '../components/IconShareTwitter.vue'
 import Icon from '../components/Icon.vue'
 import api from '@/api'
 
 export default {
   name: 'Person',
-  components: { Icon },
+  components: { Icon, IconShareTwitter },
   props: {
     slug: { required: true, type: String },
   },

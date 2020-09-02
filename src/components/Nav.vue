@@ -15,10 +15,10 @@
         </li>
         <li class="nav-item profile" v-if="profile">
           <span class="nav-profile-avatar">
+            <a class="logout-link mr-1 small" href="#" @click="handleLogout()">logout</a>
             <router-link tag="a" :to="{name: 'Person', params: { slug: profile.slug }}">
               <img :src="profile.avatarUrl" alt="avatar" />
             </router-link>
-            <a class="ml-1" href="#" @click="handleLogout()">logout</a>
           </span>
         </li>
       </ul>
@@ -147,11 +147,12 @@ export default {
         }
       }
       .nav-profile-avatar {
+        position: relative;
         img {
           vertical-align: middle;
           display: inline-block;
           @extend .border-thin;
-          border-radius: 12px;
+          // border-radius: 12px;
           height: 24px;
         }
       }
