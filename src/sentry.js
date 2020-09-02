@@ -6,7 +6,7 @@ import { Vue as VueIntegration } from "@sentry/integrations";
 // Only enable if on prod environment
 if (process.env.BRANCH) {
   Sentry.init({
-    dsn: "https://ff434f3f877e4a7a957fa0d875963509@o179529.ingest.sentry.io/1851600",
+    dsn: "https://90d9074c9f064bdf889461fadad1a390@o179529.ingest.sentry.io/5414489",
     // From Netlify
     release: process.env.COMMIT_REF,
     environment: process.env.BRANCH,
