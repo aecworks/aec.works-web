@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@johmun/vue-tags-input": "^2.1.0",
+    "@sentry/browser": "^5.22.3",
+    "@sentry/integrations": "^5.22.3",
     "core-js": "^3.6.4",
     "croppr": "^2.3.1",
     "hamburgers": "^1.1.3",
