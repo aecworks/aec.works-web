@@ -100,11 +100,16 @@
         <label class="mb" v-if="rev.id == company.lastRevisionId">👇Applied 👇</label>
         <label class="mb" v-if="rev.approvedBy && rev.id == company.id">👇Previwing 👇</label>
         <h5>{{ rev.createdAt | calendar }}</h5>
-        <span class="muted small">By {{rev.createdBy.name}}</span>
+        <span class="muted small">{{rev.createdBy.name}}</span>
         <div>
           <Button text="Show" kind="text" @click="showRevision(rev)" />
           <Button text="Apply" kind="text" @click="handleRevisionApprove(rev.id)" />
         </div>
+      </div>
+      <div class="mt-2">
+        <h3>Created</h3>
+        <h5 class="mt-1">{{ company.createdAt | calendar }}</h5>
+        <span class="small muted" v-if="company.createdBy">{{ company.createdBy.name }}</span>
       </div>
     </div>
   </div>

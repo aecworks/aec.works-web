@@ -13,7 +13,12 @@
         <p class="comment-text">{{comment.text}}</p>
 
         <Loader v-if="isLoading" />
-        <CommentReply v-if="isReplying" v-bind="{ parentId: comment.id }" @replied="handleReplied" />
+        <CommentReply
+          v-if="isReplying"
+          v-bind="{ parentId: comment.id }"
+          @replied="handleReplied"
+          @cancel="isReplying = false"
+        />
 
         <div class="flex flex-center comment-footer">
           <Button kind="text" text="Reply" @click="isReplying = true" />

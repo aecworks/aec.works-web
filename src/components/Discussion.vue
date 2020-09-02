@@ -7,7 +7,7 @@
       v-waypoint="{ active: index + 1=== comments.length, callback: onVisible }"
     />
     <Loader v-if="isLoading" />
-    <CommentReply v-bind="{threadId}" @replied="handleReplied" />
+    <CommentReply class="root-comment" v-bind="{threadId}" @replied="handleReplied" />
   </div>
 </template>
 
@@ -78,5 +78,8 @@ export default {
 .discussion {
   margin-top: 5rem;
   margin-bottom: 10rem;
+  .root-comment {
+    margin-top: 4rem;
+  }
 }
 </style>
