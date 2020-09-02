@@ -2,12 +2,13 @@
   <Card :showImage="false">
     <input
       class="post-title"
-      :class="{'empty': postTitle === ''}"
-      v-model="postTitle"
+      :class="{'empty': title === ''}"
+      v-model="title"
       placeholder="Your Title"
+      @input="handleInput"
     />
     <div class="mt-1">
-      <Editor v-model="body" />
+      <Editor v-model="body" @input="handleInput" />
     </div>
     <div class="mt-2">
       <Button text="Save" @click="handleSave" v-if="isValid" />
@@ -21,6 +22,9 @@ import Card from './Card.vue'
 import Button from '../components/forms/Button.vue'
 import api from '../api'
 import Editor from '@/components/Editor'
+import { waitForLogin } from '@/mixins'
+
+const POST_DRAFT = 'draf_post'
 
 export default {
   name: 'PostEdit',
@@ -34,41 +38,44 @@ export default {
   data() {
     return {
       body: '',
-      postTitle: '',
+      title: '',
     }
   },
   async created() {
-    if (this.isEditing) {
-      const { body, title } = await api.getPost(this.slug)
-      this.body = body
-      this.postTitle = title
-    }
+    let body, title
+    if (this.isEditing) ({ body, title } = await api.getPost(this.slug))
+    else ({ body, title } = JSON.parse(localStorage.getItem(POST_DRAFT) || '{}'))
+    this.body = body
+    this.title = title
   },
   computed: {
     isEditing() {
       return Boolean(this.slug)
     },
     isValid() {
-      return this.body && this.postTitle
+      return this.body && this.title
     },
   },
 
   methods: {
     async handleSave() {
+      await waitForLogin()
+
       const hashtags = this.body.match(/#[a-z]+/gi) || []
       let post
       if (this.isEditing) {
-        post = await api.patchPost(this.slug, this.postTitle, this.body, hashtags)
+        post = await api.patchPost(this.slug, this.title, this.body, hashtags)
       } else {
-        post = await api.postPost(this.postTitle, this.body, hashtags)
+        post = await api.postPost(this.title, this.body, hashtags)
       }
       this.$router.push({ name: 'Post', params: { slug: post.slug } })
     },
     handleCancel() {
       this.$emit('cancel')
     },
-    handleInput(e) {
-      this.postTitle = e.target.innerText
+    handleInput() {
+      const { body, title } = this
+      localStorage.setItem(POST_DRAFT, JSON.stringify({ body, title }))
     },
   },
 }

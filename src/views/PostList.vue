@@ -40,6 +40,7 @@ import TextInput from '../components/forms/TextInput.vue'
 import Loader from '../components/Loader.vue'
 import api from '@/api'
 import PostCard from '@/components/PostCard'
+import { waitForLogin } from '@/mixins'
 
 export default {
   name: 'PostList',
@@ -93,9 +94,9 @@ export default {
       this.items = []
       this.fetchItems(0, this.$route.query.hashtag, this.searchQuery)
     },
-    handleAdd() {
+    async handleAdd() {
+      await waitForLogin()
       this.isEditing = true
-      // this.$router.push({ name: 'PostNew' })
     },
     onVisible({ going }) {
       // TODO: Make paginated loading util

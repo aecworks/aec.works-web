@@ -78,7 +78,7 @@ export default {
       const { results, count } = await api.getCommentsByParentId(this.comment.id, { offset })
       this.comments = [...this.comments, ...results]
       this.offset = this.offset + results.length
-      this.count = results
+      this.count = count
     },
     handleReplied() {
       this.isReplying = false
