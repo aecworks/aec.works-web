@@ -12,7 +12,7 @@
       </h1>
       <!-- </div> -->
 
-      <div class="mt-2">
+      <div class="mt-2 mb-2">
         <p class="sans">{{ company.description || "..." }}</p>
 
         <label class="mt-2">Website</label>

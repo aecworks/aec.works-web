@@ -75,7 +75,6 @@ export default {
   },
   async created() {
     await this.refetch()
-    this.isLoading = false
   },
   computed: {
     hasMore() {
@@ -99,7 +98,9 @@ export default {
       this.items = [...this.items, ...results]
       this.offset = this.offset + results.length
       this.count = count
-      this.isLoading = false
+      this.$nextTick(() => {
+        this.isLoading = false
+      })
     },
     handleSearchInput: debounce(function(query) {
       if (query) {

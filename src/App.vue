@@ -1,8 +1,12 @@
 <template>
   <div id="app" class="app-wrapper">
     <Nav />
-    <router-view />
-    <Login v-if="showLoginModal" @closed="$router.replace({query:{}})" />
+    <transition name="fade" mode="out-in">
+      <router-view />
+    </transition>
+    <transition name="zoom" mode="out-in">
+      <Login v-if="showLoginModal" @closed="$router.replace({query:{}})" />
+    </transition>
   </div>
 </template>
 
@@ -29,4 +33,5 @@ export default {
 
 <style lang="scss">
 @import '~@/assets/scss/main.scss';
+
 </style>
