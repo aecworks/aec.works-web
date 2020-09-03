@@ -3,13 +3,13 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import { USERS } from '@/store/users'
-import './filters'
-import './sentry'
-
 import api from './api'
-import 'quill/dist/quill.core.css';
-import 'quill/dist/quill.bubble.css';
-import 'quill/dist/quill.snow.css';
+
+import '@/filters'
+import '@/sentry'
+import '@/analytics'
+import '@/quill'
+
 
 import VueWaypoint from 'vue-waypoint'
 
