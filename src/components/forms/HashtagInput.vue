@@ -7,7 +7,7 @@
       :autocomplete-items="filteredItems"
       :add-on-key="[13,188]"
       @tags-changed="handleTagChanged"
-      :max-tags="3"
+      :max-tags="4"
     />
   </div>
 </template>
@@ -35,7 +35,7 @@ export default {
       validation: [
         {
           classes: 'min-length',
-          rule: tag => tag.text.length < 3,
+          rule: tag => tag.text.length < 2,
           disableAdd: true,
         },
       ],
