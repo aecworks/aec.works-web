@@ -8,22 +8,21 @@
         :key="post.slug"
         v-bind="{post}"
         v-waypoint="{ active: index + 1=== items.length, callback: onVisible }"
+        @hashtagClick="handleHashtagClick"
       />
+      <p v-if="!isLoading && !items.length">Someone is going crazy with the filters <span class="emoji"> 🤷‍♀️</span></p>
     </div>
 
     <div class="sidebar">
       <TextInput
-        v-if="false"
         icon="search"
         v-model="searchQuery"
         @input="handleSearchInput"
         placeholder="search"
       />
-      <div class="hidden-sm">
-        <label class>Hot This Week (WIP)</label>
-        <Hashtag slug="PropTech" clickable />
-        <Hashtag slug="ADU" clickable />
-        <Hashtag slug="Housing" clickable />
+      <div class="mt-2">
+        <label>Hashtags</label>
+        <HashtagList @click="handleHashtagClick"/>
       </div>
       <div class="mt-2 mb-2">
         <Icon class="mt" icon="pencil" v-if="!isEditing" @click="handleAdd" clickable>Write</Icon>
@@ -33,14 +32,16 @@
 </template>
 
 <script>
+import HashtagList from '../components/HashtagList.vue'
 import PostEditComponent from '../components/PostEditComponent.vue'
-import Hashtag from '../components/Hashtag.vue'
 import Icon from '../components/Icon.vue'
 import TextInput from '../components/forms/TextInput.vue'
 import Loader from '../components/Loader.vue'
 import api from '@/api'
 import PostCard from '@/components/PostCard'
+import { popQuery, filterNullKeys, debounce } from '@/utils'
 import { waitForLogin } from '@/mixins'
+import { toggleHashtag } from '@/utils'
 
 export default {
   name: 'PostList',
@@ -49,8 +50,18 @@ export default {
     Loader,
     TextInput,
     Icon,
-    Hashtag,
     PostEditComponent,
+    HashtagList,
+  },
+  props: {
+    search: {
+      type: String,
+      default: '',
+    },
+    hashtags: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
@@ -63,15 +74,8 @@ export default {
     }
   },
   async created() {
-    await this.fetchItems(0, this.$route.query.hashtag)
+    await this.refetch()
     this.isLoading = false
-  },
-  beforeRouteUpdate(to, from, next) {
-    if (from.query.hashtag !== to.query.hashtag) {
-      this.items = []
-      this.fetchItems(0, to.query.hashtag)
-    }
-    next()
   },
   computed: {
     hasMore() {
@@ -79,20 +83,35 @@ export default {
     },
   },
   methods: {
-    async fetchItems(offset, hashtag, searchQuery) {
-      // ?offset=0&hashtag=abc&search=xxx
-      let query = { offset, hashtag, search: searchQuery }
-      // Remove null/undefined
-      query = Object.entries(query).reduce((a, [k, v]) => (v ? ((a[k] = v), a) : a), {})
-
+    refetch() {
+      this.isLoading = true
+      this.items = []
+      this.fetchItems(0)
+    },
+    async fetchItems(offset) {
+      let query = {
+        offset,
+        hashtags: this.hashtags,
+        search: this.searchQuery,
+      }
+      query = filterNullKeys(query)
       const { results, count } = await api.getPosts(query)
       this.items = [...this.items, ...results]
       this.offset = this.offset + results.length
       this.count = count
+      this.isLoading = false
     },
-    handleSearchInput() {
-      this.items = []
-      this.fetchItems(0, this.$route.query.hashtag, this.searchQuery)
+    handleSearchInput: debounce(function(query) {
+      if (query) {
+        this.$router.replace({ query: { ...this.$route.query, search: query } })
+      } else {
+        popQuery(this.$router, this.$route.query, 'search')
+      }
+      this.refetch()
+    }, 200),
+    handleHashtagClick(slug) {
+      toggleHashtag(this.$router, slug)
+      this.$nextTick(() => this.refetch())
     },
     async handleAdd() {
       await waitForLogin()

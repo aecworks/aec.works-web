@@ -37,9 +37,9 @@
             <img :src="company.logoUrl  || defaultImageUrl" alt />
           </div>
           <div class="mt">
-            <Button text="Upload" kind="text" @click="handleFileUploaded(imgFieldNames.logoUrl)" />
-            <Button text="Paste" kind="text" @click="startPaste(imgFieldNames.logoUrl)" />
-            <Button text="Remove" v-if="company.logoUrl" kind="text" @click="company.logoUrl=''" />
+            <Button kind="text" @click="handleFileUploaded(imgFieldNames.logoUrl)">Upload</Button>
+            <Button kind="text" @click="startPaste(imgFieldNames.logoUrl)">Paste</Button>
+            <Button v-if="company.logoUrl" kind="text" @click="company.logoUrl=''">Remove</Button>
           </div>
         </div>
 
@@ -49,9 +49,9 @@
             <img :src="company.coverUrl || defaultImageUrl" alt />
           </div>
           <div class="mt">
-            <Button text="Upload" kind="text" @click="handleFileUploaded(imgFieldNames.coverUrl)" />
-            <Button text="Paste" kind="text" @click="startPaste(imgFieldNames.coverUrl)" />
-            <Button text="Remove" v-if="company.coverUrl" kind="text" @click="company.coverUrl=''" />
+            <Button kind="text" @click="handleFileUploaded(imgFieldNames.coverUrl)">Upload</Button>
+            <Button kind="text" @click="startPaste(imgFieldNames.coverUrl)">Paste</Button>
+            <Button v-if="company.coverUrl" kind="text" @click="company.coverUrl=''">Remove</Button>
           </div>
         </div>
         <Cropper
@@ -83,8 +83,10 @@
           </ul>
         </div>
 
-        <Button :text="isEditing ? 'Create Revision' : 'Create'" class="mt-2" @click="handleSave" />
-        <Button text="Cancel" @click="handleCancelEdit" />
+        <Button class="mt-2" @click="handleSave">
+          {{isEditing ? 'Create Revision' : 'Create'}}
+        </Button>
+        <Button @click="handleCancelEdit">Cancel</Button>
       </form>
 
       <hr class="mt-2" />
@@ -102,8 +104,8 @@
         <h5>{{ rev.createdAt | calendar }}</h5>
         <span class="muted small">{{rev.createdBy.name}}</span>
         <div>
-          <Button text="Show" kind="text" @click="showRevision(rev)" />
-          <Button text="Apply" kind="text" @click="handleRevisionApprove(rev.id)" />
+          <Button kind="text" @click="showRevision(rev)">Show</Button>
+          <Button kind="text" @click="handleRevisionApprove(rev.id)">Apply</Button>
         </div>
       </div>
       <div class="mt-2">

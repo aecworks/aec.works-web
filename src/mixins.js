@@ -22,17 +22,3 @@ export const waitForLogin = () => {
 
   })
 }
-
-export const toggleHashtag = (name) => {
-  const queryParams = new URLSearchParams(window.location.search)
-  const query = {}
-  for (const [key, value] of queryParams) {
-    query[key] = value
-  }
-  if (query.hashtag && query.hashtag == name) {
-    delete query.hashtag
-  } else {
-    query.hashtag = name
-  }
-  router.replace({ query })
-}

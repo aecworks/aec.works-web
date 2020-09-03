@@ -57,3 +57,47 @@ export const subscribePaste = (callback) => {
 export const unsubscribePaste = () => {
   document.onpaste = null
 }
+
+
+export const toggleHashtag = (router, name) => {
+  const queryParams = new URLSearchParams(window.location.search)
+  const query = {}
+  
+  for (const [key, value] of queryParams) {
+    query[key] = value
+  }
+
+  let hashtags = []
+
+  if (!query.hashtags) {
+    query.hashtags = name
+    hashtags = [name]
+  } 
+
+  else {
+
+    hashtags = query.hashtags.split(",")
+    
+    if (hashtags.includes(name)) { 
+      hashtags = hashtags.filter(h => h !== name)
+
+    } else {
+      hashtags.push(name)
+    }
+
+    if (hashtags && hashtags.length) {
+      query.hashtags = hashtags.join(",")
+    } else {
+      delete query.hashtags
+    }
+  }
+
+  router.replace({ query })
+
+  return hashtags
+}
+
+
+export const filterNullKeys = (obj) => {
+  return Object.entries(obj).reduce((a, [k, v]) => (v ? ((a[k] = v), a) : a), {})
+}

@@ -2,7 +2,7 @@
   <div
     class="hashtag"
     :class="[clickable ? 'clickable' : '', isActive ? 'active' : '']"
-    @click="$emit('click')"
+    @click="handleClick"
   >
     <span>#{{slug}}</span>
   </div>

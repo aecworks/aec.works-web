@@ -21,7 +21,7 @@
         />
 
         <div class="flex flex-center comment-footer">
-          <Button kind="text" text="Reply" @click="isReplying = true" />
+          <Button kind="text" @click="isReplying = true">Reply</Button>
           <IconCounter :icon="'chat'" :count="comment.replyCount" />
           <IconCounter
             :icon="'clap'"

@@ -9,8 +9,8 @@
         ref="textareaElement"
         placeholder="Comments - don't be shy"
       />
-      <Button v-if="commentText" text="Post" @click="handleSubmitClick" />
-      <Button v-if="commentText" text="Cancel" @click="handleCancel" />
+      <Button v-if="commentText" @click="handleSubmitClick">Post</Button>
+      <Button v-if="commentText" @click="handleCancel">Cancel</Button>
     </form>
   </div>
 </template>

@@ -11,8 +11,8 @@
       <Editor v-model="body" @input="handleInput" />
     </div>
     <div class="mt-2">
-      <Button text="Save" @click="handleSave" v-if="isValid" />
-      <Button text="Cancel" @click="handleCancel" />
+      <Button @click="handleSave" v-if="isValid">Save</Button>
+      <Button @click="handleCancel">Cancel</Button>
     </div>
   </Card>
 </template>

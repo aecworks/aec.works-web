@@ -14,7 +14,7 @@
           <Editor v-model="body" />
         </div>
         <div class="post-editor-actions mt-3">
-          <Button text="Save" @click="handleSave" />
+          <Button @click="handleSave">Save</Button>
         </div>
       </div>
     </div>
