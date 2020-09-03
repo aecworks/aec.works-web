@@ -112,12 +112,15 @@ export default {
   }
 
   .nav-list {
+    scroll-snap-type: x mandatory;
+
     @include for-large-up {
       width: 100%;
       display: flex;
     }
 
     .nav-item {
+      scroll-snap-align: center;
       height: 100%;
       display: inline-block;
       line-height: 50px;
@@ -152,14 +155,10 @@ export default {
           vertical-align: middle;
           display: inline-block;
           @extend .border-thin;
-          // border-radius: 12px;
           height: 24px;
         }
       }
     }
   }
-}
-.sticky + .content {
-  // padding-top: 100px;
 }
 </style>
