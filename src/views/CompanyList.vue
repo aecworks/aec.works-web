@@ -38,6 +38,7 @@ import api from '@/api'
 import CompanyCard from '@/components/CompanyCard'
 import { popQuery, debounce } from '@/utils'
 import { bus, EVENTS } from '@/events'
+import { waitForLogin } from '@/mixins'
 
 export default {
   name: 'CompanyList',
@@ -128,7 +129,8 @@ export default {
       bus.$emit(EVENTS.HASHTAG_CLICKED, slug)
     },
 
-    handleAdd() {
+    async handleAdd() {
+      await waitForLogin()
       this.$router.push({ name: 'CompanyNew' })
     },
 
