@@ -14,17 +14,15 @@
 
       <div class="mt-2 mb-2">
         <p class="sans">{{ company.description || "..." }}</p>
+      </div>
 
-        <label class="mt-2">Website</label>
-        <a :href="company.website">{{company.website || "-" | cleanUrl}}</a>
-
-        <div class="mt-2 mb-2">
-          <label>Tags</label>
-          <Hashtag v-for="slug in company.hashtags" :slug="slug" :key="slug" />
+      <div class="flex mt-2 mb-2">
+        <div>
+          <label>Website</label>
+          <a :href="company.website">{{company.website || "-" | cleanUrl}}</a>
         </div>
-
-        <label class="mt-2">Social Media</label>
-        <div class="mt">
+        <div class="flex-right">
+          <label class="mb">Social Media</label>
           <a
             v-if="company.twitterHandle"
             :href="`https://www.twitter.com/${company.twitterHandle}`"
@@ -40,6 +38,15 @@
             <Icon icon="crunchbase" clickable></Icon>
           </a>
         </div>
+      </div>
+
+      <div class="mt-2">
+        <label>Tags</label>
+        <Hashtag v-for="slug in company.hashtags" :slug="slug" :key="slug" />
+      </div>
+
+      <div class="mt-2">
+        <TwitterFeed v-if="company.twitterHandle" :handle="company.twitterHandle" />
       </div>
     </div>
 
@@ -72,6 +79,7 @@
 <script>
 import SocialShare from '@/components/SocialShare'
 import Icon from '@/components/Icon.vue'
+import TwitterFeed from '../components/TwitterFeed.vue'
 import api from '@/api'
 import Discussion from '@/components/Discussion'
 import Hashtag from '@/components/Hashtag'
@@ -84,6 +92,7 @@ export default {
     Hashtag,
     Icon,
     SocialShare,
+    TwitterFeed,
   },
   props: {
     slug: { required: false, type: String },
