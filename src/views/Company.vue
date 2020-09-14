@@ -44,6 +44,15 @@
       <div class="mt-2">
         <TwitterFeed v-if="company.twitterHandle" :handle="company.twitterHandle" />
       </div>
+
+      <div class="mt-2">
+        <label>Tags</label>
+        <Hashtag v-for="slug in company.hashtags" :slug="slug" :key="slug" />
+      </div>
+
+      <div class="mt-2">
+        <TwitterFeed v-if="company.twitterHandle" :handle="company.twitterHandle" />
+      </div>
     </div>
 
     <div class="sidebar" v-if="company">
