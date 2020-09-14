@@ -13,8 +13,15 @@ yarn install
 yarn run serve:staging
 ```
 
-### With Local API Servers
+### With Local API Servers (requires local aecworks api)
 
 ```
 yarn run serve
 ```
+
+
+# Contributing
+TODO - Code Standards, Guidelines, Vue/Sass Conventions, etc
+
+### License
+TODO - Unlicensed
