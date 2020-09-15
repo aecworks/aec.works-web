@@ -1,14 +1,13 @@
 import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
+import App from '@/App'
+import router from '@/router'
+import store from '@/store'
 import { USERS } from '@/store/users'
-import api from './api'
-
+import api from '@/api'
 import '@/filters'
-import '@/sentry'
-import '@/analytics'
-import '@/quill'
+import '@/libs/sentry'
+import '@/libs/analytics'
+import '@/libs/quill'
 
 
 import VueWaypoint from 'vue-waypoint'
