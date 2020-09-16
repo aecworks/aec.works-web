@@ -57,8 +57,7 @@
 
       <label class="mt-2">Share</label>
       <div class="mt">
-        <IconShareTwitter />
-        <!-- <Icon icon="linkedin" clickable></Icon> -->
+        <SocialShare :pageUrl="pageUrl" />
       </div>
       <label class="mt-2">Contribute</label>
       <Icon class="mt" icon="pencil" @click="handleEdit" clickable>Edit</Icon>
@@ -71,8 +70,8 @@
 </template>
 
 <script>
-import Icon from '../components/Icon.vue'
-import IconShareTwitter from '../components/IconShareTwitter.vue'
+import SocialShare from '@/components/SocialShare'
+import Icon from '@/components/Icon.vue'
 import api from '@/api'
 import Discussion from '@/components/Discussion'
 import Hashtag from '@/components/Hashtag'
@@ -84,7 +83,7 @@ export default {
     Discussion,
     Hashtag,
     Icon,
-    IconShareTwitter,
+    SocialShare,
   },
   props: {
     slug: { required: false, type: String },
@@ -97,6 +96,11 @@ export default {
       defaultLogo: require('@/assets/images/image.svg'),
       defaultCover: 'https://picsum.photos/600/200.jpg?blur=5&grayscale',
     }
+  },
+  computed: {
+    pageUrl() {
+      return `https://aec.works/companies/${this.slug}/`
+    },
   },
   created() {
     this.fetchData()
