@@ -8,3 +8,7 @@ Vue.filter('fromNow', (timestamp) => {
 Vue.filter('calendar', (timestamp) => {
   return moment(timestamp).calendar()
 })
+
+Vue.filter('simpledate', (timestamp) => {
+  return moment(timestamp).format('lll')
+})

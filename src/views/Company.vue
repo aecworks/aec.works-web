@@ -27,17 +27,15 @@
             v-if="company.twitterHandle"
             :href="`https://www.twitter.com/${company.twitterHandle}`"
           >
-            <!-- <img src="@/assets/images/twitter.svg" /> -->
             <Icon icon="twitter" clickable></Icon>
           </a>
           <a
             v-if="company.crunchbaseId"
             :href="`https://www.crunchbase.com/organization/${company.crunchbaseId}`"
           >
-            <!-- <img src="@/assets/images/money.svg" /> -->
             <Icon icon="crunchbase" clickable></Icon>
           </a>
-        </div>
+        </div>-->
       </div>
 
       <div class="mt-2">
