@@ -40,7 +40,7 @@
         <label>Tags</label>
         <Hashtag v-for="slug in company.hashtags" :slug="slug" :key="slug" />
       </div>
-
+      <ArticleCard v-for="url in company.articles" :key="url" :url="url" />
       <div class="mt-2">
         <TwitterFeed v-if="company.twitterHandle" :handle="company.twitterHandle" />
       </div>
@@ -75,6 +75,7 @@
 <script>
 import SocialShare from '@/components/SocialShare'
 import Icon from '@/components/Icon.vue'
+import ArticleCard from '../components/ArticleCard.vue'
 import TwitterFeed from '../components/TwitterFeed.vue'
 import api from '@/api'
 import Discussion from '@/components/Discussion'
@@ -89,6 +90,7 @@ export default {
     Icon,
     SocialShare,
     TwitterFeed,
+    ArticleCard,
   },
   props: {
     slug: { required: false, type: String },
