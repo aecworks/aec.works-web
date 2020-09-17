@@ -1,6 +1,7 @@
 <template>
   <div>
     <LinkedInShare button_design="outline" has_square_edges has_icon :page_url="pageUrl" />
+    <br />
     <TwitterShare button_design="outline" has_square_edges has_icon :page_url="pageUrl" />
   </div>
 </template>
@@ -21,5 +22,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// Todo
 </style>

@@ -191,6 +191,10 @@ class Api {
     return this._post(`community/comments/${id}/clap/`)
   }
 
+  getTwitterTimeline (handle) {
+    return this._get(`social/twitter/timeline/${handle}/`)
+  }
+
 }
 
 

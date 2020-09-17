@@ -1,6 +1,6 @@
-https://aec.works/sitemap.xml                       https://api.aec.works/sitemap.xml
-https://aec.works/api/*                             https://api.aec.works/:splat
-https://aec.works/*                                 https://aec.works/
+https://aec.works/sitemap.xml                       https://api.aec.works/sitemap.xml                       200
+https://aec.works/api/*                             https://api.aec.works/:splat                            200
+https://aec.works/*                                 https://aec.works/                                      200
 
-https://staging--aecworks.netlify.app/api/*         https://aecworks-api-staging.herokuapp.com/:splat
-https://staging--aecworks.netlify.app/*             https://staging--aecworks.netlify.app/
+https://staging--aecworks.netlify.app/api/*         https://aecworks-api-staging.herokuapp.com/:splat       200
+https://staging--aecworks.netlify.app/*             https://staging--aecworks.netlify.app/                  200
