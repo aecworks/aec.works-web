@@ -16,7 +16,6 @@
 
 <script>
 import Loader from './Loader.vue'
-import api from '@/api'
 import { Timeline } from 'vue-tweet-embed'
 
 export default {
