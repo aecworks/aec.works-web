@@ -7,7 +7,7 @@
         v-model="commentText"
         @input="handleInput"
         ref="textareaElement"
-        placeholder="Comments - don't be shy"
+        placeholder="Comment"
       />
       <Button v-if="commentText" @click="handleSubmitClick">Post</Button>
       <Button v-if="commentText" @click="handleCancel">Cancel</Button>
@@ -70,6 +70,7 @@ export default {
 <style lang="scss" scoped>
 .comment-reply {
   margin-bottom: 2rem;
+
   .comment-reply-input {
     transition: height 200ms;
     height: 2.5rem;

@@ -5,7 +5,7 @@ import router from './router'
 
 // TODO take argument for ?next= so we can recover after login
 export const waitForLogin = () => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     if (api.isAuthenticated()) {
       resolve()
     } else {

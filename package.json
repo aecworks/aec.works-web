@@ -22,6 +22,7 @@
     "vue-analytics": "^5.22.1",
     "vue-goodshare": "^1.5.1",
     "vue-router": "^3.1.6",
+    "vue-tweet-embed": "^2.4.0",
     "vue-waypoint": "^3.4.1",
     "vuex": "^3.1.3"
   },

@@ -24,8 +24,9 @@
           </div>
         </div>
         <div class="profile-activity">
-          <h2>Activity</h2>TODO
           <h2 class="mt-2">Posts</h2>TODO
+          <h2>Tweets</h2>
+          <TwitterFeed v-if="profile.twitter" :handle="profile.twitter" />
         </div>
       </div>
     </div>
@@ -46,13 +47,14 @@
 </template>
 
 <script>
+import TwitterFeed from '../components/TwitterFeed.vue'
 import IconShareTwitter from '../components/IconShareTwitter.vue'
 import Icon from '../components/Icon.vue'
 import api from '@/api'
 
 export default {
   name: 'Person',
-  components: { Icon, IconShareTwitter },
+  components: { Icon, IconShareTwitter, TwitterFeed },
   props: {
     slug: { required: true, type: String },
   },
