@@ -39,4 +39,7 @@ export default {
 </script>
 
 <style lang="scss">
+.card-article {
+  width: 50px;
+}
 </style>
