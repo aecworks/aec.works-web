@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: 'IconCounter',
+  name: 'Icon',
   props: {
     clickable: {
       type: Boolean,
@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$icon-height: 18px;
+$icon-height: 20px;
 .icon {
   display: inline-block;
   line-height: $icon-height;

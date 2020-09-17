@@ -4,7 +4,7 @@
       <img :src="iconPath" />
     </span>
     <input
-      class="fill-x"
+      class="input fill-x"
       :placeholder="placeholder"
       type="text"
       :value="value"

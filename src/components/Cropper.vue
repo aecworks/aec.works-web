@@ -36,6 +36,12 @@ export default {
       croppr: null,
     }
   },
+  created() {
+    document.addEventListener('keyup', this.handleKeyUp)
+  },
+  destroyed() {
+    document.removeEventListener('keyup', this.handleKeyUp)
+  },
   mounted() {
     // https://jamesooi.design/Croppr.js/#install
     this.$refs.img.src = this.imgUrl
@@ -44,7 +50,6 @@ export default {
         if (this.$refs.img.naturalWidth > 0 && this.$refs.img.naturalHeight > 0) {
           clearInterval(interval)
           this.isLoading = false
-          console.log(this.cropRatio)
           this.$nextTick(() => {
             this.croppr = new Croppr('#img-crop', {
               aspectRatio: this.cropRatio,
@@ -94,20 +99,32 @@ export default {
         )
       }.bind(this)
     },
+    handleKeyUp(e) {
+      switch (e.key) {
+        case 'Escape':
+          return this.$emit('cancel')
+        case 'Enter':
+          return this.handleDone()
+      }
+    },
   },
 }
 </script>
 
 <style lang="scss">
-#img-crop {
-  max-height: 600px;
-  max-width: 600px;
-  display: block; // Remove gap below image
+.croppr {
+  img {
+    max-height: 600px;
+    max-width: 600px;
+    @include for-large-down {
+      max-width: 400px;
+    }
+  }
 }
 
-.croppr img {
-  max-height: 600px;
-  max-width: 600px;
+#img-crop {
+  @extend .croppr;
+  display: block; // Remove gap below image
 }
 
 .img-loader {
@@ -118,11 +135,11 @@ export default {
   opacity: 1;
 }
 
-// .croppr-handle {
-//   border-color: $dark;
-//   border-width: 2px;
-//   width: 15px;
-//   height: 15px;
-//   border-radius: 15px;
-// }
+.croppr-handle {
+  border-color: $dark;
+  border-width: 2px;
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+}
 </style>

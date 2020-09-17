@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper sm-grid-sidebar-down" v-if="post">
-    <div class="content">
+    <div class="content mb-2">
       <h1>{{post.title}}</h1>
       <Avatar v-if="true" :profile="post.profile" />
       <p class="post-content mt-2" v-html="post.body" />
@@ -9,8 +9,8 @@
         <Hashtag v-for="slug in post.hashtags" :slug="slug" :key="slug" />
       </div>
     </div>
+
     <div class="sidebar">
-      xxx
       <div>
         <Icon icon="clap" @click="handleClap(post)" clickable>{{localClapCount || post.clapCount}}</Icon>
       </div>

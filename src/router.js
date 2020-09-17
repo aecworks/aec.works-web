@@ -1,16 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import api from '../api'
-// import { handleOauthCallback } from '../api/oauth'
-import Company from '../views/Company'
-import CompanyEdit from '../views/CompanyEdit'
-import CompanyList from '../views/CompanyList'
-import PostList from '../views/PostList'
-import Post from '../views/Post'
-import PostEdit from '../views/PostEdit'
-import PersonList from '../views/PersonList'
-import Person from '../views/Person'
+import api from '@/api'
+// import { handleOauthCallback } from '@/api/oauth'
+import Company from '@/views/Company'
+import CompanyEdit from '@/views/CompanyEdit'
+import CompanyList from '@/views/CompanyList'
+import PostList from '@/views/PostList'
+import Post from '@/views/Post'
+import PostEdit from '@/views/PostEdit'
+import PersonList from '@/views/PersonList'
+import Person from '@/views/Person'
 
 Vue.use(VueRouter)
 
@@ -23,13 +23,13 @@ const routes = [
     path: '/companies',
     name: 'CompanyList',
     component: CompanyList,
-    props: true,
+    props: (route) => ({ ...route.query, ...route.params })
   },
   {
     path: '/posts',
     name: 'PostList',
     component: PostList,
-    props: true,
+    props: (route) => ({ ...route.query, ...route.params })
   },
   {
     path: '/companies/new',

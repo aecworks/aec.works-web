@@ -3,13 +3,14 @@
     <form ref="form" class="form">
       <textarea
         type="text"
+        class="input comment-reply-input fill-x"
         v-model="commentText"
         @input="handleInput"
         ref="textareaElement"
-        class="comment-reply-input fill-x"
         placeholder="Comment"
       />
-      <Button v-if="commentText" text="Post" @click="handleSubmitClick" />
+      <Button v-if="commentText" @click="handleSubmitClick">Post</Button>
+      <Button v-if="commentText" @click="handleCancel">Cancel</Button>
     </form>
   </div>
 </template>
@@ -49,9 +50,13 @@ export default {
         el.style.height = ''
       }
     },
+    handleCancel() {
+      localStorage.removeItem(DRAFT_COMMENT)
+      this.commentText = ''
+      this.$emit('cancel')
+    },
     async handleSubmitClick() {
       await waitForLogin()
-      let parent = {}
       api.postComment(this.commentText, this.threadId, this.parentId)
       this.commentText = ''
       this.$emit('replied')
@@ -64,11 +69,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .comment-reply {
+  margin-bottom: 2rem;
+
   .comment-reply-input {
-    margin-top: 2rem;
     transition: height 200ms;
     height: 2.5rem;
-    margin-bottom: 1rem;
   }
 }
 </style>

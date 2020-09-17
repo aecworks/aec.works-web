@@ -1,16 +1,18 @@
 <template>
   <div id="app" class="app-wrapper">
     <Nav />
-    <router-view />
-    <Login v-if="showLoginModal" @closed="$router.replace({query:{}})" />
+    <transition name="fade" mode="out-in">
+      <router-view />
+    </transition>
+    <transition name="zoom" mode="out-in">
+      <Login v-if="showLoginModal" @closed="$router.replace({query:{}})" />
+    </transition>
   </div>
 </template>
 
 <script>
 import Nav from '@/components/Nav'
 import Login from '@/components/Login'
-import api from '@/api'
-import { USERS } from '@/store/users'
 
 export default {
   name: 'App',
@@ -20,9 +22,6 @@ export default {
   },
   data() {
     return {}
-  },
-  created() {
-    this.$store.dispatch(USERS.GET_PROFILE)
   },
   computed: {
     showLoginModal() {
@@ -34,4 +33,5 @@ export default {
 
 <style lang="scss">
 @import '~@/assets/scss/main.scss';
+
 </style>

@@ -1,44 +1,53 @@
 <template>
   <div class="wrapper sm-grid-sidebar-down">
     <div class="content" v-if="company">
-      <div class="flex flex-center">
-        <h1>
-          {{ company.name }}
-          <span class="small muted ml">{{company.location || "Somewhere" }}</span>
-        </h1>
+      <div class="company-images">
+        <img class="logo" :src="company.logoUrl || defaultLogo" alt="Company Logo" />
+        <img class="cover" :src="company.coverUrl || defaultCover" alt="Company Cover Image" />
       </div>
 
-      <div class="flex">
+      <h1 class="mt-2">
+        {{ company.name }}
+        <span class="small muted ml">{{company.location || "Somewhere" }}</span>
+      </h1>
+      <!-- Social Icons -->
+      <!-- <a
+          class="fleat"
+          v-if="company.twitterHandle"
+          :href="`https://www.twitter.com/${company.twitterHandle}`"
+        >
+          <Icon icon="twitter" clickable></Icon>
+        </a>
+        <a
+          v-if="company.crunchbaseId"
+          :href="`https://www.crunchbase.com/organization/${company.crunchbaseId}`"
+        >
+          <Icon icon="crunchbase" clickable></Icon>
+      </a>-->
+
+      <div class="mt-2 mb-2">
+        <p class="sans">{{ company.description || "..." }}</p>
+      </div>
+
+      <div class="flex mt-2 mb-2">
         <div>
-          <div class="mt-2">
-            <p class="sans">{{ company.description || "..." }}</p>
-
-            <label class="mt-2">Website</label>
-            <a :href="company.website">{{company.website || "-" | cleanUrl}}</a>
-
-            <label class="mt-2">Social Media</label>
-            <div class="mt">
-              <a
-                v-if="company.twitterHandle"
-                :href="`https://www.twitter.com/${company.twitterHandle}`"
-              >
-                <!-- <img src="@/assets/images/twitter.svg" /> -->
-                <Icon icon="twitter" clickable></Icon>
-              </a>
-              <a
-                v-if="company.crunchbaseId"
-                :href="`https://www.crunchbase.com/organization/${company.crunchbaseId}`"
-              >
-                <!-- <img src="@/assets/images/money.svg" /> -->
-                <Icon icon="money" clickable></Icon>
-              </a>
-            </div>
-          </div>
-
-          <div class="mt-2">
-            <Hashtag v-for="slug in company.hashtags" :slug="slug" :key="slug" />
-          </div>
+          <label>Website</label>
+          <a :href="company.website">{{company.website || "-" | cleanUrl}}</a>
         </div>
+      </div>
+
+      <div class="mt-2">
+        <label>Tags</label>
+        <Hashtag v-for="slug in company.hashtags" :slug="slug" :key="slug" />
+      </div>
+
+      <div class="mt-2" v-if="company.articles">
+        <label class="mb">Articles</label>
+        <ArticleCard v-for="article in company.articles" :key="article.url" :article="article" />
+      </div>
+
+      <div class="mt-2">
+        <TwitterFeed v-if="company.twitterHandle" :handle="company.twitterHandle" />
       </div>
     </div>
 
@@ -55,12 +64,11 @@
       </div>
 
       <label class="mt-2">Share</label>
-      <div>
-        <Icon icon="twitter" clickable></Icon>
-        <Icon icon="linkedin" clickable></Icon>
+      <div class="mt">
+        <SocialShare :pageUrl="pageUrl" />
       </div>
       <label class="mt-2">Contribute</label>
-      <Icon icon="pencil" @click="handleEdit" clickable>Edit</Icon>
+      <Icon class="mt" icon="pencil" @click="handleEdit" clickable>Edit</Icon>
     </div>
 
     <div class="footer">
@@ -70,7 +78,10 @@
 </template>
 
 <script>
-import Icon from '../components/Icon.vue'
+import SocialShare from '@/components/SocialShare'
+import Icon from '@/components/Icon.vue'
+import ArticleCard from '../components/ArticleCard.vue'
+import TwitterFeed from '../components/TwitterFeed.vue'
 import api from '@/api'
 import Discussion from '@/components/Discussion'
 import Hashtag from '@/components/Hashtag'
@@ -82,6 +93,9 @@ export default {
     Discussion,
     Hashtag,
     Icon,
+    SocialShare,
+    TwitterFeed,
+    ArticleCard,
   },
   props: {
     slug: { required: false, type: String },
@@ -91,7 +105,14 @@ export default {
       errors: [],
       company: null,
       localClapCount: null,
+      defaultLogo: require('@/assets/images/image.svg'),
+      defaultCover: 'https://picsum.photos/600/200.jpg?blur=5&grayscale',
     }
+  },
+  computed: {
+    pageUrl() {
+      return `https://aec.works/companies/${this.slug}/`
+    },
   },
   created() {
     this.fetchData()
@@ -119,29 +140,29 @@ export default {
 </script>
 
 <style lang="scss">
-.company-icon {
-  img {
-    height: 64px;
-  }
-}
-
-@include for-large-down {
-  flex-wrap: wrap;
-}
-
-.company-facts {
-  .company-info-item {
-    margin-bottom: 1rem;
-    label {
-      @extend .small;
-    }
-    span {
-      @extend .small;
-    }
-  }
-  margin-top: 1rem;
+.sidebar {
   @include for-large-up {
-    // text-align: right;
+    // margin-top: 130px;
+  }
+}
+.company-images {
+  position: relative;
+  .logo {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 25px;
+    right: 25px;
+    @extend .border-thin;
+  }
+  .cover {
+    display: block; // Remove gap below image
+    height: 100px;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+
+    @extend .border-thin;
   }
 }
 </style>

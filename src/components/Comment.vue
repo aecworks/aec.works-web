@@ -13,10 +13,15 @@
         <p class="comment-text">{{comment.text}}</p>
 
         <Loader v-if="isLoading" />
-        <CommentReply v-if="isReplying" v-bind="{ parentId: comment.id }" @replied="handleReplied" />
+        <CommentReply
+          v-if="isReplying"
+          v-bind="{ parentId: comment.id }"
+          @replied="handleReplied"
+          @cancel="isReplying = false"
+        />
 
         <div class="flex flex-center comment-footer">
-          <Button kind="text" text="Reply" @click="isReplying = true" />
+          <Button kind="text" @click="isReplying = true">Reply</Button>
           <IconCounter :icon="'chat'" :count="comment.replyCount" />
           <IconCounter
             :icon="'clap'"
@@ -78,7 +83,7 @@ export default {
       const { results, count } = await api.getCommentsByParentId(this.comment.id, { offset })
       this.comments = [...this.comments, ...results]
       this.offset = this.offset + results.length
-      this.count = results
+      this.count = count
     },
     handleReplied() {
       this.isReplying = false

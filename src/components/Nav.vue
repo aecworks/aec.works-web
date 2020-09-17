@@ -15,10 +15,10 @@
         </li>
         <li class="nav-item profile" v-if="profile">
           <span class="nav-profile-avatar">
+            <a class="logout-link mr-1 small" href="#" @click="handleLogout()">logout</a>
             <router-link tag="a" :to="{name: 'Person', params: { slug: profile.slug }}">
               <img :src="profile.avatarUrl" alt="avatar" />
             </router-link>
-            <a class="ml-1" href="#" @click="handleLogout()">logout</a>
           </span>
         </li>
       </ul>
@@ -29,6 +29,7 @@
 <script>
 import { USERS } from '@/store/users'
 import { debounce } from '@/utils'
+import api from '../api'
 
 export default {
   name: 'Nav',
@@ -56,10 +57,11 @@ export default {
     isActive(route) {
       return this.$route.name === route.name
     },
-    handleLogout() {
+    async handleLogout() {
+      await api.logout()
       this.$store.dispatch(USERS.LOGOUT)
     },
-    handleScroll(event) {
+    handleScroll() {
       if (window.pageYOffset > this.sticky) {
         this.header.classList.add('sticky')
       } else {
@@ -78,7 +80,8 @@ export default {
   z-index: 2;
 
   .nav-logo {
-    transition: transform 200ms;
+    transition: transform 200ms, width 200ms;
+    width: 80px;
     img {
       height: 60px;
       margin-right: 1.5rem;
@@ -99,24 +102,25 @@ export default {
     @keyframes animatelogo {
       0% {
         transform: translateY(0);
-        width: 60px;
+        width: 80px;
       }
       100% {
         transform: translateY(-75px);
         width: 0;
       }
     }
-    // img {
-    // }
   }
 
   .nav-list {
+    scroll-snap-type: x mandatory;
+
     @include for-large-up {
       width: 100%;
       display: flex;
     }
 
     .nav-item {
+      scroll-snap-align: center;
       height: 100%;
       display: inline-block;
       line-height: 50px;
@@ -146,18 +150,15 @@ export default {
         }
       }
       .nav-profile-avatar {
+        position: relative;
         img {
           vertical-align: middle;
           display: inline-block;
           @extend .border-thin;
-          border-radius: 12px;
           height: 24px;
         }
       }
     }
   }
-}
-.sticky + .content {
-  // padding-top: 100px;
 }
 </style>

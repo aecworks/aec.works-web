@@ -1,6 +1,8 @@
 <template>
   <div :class="cls" @click="handleClick">
-    <span>{{text}}</span>
+    <span>
+      <slot>?</slot>
+    </span>
   </div>
 </template>
 
@@ -8,9 +10,6 @@
 export default {
   name: 'Button',
   props: {
-    text: {
-      required: true,
-    },
     disabled: {
       type: Boolean,
     },

@@ -1,19 +1,21 @@
 <template>
-  <div class="content">
-    <div class="page">
-      <div class="page-header">
-        <input
-          class="page-title"
-          :class="{'empty': postTitle === ''}"
-          v-model="postTitle"
-          placeholder="Your Title"
-        />
-      </div>
-      <div class="post-editor">
-        <Editor v-model="body" />
-      </div>
-      <div class="post-editor-actions mt-3">
-        <Button text="Save" @click="handleSave" />
+  <div class="wrapper">
+    <div class="content">
+      <div class="page">
+        <div class="page-header">
+          <input
+            class="page-title"
+            :class="{'empty': postTitle === ''}"
+            v-model="postTitle"
+            placeholder="Your Title"
+          />
+        </div>
+        <div class="post-editor">
+          <Editor v-model="body" />
+        </div>
+        <div class="post-editor-actions mt-3">
+          <Button @click="handleSave">Save</Button>
+        </div>
       </div>
     </div>
   </div>
@@ -74,12 +76,7 @@ export default {
 <style lang="scss" scoped>
 .page-title {
   @extend h1;
-  // font-size: $font-size-h1;
-  // font-family: $font-family-serif;
-  // font-weight: $font-weight-bold;
   border: none;
-  border-left: 1px solid $yellow;
-  padding-left: 1rem;
 
   &.empty {
     color: $light-gray;
@@ -89,7 +86,6 @@ export default {
   }
 }
 .post-editor {
-  border-left: 1px solid $yellow;
 }
 .post-editor-actions {
   margin-top: $padding-4xl;

@@ -1,6 +1,6 @@
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity .150s;
+  transition: opacity 200ms ease-in-out;
 }
 
 .fade-enter,
@@ -26,4 +26,27 @@
 .slide-down-enter-to, .slide-down-leave{
   max-height: 500px;
   opacity: 1;
+}
+
+
+.zoom-enter-active,
+.zoom-leave-active {
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+  animation-name: zoom;
+}
+
+.zoom-leave-active {
+  animation-direction: reverse;
+}
+
+@keyframes zoom {
+  from {
+    opacity: 0;
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  100% {
+    opacity: 1;
+  }
 }

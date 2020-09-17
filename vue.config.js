@@ -3,10 +3,10 @@ module.exports = {
     host: 'localhost',
     proxy: {
       "^/api/": {
-        target: "http://localhost:8000/",
+        target: process.env.VUE_APP_API_URL,
         changeOrigin: true,
         pathRewrite: { "^/api": "/" },
-        logLevel: "debug"
+        logLevel: "warn"
       }
     },
   },
@@ -18,6 +18,7 @@ module.exports = {
         @import "~@/assets/scss/abstract/_mixins.scss";
         @import '~@/assets/scss/theme.scss';
         @import '~@/assets/scss/components/buttons.scss';
+        @import '~@/assets/scss/components/forms.scss';
         @import '~@/assets/scss/base/typography.scss';
         `
       }

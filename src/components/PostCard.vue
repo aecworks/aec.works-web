@@ -35,7 +35,6 @@
 <script>
 import api from '@/api'
 import { waitForLogin } from '@/mixins'
-import { toggleHashtag } from '@/mixins'
 import Avatar from '@/components/Avatar.vue'
 import Card from '@/components/Card.vue'
 import Hashtag from '@/components/Hashtag'
@@ -57,7 +56,7 @@ export default {
   },
   methods: {
     async handleHashtagClick(name) {
-      toggleHashtag(name)
+      this.$emit('hashtagClick', name)
     },
     goToPost(post) {
       this.$router.push({ name: 'Post', params: { slug: post.slug } })

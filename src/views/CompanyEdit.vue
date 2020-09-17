@@ -1,61 +1,65 @@
 <template>
-  <div class="wrapper flex">
-    <div class="content">
+  <div class="wrapper sm-grid-sidebar-down">
+    <div class="content" v-if="company">
       <h1>{{ isEditing ? "Edit" : "New"}}</h1>
 
       <form class="form">
         <label>Name</label>
-        <input type="text" class="fill-x" v-model="company.name" />
+        <input type="text" class="input fill-x" v-model="company.name" />
         <label>Description</label>
-        <textarea type="text" class="fill-x" v-model="company.description" rows="3" />
+        <textarea type="text" class="input fill-x" v-model="company.description" rows="3" />
         <label>Location</label>
-        <input type="text" class="fill-x" v-model="company.location" />
+        <input type="text" class="input fill-x" v-model="company.location" />
         <label>Website</label>
-        <input type="text" class="fill-x" v-model="company.website" />
+        <input type="text" class="input fill-x" v-model="company.website" />
 
         <div class="flex">
           <div class="fill-x">
             <label>Twitter handle</label>
-            <input type="text" class="fill-x" v-model="company.twitterHandle" />
+            <input type="text" class="input fill-x" v-model="company.twitterHandle" />
           </div>
           <div class="fill-x ml-2">
             <label>Crunchbase id</label>
-            <input type="text" class="fill-x" v-model="company.crunchbaseId" />
+            <input type="text" class="input fill-x" v-model="company.crunchbaseId" />
           </div>
         </div>
 
         <label>Hashtags</label>
-        <span class="muted small mb-1">Comma Separated List</span>
-        <input type="text" class="mt-1 fill-x" @input="handleHashtagEdit" :value="company.hashtags" />
+        <HashtagInput
+          v-if="isReadyForHashtags"
+          @changed="handleTagChange"
+          :initialTags="company.hashtags"
+        />
 
         <label class="mt-1">Logo</label>
         <div class="flex flex-down">
-          <div class="company-logo">
-            <img :src="company.logoUrl" alt />
+          <div class="company-logo" :class="{ 'empty': !company.logoUrl }">
+            <img :src="company.logoUrl  || defaultImageUrl" alt />
           </div>
           <div class="mt">
-            <Button text="Upload" kind="text" @click="startCrop(imgFieldNames.logoUrl)" />
-            <Button text="Paste" kind="text" @click="startPaste(imgFieldNames.logoUrl)" />
-            <Button text="Remove" v-if="company.logoUrl" kind="text" @click="company.logoUrl=''" />
+            <Button kind="text" @click="handleFileUploaded(imgFieldNames.logoUrl)">Upload</Button>
+            <Button kind="text" @click="startPaste(imgFieldNames.logoUrl)">Paste</Button>
+            <Button v-if="company.logoUrl" kind="text" @click="company.logoUrl=''">Remove</Button>
           </div>
         </div>
 
         <label class="mt-1">Cover</label>
         <div class="flex flex-down">
-          <div class="company-cover">
-            <img :src="company.coverUrl" alt />
+          <div class="company-cover" :class="{ 'empty': !company.coverUrl }">
+            <img :src="company.coverUrl || defaultImageUrl" alt />
           </div>
           <div class="mt">
-            <Button text="Upload" kind="text" @click="startCrop(imgFieldNames.coverUrl)" />
-            <Button text="Paste" kind="text" @click="startPaste(imgFieldNames.coverUrl)" />
-            <Button text="Remove" v-if="company.coverUrl" kind="text" @click="company.coverUrl=''" />
+            <Button kind="text" @click="handleFileUploaded(imgFieldNames.coverUrl)">Upload</Button>
+            <Button kind="text" @click="startPaste(imgFieldNames.coverUrl)">Paste</Button>
+            <Button v-if="company.coverUrl" kind="text" @click="company.coverUrl=''">Remove</Button>
           </div>
         </div>
         <Cropper
           v-if="croppingField"
           :imgUrl="company[croppingField]"
           :cropRatio="cropRatio"
-          @done="handleCropDone"
+          @done="cropCompleted"
+          @cancel="cropCanceled"
         />
 
         <Modal v-if="pastingField" @clickOutside="endPaste">
@@ -79,45 +83,54 @@
           </ul>
         </div>
 
-        <Button :text="isEditing ? 'Create Revision' : 'Create'" class="mt-2" @click="handleSave" />
-        <Button text="Cancel" @click="handleCancel" />
+        <Button class="mt-2" @click="handleSave">
+          {{isEditing ? 'Create Revision' : 'Create'}}
+        </Button>
+        <Button @click="handleCancelEdit">Cancel</Button>
       </form>
 
       <hr class="mt-2" />
 
       <div class="mt-2">
         <h3>Preview</h3>
-        <!-- zindex moves it above crop after insertion -->
         <CompanyCard :company="company" />
       </div>
     </div>
-    <div class="sidebar">
+    <div class="sidebar mb-2">
+      <h3 class="mb-2">Revisions</h3>
       <div class="revisions" v-for="rev in revisions" :key="rev.id">
-        <h3 class="mb-2">Revisions</h3>
-        <h5>{{rev.createdAt | calendar }}</h5>
-        <span class="muted small">By {{rev.createdBy.name}}</span>
+        <label class="mb" v-if="rev.id == company.lastRevisionId">👇Applied 👇</label>
+        <label class="mb" v-if="rev.approvedBy && rev.id == company.id">👇Previwing 👇</label>
+        <h5>{{ rev.createdAt | calendar }}</h5>
+        <span class="muted small">{{rev.createdBy.name}}</span>
         <div>
-          <Button text="Show" kind="text" @click="showRevision(rev.id)" />
-          <Button text="Apply" kind="text" @click="handleRevisionApprove(rev.id)" />
+          <Button kind="text" @click="showRevision(rev)">Show</Button>
+          <Button kind="text" @click="handleRevisionApprove(rev.id)">Apply</Button>
         </div>
+      </div>
+      <div class="mt-2">
+        <h3>Created</h3>
+        <h5 class="mt-1">{{ company.createdAt | calendar }}</h5>
+        <span class="small muted" v-if="company.createdBy">{{ company.createdBy.name }}</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import IconLarge from '../components/IconLarge.vue'
-import Modal from '../components/Modal.vue'
-import Cropper from '../components/Cropper.vue'
+import HashtagInput from '../components/forms/HashtagInput.vue'
 import Button from '../components/forms/Button.vue'
 import CompanyCard from '../components/CompanyCard.vue'
+import Cropper from '../components/Cropper.vue'
+import IconLarge from '../components/IconLarge.vue'
+import Modal from '../components/Modal.vue'
 import api from '@/api'
 import { waitForLogin } from '@/mixins'
 import { filePrompt, fileToBase64, subscribePaste, unsubscribePaste } from '@/utils'
 
 export default {
   name: 'CompanyEdit',
-  components: { Button, CompanyCard, Cropper, Modal, IconLarge },
+  components: { Button, CompanyCard, Cropper, Modal, IconLarge, HashtagInput },
   props: {
     slug: {
       required: false,
@@ -126,6 +139,7 @@ export default {
   },
   data() {
     return {
+      defaultImageUrl: require('@/assets/images/image.svg'),
       imgFieldNames: {
         coverUrl: 'coverUrl',
         logoUrl: 'logoUrl',
@@ -135,6 +149,7 @@ export default {
       pastingField: null,
       errors: null,
       revisions: [],
+      isReadyForHashtags: false,
       company: {
         name: '',
         description: '',
@@ -145,6 +160,7 @@ export default {
         logoUrl: '',
         coverUrl: '',
         hashtags: [],
+        lastRevisionId: '',
       },
     }
   },
@@ -153,6 +169,9 @@ export default {
       this.company = await api.getCompany(this.slug)
       this.revisions = await api.getCompanyRevisions(this.slug)
     }
+    /// Use this to hold back hashtag input otherwise it's initiated as blank
+    // TODO: Sync, when applying doe snot work
+    this.isReadyForHashtags = true
   },
   computed: {
     isEditing() {
@@ -162,6 +181,7 @@ export default {
   methods: {
     async handleSave() {
       await waitForLogin()
+
       if (this.isEditing) {
         // Is Editing Company
         await api.postCompanyRevision(this.company.slug, this.company)
@@ -178,7 +198,7 @@ export default {
       }
     },
 
-    handleCancel() {
+    handleCancelEdit() {
       if (this.isEditing) {
         this.$router.push({ name: 'Company', params: { slug: this.slug } })
       } else {
@@ -192,7 +212,7 @@ export default {
 
     startPaste(fieldName) {
       this.pastingField = fieldName
-      subscribePaste(this.handlePasted)
+      subscribePaste(this.onPasteEvent)
     },
 
     endPaste() {
@@ -200,62 +220,90 @@ export default {
       unsubscribePaste()
     },
 
-    async handlePasted(file) {
+    async onPasteEvent(file) {
       const dataUri = await fileToBase64(file)
       this.company[this.pastingField] = dataUri
-      this.croppingField = this.pastingField
+      this.startCrop(this.pastingField)
       this.endPaste()
     },
 
-    async startCrop(fieldName) {
+    async handleFileUploaded(fieldName) {
       const file = await filePrompt()
       const dataUri = await fileToBase64(file)
       this.company[fieldName] = dataUri
+      this.startCrop(fieldName)
+    },
+
+    startCrop(fieldName) {
       this.cropRatio = fieldName == this.imgFieldNames.logoUrl ? 1 : 0.5
       this.croppingField = fieldName
     },
 
-    async handleCropDone(file) {
+    cropCanceled() {
+      this.company[this.croppingField] = null
+      this.croppingField = null
+    },
+
+    async cropCompleted(file) {
       const image = await api.putImage(file, file, file.type)
       this.company[this.croppingField] = image.url
       this.croppingField = null
     },
 
-    async handleRevisionApprove(revisionId) {
-      const revision = await api.postCompanyRevisionApprove(revisionId)
-      this.revisions = [...this.revisions.filter(({ id }) => id !== revisionId), revision]
-      this.company = await api.getCompany(this.slug)
+    handleTagChange(hashtags) {
+      this.company.hashtags = hashtags
     },
 
-    showRevision(revisionId) {
-      this.company = this.revisions.find(({ id }) => id === revisionId)
+    async handleRevisionApprove(revisionId) {
+      await api.postCompanyRevisionApprove(revisionId)
+      this.revisions = await api.getCompanyRevisions(this.slug)
+      this.company = await api.getCompany(this.slug)
+      this.isReadyForHashtags = false
+      this.$nextTick(() => {
+        this.isReadyForHashtags = true
+      })
     },
-  },
-  filters: {
-    cleanUrl(value) {
-      return value.replace('https://', '').replace('http://', '')
+
+    showRevision(revision) {
+      this.isReadyForHashtags = false
+      this.$nextTick(() => {
+        this.company = { ...this.company, ...revision }
+        this.isReadyForHashtags = true
+      })
     },
   },
 }
 </script>
 
 <style lang="scss">
-.company-logo img {
-  min-width: 60px;
-  min-height: 60px;
-  width: 60px;
+.company-logo {
   height: 60px;
-  @extend .border-thick;
-  background-color: white;
+  width: 60px;
+  overflow: hidden;
+  @extend .border-thin;
+
+  img {
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+  }
+
+  &.empty {
+    width: 60px;
+    img {
+      height: 50%;
+      object-fit: scale-down;
+      margin-top: 15px;
+    }
+  }
 }
 
-.company-cover img {
-  min-height: 60px;
-  height: 60px;
-  min-width: 120px;
+.company-cover {
+  @extend .company-logo;
   width: 120px;
-  @extend .border-thick;
-  background-color: white;
 }
 
 @include for-large-down {
@@ -265,7 +313,6 @@ export default {
 .revisions {
   margin-top: 2rem;
   @include for-large-up {
-    // text-align: right;
   }
 }
 </style>

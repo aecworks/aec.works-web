@@ -24,16 +24,16 @@
           </div>
         </div>
         <div class="profile-activity">
-          <h2>Activity</h2>TODO
           <h2 class="mt-2">Posts</h2>TODO
+          <h2>Tweets</h2>
+          <TwitterFeed v-if="profile.twitter" :handle="profile.twitter" />
         </div>
       </div>
     </div>
     <div class="sidebar hidden-sm">
       <label>Share</label>
-      <div>
-        <Icon icon="twitter" clickable></Icon>
-        <Icon icon="linkedin" clickable></Icon>
+      <div class="mt">
+        <IconShareTwitter />
       </div>
     </div>
     <div class="footer">
@@ -47,12 +47,14 @@
 </template>
 
 <script>
+import TwitterFeed from '../components/TwitterFeed.vue'
+import IconShareTwitter from '../components/IconShareTwitter.vue'
 import Icon from '../components/Icon.vue'
 import api from '@/api'
 
 export default {
   name: 'Person',
-  components: { Icon },
+  components: { Icon, IconShareTwitter, TwitterFeed },
   props: {
     slug: { required: true, type: String },
   },
@@ -70,7 +72,7 @@ export default {
       return this.$store.state.users.profile || null
     },
     isSelf() {
-      return this.storeProfile.slug === this.slug
+      return this.storeProfile && this.storeProfile.slug === this.slug
     },
   },
   methods: {
@@ -90,15 +92,20 @@ export default {
 .profile {
   display: flex;
   @include for-large-down {
+    flex-wrap: wrap;
     text-align: center;
     flex-direction: column;
+    justify-content: center;
+    align-content: center;
   }
 }
 .profile-data {
   width: 200px;
 }
 .profile-activity {
-  margin-top: 2rem;
+  @include for-large-down {
+    margin-top: 2rem;
+  }
   @include for-large-up {
     padding-left: 2rem;
   }
