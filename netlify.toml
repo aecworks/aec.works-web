@@ -12,28 +12,3 @@
   VUE_APP_API_URL = "https://aecworks-api-staging.herokuapp.com"
   VUE_APP_LINKEDIN_CLIENT_ID="86y7rl9l2go7sl"
   VUE_APP_GITHUB_CLIENT_ID="NoStagingId"
-
-[[redirects]]
-  from = "/api/*"
-  to = "https://api.aec.works/:splat"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/sitemap.xml"
-  to = "https://api.aec.works/sitemaps/sitemap.xml"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/sitemaps/*"
-  to = "https://api.aec.works/sitemaps/:splat"
-  query = {p = ":p"}
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/*"
-  to = "/"
-  status = 200
-  force = false
