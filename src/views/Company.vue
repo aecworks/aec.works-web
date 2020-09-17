@@ -10,7 +10,20 @@
         {{ company.name }}
         <span class="small muted ml">{{company.location || "Somewhere" }}</span>
       </h1>
-      <!-- </div> -->
+      <!-- Social Icons -->
+      <!-- <a
+          class="fleat"
+          v-if="company.twitterHandle"
+          :href="`https://www.twitter.com/${company.twitterHandle}`"
+        >
+          <Icon icon="twitter" clickable></Icon>
+        </a>
+        <a
+          v-if="company.crunchbaseId"
+          :href="`https://www.crunchbase.com/organization/${company.crunchbaseId}`"
+        >
+          <Icon icon="crunchbase" clickable></Icon>
+      </a>-->
 
       <div class="mt-2 mb-2">
         <p class="sans">{{ company.description || "..." }}</p>
@@ -21,21 +34,6 @@
           <label>Website</label>
           <a :href="company.website">{{company.website || "-" | cleanUrl}}</a>
         </div>
-        <div class="flex-right">
-          <label class="mb">Social Media</label>
-          <a
-            v-if="company.twitterHandle"
-            :href="`https://www.twitter.com/${company.twitterHandle}`"
-          >
-            <Icon icon="twitter" clickable></Icon>
-          </a>
-          <a
-            v-if="company.crunchbaseId"
-            :href="`https://www.crunchbase.com/organization/${company.crunchbaseId}`"
-          >
-            <Icon icon="crunchbase" clickable></Icon>
-          </a>
-        </div>-->
       </div>
 
       <div class="mt-2">
