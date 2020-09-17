@@ -40,7 +40,12 @@
         <label>Tags</label>
         <Hashtag v-for="slug in company.hashtags" :slug="slug" :key="slug" />
       </div>
-      <ArticleCard v-for="url in company.articles" :key="url" :url="url" />
+
+      <div class="mt-2" v-if="company.articles">
+        <label class="mb">Articles</label>
+        <ArticleCard v-for="article in company.articles" :key="article.url" :article="article" />
+      </div>
+
       <div class="mt-2">
         <TwitterFeed v-if="company.twitterHandle" :handle="company.twitterHandle" />
       </div>

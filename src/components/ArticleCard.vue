@@ -1,25 +1,35 @@
 <template>
-  <div>
-    <Loader v-if="isLoading" />
-    <a :href="url">{{url}}</a>
-  </div>
+  <Card>
+    <template v-slot:cover>
+      <img v-if="ogData.image" :src="ogData.image" />
+    </template>
+    <template v-slot:default>
+      <label>{{ogData.siteName}}</label>
+      <h2 class>
+        <a :href="ogData.url">{{ogData.title}}</a>
+      </h2>
+      <p class="mt-1">{{ogData.description}}</p>
+    </template>
+  </Card>
 </template>
 
-<script>
-import Loader from './Loader.vue'
 
+<script>
+import Card from './Card.vue'
 export default {
   name: 'ArticleCard',
-  components: { Loader },
+  components: { Card },
   data() {
     return {
       isLoading: true,
-      title: '',
-      description: '',
     }
   },
-  props: ['url'],
-  computed: {},
+  props: ['article'],
+  computed: {
+    ogData() {
+      return this.article.opengraphData
+    },
+  },
   async created() {
     this.isLoading = false
     // TODO
