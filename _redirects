@@ -1,5 +1,0 @@
-
-/api/*          process.env.VUE_APP_API_URL/:splat
-/api/*          $API_URL/:splat
-/sitemap.xml    $API_URL/sitemaps/sitemap.xml
-/*              /
