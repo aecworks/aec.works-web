@@ -41,7 +41,7 @@
         <Hashtag v-for="slug in company.hashtags" :slug="slug" :key="slug" />
       </div>
 
-      <div class="mt-2" v-if="company.articles">
+      <div class="mt-2" v-if="company.articles.length">
         <label class="mb">Articles</label>
         <ArticleCard v-for="article in company.articles" :key="article.url" :article="article" />
       </div>
