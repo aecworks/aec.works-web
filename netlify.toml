@@ -9,4 +9,4 @@
 
 [context.staging.environment]
   VUE_APP_LINKEDIN_CLIENT_ID="86y7rl9l2go7sl"
-  VUE_APP_GITHUB_CLIENT_ID="NoStagingId"
+  VUE_APP_GITHUB_CLIENT_ID="4f8c467a5383b913669f"
