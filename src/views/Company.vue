@@ -10,20 +10,6 @@
         {{ company.name }}
         <span class="small muted ml">{{company.location || "Somewhere" }}</span>
       </h1>
-      <!-- Social Icons -->
-      <!-- <a
-          class="fleat"
-          v-if="company.twitterHandle"
-          :href="`https://www.twitter.com/${company.twitterHandle}`"
-        >
-          <Icon icon="twitter" clickable></Icon>
-        </a>
-        <a
-          v-if="company.crunchbaseId"
-          :href="`https://www.crunchbase.com/organization/${company.crunchbaseId}`"
-        >
-          <Icon icon="crunchbase" clickable></Icon>
-      </a>-->
 
       <div class="mt-2 mb-2">
         <p class="sans">{{ company.description || "..." }}</p>
@@ -65,7 +51,7 @@
 
       <div class="mt-2">
         <label>Share</label>
-        <SocialShare :pageUrl="pageUrl" />
+        <SocialShare />
       </div>
 
       <div class="mt-2" v-if="userIsEditor">
@@ -118,9 +104,6 @@ export default {
   computed: {
     userIsEditor() {
       return this.$store.getters[USERS.IS_EDITOR]
-    },
-    pageUrl() {
-      return `https://aec.works/companies/${this.slug}/`
     },
   },
   created() {

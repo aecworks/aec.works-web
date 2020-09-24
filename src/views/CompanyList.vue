@@ -23,7 +23,7 @@
       <p class="mt-1 sans small muted">Showing {{count}} {{count === 1 ? "company" : "companies"}}</p>
 
       <div class="mb-1">
-        <Button v-if="userIsCreator" @click="handleAdd">Add Company</Button>
+        <Button v-if="userIsEditor" @click="handleAdd">Add Company</Button>
       </div>
     </div>
   </div>
@@ -80,8 +80,8 @@ export default {
     this.fetchItems(0)
   },
   computed: {
-    userIsCreator() {
-      return this.$store.getters[USERS.IS_CREATOR]
+    userIsEditor() {
+      return this.$store.getters[USERS.IS_EDITOR]
     },
     hasMore() {
       return this.count > this.items.length
