@@ -3,6 +3,7 @@ import api from "../api"
 export const USERS = {
   SET_PROFILE: "SET_PROFILE",
   GET_PROFILE: "GET_PROFILE",
+  IS_CREATOR: "IS_CREATOR",
   IS_EDITOR: "IS_EDITOR",
   LOGOUT: "LOGOUT",
 }
@@ -30,6 +31,9 @@ export default {
     }
   },
   getters: {
+    [USERS.IS_CREATOR] (state) {
+      return state.profile ? state.profile.groups.includes("creators") : false
+    },
     [USERS.IS_EDITOR] (state) {
       return state.profile ? state.profile.groups.includes("editors") : false
     }

@@ -51,7 +51,7 @@
 
       <div class="mt-2">
         <label>Share</label>
-        <SocialShare />
+        <SocialShare :pageUrl="pageUrl" />
       </div>
 
       <div class="mt-2" v-if="userIsEditor">
@@ -104,6 +104,9 @@ export default {
   computed: {
     userIsEditor() {
       return this.$store.getters[USERS.IS_EDITOR]
+    },
+    pageUrl() {
+      return `https://aec.works/companies/${this.slug}/`
     },
   },
   created() {
