@@ -22,7 +22,7 @@
 
       <div class="mt-2">
         <label>Share</label>
-        <SocialShare />
+        <SocialShare :pageUrl="pageUrl" />
       </div>
 
       <div v-if="isAuthor" class="mt-2">
@@ -67,6 +67,9 @@ export default {
     isAuthor() {
       const profile = this.$store.state.users.profile
       return profile && profile.slug && this.post && profile.slug === this.post.profile.slug
+    },
+    pageUrl() {
+      return `https://aec.works/posts/${this.slug}/`
     },
   },
   async created() {
