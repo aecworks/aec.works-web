@@ -1,8 +1,8 @@
 <template>
   <div>
-    <LinkedInShare button_design="outline" has_square_edges has_icon :page_url="pageUrl" />
+    <LinkedInShare button_design="outline" has_square_edges has_icon :page_url="url" />
     <br />
-    <TwitterShare button_design="outline" has_square_edges has_icon :page_url="pageUrl" />
+    <TwitterShare button_design="outline" has_square_edges has_icon :page_url="url" />
   </div>
 </template>
 
@@ -17,7 +17,11 @@ export default {
   data() {
     return {}
   },
-  computed: {},
+  computed: {
+    url() {
+      return this.pageUrl || document.location.href
+    },
+  },
 }
 </script>
 

@@ -31,9 +31,9 @@
       </div>
     </div>
     <div class="sidebar hidden-sm">
-      <label>Share</label>
-      <div class="mt">
-        <IconShareTwitter />
+      <div class="mt-2">
+        <label>Share</label>
+        <SocialShare />
       </div>
     </div>
     <div class="footer">
@@ -47,13 +47,14 @@
 </template>
 
 <script>
+import SocialShare from '../components/SocialShare.vue'
 import TwitterFeed from '../components/TwitterFeed.vue'
-import IconShareTwitter from '../components/IconShareTwitter.vue'
 import Icon from '../components/Icon.vue'
 import api from '@/api'
 
 export default {
   name: 'Person',
+<<<<<<< HEAD
   metaInfo() {
     const profile = this.profile
     return {
@@ -61,6 +62,9 @@ export default {
     }
   },
   components: { Icon, IconShareTwitter, TwitterFeed },
+=======
+  components: { Icon, TwitterFeed, SocialShare },
+>>>>>>> 9e4046c... Some Release Changes (#8)
   props: {
     slug: { required: true, type: String },
   },

@@ -25,11 +25,12 @@ export default {
 <style lang="scss" scoped>
 .profile {
   .profile-avatar {
-    width: 34px;
-    height: 34px;
+    width: 30px;
+    height: 30px;
+    // border: 1px solid $dark;
     border-radius: 17px;
     border: 1px solid $yellow;
-    padding: 3px;
+    padding: 2px;
   }
 
   .profile-name {

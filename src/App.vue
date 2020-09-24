@@ -1,6 +1,7 @@
 <template>
   <div id="app" class="app-wrapper">
     <Nav />
+    <Poopee />
     <transition name="fade" mode="out-in">
       <router-view />
     </transition>
@@ -11,6 +12,7 @@
 </template>
 
 <script>
+import Poopee from './components/Poopee.vue'
 import Nav from '@/components/Nav'
 import Login from '@/components/Login'
 
@@ -25,6 +27,7 @@ export default {
   components: {
     Nav,
     Login,
+    Poopee,
   },
   data() {
     return {}
@@ -39,5 +42,4 @@ export default {
 
 <style lang="scss">
 @import '~@/assets/scss/main.scss';
-
 </style>

@@ -16,7 +16,7 @@
     -ms-user-select: none;
     user-select: none;
 
-    background-color: $yellow;
+    background-color: $cream;
     color: dark;
 
     @extend .border-thin;
@@ -37,6 +37,13 @@
     &.linkedin {
         background-color: #003f67;
         color: white;
+    }
+
+    &.disabled {
+        opacity: .5
+    }
+    &.disabled:hover {
+        box-shadow: none;
     }
 
     &.icon {

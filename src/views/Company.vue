@@ -10,20 +10,6 @@
         {{ company.name }}
         <span class="small muted ml">{{company.location || "Somewhere" }}</span>
       </h1>
-      <!-- Social Icons -->
-      <!-- <a
-          class="fleat"
-          v-if="company.twitterHandle"
-          :href="`https://www.twitter.com/${company.twitterHandle}`"
-        >
-          <Icon icon="twitter" clickable></Icon>
-        </a>
-        <a
-          v-if="company.crunchbaseId"
-          :href="`https://www.crunchbase.com/organization/${company.crunchbaseId}`"
-        >
-          <Icon icon="crunchbase" clickable></Icon>
-      </a>-->
 
       <div class="mt-2 mb-2">
         <p class="sans">{{ company.description || "..." }}</p>
@@ -41,7 +27,7 @@
         <Hashtag v-for="slug in company.hashtags" :slug="slug" :key="slug" />
       </div>
 
-      <div class="mt-2" v-if="company.articles">
+      <div class="mt-2" v-if="company.articles.length">
         <label class="mb">Articles</label>
         <ArticleCard v-for="article in company.articles" :key="article.url" :article="article" />
       </div>
@@ -63,12 +49,15 @@
         <Icon icon="chat">{{company.threadSize || 0}}</Icon>
       </div>
 
-      <label class="mt-2">Share</label>
-      <div class="mt">
-        <SocialShare :pageUrl="pageUrl" />
+      <div class="mt-2">
+        <label>Share</label>
+        <SocialShare />
       </div>
-      <label class="mt-2">Contribute</label>
-      <Icon class="mt" icon="pencil" @click="handleEdit" clickable>Edit</Icon>
+
+      <div class="mt-2" v-if="userIsEditor">
+        <!-- <label>Contribute</label> -->
+        <Button @click="handleEdit">Edit</Button>
+      </div>
     </div>
 
     <div class="footer">
@@ -78,6 +67,8 @@
 </template>
 
 <script>
+import Button from '../components/forms/Button.vue'
+import { USERS } from '@/store/users'
 import SocialShare from '@/components/SocialShare'
 import Icon from '@/components/Icon.vue'
 import ArticleCard from '../components/ArticleCard.vue'
@@ -102,6 +93,7 @@ export default {
     SocialShare,
     TwitterFeed,
     ArticleCard,
+    Button,
   },
   props: {
     slug: { required: false, type: String },
@@ -116,8 +108,8 @@ export default {
     }
   },
   computed: {
-    pageUrl() {
-      return `https://aec.works/companies/${this.slug}/`
+    userIsEditor() {
+      return this.$store.getters[USERS.IS_EDITOR]
     },
   },
   created() {
