@@ -54,6 +54,12 @@ import api from '@/api'
 
 export default {
   name: 'Person',
+  metaInfo() {
+    const profile = this.profile
+    return {
+      title: () => (profile && profile.name ? profile.name : 'People'),
+    }
+  },
   components: { Icon, IconShareTwitter, TwitterFeed },
   props: {
     slug: { required: true, type: String },

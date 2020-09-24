@@ -45,6 +45,9 @@ import { toggleHashtag } from '@/utils'
 
 export default {
   name: 'PostList',
+  metaInfo: {
+    title: 'Feed',
+  },
   components: {
     PostCard,
     Loader,

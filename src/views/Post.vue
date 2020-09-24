@@ -46,6 +46,12 @@ import Avatar from '@/components/Avatar'
 
 export default {
   name: 'Post',
+  metaInfo() {
+    const post = this.post
+    return {
+      title: () => (post && post.title ? post.title : 'Feed'),
+    }
+  },
   components: { Discussion, Hashtag, Avatar, Icon },
   props: {
     slug: { required: true, type: String },
