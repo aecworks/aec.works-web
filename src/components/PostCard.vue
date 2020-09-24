@@ -65,9 +65,22 @@ export default {
       this.goToPost(post) // TODO: Anchor Comments
     },
     async handleClapClick(post) {
-      const sound = new Audio(require('@/assets/sounds/effect.mp3'))
-      if (Math.random() > 0.8) sound.play()
       await waitForLogin()
+      switch (post.clapCount) {
+        case 1:
+          new Audio(require('@/assets/sounds/clap-surprise.mp3')).play()
+          this.$ga.event({
+            eventCategory: 'jokes',
+            eventAction: 'surprise-sound-played',
+          })
+          break
+        case 10:
+          new Audio(require('@/assets/sounds/clap-loud.mp3')).play()
+          break
+        default:
+          new Audio(require('@/assets/sounds/clap-fake.mp3')).play()
+          break
+      }
       const clapCount = await api.postPostClap(post.slug)
       this.localClapCount = clapCount
     },
