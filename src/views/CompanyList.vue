@@ -25,7 +25,7 @@
       </p>
 
       <div class="mb-1">
-        <Button v-if="userIsCreator" @click="handleAdd">Add Company</Button>
+        <Button v-if="userIsEditor" @click="handleAdd">Add Company</Button>
       </div>
     </div>
   </div>
@@ -76,8 +76,8 @@ export default {
     }
   },
   computed: {
-    userIsCreator() {
-      return this.$store.getters[USERS.IS_CREATOR]
+    userIsEditor() {
+      return this.$store.getters[USERS.IS_EDITOR]
     },
     hasMore() {
       return this.count > this.items.length
