@@ -63,12 +63,15 @@
         <Icon icon="chat">{{company.threadSize || 0}}</Icon>
       </div>
 
-      <label class="mt-2">Share</label>
-      <div class="mt">
+      <div class="mt-2">
+        <label>Share</label>
         <SocialShare :pageUrl="pageUrl" />
       </div>
-      <label class="mt-2">Contribute</label>
-      <Icon class="mt" icon="pencil" @click="handleEdit" clickable>Edit</Icon>
+
+      <div class="mt-2" v-if="userIsEditor">
+        <!-- <label>Contribute</label> -->
+        <Button @click="handleEdit">Edit</Button>
+      </div>
     </div>
 
     <div class="footer">
@@ -78,6 +81,8 @@
 </template>
 
 <script>
+import Button from '../components/forms/Button.vue'
+import { USERS } from '@/store/users'
 import SocialShare from '@/components/SocialShare'
 import Icon from '@/components/Icon.vue'
 import ArticleCard from '../components/ArticleCard.vue'
@@ -96,6 +101,7 @@ export default {
     SocialShare,
     TwitterFeed,
     ArticleCard,
+    Button,
   },
   props: {
     slug: { required: false, type: String },
@@ -110,6 +116,9 @@ export default {
     }
   },
   computed: {
+    userIsEditor() {
+      return this.$store.getters[USERS.IS_EDITOR]
+    },
     pageUrl() {
       return `https://aec.works/companies/${this.slug}/`
     },

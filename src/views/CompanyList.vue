@@ -23,15 +23,16 @@
       <p class="mt-1 sans small muted">Showing {{count}} {{count === 1 ? "company" : "companies"}}</p>
 
       <div class="mb-1">
-        <Icon v-if="true" class="mt-2" icon="pencil" @click="handleAdd" clickable>Add Company</Icon>
+        <Button v-if="userIsCreator" @click="handleAdd">Add Company</Button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { USERS } from '@/store/users'
+import Button from '../components/forms/Button.vue'
 import HashtagInput from '../components/forms/HashtagInput.vue'
-import Icon from '../components/Icon.vue'
 import Loader from '../components/Loader.vue'
 import TextInput from '../components/forms/TextInput.vue'
 import api from '@/api'
@@ -46,8 +47,8 @@ export default {
     CompanyCard,
     TextInput,
     Loader,
-    Icon,
     HashtagInput,
+    Button,
   },
   props: {
     search: {
@@ -79,6 +80,9 @@ export default {
     this.fetchItems(0)
   },
   computed: {
+    userIsCreator() {
+      return this.$store.getters[USERS.IS_CREATOR]
+    },
     hasMore() {
       return this.count > this.items.length
     },
