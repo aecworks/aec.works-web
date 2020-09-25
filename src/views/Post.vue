@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper sm-grid-sidebar-down" v-if="post">
     <div class="content mb-2">
-      <h1>{{post.title}}</h1>
+      <h1>{{ post.title }}</h1>
       <Avatar v-if="true" :profile="post.profile" />
       <p class="post-content mt-2" v-html="post.body" />
 
@@ -12,10 +12,12 @@
 
     <div class="sidebar">
       <div>
-        <Icon icon="clap" @click="handleClap(post)" clickable>{{localClapCount || post.clapCount}}</Icon>
+        <Icon icon="clap" @click="handleClap(post)" clickable>{{
+          localClapCount || post.clapCount
+        }}</Icon>
       </div>
       <div class="mt-1">
-        <Icon icon="chat">{{post.threadSize || 0}}</Icon>
+        <Icon icon="chat">{{ post.threadSize || 0 }}</Icon>
       </div>
 
       <div class="mt-2">
@@ -45,6 +47,12 @@ import Avatar from '@/components/Avatar'
 
 export default {
   name: 'Post',
+  metaInfo() {
+    const post = this.post
+    return {
+      title: () => (post && post.title ? post.title : 'Feed'),
+    }
+  },
   components: { Discussion, Hashtag, Avatar, Icon, SocialShare },
   props: {
     slug: { required: true, type: String },

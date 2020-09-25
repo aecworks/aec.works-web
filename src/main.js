@@ -11,6 +11,7 @@ import '@/libs/quill'
 
 
 import VueWaypoint from 'vue-waypoint'
+import VueMeta from 'vue-meta'
 
 Vue.use(VueWaypoint)
 api.getMyProfile().then(resp => {
@@ -24,4 +25,5 @@ api.getMyProfile().then(resp => {
     render: h => h(App)
   }).$mount('#app')
 })
+Vue.use(VueMeta)
 

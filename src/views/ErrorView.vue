@@ -5,6 +5,9 @@
 <script>
 export default {
   name: 'Error',
+  metaInfo: {
+    title: 'Ooops...',
+  },
   data() {
     return {}
   },
