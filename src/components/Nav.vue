@@ -13,9 +13,13 @@
           >{{route.text}}</router-link>
           <span class="ml muted small">{{route.label}}</span>
         </li>
+        <li class="nav-item profile" v-if="!profile">
+          <a href="#" @click="handleLogin()">login</a>
+        </li>
+        <li />
         <li class="nav-item profile" v-if="profile">
           <span class="nav-profile-avatar">
-            <a class="logout-link mr-1 small" href="#" @click="handleLogout()">logout</a>
+            <a class="mr-1 small" href="#" @click="handleLogout()">logout</a>
             <router-link tag="a" :to="{name: 'Person', params: { slug: profile.slug }}">
               <img :src="profile.avatarUrl" alt="avatar" />
             </router-link>
@@ -56,6 +60,9 @@ export default {
   methods: {
     isActive(route) {
       return this.$route.name === route.name
+    },
+    handleLogin() {
+      this.$router.replace({ query: { login: 1 } })
     },
     async handleLogout() {
       await api.logout()

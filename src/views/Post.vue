@@ -18,13 +18,11 @@
         <Icon icon="chat">{{post.threadSize || 0}}</Icon>
       </div>
 
-      <label class="mt-2">Share</label>
-      <div class="mt-1">
-        <div>
-          <Icon icon="twitter" clickable></Icon>
-          <Icon icon="linkedin" clickable></Icon>
-        </div>
+      <div class="mt-2">
+        <label>Share</label>
+        <SocialShare />
       </div>
+
       <div class="mt-2" v-if="isAuthor">
         <label>Author</label>
         <Icon icon="pencil" @click="handleEdit" clickable>Edit</Icon>
@@ -37,6 +35,7 @@
 </template>
 
 <script>
+import SocialShare from '../components/SocialShare.vue'
 import Icon from '../components/Icon.vue'
 import api from '@/api'
 import { waitForLogin } from '@/mixins'

@@ -31,9 +31,9 @@
       </div>
     </div>
     <div class="sidebar hidden-sm">
-      <label>Share</label>
-      <div class="mt">
-        <IconShareTwitter />
+      <div class="mt-2">
+        <label>Share</label>
+        <SocialShare />
       </div>
     </div>
     <div class="footer">
@@ -47,8 +47,8 @@
 </template>
 
 <script>
+import SocialShare from '../components/SocialShare.vue'
 import TwitterFeed from '../components/TwitterFeed.vue'
-import IconShareTwitter from '../components/IconShareTwitter.vue'
 import Icon from '../components/Icon.vue'
 import api from '@/api'
 
