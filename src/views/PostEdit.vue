@@ -28,6 +28,9 @@ import Editor from '@/components/Editor'
 
 export default {
   name: 'PostEdit',
+  metaInfo: {
+    title: 'Edit Post',
+  },
   components: { Editor, Button },
   props: {
     slug: {

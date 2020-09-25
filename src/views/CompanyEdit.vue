@@ -130,6 +130,20 @@ import { filePrompt, fileToBase64, subscribePaste, unsubscribePaste } from '@/ut
 
 export default {
   name: 'CompanyEdit',
+  metaInfo() {
+    const company = this.company
+    const isEditing = this.isEditing
+    return {
+      title: () => {
+        if (isEditing) {
+          return company && company.name
+            ? `Edit: ${company.name}`
+            : 'Edit Company'
+        }
+        return 'Add Company'
+      },
+    }
+  },
   components: { Button, CompanyCard, Cropper, Modal, IconLarge, HashtagInput },
   props: {
     slug: {
