@@ -67,7 +67,7 @@ export default {
     async handleClapClick(post) {
       await waitForLogin()
       switch (post.clapCount) {
-        case 1:
+        case 0:
           new Audio(require('@/assets/sounds/clap-surprise.mp3')).play()
           this.$ga.event({
             eventCategory: 'jokes',
