@@ -14,8 +14,10 @@
           class="input fill-x"
           rows="3"
         />
+
         <label for="input-location">Location</label>
-        <input id="input-location" v-model="company.location" type="text" class="input fill-x" />
+        <gmaps-autocomplete v-model="company.location" />
+
         <label for="input-website">Website</label>
         <input id="input-website" v-model="company.website" type="text" class="input fill-x" />
 
@@ -180,6 +182,7 @@ import CompanyCard from '../components/CompanyCard.vue'
 import Cropper from '../components/Cropper.vue'
 import IconLarge from '../components/IconLarge.vue'
 import Modal from '../components/Modal.vue'
+import GmapsAutocomplete from '../components/GmapsAutocomplete.vue'
 import api from '@/api'
 import { waitForLogin } from '@/mixins'
 import { filePrompt, fileToBase64, subscribePaste, unsubscribePaste } from '@/utils'
@@ -198,7 +201,7 @@ export default {
       },
     }
   },
-  components: { Button, CompanyCard, Cropper, Modal, IconLarge, HashtagInput },
+  components: { Button, CompanyCard, Cropper, GmapsAutocomplete, Modal, IconLarge, HashtagInput },
   props: {
     slug: {
       default: null,
