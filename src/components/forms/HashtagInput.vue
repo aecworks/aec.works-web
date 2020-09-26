@@ -6,7 +6,7 @@
       v-model="tag"
       :tags.sync="tags"
       :autocomplete-items="filteredItems"
-      :add-on-key="[13,188]"
+      :add-on-key="[13, 188]"
       @tags-changed="handleTagChanged"
       :max-tags="4"
     />
@@ -36,25 +36,25 @@ export default {
       validation: [
         {
           classes: 'min-length',
-          rule: tag => tag.text.length < 2,
+          rule: (tag) => tag.text.length < 2,
           disableAdd: true,
         },
       ],
     }
   },
   mounted() {
-    this.tags = this.initialTags.map(slug => ({ text: slug }))
+    this.tags = this.initialTags.map((slug) => ({ text: slug }))
   },
   async created() {
     const hashtagsResponse = await api.getHashtags()
     this.existingHashtags = hashtagsResponse.map(({ slug }) => ({ text: slug }))
 
     // Listen on for external adds
-    bus.$on(EVENTS.HASHTAG_CLICKED, slug => {
-      if (!this.tags.find(t => t.text === slug)) {
+    bus.$on(EVENTS.HASHTAG_CLICKED, (slug) => {
+      if (!this.tags.find((t) => t.text === slug)) {
         this.tags.push({ text: slug })
       } else {
-        this.tags = this.tags.filter(t => t.text !== slug)
+        this.tags = this.tags.filter((t) => t.text !== slug)
       }
       this.handleTagChanged(this.tags)
     })
@@ -64,13 +64,13 @@ export default {
       this.tags = newTags
       this.$emit(
         'changed',
-        newTags.map(tag => tag.text),
+        newTags.map((tag) => tag.text),
       )
     },
   },
   computed: {
     filteredItems() {
-      return this.existingHashtags.filter(i => {
+      return this.existingHashtags.filter((i) => {
         return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1
       })
     },
@@ -78,7 +78,6 @@ export default {
   method: {},
 }
 </script>
-
 
 <style lang="scss">
 .vue-tags-input {
