@@ -93,20 +93,15 @@ export default {
   },
   methods: {
     async fetchData() {
-      this.getCompanyClaps()
-      const response = await api.getProfile(this.slug)
-      if (!response.message) {
-        this.profile = response
+      const [profileResponse, clapsResponse] = await Promise.all([
+        api.getProfile(this.slug),
+        api.getCompanyClapsByProfileSlug(this.slug),
+      ])
+      if (!profileResponse.message && !clapsResponse.message) {
+        this.profile = profileResponse
+        this.companyClaps = clapsResponse
       } else {
-        this.errors.push(response.message)
-      }
-    },
-    async getCompanyClaps() {
-      const response = await api.getCompanyClapsByProfileSlug(this.slug)
-      if (!response.message) {
-        this.companyClaps = response
-      } else {
-        this.errors.push(response.message)
+        this.errors.push(...profileResponse.message, ...clapsResponse.message)
       }
     },
   },
@@ -119,7 +114,6 @@ export default {
   @include for-large-down {
     flex-wrap: wrap;
     text-align: center;
-    flex-direction: column;
     justify-content: center;
     align-content: center;
   }
@@ -130,9 +124,6 @@ export default {
 .profile-activity {
   @include for-large-down {
     margin-top: 2rem;
-  }
-  @include for-large-up {
-    padding-left: 2rem;
   }
 }
 
