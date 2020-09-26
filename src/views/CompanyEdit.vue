@@ -4,27 +4,43 @@
       <h1>{{ isEditing ? 'Edit' : 'New' }}</h1>
 
       <form class="form">
-        <label>Name</label>
-        <input v-model="company.name" type="text" class="input fill-x" />
-        <label>Description</label>
-        <textarea v-model="company.description" type="text" class="input fill-x" rows="3" />
-        <label>Location</label>
-        <input v-model="company.location" type="text" class="input fill-x" />
-        <label>Website</label>
-        <input v-model="company.website" type="text" class="input fill-x" />
+        <label for="input-name">Name</label>
+        <input id="input-name" v-model="company.name" type="text" class="input fill-x" />
+        <label for="input-description">Description</label>
+        <textarea
+          id="input-description"
+          v-model="company.description"
+          type="text"
+          class="input fill-x"
+          rows="3"
+        />
+        <label for="input-location">Location</label>
+        <input id="input-location" v-model="company.location" type="text" class="input fill-x" />
+        <label for="input-website">Website</label>
+        <input id="input-website" v-model="company.website" type="text" class="input fill-x" />
 
         <div class="flex">
           <div class="fill-x">
-            <label>Twitter handle</label>
-            <input v-model="company.twitterHandle" type="text" class="input fill-x" />
+            <label for="input-twitter-handle">Twitter handle</label>
+            <input
+              id="input-twitter-handle"
+              v-model="company.twitterHandle"
+              type="text"
+              class="input fill-x"
+            />
           </div>
           <div class="fill-x ml-2">
-            <label>Crunchbase id</label>
-            <input v-model="company.crunchbaseId" type="text" class="input fill-x" />
+            <label for="input-crunchbase-id">Crunchbase id</label>
+            <input
+              id="input-crunchbase-id"
+              v-model="company.crunchbaseId"
+              type="text"
+              class="input fill-x"
+            />
           </div>
         </div>
 
-        <label>Hashtags</label>
+        <label for="input-hashtags">Hashtags</label>
         <HashtagInput
           v-if="isReadyForHashtags"
           :initial-tags="company.hashtags"
@@ -37,9 +53,28 @@
             <img :src="company.logoUrl || defaultImageUrl" alt />
           </div>
           <div class="mt">
-            <Button kind="text" @click="handleFileUploaded(imgFieldNames.logoUrl)">Upload</Button>
-            <Button kind="text" @click="startPaste(imgFieldNames.logoUrl)">Paste</Button>
-            <Button v-if="company.logoUrl" kind="text" @click="company.logoUrl = ''">Remove</Button>
+            <Button
+              kind="text"
+              aria-label="upload logo file"
+              @click="handleFileUploaded(imgFieldNames.logoUrl)"
+            >
+              Upload
+            </Button>
+            <Button
+              kind="text"
+              aria-label="upload logo URL"
+              @click="startPaste(imgFieldNames.logoUrl)"
+            >
+              Paste
+            </Button>
+            <Button
+              v-if="company.logoUrl"
+              kind="text"
+              aria-label="remove current logo"
+              @click="company.logoUrl = ''"
+            >
+              Remove
+            </Button>
           </div>
         </div>
 
@@ -49,9 +84,26 @@
             <img :src="company.coverUrl || defaultImageUrl" alt />
           </div>
           <div class="mt">
-            <Button kind="text" @click="handleFileUploaded(imgFieldNames.coverUrl)">Upload</Button>
-            <Button kind="text" @click="startPaste(imgFieldNames.coverUrl)">Paste</Button>
-            <Button v-if="company.coverUrl" kind="text" @click="company.coverUrl = ''">
+            <Button
+              kind="text"
+              aria-label="upload cover file"
+              @click="handleFileUploaded(imgFieldNames.coverUrl)"
+            >
+              Upload
+            </Button>
+            <Button
+              kind="text"
+              aria-label="paste cover file URL"
+              @click="startPaste(imgFieldNames.coverUrl)"
+            >
+              Paste
+            </Button>
+            <Button
+              v-if="company.coverUrl"
+              aria-label="remove existing cover file"
+              kind="text"
+              @click="company.coverUrl = ''"
+            >
               Remove
             </Button>
           </div>
@@ -106,8 +158,10 @@
         <h5>{{ rev.createdAt | calendar }}</h5>
         <span class="muted small">{{ rev.createdBy.name }}</span>
         <div>
-          <Button kind="text" @click="showRevision(rev)">Show</Button>
-          <Button kind="text" @click="handleRevisionApprove(rev.id)">Apply</Button>
+          <Button kind="text" aria-label="show revision" @click="showRevision(rev)">Show</Button>
+          <Button kind="text" aria-label="apply revision" @click="handleRevisionApprove(rev.id)">
+            Apply
+          </Button>
         </div>
       </div>
       <div class="mt-2">

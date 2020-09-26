@@ -1,6 +1,7 @@
 <template>
   <div class="fill-x">
     <vue-tags-input
+      id="input-hashtags"
       :validation="validation"
       v-model="tag"
       :tags.sync="tags"
