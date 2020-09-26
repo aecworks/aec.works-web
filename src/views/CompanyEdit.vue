@@ -1,63 +1,65 @@
 <template>
   <div class="wrapper sm-grid-sidebar-down">
-    <div class="content" v-if="company">
-      <h1>{{ isEditing ? "Edit" : "New"}}</h1>
+    <div v-if="company" class="content">
+      <h1>{{ isEditing ? 'Edit' : 'New' }}</h1>
 
       <form class="form">
         <label>Name</label>
-        <input type="text" class="input fill-x" v-model="company.name" />
+        <input v-model="company.name" type="text" class="input fill-x" />
         <label>Description</label>
-        <textarea type="text" class="input fill-x" v-model="company.description" rows="3" />
+        <textarea v-model="company.description" type="text" class="input fill-x" rows="3" />
         <label>Location</label>
-        <input type="text" class="input fill-x" v-model="company.location" />
+        <input v-model="company.location" type="text" class="input fill-x" />
         <label>Website</label>
-        <input type="text" class="input fill-x" v-model="company.website" />
+        <input v-model="company.website" type="text" class="input fill-x" />
 
         <div class="flex">
           <div class="fill-x">
             <label>Twitter handle</label>
-            <input type="text" class="input fill-x" v-model="company.twitterHandle" />
+            <input v-model="company.twitterHandle" type="text" class="input fill-x" />
           </div>
           <div class="fill-x ml-2">
             <label>Crunchbase id</label>
-            <input type="text" class="input fill-x" v-model="company.crunchbaseId" />
+            <input v-model="company.crunchbaseId" type="text" class="input fill-x" />
           </div>
         </div>
 
         <label>Hashtags</label>
         <HashtagInput
           v-if="isReadyForHashtags"
+          :initial-tags="company.hashtags"
           @changed="handleTagChange"
-          :initialTags="company.hashtags"
         />
 
         <label class="mt-1">Logo</label>
         <div class="flex flex-down">
-          <div class="company-logo" :class="{ 'empty': !company.logoUrl }">
-            <img :src="company.logoUrl  || defaultImageUrl" alt />
+          <div class="company-logo" :class="{ empty: !company.logoUrl }">
+            <img :src="company.logoUrl || defaultImageUrl" alt />
           </div>
           <div class="mt">
             <Button kind="text" @click="handleFileUploaded(imgFieldNames.logoUrl)">Upload</Button>
             <Button kind="text" @click="startPaste(imgFieldNames.logoUrl)">Paste</Button>
-            <Button v-if="company.logoUrl" kind="text" @click="company.logoUrl=''">Remove</Button>
+            <Button v-if="company.logoUrl" kind="text" @click="company.logoUrl = ''">Remove</Button>
           </div>
         </div>
 
         <label class="mt-1">Cover</label>
         <div class="flex flex-down">
-          <div class="company-cover" :class="{ 'empty': !company.coverUrl }">
+          <div class="company-cover" :class="{ empty: !company.coverUrl }">
             <img :src="company.coverUrl || defaultImageUrl" alt />
           </div>
           <div class="mt">
             <Button kind="text" @click="handleFileUploaded(imgFieldNames.coverUrl)">Upload</Button>
             <Button kind="text" @click="startPaste(imgFieldNames.coverUrl)">Paste</Button>
-            <Button v-if="company.coverUrl" kind="text" @click="company.coverUrl=''">Remove</Button>
+            <Button v-if="company.coverUrl" kind="text" @click="company.coverUrl = ''">
+              Remove
+            </Button>
           </div>
         </div>
         <Cropper
           v-if="croppingField"
-          :imgUrl="company[croppingField]"
-          :cropRatio="cropRatio"
+          :img-url="company[croppingField]"
+          :crop-ratio="cropRatio"
           @done="cropCompleted"
           @cancel="cropCanceled"
         />
@@ -76,15 +78,15 @@
           <ul>
             <li v-for="(value, key) in errors" :key="key">
               <span>
-                <strong>{{key}}:</strong>
-                {{value[0]}}
+                <strong>{{ key }}:</strong>
+                {{ value[0] }}
               </span>
             </li>
           </ul>
         </div>
 
         <Button class="mt-2" @click="handleSave">
-          {{isEditing ? 'Create Revision' : 'Create'}}
+          {{ isEditing ? 'Create Revision' : 'Create' }}
         </Button>
         <Button @click="handleCancelEdit">Cancel</Button>
       </form>
@@ -98,11 +100,11 @@
     </div>
     <div class="sidebar mb-2">
       <h3 class="mb-2">Revisions</h3>
-      <div class="revisions" v-for="rev in revisions" :key="rev.id">
-        <label class="mb" v-if="rev.id == company.lastRevisionId">👇Applied 👇</label>
-        <label class="mb" v-if="rev.approvedBy && rev.id == company.id">👇Previwing 👇</label>
+      <div v-for="rev in revisions" :key="rev.id" class="revisions">
+        <label v-if="rev.id == company.lastRevisionId" class="mb">👇Applied 👇</label>
+        <label v-if="rev.approvedBy && rev.id == company.id" class="mb">👇Previwing 👇</label>
         <h5>{{ rev.createdAt | calendar }}</h5>
-        <span class="muted small">{{rev.createdBy.name}}</span>
+        <span class="muted small">{{ rev.createdBy.name }}</span>
         <div>
           <Button kind="text" @click="showRevision(rev)">Show</Button>
           <Button kind="text" @click="handleRevisionApprove(rev.id)">Apply</Button>
@@ -111,7 +113,7 @@
       <div class="mt-2">
         <h3>Created</h3>
         <h5 class="mt-1">{{ company.createdAt | calendar }}</h5>
-        <span class="small muted" v-if="company.createdBy">{{ company.createdBy.name }}</span>
+        <span v-if="company.createdBy" class="small muted">{{ company.createdBy.name }}</span>
       </div>
     </div>
   </div>
@@ -136,9 +138,7 @@ export default {
     return {
       title: () => {
         if (isEditing) {
-          return company && company.name
-            ? `Edit: ${company.name}`
-            : 'Edit Company'
+          return company && company.name ? `Edit: ${company.name}` : 'Edit Company'
         }
         return 'Add Company'
       },
@@ -147,7 +147,7 @@ export default {
   components: { Button, CompanyCard, Cropper, Modal, IconLarge, HashtagInput },
   props: {
     slug: {
-      required: false,
+      default: null,
       type: String,
     },
   },
@@ -178,6 +178,11 @@ export default {
       },
     }
   },
+  computed: {
+    isEditing() {
+      return Boolean(this.slug)
+    },
+  },
   async created() {
     if (this.isEditing) {
       this.company = await api.getCompany(this.slug)
@@ -186,11 +191,6 @@ export default {
     /// Use this to hold back hashtag input otherwise it's initiated as blank
     // TODO: Sync, when applying doe snot work
     this.isReadyForHashtags = true
-  },
-  computed: {
-    isEditing() {
-      return Boolean(this.slug)
-    },
   },
   methods: {
     async handleSave() {
