@@ -11,7 +11,7 @@
   }
 }
 
-.input{
+.input {
   font-size: $font-size-p;
   font-family: $font-family;
   padding: $padding-sm $padding;
@@ -19,7 +19,7 @@
   @extend .border-thin;
 
   &:focus {
-  @include shadow-color($dark);
+    @include shadow-color($dark);
   }
   &::placeholder {
     font-family: $font-family;
@@ -99,5 +99,3 @@
 //      color: $gray-500;
 //      font-size: 1.4rem;
 //    }
-
-
