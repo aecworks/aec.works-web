@@ -26,10 +26,15 @@
           </div>
         </div>
         <div class="profile-activity">
-          <h2 class="mt-2">Posts</h2>
-          TODO
-          <h2>Tweets</h2>
-          <TwitterFeed v-if="profile.twitter" :handle="profile.twitter" />
+          <div>
+            <h3>Companies Liked</h3>
+            <ul>
+              <li v-for="company in companyClaps" :key="company.slug">{{company.name}}</li>
+            </ul>
+          </div>
+          <div>
+            <TwitterFeed class="mt-2" v-if="profile.twitter" :handle="profile.twitter" />
+          </div>
         </div>
       </div>
     </div>
@@ -42,10 +47,8 @@
     <div class="footer">
       <div v-if="isSelf" class="mt-3">
         <label class="mt-1">Notifications</label>
-        <input type="checkbox" />
-        Email
-        <input type="checkbox" />
-        Text
+        <input type="checkbox" /> Email
+        <input type="checkbox" /> Text
       </div>
     </div>
   </div>
@@ -73,6 +76,7 @@ export default {
     return {
       errors: [],
       profile: null,
+      companyClaps: [],
     }
   },
   computed: {
@@ -88,9 +92,18 @@ export default {
   },
   methods: {
     async fetchData() {
+      this.getCompanyClaps()
       const response = await api.getProfile(this.slug)
       if (!response.message) {
         this.profile = response
+      } else {
+        this.errors.push(response.message)
+      }
+    },
+    async getCompanyClaps() {
+      const response = await api.getCompanyClapsByProfileSlug(this.slug)
+      if (!response.message) {
+        this.companyClaps = response
       } else {
         this.errors.push(response.message)
       }

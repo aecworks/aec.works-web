@@ -119,7 +119,11 @@ class Api {
     return this._post(`community/comments/`, { body: { text, threadId, parentId } })
   }
 
-  getCompany(slug) {
+  getCompanyClapsByProfileSlug (slug) {
+    return this._get(`community/companies/claps/${slug}/`)
+  }
+
+  getCompany (slug) {
     return this._get(`community/companies/${slug}/`)
   }
 
