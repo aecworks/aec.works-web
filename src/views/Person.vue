@@ -5,7 +5,10 @@
         <div class="profile-data">
           <div class="profile-image">
             <img
-              :src="profile.avatarUrl || 'https://avatars.dicebear.com/api/male/john.svg?mood[]=happy'"
+              :src="
+                profile.avatarUrl ||
+                'https://avatars.dicebear.com/api/male/john.svg?mood[]=happy'
+              "
             />
           </div>
           <h2 class="mt-1">{{ profile.name }}</h2>
@@ -24,7 +27,8 @@
           </div>
         </div>
         <div class="profile-activity">
-          <h2 class="mt-2">Posts</h2>TODO
+          <h2 class="mt-2">Posts</h2>
+          TODO
           <h2>Tweets</h2>
           <TwitterFeed v-if="profile.twitter" :handle="profile.twitter" />
         </div>
@@ -39,8 +43,7 @@
     <div class="footer">
       <div class="mt-3" v-if="isSelf">
         <label class="mt-1">Notifications</label>
-        <input type="checkbox" /> Email
-        <input type="checkbox" /> Text
+        <input type="checkbox" /> Email <input type="checkbox" /> Text
       </div>
     </div>
   </div>
@@ -54,6 +57,12 @@ import api from '@/api'
 
 export default {
   name: 'Person',
+  metaInfo() {
+    const profile = this.profile
+    return {
+      title: () => (profile && profile.name ? profile.name : 'People'),
+    }
+  },
   components: { Icon, TwitterFeed, SocialShare },
   props: {
     slug: { required: true, type: String },

@@ -80,6 +80,12 @@ import { waitForLogin } from '@/mixins'
 
 export default {
   name: 'Company',
+  metaInfo() {
+    const company = this.company
+    return {
+      title: () => (company && company.name ? company.name : 'Companies'),
+    }
+  },
   components: {
     Discussion,
     Hashtag,

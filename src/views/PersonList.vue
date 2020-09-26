@@ -17,6 +17,9 @@ import Avatar from '@/components/Avatar'
 
 export default {
   name: 'Person',
+  metaInfo: {
+    title: 'People',
+  },
   components: { Avatar },
   props: ['id'],
   data() {
