@@ -28,6 +28,15 @@ PS: when using staging api, only LinkedIn login will work
 yarn run serve
 ```
 
+## Release
+
+#### Staging
+
+All code pushed or merged into `staging` is automatically deployed to http://staging--aecworks.netlify.app/
+
+#### Production
+
+All code pushed or merged into `master` is automatically deployed to https://aec.works
 
 # Contributing
 TODO
