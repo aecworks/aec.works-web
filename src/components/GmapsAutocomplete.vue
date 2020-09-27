@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import gmapsInit from '../libs/gmaps'
+import { gmapsInit, getCountryComponent } from '../libs/gmaps'
 
 export default {
   name: 'GmapsAutocomplete',
@@ -49,12 +49,15 @@ export default {
   },
   methods: {
     getCity() {
-      const { name, formatted_address } = this.autocomplete.getPlace()
-      // replaces user input with formatted result
-      this.query = formatted_address
-      this.isResultSelected = true
-      // sends simple city name back to form
-      this.$emit('input', name)
+      try {
+        const { name: city, formatted_address, address_components } = this.autocomplete.getPlace()
+        const countryComponent = getCountryComponent(address_components)
+        this.isResultSelected = true
+        this.query = formatted_address
+        this.$emit('input', `${city}, ${countryComponent.long_name}`)
+      } catch (e) {
+        console.error(e)
+      }
     },
     checkInput() {
       // runs onBlur, wipes the inserted value in case the users

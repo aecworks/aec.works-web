@@ -11,7 +11,7 @@ const initPromise = new Promise((resolve, reject) => {
   rejectInitPromise = reject
 })
 
-export default function init() {
+export function gmapsInit() {
   // if Google Maps is already initialized.
   // the initPromise should get resolved, eventually
   if (initialized) return initPromise
@@ -31,4 +31,13 @@ export default function init() {
   document.querySelector('head').appendChild(script)
 
   return initPromise
+}
+
+export function getCountryComponent(addressComponents) {
+  if (!addressComponents || addressComponents.length === 0)
+    throw new Error('No address components provided!')
+  const countryComponent = addressComponents.find((component) =>
+    component.types.includes('country'),
+  )
+  return countryComponent
 }
