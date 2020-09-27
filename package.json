@@ -9,14 +9,8 @@
     "lint": "vue-cli-service lint"
   },
   "lint-staged": {
-    "*.{js,vue}": [
-      "vue-cli-service lint",
-      "git add"
-    ],
-    "*.{css,vue}": [
-      "stylelint --fix",
-      "git add"
-    ]
+    "*.{js,vue}": "vue-cli-service lint",
+    "*.{css,vue}": "stylelint --fix"
   },
   "husky": {
     "hooks": {
