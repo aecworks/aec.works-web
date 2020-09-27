@@ -2,12 +2,12 @@ module.exports = {
   devServer: {
     host: 'localhost',
     proxy: {
-      "^/api/": {
+      '^/api/': {
         target: process.env.VUE_APP_API_URL,
         changeOrigin: true,
-        pathRewrite: { "^/api": "/" },
-        logLevel: "warn",
-      }
+        pathRewrite: { '^/api': '/' },
+        logLevel: 'warn',
+      },
     },
   },
   css: {
@@ -20,8 +20,8 @@ module.exports = {
         @import '~@/assets/scss/components/buttons.scss';
         @import '~@/assets/scss/components/forms.scss';
         @import '~@/assets/scss/base/typography.scss';
-        `
-      }
-    }
-  }
+        `,
+      },
+    },
+  },
 }

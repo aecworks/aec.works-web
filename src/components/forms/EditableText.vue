@@ -1,7 +1,7 @@
 <template>
   <div class="c-editabletext">
     <span :contenteditable="editable">
-      {{value}}
+      {{ value }}
     </span>
     <!-- <span class="icon" v-if="icon">
       <img :src="iconPath" />

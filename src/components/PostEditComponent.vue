@@ -1,9 +1,9 @@
 <template>
-  <Card :showImage="false">
+  <Card :show-image="false">
     <input
-      class="post-title"
-      :class="{'empty': title === ''}"
       v-model="title"
+      class="post-title"
+      :class="{ empty: title === '' }"
       placeholder="Your Title"
       @input="handleInput"
     />
@@ -11,7 +11,7 @@
       <Editor v-model="body" @input="handleInput" />
     </div>
     <div class="mt-2">
-      <Button @click="handleSave" v-if="isValid">Save</Button>
+      <Button v-if="isValid" @click="handleSave">Save</Button>
       <Button @click="handleCancel">Cancel</Button>
     </div>
   </Card>
@@ -41,13 +41,6 @@ export default {
       title: '',
     }
   },
-  async created() {
-    let body, title
-    if (this.isEditing) ({ body, title } = await api.getPost(this.slug))
-    else ({ body, title } = JSON.parse(localStorage.getItem(POST_DRAFT) || '{}'))
-    this.body = body
-    this.title = title
-  },
   computed: {
     isEditing() {
       return Boolean(this.slug)
@@ -55,6 +48,13 @@ export default {
     isValid() {
       return this.body && this.title
     },
+  },
+  async created() {
+    let body, title
+    if (this.isEditing) ({ body, title } = await api.getPost(this.slug))
+    else ({ body, title } = JSON.parse(localStorage.getItem(POST_DRAFT) || '{}'))
+    this.body = body
+    this.title = title
   },
 
   methods: {

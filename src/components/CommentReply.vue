@@ -2,12 +2,12 @@
   <div class="comment-reply">
     <form ref="form" class="form">
       <textarea
+        ref="textareaElement"
+        v-model="commentText"
         type="text"
         class="input comment-reply-input fill-x"
-        v-model="commentText"
-        @input="handleInput"
-        ref="textareaElement"
         placeholder="Comment"
+        @input="handleInput"
       />
       <Button v-if="commentText" @click="handleSubmitClick">Post</Button>
       <Button v-if="commentText" @click="handleCancel">Cancel</Button>
@@ -24,10 +24,10 @@ const DRAFT_COMMENT = 'draft_comment'
 
 export default {
   name: 'CommentReply',
-  props: ['threadId', 'parentId'],
   components: {
     Button,
   },
+  props: ['threadId', 'parentId'],
   data() {
     return {
       commentText: '',

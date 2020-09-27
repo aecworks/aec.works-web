@@ -1,7 +1,7 @@
 <template>
   <div class="profile flex flex-center">
     <img class="profile-avatar" :src="avatarImg" />
-    <span @click="handleClick()" class="small profile-name">{{profile.name}}</span>
+    <span class="small profile-name" @click="handleClick()">{{ profile.name }}</span>
   </div>
 </template>
 

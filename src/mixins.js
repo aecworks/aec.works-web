@@ -1,6 +1,6 @@
 // TODO Move/Merge Utils
 
-import api from "@/api"
+import api from '@/api'
 import router from './router'
 
 // TODO take argument for ?next= so we can recover after login
@@ -19,6 +19,5 @@ export const waitForLogin = () => {
         }
       }, 500)
     }
-
   })
 }

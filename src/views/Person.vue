@@ -1,13 +1,12 @@
 <template>
-  <div class="wrapper" v-if="profile">
+  <div v-if="profile" class="wrapper">
     <div class="content">
       <div class="profile">
         <div class="profile-data">
           <div class="profile-image">
             <img
               :src="
-                profile.avatarUrl ||
-                'https://avatars.dicebear.com/api/male/john.svg?mood[]=happy'
+                profile.avatarUrl || 'https://avatars.dicebear.com/api/male/john.svg?mood[]=happy'
               "
             />
           </div>
@@ -41,9 +40,12 @@
       </div>
     </div>
     <div class="footer">
-      <div class="mt-3" v-if="isSelf">
+      <div v-if="isSelf" class="mt-3">
         <label class="mt-1">Notifications</label>
-        <input type="checkbox" /> Email <input type="checkbox" /> Text
+        <input type="checkbox" />
+        Email
+        <input type="checkbox" />
+        Text
       </div>
     </div>
   </div>
@@ -73,9 +75,6 @@ export default {
       profile: null,
     }
   },
-  created() {
-    this.fetchData()
-  },
   computed: {
     storeProfile() {
       return this.$store.state.users.profile || null
@@ -83,6 +82,9 @@ export default {
     isSelf() {
       return this.storeProfile && this.storeProfile.slug === this.slug
     },
+  },
+  created() {
+    this.fetchData()
   },
   methods: {
     async fetchData() {

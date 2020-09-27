@@ -1,42 +1,41 @@
-import { buildUrl } from "./utils"
+import { buildUrl } from './utils'
 import Cookies from 'js-cookie'
 
-
-const API_URL = "/api"
+const API_URL = '/api'
 
 class Api {
   API_URL = API_URL
   DEFAULT_HEADERS = {
-    "Content-Type": "application/json"
+    'Content-Type': 'application/json',
   }
 
   constructor() {
     this._isAuthenticated = false
   }
 
-  setAuthentication (bool) {
+  setAuthentication(bool) {
     this._isAuthenticated = bool
   }
 
-  isAuthenticated () {
+  isAuthenticated() {
     return this._isAuthenticated
   }
 
-  _buildHeaders (headers = {}) {
-    const csrftoken = Cookies.get('csrftoken');
+  _buildHeaders(headers = {}) {
+    const csrftoken = Cookies.get('csrftoken')
     const mergedHeaders = {
       ...this.DEFAULT_HEADERS,
       ...headers,
-      'X-CSRFToken': csrftoken
+      'X-CSRFToken': csrftoken,
     }
     return mergedHeaders
   }
 
-  _is_auth_failure (response) {
-    return (response.status == 401 || response.status == 403)
+  _is_auth_failure(response) {
+    return response.status == 401 || response.status == 403
   }
 
-  async _fetch (method, urlPath, options = {}) {
+  async _fetch(method, urlPath, options = {}) {
     let { body, headers, query } = options
     const url = buildUrl(this.API_URL, urlPath, query)
 
@@ -46,7 +45,7 @@ class Api {
     const request = new Request(url, {
       method,
       headers: this._buildHeaders(headers),
-      body: body
+      body: body,
     })
     const response = await fetch(request)
     if (this._is_auth_failure(response)) {
@@ -55,23 +54,23 @@ class Api {
     return response
   }
 
-  async _get (urlPath, options) {
-    const response = await this._fetch("GET", urlPath, options)
+  async _get(urlPath, options) {
+    const response = await this._fetch('GET', urlPath, options)
     return response.json()
   }
 
-  async _post (urlPath, options) {
-    const response = await this._fetch("POST", urlPath, options)
+  async _post(urlPath, options) {
+    const response = await this._fetch('POST', urlPath, options)
     return response.json()
   }
 
-  async _put (urlPath, options) {
-    const response = await this._fetch("PUT", urlPath, options)
+  async _put(urlPath, options) {
+    const response = await this._fetch('PUT', urlPath, options)
     return response.json()
   }
 
-  async _patch (urlPath, options) {
-    const response = await this._fetch("PATCH", urlPath, options)
+  async _patch(urlPath, options) {
+    const response = await this._fetch('PATCH', urlPath, options)
     return response.json()
   }
 
@@ -79,7 +78,7 @@ class Api {
    * @param  {String} email
    * @param  {String} password
    */
-  async loginWithCredentials (email, password) {
+  async loginWithCredentials(email, password) {
     const response = await this._getJwt(email, password)
     if (response.status !== 200) {
       return await response.json()
@@ -92,110 +91,112 @@ class Api {
    * @param  {String} code
    * @param  {String} v
    */
-  async loginWithOauthCode (provider, code, redirectUri) {
-    const response = await this._fetch("POST", `users/login/${provider}/`, { query: { code, redirect_uri: redirectUri } })
-    if (!response.status === 200) {
+  async loginWithOauthCode(provider, code, redirectUri) {
+    const response = await this._fetch('POST', `users/login/${provider}/`, {
+      query: { code, redirect_uri: redirectUri },
+    })
+    if (response.status !== 200) {
       return await response.json()
     }
   }
 
-  async logout () {
-    const response = await this._fetch("POST", `users/logout/`)
-    if (!response.status === 200) {
+  async logout() {
+    const response = await this._fetch('POST', `users/logout/`)
+    if (response.status !== 200) {
       return await response.json()
     }
   }
 
-
-  getCommentsByThreadId (threadId, query) {
-    return this._get(`community/comments/`, { query: { ...query, "thread_id": threadId } })
+  getCommentsByThreadId(threadId, query) {
+    return this._get(`community/comments/`, { query: { ...query, thread_id: threadId } })
   }
 
-  getCommentsByParentId (commentId, query) {
-    return this._get(`community/comments/`, { query: { ...query, "parent_id": commentId } })
+  getCommentsByParentId(commentId, query) {
+    return this._get(`community/comments/`, { query: { ...query, parent_id: commentId } })
   }
 
-  postComment (text, threadId, parentId) {
+  postComment(text, threadId, parentId) {
     return this._post(`community/comments/`, { body: { text, threadId, parentId } })
   }
 
-  getCompany (slug) {
+  getCompany(slug) {
     return this._get(`community/companies/${slug}/`)
   }
 
-  getCompanies (query) {
+  getCompanies(query) {
     return this._get(`community/companies/`, { query })
   }
 
-  getCompanyRevisions (slug) {
+  getCompanyRevisions(slug) {
     return this._get(`community/companies/${slug}/revisions/`)
   }
 
-  postCompany (company) {
+  postCompany(company) {
     return this._post(`community/companies/`, { body: company })
   }
 
-  postCompanyRevision (slug, company) {
+  postCompanyRevision(slug, company) {
     return this._post(`community/companies/${slug}/revisions/`, { body: company })
   }
 
-  postCompanyRevisionApprove (revisionId) {
+  postCompanyRevisionApprove(revisionId) {
     return this._post(`community/revisions/${revisionId}/approve`)
   }
 
-  putImage (file) {
-    return this._put(`images/upload/${file.name}`, { body: file, headers: { 'Content-Type': file.type } })
+  putImage(file) {
+    return this._put(`images/upload/${file.name}`, {
+      body: file,
+      headers: { 'Content-Type': file.type },
+    })
   }
 
-  getHashtags (query) {
-    return this._get(`community/hashtags/`, { search: query || "" })
+  getHashtags(query) {
+    return this._get(`community/hashtags/`, { search: query || '' })
   }
 
-  getPost (slug) {
+  getPost(slug) {
     return this._get(`community/posts/${slug}/`)
   }
 
-  getPosts (query) {
+  getPosts(query) {
     return this._get(`community/posts/`, { query })
   }
 
-  postPost (title, body, hashtags) {
+  postPost(title, body, hashtags) {
     return this._post(`community/posts/`, { body: { title, body, hashtags } })
   }
 
-  patchPost (slug, title, body, hashtags) {
+  patchPost(slug, title, body, hashtags) {
     return this._patch(`community/posts/${slug}/`, { body: { title, body, hashtags } })
   }
 
-  getMyProfile () {
+  getMyProfile() {
     return this._get(`users/profiles/me/`)
   }
 
-  getProfile (slug) {
+  getProfile(slug) {
     return this._get(`users/profiles/${slug}/`)
   }
 
-  getProfiles (query) {
+  getProfiles(query) {
     return this._get(`users/profiles/`, { query })
   }
 
-  postPostClap (slug) {
+  postPostClap(slug) {
     return this._post(`community/posts/${slug}/clap/`)
   }
 
-  postCompanyClap (slug) {
+  postCompanyClap(slug) {
     return this._post(`community/companies/${slug}/clap/`)
   }
 
-  commentClap (id) {
+  commentClap(id) {
     return this._post(`community/comments/${id}/clap/`)
   }
 
-  getTwitterTimeline (handle) {
+  getTwitterTimeline(handle) {
     return this._get(`social/twitter/timeline/${handle}/`)
   }
-
 }
-
 
 export default new Api()

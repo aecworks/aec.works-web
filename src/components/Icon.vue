@@ -1,5 +1,5 @@
 <template>
-  <div class="icon" :class="{'pointer': clickable}" @click="$emit('click')">
+  <div class="icon" :class="{ pointer: clickable }" @click="$emit('click')">
     <div class="flex">
       <img :src="iconPath" />
       <slot></slot>

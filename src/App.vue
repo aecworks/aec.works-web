@@ -6,7 +6,7 @@
       <router-view />
     </transition>
     <transition name="zoom" mode="out-in">
-      <Login v-if="showLoginModal" @closed="$router.replace({query:{}})" />
+      <Login v-if="showLoginModal" @closed="$router.replace({ query: {} })" />
     </transition>
   </div>
 </template>

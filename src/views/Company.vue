@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper sm-grid-sidebar-down">
-    <div class="content" v-if="company">
+    <div v-if="company" class="content">
       <div class="company-images">
         <img class="logo" :src="company.logoUrl || defaultLogo" alt="Company Logo" />
         <img class="cover" :src="company.coverUrl || defaultCover" alt="Company Cover Image" />
@@ -8,26 +8,26 @@
 
       <h1 class="mt-2">
         {{ company.name }}
-        <span class="small muted ml">{{company.location || "Somewhere" }}</span>
+        <span class="small muted ml">{{ company.location || 'Somewhere' }}</span>
       </h1>
 
       <div class="mt-2 mb-2">
-        <p class="sans">{{ company.description || "..." }}</p>
+        <p class="sans">{{ company.description || '...' }}</p>
       </div>
 
       <div class="flex mt-2 mb-2">
         <div>
           <label>Website</label>
-          <a :href="company.website">{{company.website || "-" | cleanUrl}}</a>
+          <a :href="company.website">{{ company.website || '-' | cleanUrl }}</a>
         </div>
       </div>
 
       <div class="mt-2">
         <label>Tags</label>
-        <Hashtag v-for="slug in company.hashtags" :slug="slug" :key="slug" />
+        <Hashtag v-for="slug in company.hashtags" :key="slug" :slug="slug" />
       </div>
 
-      <div class="mt-2" v-if="company.articles.length">
+      <div v-if="company.articles.length" class="mt-2">
         <label class="mb">Articles</label>
         <ArticleCard v-for="article in company.articles" :key="article.url" :article="article" />
       </div>
@@ -37,16 +37,14 @@
       </div>
     </div>
 
-    <div class="sidebar" v-if="company">
+    <div v-if="company" class="sidebar">
       <div>
-        <Icon
-          icon="clap"
-          @click="handleClap(company)"
-          clickable
-        >{{localClapCount || company.clapCount}}</Icon>
+        <Icon icon="clap" clickable @click="handleClap(company)">
+          {{ localClapCount || company.clapCount }}
+        </Icon>
       </div>
       <div>
-        <Icon icon="chat">{{company.threadSize || 0}}</Icon>
+        <Icon icon="chat">{{ company.threadSize || 0 }}</Icon>
       </div>
 
       <div class="mt-2">
@@ -54,14 +52,14 @@
         <SocialShare />
       </div>
 
-      <div class="mt-2" v-if="userIsEditor">
+      <div v-if="userIsEditor" class="mt-2">
         <!-- <label>Contribute</label> -->
         <Button @click="handleEdit">Edit</Button>
       </div>
     </div>
 
     <div class="footer">
-      <Discussion v-if="company && company.threadId" :threadId="company.threadId" />
+      <Discussion v-if="company && company.threadId" :thread-id="company.threadId" />
     </div>
   </div>
 </template>
@@ -95,6 +93,11 @@ export default {
     ArticleCard,
     Button,
   },
+  filters: {
+    cleanUrl(value) {
+      return value.replace('https://', '').replace('http://', '')
+    },
+  },
   props: {
     slug: { required: false, type: String },
   },
@@ -127,11 +130,6 @@ export default {
       await waitForLogin()
       const clapCount = await api.postCompanyClap(company.slug)
       this.localClapCount = clapCount
-    },
-  },
-  filters: {
-    cleanUrl(value) {
-      return value.replace('https://', '').replace('http://', '')
     },
   },
 }

@@ -10,12 +10,12 @@
 <script>
 export default {
   name: 'Discussion',
-  props: {
-    threadId: { required: true, type: Number },
-  },
   components: {
     Comment,
     CommentReply,
+  },
+  props: {
+    threadId: { required: true, type: Number },
   },
   data() {
     return {
