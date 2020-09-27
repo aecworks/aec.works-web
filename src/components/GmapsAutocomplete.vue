@@ -25,27 +25,29 @@ export default {
   },
   data() {
     return {
+      google: undefined,
       autocomplete: undefined,
+      autocompleteListener: undefined,
       query: this.value,
       isResultSelected: false,
     }
   },
   async mounted() {
     try {
-      const google = await gmapsInit()
+      this.google = await gmapsInit()
       const input = document.getElementById('autocomplete')
       var options = {
         types: ['(cities)'],
         language: 'en',
       }
-      this.autocomplete = new google.maps.places.Autocomplete(input, options)
-      this.autocomplete.addListener('place_changed', this.getCity)
+      this.autocomplete = new this.google.maps.places.Autocomplete(input, options)
+      this.autocompleteListener = this.autocomplete.addListener('place_changed', this.getCity)
     } catch (error) {
       console.error(error)
     }
   },
   beforeDestroy() {
-    this.autocomplete.removeEventListener('place_changed', this.getCity)
+    this.google.maps.event.removeListener(this.autocompleteListener)
   },
   methods: {
     getCity() {
