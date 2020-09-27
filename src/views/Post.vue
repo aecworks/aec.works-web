@@ -66,7 +66,7 @@ export default {
   computed: {
     isAuthor() {
       const profile = this.$store.state.users.profile
-      return profile && profile.slug && profile.slug === this.post.profile.slug
+      return profile && profile.slug && this.post && profile.slug === this.post.profile.slug
     },
   },
   async created() {
