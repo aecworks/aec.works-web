@@ -11,6 +11,8 @@ import Post from '@/views/Post'
 import PostEdit from '@/views/PostEdit'
 import PersonList from '@/views/PersonList'
 import Person from '@/views/Person'
+import Privacy from '@/views/Privacy'
+import Terms from '@/views/Terms'
 
 Vue.use(VueRouter)
 
@@ -80,6 +82,17 @@ const routes = [
     name: 'Person',
     component: Person,
     props: true,
+  },
+  {
+    path: '/privacy',
+    name: 'Privacy Policy',
+    component: Privacy,
+    props: true,
+  },
+  {
+    path: '/terms',
+    name: 'Terms of Service',
+    component: Terms,
   },
   {
     path: '/auth/:provider',
