@@ -8,6 +8,21 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
+  "lint-staged": {
+    "*.{js,vue}": [
+      "vue-cli-service lint",
+      "git add"
+    ],
+    "*.{css,vue}": [
+      "stylelint --fix",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "dependencies": {
     "@johmun/vue-tags-input": "^2.1.0",
     "@sentry/browser": "^5.22.3",
@@ -39,6 +54,9 @@
     "prettier": "^2.1.2",
     "node-sass": "^4.14.0",
     "sass-loader": "^8.0.2",
-    "vue-template-compiler": "^2.6.11"
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
+    "vue-template-compiler": "^2.6.11",
+    "stylelint": "^13.6.1"
   }
 }
