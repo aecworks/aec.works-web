@@ -55,6 +55,9 @@ export default {
     this.header = document.getElementById('nav-container')
     this.sticky = this.header.offsetTop
   },
+  beforeDestroy() {
+    window.removeEventListener('scroll', debounce(this.handleScroll, 10))
+  },
   methods: {
     isActive(route) {
       return this.$route.name === route.name
