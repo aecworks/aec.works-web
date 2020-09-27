@@ -31,10 +31,11 @@
       </div>
     </div>
     <Comment
-      v-for="(comment, index) in comments"
-      :key="comment.id"
-      v-waypoint="{ active: index + 1 === comments.length, callback: onVisible }"
-      v-bind="{ comment, index }"
+      v-for="(subcomment, j) in comments"
+      :key="subcomment.id"
+      v-waypoint="{ active: j + 1 === comments.length, callback: onVisible }"
+      :index="j"
+      :comment="subcomment"
     />
   </div>
 </template>
