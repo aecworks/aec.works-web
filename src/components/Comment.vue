@@ -51,7 +51,16 @@ import { waitForLogin } from '@/mixins'
 export default {
   name: 'Comment',
   components: { IconCounter, Button, CommentReply, Loader },
-  props: ['comment', 'index'],
+  props: {
+    comment: {
+      type: Object,
+      required: true,
+    },
+    index: {
+      type: Number,
+      default: 0,
+    },
+  },
   data() {
     return {
       comments: [],
