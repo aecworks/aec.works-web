@@ -21,13 +21,22 @@
 export default {
   name: 'TextInput',
   props: {
-    editable: { required: true },
-    value: { required: true },
-    icon: { required: false },
-    placeholder: { required: false },
-  },
-  data() {
-    return {}
+    editable: {
+      type: Boolean,
+      required: true,
+    },
+    value: {
+      type: String,
+      required: true,
+    },
+    icon: {
+      type: String,
+      default: '',
+    },
+    placeholder: {
+      type: String,
+      default: '',
+    },
   },
   computed: {
     iconPath() {
