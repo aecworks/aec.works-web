@@ -174,9 +174,7 @@
       <h2 class="mb-1 mt-3">Deleting Your Personal Information</h2>
       <p>
         You may request deletion of your personal information and account by emailing
-        <a
-          href="mailto:team@aec.works"
-        >team@aec.works.</a>
+        <a href="mailto:team@aec.works">team@aec.works.</a>
       </p>
       <p>
         To protect information from accidental or malicious destruction, we may maintain residual
@@ -186,9 +184,7 @@
       <h2 class="mb-1 mt-3">Data Portability</h2>
       <p>
         If you would like to request a copy of your user data, please email
-        <a
-          href="mailto:team@aec.works"
-        >team@aec.works</a>
+        <a href="mailto:team@aec.works">team@aec.works</a>
         .
       </p>
       <h2 class="mb-1 mt-3">Business Transfers</h2>
@@ -209,7 +205,7 @@
 
 <script>
 export default {
-  name: 'Privacy Policy',
+  name: 'PrivacyPolicy',
   metaInfo: {
     title: 'Privacy Policy',
   },

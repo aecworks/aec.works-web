@@ -10,9 +10,7 @@
       <p>
         By accessing this web site, you are agreeing to be bound by these web site Terms and
         Conditions of Use, our
-        <a
-          href="/privacy"
-        >Privacy Policy</a>
+        <a href="/privacy">Privacy Policy</a>
         , all applicable laws and regulations, and agree that you are responsible for compliance
         with any applicable local laws. If you do not agree with any of these terms, you are
         prohibited from using or accessing this site. The materials contained in this web site are
@@ -36,7 +34,9 @@
           </p>
         </li>
         <li class="ml-1">
-          <p>• Attempt to decompile or reverse engineer any software contained on AEC Works' web site</p>
+          <p>
+            • Attempt to decompile or reverse engineer any software contained on AEC Works' web site
+          </p>
         </li>
         <li class="ml-1">
           <p>• Remove any copyright or other proprietary notations from the materials; or</p>
@@ -102,9 +102,7 @@
         accuracy, claims relating to intellectual property, or other legal rights. If you believe
         that a user has plagiarized content, misrepresented their identity, misappropriated work, or
         otherwise run afoul of DMCA regulations, please email
-        <a
-          href="mailto:team@aec.works"
-        >team@aec.works</a>
+        <a href="mailto:team@aec.works">team@aec.works</a>
         . AEC Works may remove any content users post for any reason.
       </p>
 
@@ -120,9 +118,7 @@
         All uses of the AEC Works logo, AEC Works badges, brand slogans, iconography, and the like,
         may only be used with express permission from AEC Works. AEC Works reserves all rights, even
         if certain assets are included in AEC Works open source projects. Please contact
-        <a
-          href="mailto:team@aec.works"
-        >team@aec.works</a>
+        <a href="mailto:team@aec.works">team@aec.works</a>
         with any questions or to request permission.
       </p>
 
@@ -183,7 +179,7 @@
 
 <script>
 export default {
-  name: 'Terms of Service',
+  name: 'TermsOfService',
   metaInfo: {
     title: 'Terms of Service',
   },
