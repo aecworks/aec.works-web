@@ -48,7 +48,7 @@ export default {
   .modal {
     z-index: 101;
     background-color: white;
-    @extend .border-thick;
+    @extend .border-thin;
     @include shadow-color($dark);
 
     @include for-large-up {
