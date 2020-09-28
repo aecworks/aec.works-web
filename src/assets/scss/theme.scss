@@ -2,7 +2,13 @@ body {
   // background-color: $cream;
 }
 
-body, h1, h2, h3, h4, h5, h6 {
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: $dark;
 }
 
@@ -40,14 +46,19 @@ a:hover {
 
 .invert {
   background-color: $dark;
-  h1, h2, h3, h4, h5, p {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  p {
     color: white;
   }
 }
 
 .pill {
   display: inline-block;
-  padding: .125rem .25rem;
+  padding: 0.125rem 0.25rem;
   background-color: $green;
   font-size: $font-size-h4;
   border-radius: 4px;
