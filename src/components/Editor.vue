@@ -2,7 +2,6 @@
   <div id="editor"></div>
 </template>
 
-
 <script>
 import Quill from 'quill'
 // https://www.npmjs.com/package/quill-image-upload
@@ -88,7 +87,6 @@ export default {
   },
 }
 </script>
-
 
 <style lang="scss">
 #editor {

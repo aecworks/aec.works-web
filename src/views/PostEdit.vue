@@ -4,9 +4,9 @@
       <div class="page">
         <div class="page-header">
           <input
-            class="page-title"
-            :class="{'empty': postTitle === ''}"
             v-model="postTitle"
+            class="page-title"
+            :class="{ empty: postTitle === '' }"
             placeholder="Your Title"
           />
         </div>
@@ -44,17 +44,17 @@ export default {
       postTitle: '',
     }
   },
+  computed: {
+    isEditing() {
+      return Boolean(this.slug)
+    },
+  },
   async created() {
     if (this.isEditing) {
       const { body, title } = await api.getPost(this.slug)
       this.body = body
       this.postTitle = title
     }
-  },
-  computed: {
-    isEditing() {
-      return Boolean(this.slug)
-    },
   },
 
   methods: {

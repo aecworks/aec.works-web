@@ -1,13 +1,12 @@
-
 <template>
-  <Modal @clickOutside="handleDone" class="cropper-container">
+  <Modal class="cropper-container" @clickOutside="handleDone">
     <div v-if="isLoading" class="img-loader flex flex-center flex-center-vertical">
       <Loader />
     </div>
     <div v-show="!isLoading">
       <img id="img-crop" ref="img" />
     </div>
-    <canvas id="canvas" style="display: none;" />
+    <canvas id="canvas" style="display: none" />
   </Modal>
 </template>
 
@@ -76,7 +75,7 @@ export default {
       image.src = this.imgUrl
       image.crossOrigin = 'anonymous'
 
-      image.onload = function() {
+      image.onload = function () {
         ctx.drawImage(
           image,
           x, // top
@@ -90,7 +89,7 @@ export default {
         )
         // const dataUrl = canvas.toDataURL('image/png', 1.0)
         canvas.toBlob(
-          blob => {
+          (blob) => {
             const file = new File([blob], 'image.png', { type: blob.type })
             this.$emit('done', file)
           },

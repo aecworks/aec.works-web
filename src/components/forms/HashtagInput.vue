@@ -2,13 +2,13 @@
   <div class="fill-x">
     <vue-tags-input
       id="input-hashtags"
-      :validation="validation"
       v-model="tag"
+      :validation="validation"
       :tags.sync="tags"
       :autocomplete-items="filteredItems"
       :add-on-key="[13, 188]"
-      @tags-changed="handleTagChanged"
       :max-tags="4"
+      @tags-changed="handleTagChanged"
     />
   </div>
 </template>
@@ -42,6 +42,13 @@ export default {
       ],
     }
   },
+  computed: {
+    filteredItems() {
+      return this.existingHashtags.filter((i) => {
+        return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1
+      })
+    },
+  },
   mounted() {
     this.tags = this.initialTags.map((slug) => ({ text: slug }))
   },
@@ -66,13 +73,6 @@ export default {
         'changed',
         newTags.map((tag) => tag.text),
       )
-    },
-  },
-  computed: {
-    filteredItems() {
-      return this.existingHashtags.filter((i) => {
-        return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1
-      })
     },
   },
   method: {},

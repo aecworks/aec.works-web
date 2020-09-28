@@ -1,12 +1,11 @@
-import Vue from "vue";
-import * as Sentry from "@sentry/browser";
-import { Vue as VueIntegration } from "@sentry/integrations";
-
+import Vue from 'vue'
+import * as Sentry from '@sentry/browser'
+import { Vue as VueIntegration } from '@sentry/integrations'
 
 // Only enable if on prod environment
 if (!document.location.href.includes('localhost')) {
   Sentry.init({
-    dsn: "https://90d9074c9f064bdf889461fadad1a390@o179529.ingest.sentry.io/5414489",
+    dsn: 'https://90d9074c9f064bdf889461fadad1a390@o179529.ingest.sentry.io/5414489',
     // From Netlify
     release: process.env.COMMIT_REF,
     environment: process.env.BRANCH,

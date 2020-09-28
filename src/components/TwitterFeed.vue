@@ -6,8 +6,8 @@
 
     <Timeline
       :id="handle"
-      sourceType="profile"
-      :options="{ tweetLimit: '3', chrome: 'noheader,noborders,nofooter,transparent', dnt: true}"
+      source-type="profile"
+      :options="{ tweetLimit: '3', chrome: 'noheader,noborders,nofooter,transparent', dnt: true }"
     >
       <Loader />
     </Timeline>
@@ -21,16 +21,15 @@ import { Timeline } from 'vue-tweet-embed'
 export default {
   name: 'TwitterFeed',
   components: { Loader, Timeline },
+  props: ['handle'],
   data() {
     return {
       isLoading: true,
     }
   },
-  props: ['handle'],
   computed: {},
   async created() {},
 }
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

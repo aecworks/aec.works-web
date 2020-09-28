@@ -5,22 +5,24 @@
       <CompanyCard
         v-for="(company, index) in items"
         :key="company.id"
-        v-bind="{company}"
-        v-waypoint="{ active: index + 1=== items.length, callback: onVisible }"
+        v-waypoint="{ active: index + 1 === items.length, callback: onVisible }"
+        v-bind="{ company }"
         @hashtagClick="handleHashtagClick"
       />
     </div>
     <div class="sidebar">
       <TextInput
-        icon="search"
         v-model="searchQuery"
-        @input="handleSearchInput"
+        icon="search"
         placeholder="search"
+        @input="handleSearchInput"
       />
       <label class="mt-1">Hashtags</label>
-      <HashtagInput @changed="handleHashtagFilterChanged" :initialTags="initialQueryHashtags" />
+      <HashtagInput :initial-tags="initialQueryHashtags" @changed="handleHashtagFilterChanged" />
 
-      <p class="mt-1 sans small muted">Showing {{count}} {{count === 1 ? "company" : "companies"}}</p>
+      <p class="mt-1 sans small muted">
+        Showing {{ count }} {{ count === 1 ? 'company' : 'companies' }}
+      </p>
 
       <div class="mb-1">
         <Button v-if="userIsEditor" @click="handleAdd">Add Company</Button>
@@ -73,15 +75,6 @@ export default {
       initialQueryHashtags: [],
     }
   },
-  created() {
-    if (this.hashtags) {
-      this.initialQueryHashtags = this.hashtags.split(',').filter(i => i.length)
-    }
-    if (this.search) {
-      this.searchQuery = this.search
-    }
-    this.fetchItems(0)
-  },
   computed: {
     userIsEditor() {
       return this.$store.getters[USERS.IS_EDITOR]
@@ -89,6 +82,15 @@ export default {
     hasMore() {
       return this.count > this.items.length
     },
+  },
+  created() {
+    if (this.hashtags) {
+      this.initialQueryHashtags = this.hashtags.split(',').filter((i) => i.length)
+    }
+    if (this.search) {
+      this.searchQuery = this.search
+    }
+    this.fetchItems(0)
   },
   methods: {
     refetch() {
@@ -113,7 +115,7 @@ export default {
       this.isLoading = false
     },
 
-    handleSearchInput: debounce(function(query) {
+    handleSearchInput: debounce(function (query) {
       if (query) {
         this.$router.replace({ query: { ...this.$route.query, search: query } })
       } else {

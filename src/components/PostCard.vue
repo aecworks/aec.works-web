@@ -1,8 +1,8 @@
 <template>
-  <Card :showImage="false" :banner="post.banner">
+  <Card :show-image="false" :banner="post.banner">
     <template v-slot>
       <h2>
-        <a href @click="goToPost(post)">{{post.title}}</a>
+        <a href @click="goToPost(post)">{{ post.title }}</a>
       </h2>
 
       <p class="mt-1 post-text" v-html="truncatedBody"></p>
@@ -10,23 +10,23 @@
       <div>
         <Hashtag
           v-for="name in post.hashtags"
-          :slug="name"
           :key="name"
-          @click="handleHashtagClick(name)"
+          :slug="name"
           clickable
+          @click="handleHashtagClick(name)"
         />
       </div>
 
       <Avatar class="mt-1" :profile="post.profile" />
 
       <div class="flex mt-2">
-        <Icon :icon="'chat'" class="mr-1" @click="handleChatIconClick(post)" clickable>
-          <span class="small">{{post.threadSize || 0}}</span>
+        <Icon :icon="'chat'" class="mr-1" clickable @click="handleChatIconClick(post)">
+          <span class="small">{{ post.threadSize || 0 }}</span>
         </Icon>
-        <Icon :icon="'clap'" @click="handleClapClick(post)" clickable>
-          <span class="small">{{localClapCount || post.clapCount}}</span>
+        <Icon :icon="'clap'" clickable @click="handleClapClick(post)">
+          <span class="small">{{ localClapCount || post.clapCount }}</span>
         </Icon>
-        <span class="small flex-right">{{post.createdAt | fromNow}}</span>
+        <span class="small flex-right">{{ post.createdAt | fromNow }}</span>
       </div>
     </template>
   </Card>
@@ -42,8 +42,8 @@ import Icon from '@/components/Icon.vue'
 
 export default {
   name: 'PostCard',
-  props: ['post'],
   components: { Hashtag, Avatar, Card, Icon },
+  props: ['post'],
   data() {
     return {
       localClapCount: null,
@@ -89,5 +89,4 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss">
-</style>
+<style lang="scss"></style>

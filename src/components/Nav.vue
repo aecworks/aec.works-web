@@ -1,26 +1,24 @@
 <template>
-  <div id="nav-container" :class="{ 'expanded': navExpanded }">
+  <div id="nav-container" :class="{ expanded: navExpanded }">
     <div id="nav" class="flex">
       <a href="/" class="nav-logo hidden-sm">
         <img alt="AEC Works Logo" src="@/assets/images/logo-black.svg" />
       </a>
       <ul class="nav-list">
         <li v-for="route in routes" :key="route.text" class="nav-item">
-          <router-link
-            tag="a"
-            :class="{'active': isActive(route)}"
-            :to="{name: route.name}"
-          >{{route.text}}</router-link>
-          <span class="ml muted small">{{route.label}}</span>
+          <router-link tag="a" :class="{ active: isActive(route) }" :to="{ name: route.name }">
+            {{ route.text }}
+          </router-link>
+          <span class="ml muted small">{{ route.label }}</span>
         </li>
-        <li class="nav-item profile" v-if="!profile">
+        <li v-if="!profile" class="nav-item profile">
           <a href="#" @click="handleLogin()">login</a>
         </li>
         <li />
-        <li class="nav-item profile" v-if="profile">
+        <li v-if="profile" class="nav-item profile">
           <span class="nav-profile-avatar">
             <a class="mr-1 small" href="#" @click="handleLogout()">logout</a>
-            <router-link tag="a" :to="{name: 'Person', params: { slug: profile.slug }}">
+            <router-link tag="a" :to="{ name: 'Person', params: { slug: profile.slug } }">
               <img :src="profile.avatarUrl" alt="avatar" />
             </router-link>
           </span>
@@ -47,15 +45,18 @@ export default {
       ],
     }
   },
+  computed: {
+    profile() {
+      return this.$store.state.users.profile || null
+    },
+  },
   mounted() {
     window.addEventListener('scroll', debounce(this.handleScroll, 10))
     this.header = document.getElementById('nav-container')
     this.sticky = this.header.offsetTop
   },
-  computed: {
-    profile() {
-      return this.$store.state.users.profile || null
-    },
+  beforeDestroy() {
+    window.removeEventListener('scroll', debounce(this.handleScroll, 10))
   },
   methods: {
     isActive(route) {

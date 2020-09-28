@@ -17,33 +17,33 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: { name: 'CompanyList' }
+    redirect: { name: 'CompanyList' },
   },
   {
     path: '/companies',
     name: 'CompanyList',
     component: CompanyList,
-    props: (route) => ({ ...route.query, ...route.params })
+    props: (route) => ({ ...route.query, ...route.params }),
   },
   {
     path: '/posts',
     name: 'PostList',
     component: PostList,
-    props: (route) => ({ ...route.query, ...route.params })
+    props: (route) => ({ ...route.query, ...route.params }),
   },
   {
     path: '/companies/new',
     name: 'CompanyNew',
     component: CompanyEdit,
     props: false,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true },
   },
   {
     path: '/companies/:slug/edit',
     name: 'CompanyEdit',
     component: CompanyEdit,
     props: true,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true },
   },
   {
     path: '/companies/:slug',
@@ -55,14 +55,14 @@ const routes = [
     path: '/posts/new',
     name: 'PostNew',
     component: PostEdit,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true },
   },
   {
     path: '/posts/:slug/edit',
     name: 'PostEdit',
     component: PostEdit,
     props: true,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true },
   },
   {
     path: '/posts/:slug',
@@ -96,19 +96,18 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: "history",
-  routes
+  mode: 'history',
+  routes,
 })
 
-
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
     if (!api.isAuthenticated()) {
       return next({
         path: from.path,
-        query: { login: 1 }
+        query: { login: 1 },
       })
     } else {
       return next()
@@ -117,6 +116,5 @@ router.beforeEach((to, from, next) => {
     return next()
   }
 })
-
 
 export default router

@@ -3,11 +3,11 @@
     <Comment
       v-for="(comment, index) in comments"
       :key="comment.id"
-      v-bind="{comment, index}"
-      v-waypoint="{ active: index + 1=== comments.length, callback: onVisible }"
+      v-waypoint="{ active: index + 1 === comments.length, callback: onVisible }"
+      v-bind="{ comment, index }"
     />
     <Loader v-if="isLoading" />
-    <CommentReply class="root-comment" v-bind="{threadId}" @replied="handleReplied" />
+    <CommentReply class="root-comment" v-bind="{ threadId }" @replied="handleReplied" />
   </div>
 </template>
 
@@ -19,13 +19,13 @@ import Loader from '@/components/Loader'
 
 export default {
   name: 'Discussion',
-  props: {
-    threadId: { required: true, type: Number },
-  },
   components: {
     Comment,
     CommentReply,
     Loader,
+  },
+  props: {
+    threadId: { required: true, type: Number },
   },
   data() {
     return {
@@ -35,15 +35,15 @@ export default {
       isLoading: false,
     }
   },
-  async created() {
-    if (this.threadId) {
-      this.fetchItems(0)
-    }
-  },
   computed: {
     hasMore() {
       return this.count > this.comments.length
     },
+  },
+  async created() {
+    if (this.threadId) {
+      this.fetchItems(0)
+    }
   },
   methods: {
     async fetchItems(offset, limit = 5) {

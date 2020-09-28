@@ -12,7 +12,7 @@
       <slot />
     </div>
     <div class="c-card__ribbon">
-      <Ribbon :text="banner" v-if="banner" />
+      <Ribbon v-if="banner" :text="banner" />
     </div>
   </div>
 </template>
@@ -21,6 +21,7 @@
 import Ribbon from './Ribbon.vue'
 export default {
   name: 'Card',
+  components: { Ribbon },
   props: {
     banner: {
       type: String,
@@ -30,7 +31,6 @@ export default {
       default: true,
     },
   },
-  components: { Ribbon },
   data() {
     return {}
   },

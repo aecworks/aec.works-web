@@ -1,8 +1,8 @@
 <template>
   <div>
     <ul class="hashtag-list">
-      <li class="hashtag-item" v-for="hashtag in filteredHashtags" :key="hashtag.slug">
-        <Hashtag :slug="hashtag.slug" @click="handleClick" clickable/>
+      <li v-for="hashtag in filteredHashtags" :key="hashtag.slug" class="hashtag-item">
+        <Hashtag :slug="hashtag.slug" clickable @click="handleClick" />
       </li>
     </ul>
     <Button kind="text" @click="handleMore">Show More"</Button>
@@ -26,9 +26,6 @@ export default {
       limit: 5,
     }
   },
-  async created() {
-    this.fetchItems()
-  },
   computed: {
     filteredHashtags() {
       return this.hashtags.slice(0, this.limit)
@@ -36,6 +33,9 @@ export default {
     hasMore() {
       return this.limit < this.hashtags.length
     },
+  },
+  async created() {
+    this.fetchItems()
   },
   methods: {
     async fetchItems() {
@@ -47,7 +47,7 @@ export default {
     },
     handleClick(slug) {
       this.$emit('click', slug)
-    }
+    },
   },
 }
 </script>

@@ -4,7 +4,7 @@
     :class="[clickable ? 'clickable' : '', isActive ? 'active' : '']"
     @click="handleClick"
   >
-    <span>#{{slug}}</span>
+    <span>#{{ slug }}</span>
   </div>
 </template>
 

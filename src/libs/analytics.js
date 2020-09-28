@@ -6,13 +6,12 @@ import router from '@/router'
 Vue.use(VueAnalytics, {
   id: 'UA-3836052-15',
   router,
-  ignoreRoutes: [
-  ],
+  ignoreRoutes: [],
   autoTracking: {
     pageviewOnLoad: true,
     screenview: false,
   },
   debug: {
-    sendHitTask: process.env.NODE_ENV === 'production'
-  }
+    sendHitTask: process.env.NODE_ENV === 'production',
+  },
 })

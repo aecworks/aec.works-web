@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div ref="poopee" class="poopee-container" :class="{'hide': hide}" @click="handleClick">
+    <div ref="poopee" class="poopee-container" :class="{ hide: hide }" @click="handleClick">
       <img src="@/assets/images/poopee.svg" />
     </div>
     <p class="delete-me">

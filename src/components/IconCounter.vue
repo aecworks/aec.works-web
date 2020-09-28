@@ -1,7 +1,7 @@
 <template>
   <div class="icon" @click="$emit('click')">
     <img :src="iconPath" />
-    <span class="small">{{count}}</span>
+    <span class="small">{{ count }}</span>
   </div>
 </template>
 

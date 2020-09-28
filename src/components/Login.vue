@@ -1,7 +1,7 @@
 <template>
   <Modal @clickOutside="$emit('closed')">
     <div class="login-container">
-      <div class="login-loader flex flex-center flex-center-vertical" v-if="isLoading">
+      <div v-if="isLoading" class="login-loader flex flex-center flex-center-vertical">
         <div>
           <Loader />
         </div>
@@ -36,7 +36,11 @@
           </div>
           <div class="button linkedin icon" @click="oauthRedirect('linkedin')">
             <span class="icon">
-              <img alt="Linkedin Logo" class="button-icon" src="@/assets/images/linkedin-login.svg" />
+              <img
+                alt="Linkedin Logo"
+                class="button-icon"
+                src="@/assets/images/linkedin-login.svg"
+              />
             </span>
             Login with LinkedIn
           </div>

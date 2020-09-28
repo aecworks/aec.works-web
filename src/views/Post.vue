@@ -1,20 +1,20 @@
 <template>
-  <div class="wrapper sm-grid-sidebar-down" v-if="post">
+  <div v-if="post" class="wrapper sm-grid-sidebar-down">
     <div class="content mb-2">
       <h1>{{ post.title }}</h1>
       <Avatar v-if="true" :profile="post.profile" />
       <p class="post-content mt-2" v-html="post.body" />
 
       <div>
-        <Hashtag v-for="slug in post.hashtags" :slug="slug" :key="slug" />
+        <Hashtag v-for="slug in post.hashtags" :key="slug" :slug="slug" />
       </div>
     </div>
 
     <div class="sidebar">
       <div>
-        <Icon icon="clap" @click="handleClap(post)" clickable>{{
-          localClapCount || post.clapCount
-        }}</Icon>
+        <Icon icon="clap" clickable @click="handleClap(post)">
+          {{ localClapCount || post.clapCount }}
+        </Icon>
       </div>
       <div class="mt-1">
         <Icon icon="chat">{{ post.threadSize || 0 }}</Icon>
@@ -25,13 +25,13 @@
         <SocialShare />
       </div>
 
-      <div class="mt-2" v-if="isAuthor">
+      <div v-if="isAuthor" class="mt-2">
         <label>Author</label>
-        <Icon icon="pencil" @click="handleEdit" clickable>Edit</Icon>
+        <Icon icon="pencil" clickable @click="handleEdit">Edit</Icon>
       </div>
     </div>
     <div class="footer">
-      <Discussion :threadId="post.threadId" />
+      <Discussion :thread-id="post.threadId" />
     </div>
   </div>
 </template>
@@ -63,14 +63,14 @@ export default {
       localClapCount: null,
     }
   },
-  async created() {
-    this.post = await api.getPost(this.slug)
-  },
   computed: {
     isAuthor() {
       const profile = this.$store.state.users.profile
-      return profile && profile.slug && profile.slug === this.post.profile.slug
+      return profile && profile.slug && this.post && profile.slug === this.post.profile.slug
     },
+  },
+  async created() {
+    this.post = await api.getPost(this.slug)
   },
   methods: {
     handleEdit() {

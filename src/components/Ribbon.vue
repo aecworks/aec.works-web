@@ -1,6 +1,6 @@
 <template>
   <div class="corner-ribbon top-right blue">
-    <h5 class="small">{{text}}</h5>
+    <h5 class="small">{{ text }}</h5>
     <!-- <h5 class="small">{{text}} 👋</h5> -->
   </div>
 </template>

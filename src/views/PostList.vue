@@ -6,26 +6,29 @@
       <PostCard
         v-for="(post, index) in items"
         :key="post.slug"
-        v-bind="{post}"
-        v-waypoint="{ active: index + 1=== items.length, callback: onVisible }"
+        v-waypoint="{ active: index + 1 === items.length, callback: onVisible }"
+        v-bind="{ post }"
         @hashtagClick="handleHashtagClick"
       />
-      <p v-if="!isLoading && !items.length">Someone is going crazy with the filters <span class="emoji"> 🤷‍♀️</span></p>
+      <p v-if="!isLoading && !items.length">
+        Someone is going crazy with the filters
+        <span class="emoji">🤷‍♀️</span>
+      </p>
     </div>
 
     <div class="sidebar">
       <TextInput
-        icon="search"
         v-model="searchQuery"
-        @input="handleSearchInput"
+        icon="search"
         placeholder="search"
+        @input="handleSearchInput"
       />
       <div class="mt-2">
         <label>Hashtags</label>
-        <HashtagList @click="handleHashtagClick"/>
+        <HashtagList @click="handleHashtagClick" />
       </div>
       <div class="mt-2 mb-2">
-        <Icon class="mt" icon="pencil" v-if="!isEditing" @click="handleAdd" clickable>Write</Icon>
+        <Icon v-if="!isEditing" class="mt" icon="pencil" clickable @click="handleAdd">Write</Icon>
       </div>
     </div>
   </div>
@@ -76,13 +79,13 @@ export default {
       searchQuery: '',
     }
   },
-  async created() {
-    await this.refetch()
-  },
   computed: {
     hasMore() {
       return this.count > this.items.length
     },
+  },
+  async created() {
+    await this.refetch()
   },
   methods: {
     refetch() {
@@ -105,7 +108,7 @@ export default {
         this.isLoading = false
       })
     },
-    handleSearchInput: debounce(function(query) {
+    handleSearchInput: debounce(function (query) {
       if (query) {
         this.$router.replace({ query: { ...this.$route.query, search: query } })
       } else {

@@ -1,16 +1,14 @@
 <template>
   <div>
     <div class="comment">
-      <div v-if="comment.level != 0" class="comment-prefix" :class="{'not-first': index !== 0}" />
+      <div v-if="comment.level != 0" class="comment-prefix" :class="{ 'not-first': index !== 0 }" />
       <div class="fill-x">
         <h4>
-          {{ comment.profile.name || "No One" }}
-          <span
-            class="comment-timestamp"
-          >{{ comment.createdAt | fromNow }}</span>
+          {{ comment.profile.name || 'No One' }}
+          <span class="comment-timestamp">{{ comment.createdAt | fromNow }}</span>
         </h4>
 
-        <p class="comment-text">{{comment.text}}</p>
+        <p class="comment-text">{{ comment.text }}</p>
 
         <Loader v-if="isLoading" />
         <CommentReply
@@ -26,17 +24,18 @@
           <IconCounter
             :icon="'clap'"
             :count="comment.clapCount || localClapCount"
-            @click="handleClap(comment)"
             clickable
+            @click="handleClap(comment)"
           />
         </div>
       </div>
     </div>
     <Comment
-      v-for="(comment, index) in comments"
-      :key="comment.id"
-      v-bind="{comment, index}"
-      v-waypoint="{ active: index + 1=== comments.length, callback: onVisible }"
+      v-for="(subcomment, j) in comments"
+      :key="subcomment.id"
+      v-waypoint="{ active: j + 1 === comments.length, callback: onVisible }"
+      :index="j"
+      :comment="subcomment"
     />
   </div>
 </template>
@@ -51,8 +50,17 @@ import { waitForLogin } from '@/mixins'
 
 export default {
   name: 'Comment',
-  props: ['comment', 'index'],
   components: { IconCounter, Button, CommentReply, Loader },
+  props: {
+    comment: {
+      type: Object,
+      required: true,
+    },
+    index: {
+      type: Number,
+      default: 0,
+    },
+  },
   data() {
     return {
       comments: [],
@@ -64,12 +72,6 @@ export default {
       // expanded: false, TODO
     }
   },
-  async created() {
-    if (this.hasReplies) {
-      // TODO Fetch on Demand
-      this.fetchItems(0)
-    }
-  },
   computed: {
     hasReplies() {
       return this.comment.replyCount > 0
@@ -77,6 +79,12 @@ export default {
     hasMore() {
       return this.count > this.comments.length
     },
+  },
+  async created() {
+    if (this.hasReplies) {
+      // TODO Fetch on Demand
+      this.fetchItems(0)
+    }
   },
   methods: {
     async fetchItems(offset) {
@@ -89,7 +97,7 @@ export default {
       this.isReplying = false
       this.isLoading = true
       setTimeout(() => {
-        this.fetchItems(this.offset, 1).then(() => {
+        this.fetchItems((this.offset, 1)).then(() => {
           this.isLoading = false
         })
       }, 1000)

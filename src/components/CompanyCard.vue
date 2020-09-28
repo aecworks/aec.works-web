@@ -2,7 +2,7 @@
   <!-- <Card @click="handleClick(company)"> -->
   <Card>
     <template v-slot:logo>
-      <img class="company-logo" v-if="company.logoUrl" :src="getImageUrl(company.logoUrl)" />
+      <img v-if="company.logoUrl" class="company-logo" :src="getImageUrl(company.logoUrl)" />
     </template>
     <template v-slot:cover>
       <img v-if="company.coverUrl" :src="getImageUrl(company.coverUrl)" />
@@ -11,34 +11,34 @@
       <!-- Company Name -->
       <h2 class="mt-1">
         <!-- TODO throwing router error -->
-        <router-link
-          :to="{ name: 'Company', params: { slug: company.slug ||'?' } }"
-        >{{company.name}}</router-link>
+        <router-link :to="{ name: 'Company', params: { slug: company.slug || '?' } }">
+          {{ company.name }}
+        </router-link>
       </h2>
 
       <!-- Company Description -->
-      <p class="mt-1">{{company.description || "-"}}</p>
+      <p class="mt-1">{{ company.description || '-' }}</p>
 
       <!-- Company Hashtags -->
       <div class="mt-1">
         <Hashtag
           v-for="slug in company.hashtags"
-          :slug="slug"
           :key="slug"
-          @click="$emit('hashtagClick', slug)"
+          :slug="slug"
           clickable
+          @click="$emit('hashtagClick', slug)"
         />
       </div>
 
       <!-- Footer -->
       <div class="flex mt-1">
         <Icon :icon="'chat'" class="mr-1">
-          <span class="small">{{company.threadSize}}</span>
+          <span class="small">{{ company.threadSize }}</span>
         </Icon>
-        <Icon :icon="'clap'" @click="handleClapClick(company)" clickable>
-          <span class="small">{{localClapCount || company.clapCount}}</span>
+        <Icon :icon="'clap'" clickable @click="handleClapClick(company)">
+          <span class="small">{{ localClapCount || company.clapCount }}</span>
         </Icon>
-        <span class="small flex-right">{{company.location}}</span>
+        <span class="small flex-right">{{ company.location }}</span>
       </div>
     </template>
   </Card>
@@ -53,8 +53,8 @@ import Hashtag from '@/components/Hashtag'
 
 export default {
   name: 'CompanyCard',
-  props: ['company'],
   components: { Hashtag, Card, Icon },
+  props: ['company'],
   data() {
     return {
       localClapCount: null,

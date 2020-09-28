@@ -1,6 +1,6 @@
 <template>
   <div class="c-textinput">
-    <span class="icon" v-if="icon">
+    <span v-if="icon" class="icon">
       <img :src="iconPath" />
     </span>
     <input
