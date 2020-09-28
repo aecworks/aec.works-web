@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import api from '@/api'
-// import { handleOauthCallback } from '@/api/oauth'
 import Company from '@/views/Company'
 import CompanyEdit from '@/views/CompanyEdit'
 import CompanyList from '@/views/CompanyList'
@@ -87,7 +86,6 @@ const routes = [
     path: '/privacy',
     name: 'Privacy Policy',
     component: Privacy,
-    props: true,
   },
   {
     path: '/terms',
