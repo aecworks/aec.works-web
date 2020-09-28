@@ -6,15 +6,16 @@
       </a>
       <ul class="nav-list">
         <li v-for="route in routes" :key="route.text" class="nav-item">
-          <router-link tag="a" :class="{ active: isActive(route) }" :to="{ name: route.name }">
-            {{ route.text }}
-          </router-link>
+          <router-link
+            tag="a"
+            :class="{ active: isActive(route) }"
+            :to="{ name: route.name }"
+          >{{ route.text }}</router-link>
           <span class="ml muted small">{{ route.label }}</span>
         </li>
         <li v-if="!profile" class="nav-item profile">
           <a href="#" @click="handleLogin()">login</a>
         </li>
-        <li />
         <li v-if="profile" class="nav-item profile">
           <span class="nav-profile-avatar">
             <a class="mr-1 small" href="#" @click="handleLogout()">logout</a>
