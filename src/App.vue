@@ -23,6 +23,58 @@ export default {
     title: 'Welcome',
     // all titles will be injected into this template
     titleTemplate: '%s | aec.works',
+    htmlAttrs: {
+      lang: 'en',
+      amp: false,
+    },
+    meta: [
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      {
+        property: 'og:type',
+        content: 'website',
+      },
+      {
+        property: 'og:url',
+        content: 'https://aec.works',
+      },
+      {
+        property: 'og:title',
+        vmid: 'og:title',
+        template: (chunk) => `${chunk} | aec.works`,
+      },
+      {
+        property: 'og:description',
+        content:
+          'An open-source AEC community platform that promotes inclusive and enriching conversations through content-sharing and discussions.',
+      },
+      {
+        property: 'og:image',
+        content: './assets/images/meta.png',
+      },
+      {
+        property: 'twitter:card',
+        content: 'summary_large_image',
+      },
+      {
+        property: 'twitter:url',
+        content: 'https://aec.works',
+      },
+      {
+        property: 'twitter:title',
+        vmid: 'twitter:title',
+        template: (chunk) => `${chunk} | aec.works`,
+      },
+      {
+        property: 'twitter:description',
+        content:
+          'An open-source AEC community platform that promotes inclusive and enriching conversations through content-sharing and discussions.',
+      },
+      {
+        property: 'twitter:image',
+        content: './assets/images/meta.png',
+      },
+    ],
   },
   components: {
     Nav,
