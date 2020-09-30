@@ -4,7 +4,7 @@
       <div class="profile">
         <div class="profile-data">
           <div class="profile-image">
-            <img
+            <LazyImg
               :src="
                 profile.avatarUrl || 'https://avatars.dicebear.com/api/male/john.svg?mood[]=happy'
               "
@@ -54,6 +54,7 @@
 <script>
 import SocialShare from '../components/SocialShare.vue'
 import TwitterFeed from '../components/TwitterFeed.vue'
+import LazyImg from '../components/LazyImg.vue'
 import Icon from '../components/Icon.vue'
 import api from '@/api'
 
@@ -65,7 +66,7 @@ export default {
       title: () => (profile && profile.name ? profile.name : 'People'),
     }
   },
-  components: { Icon, TwitterFeed, SocialShare },
+  components: { Icon, LazyImg, TwitterFeed, SocialShare },
   props: {
     slug: { required: true, type: String },
   },
