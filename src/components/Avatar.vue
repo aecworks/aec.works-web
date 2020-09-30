@@ -12,7 +12,12 @@ export default {
   components: {
     LazyImg,
   },
-  props: ['profile'],
+  props: {
+    profile: {
+      type: Object,
+      required: true,
+    },
+  },
   computed: {
     avatarImg() {
       return this.profile.avatarUrl || require('@/assets/images/avatar.svg')
