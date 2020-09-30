@@ -1,13 +1,17 @@
 <template>
   <div class="profile flex flex-center">
-    <img class="profile-avatar" :src="avatarImg" />
+    <LazyImg class="profile-avatar" :src="avatarImg" />
     <span class="small profile-name" @click="handleClick()">{{ profile.name }}</span>
   </div>
 </template>
 
 <script>
+import LazyImg from '@/components/LazyImg'
 export default {
   name: 'Hashtag',
+  components: {
+    LazyImg,
+  },
   props: ['profile'],
   computed: {
     avatarImg() {

@@ -2,10 +2,10 @@
   <!-- <Card @click="handleClick(company)"> -->
   <Card>
     <template v-slot:logo>
-      <img v-if="company.logoUrl" class="company-logo" :src="getImageUrl(company.logoUrl)" />
+      <LazyImg v-if="company.logoUrl" class="company-logo" :src="getImageUrl(company.logoUrl)" />
     </template>
     <template v-slot:cover>
-      <img v-if="company.coverUrl" :src="getImageUrl(company.coverUrl)" />
+      <LazyImg v-if="company.coverUrl" :src="getImageUrl(company.coverUrl)" />
     </template>
     <template v-slot:default>
       <!-- Company Name -->
@@ -50,10 +50,11 @@ import { waitForLogin } from '@/mixins'
 import Icon from '@/components/Icon.vue'
 import Card from '@/components/Card.vue'
 import Hashtag from '@/components/Hashtag'
+import LazyImg from '@/components/LazyImg'
 
 export default {
   name: 'CompanyCard',
-  components: { Hashtag, Card, Icon },
+  components: { LazyImg, Hashtag, Card, Icon },
   props: {
     company: {
       type: Object,

@@ -2,8 +2,8 @@
   <div class="wrapper sm-grid-sidebar-down">
     <div v-if="company" class="content">
       <div class="company-images">
-        <img class="logo" :src="company.logoUrl || defaultLogo" alt="Company Logo" />
-        <img class="cover" :src="company.coverUrl || defaultCover" alt="Company Cover Image" />
+        <lazy-img class="logo" :src="company.logoUrl || defaultLogo" alt="Company Logo" />
+        <lazy-img class="cover" :src="company.coverUrl || defaultCover" alt="Company Cover Image" />
       </div>
 
       <h1 class="mt-2">
@@ -74,6 +74,7 @@ import TwitterFeed from '../components/TwitterFeed.vue'
 import api from '@/api'
 import Discussion from '@/components/Discussion'
 import Hashtag from '@/components/Hashtag'
+import LazyImg from '@/components/LazyImg'
 import { waitForLogin } from '@/mixins'
 
 export default {
@@ -86,6 +87,7 @@ export default {
   },
   components: {
     Discussion,
+    LazyImg,
     Hashtag,
     Icon,
     SocialShare,
