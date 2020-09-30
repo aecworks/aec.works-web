@@ -26,7 +26,7 @@
           :key="slug"
           :slug="slug"
           clickable
-          @click="$emit('hashtagClick', slug)"
+          @click="$emit('hashtag-click', slug)"
         />
       </div>
 
@@ -54,7 +54,12 @@ import Hashtag from '@/components/Hashtag'
 export default {
   name: 'CompanyCard',
   components: { Hashtag, Card, Icon },
-  props: ['company'],
+  props: {
+    company: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       localClapCount: null,
