@@ -84,12 +84,12 @@ const routes = [
   },
   {
     path: '/privacy',
-    name: 'Privacy Policy',
+    name: 'Privacy',
     component: Privacy,
   },
   {
     path: '/terms',
-    name: 'Terms of Service',
+    name: 'Terms',
     component: Terms,
   },
   {
