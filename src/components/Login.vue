@@ -10,7 +10,7 @@
         <img alt="AEC Guide Logo" class="logo" src="@/assets/images/logo.svg" />
         <p class="center">Login to join the conversation.</p>
         <p class="center small mt-2">
-          Bored? Checkout our
+          Bored? Check out our
           <br />
           <router-link :to="{ name: 'Privacy', query: {} }">Privacy Policy</router-link>
           &nbsp;and
