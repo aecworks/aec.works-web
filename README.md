@@ -26,7 +26,4 @@ yarn run serve
 
 
 # Contributing
-TODO - Code Standards, Guidelines, Vue/Sass Conventions, etc
-
-### License
-TODO - Unlicensed
+TODO
