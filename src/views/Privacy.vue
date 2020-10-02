@@ -138,15 +138,15 @@
       </p>
       <p>
         AEC Works uses a specific cookie in order to facilitate the use of Google Universal
-        Analytics for users logged-in to the Applications or the Platforms (“Logged-In User). If you
-        are a Logged-In User, AEC Works may use your AEC Works user ID in combination with Google
-        Universal Analytics and Google Analytics to track and analyze the pages of the Services you
-        visit. We do this only to better understand how you use the Website and the other Services,
-        with a view to offering improvements for all AEC Works users; and to tailor our business and
-        marketing activities accordingly, both generally and specifically to you. Google Analytics
-        cookies do not provide AEC Works with any Personal Information. You can prevent Google
-        Analytics from recognizing you on return visits to this site by disabling cookies on your
-        browser.
+        Analytics for users logged-in to the Applications or the Platforms (“Logged-In User"). If
+        you are a Logged-In User, AEC Works may use your AEC Works user ID in combination with
+        Google Universal Analytics and Google Analytics to track and analyze the pages of the
+        Services you visit. We do this only to better understand how you use the Website and the
+        other Services, with a view to offering improvements for all AEC Works users; and to tailor
+        our business and marketing activities accordingly, both generally and specifically to you.
+        Google Analytics cookies do not provide AEC Works with any Personal Information. You can
+        prevent Google Analytics from recognizing you on return visits to this site by disabling
+        cookies on your browser.
       </p>
       <p>
         You may opt-out of this feature by installing the Google Analytics Opt-out Browser Add-on,
