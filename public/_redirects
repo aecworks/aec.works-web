@@ -2,5 +2,5 @@ https://aec.works/sitemap.xml                       https://api.aec.works/sitema
 https://aec.works/api/*                             https://api.aec.works/:splat                            200
 https://aec.works/*                                 https://aec.works/                                      200
 
-https://staging--aecworks.netlify.app/api/*         https://aecworks-api-staging.herokuapp.com/:splat       200
-https://staging--aecworks.netlify.app/*             https://staging--aecworks.netlify.app/                  200
+/api/*                                              https://aecworks-api-staging.herokuapp.com/:splat       200
+/*                                                  /                                                       200
