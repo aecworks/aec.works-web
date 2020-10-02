@@ -28,8 +28,6 @@ export default {
       amp: false,
     },
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         property: 'og:type',
         content: 'website',
@@ -50,7 +48,7 @@ export default {
       },
       {
         property: 'og:image',
-        content: './assets/images/meta.png',
+        content: require('@/assets/images/meta.png'),
       },
       {
         property: 'twitter:card',
@@ -72,7 +70,7 @@ export default {
       },
       {
         property: 'twitter:image',
-        content: './assets/images/meta.png',
+        content: require('@/assets/images/meta.png'),
       },
     ],
   },
