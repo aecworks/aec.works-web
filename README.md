@@ -18,6 +18,8 @@ yarn install
 yarn run serve:staging
 ```
 
+PS: when using staging api, only LinkedIn login will work
+
 ### With Local API Servers (requires local aecworks api)
 
 ```
