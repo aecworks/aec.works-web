@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="content">
-      <div class="sans small muted mb-1 people-count">{{ items.length }} lovely people</div>
+      <div class="people-count">{{ items.length }} lovely people</div>
       <p v-for="profile in items" :key="profile.slug">
         <PeopleAvatar :profile="profile" />
       </p>
@@ -20,15 +20,23 @@
 <script>
 import api from '../api'
 import TextInput from '../components/forms/TextInput.vue'
-import PeopleAvatar from '@/components/PeopleAvatar'
-import { popQuery, debounce } from '@/utils'
+import Avatar from '@/components/Avatar'
 
 export default {
   name: 'PersonList',
   metaInfo: {
     title: 'People',
   },
-  components: { PeopleAvatar, TextInput },
+  components: {
+    Avatar,
+    TextInput,
+  },
+  props: {
+    search: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       items: [],
@@ -70,8 +78,8 @@ export default {
 
 <style lang="scss" scoped>
 .people-count {
-  @include for-large-down {
-    margin-top: 1rem;
-  }
+  font-size: 0.9rem;
+  color: $dark-gray;
+  margin: 0 0 1rem 0;
 }
 </style>

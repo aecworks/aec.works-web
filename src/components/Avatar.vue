@@ -1,7 +1,11 @@
 <template>
-  <div class="profile flex flex-center">
+  <div class="profile mb-2 flex flex-center">
     <LazyImg class="profile-avatar" :src="avatarImg" />
-    <span class="small profile-name" @click="handleClick()">{{ profile.name }}</span>
+    <div class="small">
+      <h3 class="profile-name" @click="handleClick()">{{ profile.name }}</h3>
+      <div class="profile-location">{{ profile.location }}</div>
+      <div class="profile-location">{{ profile.bio }}</div>
+    </div>
   </div>
 </template>
 
@@ -34,20 +38,27 @@ export default {
 <style lang="scss" scoped>
 .profile {
   .profile-avatar {
-    width: 30px;
-    height: 30px;
+    width: 58px;
+    height: 58px;
     // border: 1px solid $dark;
-    border-radius: 17px;
-    border: 1px solid $yellow;
+    border-radius: 30px;
+    border: 2px solid $yellow;
     padding: 2px;
   }
   .profile-name {
     cursor: pointer;
     margin-left: 0.75rem;
-    font-family: $font-family-serif;
+    font-family: $font-family;
     &:hover {
       text-decoration: underline;
     }
+  }
+
+  .profile-location {
+    font-family: $font-family;
+    font-weight: $font-weight-normal;
+    font-size: $font-size-h5;
+    margin-left: 12px;
   }
 }
 </style>
