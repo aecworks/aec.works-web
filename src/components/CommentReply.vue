@@ -27,7 +27,17 @@ export default {
   components: {
     Button,
   },
-  props: ['threadId', 'parentId'],
+  props: {
+    threadId: {
+      type: Number,
+
+      required: false,
+    },
+    parentId: {
+      type: Number,
+      required: false,
+    },
+  },
   data() {
     return {
       commentText: '',

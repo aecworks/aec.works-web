@@ -29,6 +29,7 @@ export default {
     },
     showImage: {
       default: true,
+      type: Boolean,
     },
   },
   data() {

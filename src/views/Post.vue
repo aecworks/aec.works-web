@@ -6,7 +6,7 @@
       <p class="post-content mt-2" v-html="post.body" />
 
       <div>
-        <Hashtag v-for="slug in post.hashtags" :key="slug" :slug="slug" />
+        <Hashtag v-for="hashtagSlug in post.hashtags" :key="hashtagSlug" :slug="hashtagSlug" />
       </div>
     </div>
 
