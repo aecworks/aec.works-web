@@ -1,18 +1,25 @@
 <template>
   <div class="wrapper">
     <div class="content">
-      <h1>People</h1>
-
+      <div class="people-count">{{ items.length }} lovely people</div>
       <p v-for="profile in items" :key="profile.slug">
         <Avatar :profile="profile" />
       </p>
     </div>
-    <div class="sidebar"></div>
+    <div class="sidebar">
+      <TextInput
+        v-model="searchQuery"
+        icon="search"
+        placeholder="search"
+        @input="handleSearchInput"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import api from '../api'
+import TextInput from '../components/forms/TextInput.vue'
 import Avatar from '@/components/Avatar'
 
 export default {
@@ -20,13 +27,23 @@ export default {
   metaInfo: {
     title: 'People',
   },
-  components: { Avatar },
-  props: ['id'],
+  components: {
+    Avatar,
+    TextInput,
+  },
+  props: {
+    search: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       items: [],
+      searchQuery: '',
     }
   },
+  computed: {},
   async created() {
     const { results: items } = await api.getProfiles()
     this.items = items
@@ -34,3 +51,11 @@ export default {
   methods: {},
 }
 </script>
+
+<style lang="scss" scoped>
+.people-count {
+  font-size: 0.9rem;
+  color: $dark-gray;
+  margin: 0 0 1rem 0;
+}
+</style>
