@@ -30,7 +30,6 @@ export default {
   props: {
     threadId: {
       type: Number,
-
       required: false,
     },
     parentId: {
