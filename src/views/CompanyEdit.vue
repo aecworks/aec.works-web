@@ -26,7 +26,7 @@
             <label for="input-twitter-handle">Twitter handle</label>
             <input
               id="input-twitter-handle"
-              v-model="company.twitterHandle"
+              v-model="company.twitter"
               type="text"
               class="input fill-x"
             />
@@ -226,7 +226,7 @@ export default {
         description: '',
         location: '',
         website: '',
-        twitterHandle: '',
+        twitter: '',
         crunchbaseId: '',
         logoUrl: '',
         coverUrl: '',
