@@ -50,82 +50,22 @@
         />
 
         <label class="mt-1">Logo</label>
-        <div class="flex flex-down">
-          <div class="company-logo" :class="{ empty: !company.logoUrl }">
-            <img :src="company.logoUrl || defaultImageUrl" alt />
-          </div>
-          <div class="mt">
-            <Button
-              kind="text"
-              aria-label="upload logo file"
-              @click="handleFileUploaded(imgFieldNames.logoUrl)"
-            >
-              Upload
-            </Button>
-            <Button
-              kind="text"
-              aria-label="upload logo URL"
-              @click="startPaste(imgFieldNames.logoUrl)"
-            >
-              Paste
-            </Button>
-            <Button
-              v-if="company.logoUrl"
-              kind="text"
-              aria-label="remove current logo"
-              @click="company.logoUrl = ''"
-            >
-              Remove
-            </Button>
-          </div>
+        <div class="company-logo" :class="{ empty: !company.logoUrl }">
+          <img :src="company.logoUrl || defaultImageUrl" alt />
         </div>
+        <ImageUploader :crop-ratio="1" @uploaded="handleLogoUploaded" />
+        <!-- <Button
+          v-if="company.logoUrl"
+          kind="text"
+          aria-label="remove current logo"
+          @click="company.logoUrl = ''"
+        >Remove</Button>-->
 
         <label class="mt-1">Cover</label>
-        <div class="flex flex-down">
-          <div class="company-cover" :class="{ empty: !company.coverUrl }">
-            <img :src="company.coverUrl || defaultImageUrl" alt />
-          </div>
-          <div class="mt">
-            <Button
-              kind="text"
-              aria-label="upload cover file"
-              @click="handleFileUploaded(imgFieldNames.coverUrl)"
-            >
-              Upload
-            </Button>
-            <Button
-              kind="text"
-              aria-label="paste cover file URL"
-              @click="startPaste(imgFieldNames.coverUrl)"
-            >
-              Paste
-            </Button>
-            <Button
-              v-if="company.coverUrl"
-              aria-label="remove existing cover file"
-              kind="text"
-              @click="company.coverUrl = ''"
-            >
-              Remove
-            </Button>
-          </div>
+        <div class="company-cover" :class="{ empty: !company.coverUrl }">
+          <img :src="company.coverUrl || defaultImageUrl" alt />
         </div>
-        <Cropper
-          v-if="croppingField"
-          :img-url="company[croppingField]"
-          :crop-ratio="cropRatio"
-          @done="cropCompleted"
-          @cancel="cropCanceled"
-        />
-
-        <Modal v-if="pastingField" @clickOutside="endPaste">
-          <div class="section flex flex-down flex-center">
-            <IconLarge class="mt-1" icon="paste" />
-            <p class="mt-1 muted small">
-              <code>ctrl+c</code>
-            </p>
-          </div>
-        </Modal>
+        <ImageUploader :crop-ratio="0.5" @uploaded="handleCoverUploaded" />
 
         <div v-if="errors">
           <h3 class="mt-2">Errors:</h3>
@@ -169,23 +109,22 @@
       <div class="mt-2">
         <h3>Created</h3>
         <h5 class="mt-1">{{ company.createdAt | calendar }}</h5>
-        <span v-if="company.createdBy" class="small muted">{{ company.createdBy.name }}</span>
+        <span v-if="company.createdBy" class="small muted">
+          {{ company.createdBy.name }}
+        </span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import HashtagInput from '../components/forms/HashtagInput.vue'
-import Button from '../components/forms/Button.vue'
-import CompanyCard from '../components/CompanyCard.vue'
-import Cropper from '../components/Cropper.vue'
-import IconLarge from '../components/IconLarge.vue'
-import Modal from '../components/Modal.vue'
-import GmapsAutocomplete from '../components/GmapsAutocomplete.vue'
+import HashtagInput from '../components/forms/HashtagInput'
+import Button from '../components/forms/Button'
+import CompanyCard from '../components/CompanyCard'
+import ImageUploader from '../components/ImageUploader.vue'
+import GmapsAutocomplete from '../components/GmapsAutocomplete'
 import api from '@/api'
 import { waitForLogin } from '@/mixins'
-import { filePrompt, fileToBase64, subscribePaste, unsubscribePaste } from '@/utils'
 
 export default {
   name: 'CompanyEdit',
@@ -201,7 +140,13 @@ export default {
       },
     }
   },
-  components: { Button, CompanyCard, Cropper, GmapsAutocomplete, Modal, IconLarge, HashtagInput },
+  components: {
+    Button,
+    CompanyCard,
+    GmapsAutocomplete,
+    HashtagInput,
+    ImageUploader,
+  },
   props: {
     slug: {
       default: null,
@@ -211,13 +156,6 @@ export default {
   data() {
     return {
       defaultImageUrl: require('@/assets/images/image.svg'),
-      imgFieldNames: {
-        coverUrl: 'coverUrl',
-        logoUrl: 'logoUrl',
-      },
-      cropRatio: 1,
-      croppingField: false,
-      pastingField: null,
       errors: null,
       revisions: [],
       isReadyForHashtags: false,
@@ -229,7 +167,9 @@ export default {
         twitter: '',
         crunchbaseId: '',
         logoUrl: '',
+        logo: '',
         coverUrl: '',
+        cover: '',
         hashtags: [],
         lastRevisionId: '',
       },
@@ -252,7 +192,7 @@ export default {
   methods: {
     async handleSave() {
       await waitForLogin()
-
+      debugger
       if (this.isEditing) {
         // Is Editing Company
         await api.postCompanyRevision(this.company.slug, this.company)
@@ -277,48 +217,18 @@ export default {
       }
     },
 
+    handleLogoUploaded(image) {
+      this.company.logoUrl = image.url
+      this.company.logo = image.id
+    },
+
+    handleCoverUploaded(image) {
+      this.company.coverUrl = image.url
+      this.company.cover = image.id
+    },
+
     handleHashtagEdit(e) {
       this.company.hashtags = e.target.value.split(',')
-    },
-
-    startPaste(fieldName) {
-      this.pastingField = fieldName
-      subscribePaste(this.onPasteEvent)
-    },
-
-    endPaste() {
-      this.pastingField = null
-      unsubscribePaste()
-    },
-
-    async onPasteEvent(file) {
-      const dataUri = await fileToBase64(file)
-      this.company[this.pastingField] = dataUri
-      this.startCrop(this.pastingField)
-      this.endPaste()
-    },
-
-    async handleFileUploaded(fieldName) {
-      const file = await filePrompt()
-      const dataUri = await fileToBase64(file)
-      this.company[fieldName] = dataUri
-      this.startCrop(fieldName)
-    },
-
-    startCrop(fieldName) {
-      this.cropRatio = fieldName == this.imgFieldNames.logoUrl ? 1 : 0.5
-      this.croppingField = fieldName
-    },
-
-    cropCanceled() {
-      this.company[this.croppingField] = null
-      this.croppingField = null
-    },
-
-    async cropCompleted(file) {
-      const image = await api.putImage(file, file, file.type)
-      this.company[this.croppingField] = image.url
-      this.croppingField = null
     },
 
     handleTagChange(hashtags) {

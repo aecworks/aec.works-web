@@ -7,7 +7,11 @@
     <Timeline
       :id="handle"
       source-type="profile"
-      :options="{ tweetLimit: '3', chrome: 'noheader,noborders,nofooter,transparent', dnt: true }"
+      :options="{
+        tweetLimit: '3',
+        chrome: 'noheader,noborders,nofooter,transparent',
+        dnt: true,
+      }"
     >
       <Loader />
     </Timeline>

@@ -127,7 +127,9 @@ export default {
     handleHashtagFilterChanged(tags) {
       if (tags.length) {
         const hashtagStr = tags.join(',')
-        this.$router.replace({ query: { ...this.$route.query, hashtags: hashtagStr } })
+        this.$router.replace({
+          query: { ...this.$route.query, hashtags: hashtagStr },
+        })
       } else {
         popQuery(this.$router, this.$route.query, 'hashtags')
       }

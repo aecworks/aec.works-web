@@ -8,7 +8,9 @@
 
       <h1 class="mt-2">
         {{ company.name }}
-        <span class="small muted ml">{{ company.location || 'Somewhere' }}</span>
+        <span class="small muted ml">
+          {{ company.location || 'Somewhere' }}
+        </span>
       </h1>
 
       <div class="mt-2 mb-2">

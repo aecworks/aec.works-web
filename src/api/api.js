@@ -108,15 +108,21 @@ class Api {
   }
 
   getCommentsByThreadId(threadId, query) {
-    return this._get(`community/comments/`, { query: { ...query, thread_id: threadId } })
+    return this._get(`community/comments/`, {
+      query: { ...query, thread_id: threadId },
+    })
   }
 
   getCommentsByParentId(commentId, query) {
-    return this._get(`community/comments/`, { query: { ...query, parent_id: commentId } })
+    return this._get(`community/comments/`, {
+      query: { ...query, parent_id: commentId },
+    })
   }
 
   postComment(text, threadId, parentId) {
-    return this._post(`community/comments/`, { body: { text, threadId, parentId } })
+    return this._post(`community/comments/`, {
+      body: { text, threadId, parentId },
+    })
   }
 
   getCompany(slug) {
@@ -136,7 +142,9 @@ class Api {
   }
 
   postCompanyRevision(slug, company) {
-    return this._post(`community/companies/${slug}/revisions/`, { body: company })
+    return this._post(`community/companies/${slug}/revisions/`, {
+      body: company,
+    })
   }
 
   postCompanyRevisionApprove(revisionId) {
@@ -167,7 +175,9 @@ class Api {
   }
 
   patchPost(slug, title, body, hashtags) {
-    return this._patch(`community/posts/${slug}/`, { body: { title, body, hashtags } })
+    return this._patch(`community/posts/${slug}/`, {
+      body: { title, body, hashtags },
+    })
   }
 
   getMyProfile() {

@@ -5,7 +5,9 @@
       <div class="fill-x">
         <h4>
           {{ comment.profile.name || 'No One' }}
-          <span class="comment-timestamp">{{ comment.createdAt | fromNow }}</span>
+          <span class="comment-timestamp">
+            {{ comment.createdAt | fromNow }}
+          </span>
         </h4>
 
         <p class="comment-text">{{ comment.text }}</p>

@@ -3,7 +3,10 @@
     <Comment
       v-for="(comment, index) in comments"
       :key="comment.id"
-      v-waypoint="{ active: index + 1 === comments.length, callback: onVisible }"
+      v-waypoint="{
+        active: index + 1 === comments.length,
+        callback: onVisible,
+      }"
       v-bind="{ comment, index }"
     />
     <Loader v-if="isLoading" />

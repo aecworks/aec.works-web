@@ -1,7 +1,9 @@
 <template>
   <div class="profile flex flex-center">
     <LazyImg class="profile-avatar" :src="avatarImg" />
-    <span class="small profile-name" @click="handleClick()">{{ profile.name }}</span>
+    <span class="small profile-name" @click="handleClick()">
+      {{ profile.name }}
+    </span>
   </div>
 </template>
 
