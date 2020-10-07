@@ -12,6 +12,7 @@ import PersonList from '@/views/PersonList'
 import Person from '@/views/Person'
 import Privacy from '@/views/Privacy'
 import Terms from '@/views/Terms'
+import FeedList from '@/views/FeedList'
 
 Vue.use(VueRouter)
 
@@ -30,6 +31,12 @@ const routes = [
     path: '/posts',
     name: 'PostList',
     component: PostList,
+    props: (route) => ({ ...route.query, ...route.params }),
+  },
+  {
+    path: '/feed',
+    name: 'FeedList',
+    component: FeedList,
     props: (route) => ({ ...route.query, ...route.params }),
   },
   {

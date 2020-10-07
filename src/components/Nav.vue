@@ -6,11 +6,9 @@
       </a>
       <ul class="nav-list">
         <li v-for="route in routes" :key="route.text" class="nav-item">
-          <router-link
-            tag="a"
-            :class="{ active: isActive(route) }"
-            :to="{ name: route.name }"
-          >{{ route.text }}</router-link>
+          <router-link tag="a" :class="{ active: isActive(route) }" :to="{ name: route.name }">
+            {{ route.text }}
+          </router-link>
           <span class="ml muted small">{{ route.label }}</span>
         </li>
         <li v-if="!profile" class="nav-item profile">
@@ -41,7 +39,7 @@ export default {
       navExpanded: false,
       routes: [
         { text: 'companies', name: 'CompanyList' },
-        { text: 'feed', name: 'PostList', label: '( beta )' },
+        { text: 'feed', name: 'FeedList', label: '( beta )' },
         { text: 'people', name: 'PersonList' },
       ],
     }
