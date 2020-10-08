@@ -38,30 +38,21 @@ import { filePrompt, fileToBase64, subscribePaste, unsubscribePaste } from '@/ut
 
 export default {
   name: 'ImageUploader',
-  metaInfo() {
-    const company = this.company
-    const isEditing = this.isEditing
-    return {
-      title: () => {
-        if (isEditing) {
-          return company && company.name ? `Edit: ${company.name}` : 'Edit Company'
-        }
-        return 'Add Company'
-      },
-    }
-  },
+
   components: {
     Button,
     Cropper,
     Modal,
     IconLarge,
   },
+
   props: {
     cropRatio: {
       default: 1,
       type: Number,
     },
   },
+
   data() {
     return {
       isCropping: false,
@@ -69,7 +60,7 @@ export default {
       dataUri: null,
     }
   },
-  computed: {},
+
   methods: {
     startPaste() {
       this.isPasting = true
