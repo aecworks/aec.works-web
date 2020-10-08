@@ -11,7 +11,11 @@
 export default {
   name: 'Modal',
   components: {},
-  props: ['isActive'],
+  props: {
+    isActive: {
+      type: Boolean,
+    },
+  },
   data() {
     return {}
   },

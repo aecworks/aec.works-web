@@ -14,7 +14,8 @@ export default {
       type: Boolean,
     },
     kind: {
-      required: false,
+      default: '',
+      type: String,
     },
   },
   data() {

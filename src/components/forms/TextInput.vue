@@ -17,9 +17,9 @@
 export default {
   name: 'TextInput',
   props: {
-    value: { required: true },
-    icon: { required: false },
-    placeholder: { required: false },
+    value: { required: true, type: String },
+    icon: { default: '', type: String },
+    placeholder: { default: '', type: String },
   },
   data() {
     return {}

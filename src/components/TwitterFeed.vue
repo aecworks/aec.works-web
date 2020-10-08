@@ -21,7 +21,12 @@ import { Timeline } from 'vue-tweet-embed'
 export default {
   name: 'TwitterFeed',
   components: { Loader, Timeline },
-  props: ['handle'],
+  props: {
+    handle: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
       isLoading: true,

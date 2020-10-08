@@ -16,12 +16,11 @@ import api from '../api'
 import Avatar from '@/components/Avatar'
 
 export default {
-  name: 'Person',
+  name: 'PersonList',
   metaInfo: {
     title: 'People',
   },
   components: { Avatar },
-  props: ['id'],
   data() {
     return {
       items: [],

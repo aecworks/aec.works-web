@@ -12,7 +12,10 @@
 export default {
   name: 'Hashtag',
   props: {
-    slug: String,
+    slug: {
+      type: String,
+      required: true,
+    },
     clickable: {
       type: Boolean,
       default: false,
