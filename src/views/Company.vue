@@ -33,7 +33,7 @@
       </div>
 
       <div class="mt-2">
-        <TwitterFeed v-if="company.twitterHandle" :handle="company.twitterHandle" />
+        <TwitterFeed v-if="company.twitter" :handle="company.twitter" />
       </div>
     </div>
 
