@@ -48,7 +48,7 @@ export default {
       },
       {
         property: 'og:image',
-        content: require('@/assets/images/meta.png'),
+        content: require('@/assets/images/logo-color-200.png'),
       },
       {
         property: 'twitter:card',
@@ -70,7 +70,7 @@ export default {
       },
       {
         property: 'twitter:image',
-        content: require('@/assets/images/meta.png'),
+        content: require('@/assets/images/logo-color-200.png'),
       },
     ],
   },
