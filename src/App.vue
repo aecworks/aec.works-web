@@ -43,8 +43,7 @@ export default {
       },
       {
         property: 'og:description',
-        content:
-          'An open-source AEC community platform that promotes inclusive and enriching conversations through content-sharing and discussions.',
+        content: 'The Open Source AEC Community Platform',
       },
       {
         property: 'og:image',
@@ -65,8 +64,7 @@ export default {
       },
       {
         property: 'twitter:description',
-        content:
-          'An open-source AEC community platform that promotes inclusive and enriching conversations through content-sharing and discussions.',
+        content: 'The Open Source AEC Community Platform',
       },
       {
         property: 'twitter:image',
