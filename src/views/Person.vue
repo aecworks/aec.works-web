@@ -27,13 +27,17 @@
         </div>
         <div class="profile-activity">
           <div>
-            <h3>Companies Liked</h3>
-            <ul>
-              <li v-for="company in companyClaps" :key="company.slug">{{company.name}}</li>
+            <h3>Companies I Like</h3>
+            <ul class="mt-1">
+              <li v-for="company in companyClaps" :key="company.slug">
+                <router-link tag="a" :to="{ name: 'Company', params: { slug: company.slug } }">
+                  {{ company.name }}
+                </router-link>
+              </li>
             </ul>
           </div>
           <div>
-            <TwitterFeed class="mt-2" v-if="profile.twitter" :handle="profile.twitter" />
+            <TwitterFeed v-if="profile.twitter" class="mt-2" :handle="profile.twitter" />
           </div>
         </div>
       </div>
@@ -47,8 +51,10 @@
     <div class="footer">
       <div v-if="isSelf" class="mt-3">
         <label class="mt-1">Notifications</label>
-        <input type="checkbox" /> Email
-        <input type="checkbox" /> Text
+        <input type="checkbox" />
+        Email
+        <input type="checkbox" />
+        Text
       </div>
     </div>
   </div>
