@@ -50,19 +50,13 @@
         />
 
         <label class="mt-1">Logo</label>
-        <div class="company-logo" :class="{ empty: !company.logoUrl }">
+        <div class="company-logo" :class="{ empty: !company.logoUrl }" @click="clearLogo">
           <img :src="company.logoUrl || defaultImageUrl" alt />
         </div>
         <ImageUploader :crop-ratio="1" @uploaded="handleLogoUploaded" />
-        <!-- <Button
-          v-if="company.logoUrl"
-          kind="text"
-          aria-label="remove current logo"
-          @click="company.logoUrl = ''"
-        >Remove</Button>-->
 
         <label class="mt-1">Cover</label>
-        <div class="company-cover" :class="{ empty: !company.coverUrl }">
+        <div class="company-cover" :class="{ empty: !company.coverUrl }" @click="clearCover">
           <img :src="company.coverUrl || defaultImageUrl" alt />
         </div>
         <ImageUploader :crop-ratio="0.5" @uploaded="handleCoverUploaded" />
@@ -109,9 +103,7 @@
       <div class="mt-2">
         <h3>Created</h3>
         <h5 class="mt-1">{{ company.createdAt | calendar }}</h5>
-        <span v-if="company.createdBy" class="small muted">
-          {{ company.createdBy.name }}
-        </span>
+        <span v-if="company.createdBy" class="small muted">{{ company.createdBy.name }}</span>
       </div>
     </div>
   </div>
@@ -217,6 +209,16 @@ export default {
       }
     },
 
+    clearLogo() {
+      this.company.logoUrl = ''
+      this.company.logo = ''
+    },
+
+    clearCover() {
+      this.company.coverUrl = ''
+      this.company.cover = ''
+    },
+
     handleLogoUploaded(image) {
       this.company.logoUrl = image.url
       this.company.logo = image.id
@@ -261,7 +263,28 @@ export default {
   height: 60px;
   width: 60px;
   overflow: hidden;
+  position: relative;
   @extend .border-thin;
+
+  &:not(.empty):hover {
+    cursor: pointer;
+    img {
+      opacity: 0.25;
+    }
+  }
+  &:not(.empty):hover::after,
+  &:not(.empty):hover::before {
+    content: '';
+    position: absolute;
+    top: 27px;
+    height: 4px;
+    width: 30px;
+    background-color: $dark;
+    transform: translateX(50%) rotate(45deg);
+  }
+  &:not(.empty):hover::before {
+    transform: translateX(50%) rotate(-45deg);
+  }
 
   img {
     display: block;
