@@ -7,6 +7,8 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/ee864a9e-f8a4-436a-9e9e-094df6a03fca/deploy-status)](https://app.netlify.com/sites/aecworks/deploys)
 ---
 
+Live at `https://aec.works`
+
 ## Project setup
 ```
 yarn install
@@ -26,6 +28,15 @@ PS: when using staging api, only LinkedIn login will work
 yarn run serve
 ```
 
+## Release
+
+#### Staging
+
+All code pushed or merged into `staging` is automatically deployed to http://staging--aecworks.netlify.app/
+
+#### Production
+
+All code pushed or merged into `master` is automatically deployed to https://aec.works
 
 # Contributing
 TODO

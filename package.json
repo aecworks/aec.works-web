@@ -57,7 +57,11 @@
     }
   },
   "lint-staged": {
-    "*.{js,vue}": "vue-cli-service lint",
-    "*.{css,vue}": "stylelint --fix"
+    "*.{js,vue,ts}": "vue-cli-service lint",
+    "*.{css,vue}": "stylelint --fix",
+    "*.{js,vue,json,ts}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }

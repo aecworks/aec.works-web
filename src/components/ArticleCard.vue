@@ -18,7 +18,12 @@ import Card from './Card.vue'
 export default {
   name: 'ArticleCard',
   components: { Card },
-  props: ['article'],
+  props: {
+    article: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       isLoading: true,

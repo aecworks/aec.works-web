@@ -24,7 +24,7 @@
 
       <div class="mt-2">
         <label>Tags</label>
-        <Hashtag v-for="slug in company.hashtags" :key="slug" :slug="slug" />
+        <Hashtag v-for="hashtagSlug in company.hashtags" :key="hashtagSlug" :slug="hashtagSlug" />
       </div>
 
       <div v-if="company.articles.length" class="mt-2">
@@ -33,7 +33,7 @@
       </div>
 
       <div class="mt-2">
-        <TwitterFeed v-if="company.twitterHandle" :handle="company.twitterHandle" />
+        <TwitterFeed v-if="company.twitter" :handle="company.twitter" />
       </div>
     </div>
 
@@ -101,7 +101,7 @@ export default {
     },
   },
   props: {
-    slug: { required: false, type: String },
+    slug: { required: true, type: String },
   },
   data() {
     return {

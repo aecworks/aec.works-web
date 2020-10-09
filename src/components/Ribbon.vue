@@ -9,7 +9,10 @@
 export default {
   name: 'Ribbon',
   props: {
-    text: String,
+    text: {
+      type: String,
+      default: '',
+    },
   },
 }
 </script>

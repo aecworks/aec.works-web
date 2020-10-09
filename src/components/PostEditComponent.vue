@@ -31,7 +31,7 @@ export default {
   components: { Editor, Button, Card },
   props: {
     slug: {
-      required: false,
+      default: '',
       type: String,
     },
   },

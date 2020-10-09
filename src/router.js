@@ -5,13 +5,6 @@ import api from '@/api'
 import Company from '@/views/Company'
 import CompanyEdit from '@/views/CompanyEdit'
 import CompanyList from '@/views/CompanyList'
-import PostList from '@/views/PostList'
-import Post from '@/views/Post'
-import PostEdit from '@/views/PostEdit'
-import PersonList from '@/views/PersonList'
-import Person from '@/views/Person'
-import Privacy from '@/views/Privacy'
-import Terms from '@/views/Terms'
 
 Vue.use(VueRouter)
 
@@ -29,13 +22,13 @@ const routes = [
   {
     path: '/posts',
     name: 'PostList',
-    component: PostList,
+    component: () => import(/* webpackChunkName: "posts" */ '@/views/PostList'),
     props: (route) => ({ ...route.query, ...route.params }),
   },
   {
     path: '/companies/new',
     name: 'CompanyNew',
-    component: CompanyEdit,
+    component: () => import(/* webpackChunkName: "company-edit" */ '@/views/CompanyEdit'),
     props: false,
     meta: { requiresAuth: true },
   },
@@ -55,42 +48,42 @@ const routes = [
   {
     path: '/posts/new',
     name: 'PostNew',
-    component: PostEdit,
+    component: () => import(/* webpackChunkName: "posts-edit" */ '@/views/PostEdit'),
     meta: { requiresAuth: true },
   },
   {
     path: '/posts/:slug/edit',
     name: 'PostEdit',
-    component: PostEdit,
+    component: () => import(/* webpackChunkName: "posts-edit" */ '@/views/PostEdit'),
     props: true,
     meta: { requiresAuth: true },
   },
   {
     path: '/posts/:slug',
     name: 'Post',
-    component: Post,
+    component: () => import(/* webpackChunkName: "posts" */ '@/views/Post'),
     props: true,
   },
   {
     path: '/people',
     name: 'PersonList',
-    component: PersonList,
+    component: () => import(/* webpackChunkName: "people" */ '@/views/PersonList'),
   },
   {
     path: '/people/:slug',
     name: 'Person',
-    component: Person,
+    component: () => import(/* webpackChunkName: "people" */ '@/views/Person'),
     props: true,
   },
   {
     path: '/privacy',
     name: 'Privacy',
-    component: Privacy,
+    component: () => import('@/views/Privacy'),
   },
   {
     path: '/terms',
     name: 'Terms',
-    component: Terms,
+    component: () => import('@/views/Terms'),
   },
   {
     path: '/auth/:provider',

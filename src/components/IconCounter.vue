@@ -9,8 +9,10 @@
 export default {
   name: 'IconCounter',
   props: {
-    count: Number,
-    onClick: Function,
+    count: {
+      default: 0,
+      type: Number,
+    },
     icon: {
       required: true,
       type: String,
