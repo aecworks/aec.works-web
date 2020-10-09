@@ -54,7 +54,8 @@ export default {
     }
   }
 
-  .profile-location {
+  .profile-location,
+  .profile-bio {
     font-family: $font-family;
     font-weight: $font-weight-normal;
     font-size: $font-size-h5;
