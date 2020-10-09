@@ -13,7 +13,12 @@ import TwitterShare from 'vue-goodshare/src/providers/Twitter.vue'
 export default {
   name: 'SocialShare',
   components: { LinkedInShare, TwitterShare },
-  props: ['pageUrl'],
+  props: {
+    pageUrl: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {}
   },
