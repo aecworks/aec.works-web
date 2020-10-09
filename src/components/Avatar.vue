@@ -84,6 +84,7 @@ export default {
       text-decoration: underline;
     }
   }
+
   .profile-location,
   .profile-bio {
     font-family: $font-family;

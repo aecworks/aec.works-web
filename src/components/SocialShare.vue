@@ -16,7 +16,7 @@ export default {
   props: {
     pageUrl: {
       type: String,
-      default: '',
+      required: true,
     },
   },
   data() {
