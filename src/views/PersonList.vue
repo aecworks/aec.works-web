@@ -28,16 +28,7 @@ export default {
   metaInfo: {
     title: 'People',
   },
-  components: {
-    Avatar,
-    TextInput,
-  },
-  props: {
-    search: {
-      type: String,
-      default: '',
-    },
-  },
+  components: { Avatar, TextInput },
   data() {
     return {
       items: [],
@@ -81,6 +72,9 @@ export default {
 .people-count {
   font-size: 0.9rem;
   color: $dark-gray;
-  margin: 0 0 1rem 0;
+  margin: 1rem 0 1rem 0;
+  @media only screen and (min-width: $lg) {
+    margin-top: 0;
+  }
 }
 </style>
