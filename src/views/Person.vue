@@ -26,10 +26,19 @@
           </div>
         </div>
         <div class="profile-activity">
-          <h2 class="mt-2">Posts</h2>
-          TODO
-          <h2>Tweets</h2>
-          <TwitterFeed v-if="profile.twitter" :handle="profile.twitter" />
+          <div>
+            <h3>Companies I Like</h3>
+            <ul class="mt-1">
+              <li v-for="company in companyClaps" :key="company.slug">
+                <router-link tag="a" :to="{ name: 'Company', params: { slug: company.slug } }">
+                  {{ company.name }}
+                </router-link>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <TwitterFeed v-if="profile.twitter" class="mt-2" :handle="profile.twitter" />
+          </div>
         </div>
       </div>
     </div>
@@ -74,6 +83,7 @@ export default {
     return {
       errors: [],
       profile: null,
+      companyClaps: [],
     }
   },
   computed: {
@@ -89,11 +99,15 @@ export default {
   },
   methods: {
     async fetchData() {
-      const response = await api.getProfile(this.slug)
-      if (!response.message) {
-        this.profile = response
+      const [profileResponse, clapsResponse] = await Promise.all([
+        api.getProfile(this.slug),
+        api.getCompanyClapsByProfileSlug(this.slug),
+      ])
+      if (!profileResponse.message && !clapsResponse.message) {
+        this.profile = profileResponse
+        this.companyClaps = clapsResponse
       } else {
-        this.errors.push(response.message)
+        this.errors.push(...profileResponse.message, ...clapsResponse.message)
       }
     },
   },
@@ -106,7 +120,6 @@ export default {
   @include for-large-down {
     flex-wrap: wrap;
     text-align: center;
-    flex-direction: column;
     justify-content: center;
     align-content: center;
   }
@@ -117,9 +130,6 @@ export default {
 .profile-activity {
   @include for-large-down {
     margin-top: 2rem;
-  }
-  @include for-large-up {
-    padding-left: 2rem;
   }
 }
 

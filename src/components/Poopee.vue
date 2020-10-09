@@ -3,7 +3,7 @@
     <div ref="poopee" class="poopee-container" :class="{ hide: hide }" @click="handleClick">
       <img src="@/assets/images/poopee.svg" />
     </div>
-    <p class="delete-me">
+    <p class="delete-me hidden-sm">
       <a href="#" @click="handleDelete">delete page</a>
     </p>
   </div>

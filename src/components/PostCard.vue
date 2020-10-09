@@ -43,7 +43,12 @@ import Icon from '@/components/Icon.vue'
 export default {
   name: 'PostCard',
   components: { Hashtag, Avatar, Card, Icon },
-  props: ['post'],
+  props: {
+    post: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       localClapCount: null,
