@@ -3,7 +3,7 @@
     <div class="content">
       <div class="people-count">{{ items.length }} lovely people</div>
       <p v-for="profile in items" :key="profile.slug">
-        <Avatar :profile="profile" />
+        <PeopleAvatar :profile="profile" />
       </p>
     </div>
     <div class="sidebar">
@@ -20,7 +20,7 @@
 <script>
 import api from '../api'
 import TextInput from '../components/forms/TextInput.vue'
-import Avatar from '@/components/Avatar'
+import PeopleAvatar from '@/components/PeopleAvatar'
 import { popQuery, debounce } from '@/utils'
 
 export default {
@@ -28,7 +28,7 @@ export default {
   metaInfo: {
     title: 'People',
   },
-  components: { Avatar, TextInput },
+  components: { PeopleAvatar, TextInput },
   data() {
     return {
       items: [],
