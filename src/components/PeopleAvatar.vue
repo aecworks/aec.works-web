@@ -40,13 +40,13 @@ export default {
   mounted() {
     let _this = this
     window.addEventListener('resize', function () {
-      if (window.matchMedia('(max-width: 576px)').matches) {
+      if (window.matchMedia('(max-width: 575px)').matches) {
         console.log('40')
         _this.bioLength = 40
-      } else if (window.matchMedia('(min-width: 576px) and (max-width: 768px').matches) {
+      } else if (window.matchMedia('(min-width: 576px) and (max-width: 767px').matches) {
         console.log('50')
         _this.bioLength = 50
-      } else if (window.matchMedia('(min-width: 768px) and (max-width: 992px').matches) {
+      } else if (window.matchMedia('(min-width: 768px) and (max-width: 991px').matches) {
         console.log('105')
         _this.bioLength = 105
       } else if (window.matchMedia('(min-width: 992px)').matches) {
