@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="content">
-      <div class="people-count">{{ items.length }} lovely people</div>
+      <div class="sans small muted mb-1 people-count">{{ items.length }} lovely people</div>
       <p v-for="profile in items" :key="profile.slug">
         <PeopleAvatar :profile="profile" />
       </p>
@@ -70,11 +70,8 @@ export default {
 
 <style lang="scss" scoped>
 .people-count {
-  font-size: 0.9rem;
-  color: $dark-gray;
-  margin: 1rem 0 1rem 0;
-  @media only screen and (min-width: $lg) {
-    margin-top: 0;
+  @include for-large-down {
+    margin-top: 1rem;
   }
 }
 </style>
