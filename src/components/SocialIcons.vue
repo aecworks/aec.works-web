@@ -3,6 +3,7 @@
     <a
       href="https://github.com/aecworks"
       :class="gIconExpanded ? 'social-icon--container-active' : 'social-icon--container'"
+      class="transition"
       @mouseover="gHandleExpand"
       @mouseout="gHandleCollapse"
     >
@@ -16,6 +17,7 @@
     <a
       href="https://twitter.com/gtalarico"
       :class="tIconExpanded ? 'social-icon--container-active' : 'social-icon--container'"
+      class="transition"
       @mouseover="tHandleExpand"
       @mouseout="tHandleCollapse"
     >
@@ -29,6 +31,7 @@
     <a
       href="https://twitter.com/gtalarico"
       :class="aIconExpanded ? 'social-icon--container-active' : 'social-icon--container'"
+      class="transition"
       @mouseover="aHandleExpand"
       @mouseout="aHandleCollapse"
     >
@@ -86,12 +89,20 @@ export default {
     margin-right: 1rem;
     flex-direction: column;
     direction: rtl;
-    width: 32px;
   }
   @include for-large-down {
     top: calc(100vh - 32px - 1rem);
     z-index: 3;
   }
+}
+
+.transition {
+  width: 32px;
+}
+
+.transition:hover {
+  width: 120px;
+  transition: all 0.1s;
 }
 
 .social-icon--container,
@@ -104,6 +115,7 @@ export default {
   border-radius: 2px;
   height: 32px;
   margin: 0.25rem 0;
+
   @include for-large-down {
     width: 32px;
     margin: 0 0.25rem;
@@ -116,10 +128,15 @@ export default {
 }
 
 .social-icon--container-active {
-  width: 120px;
   justify-content: center;
   padding: 0 0.25rem;
   box-shadow: 3px 3px 0px #32312d;
+}
+
+.social-icon--text,
+.social-icon--text-active {
+  font-family: $font-family;
+  font-weight: $font-weight-bold;
 }
 
 .social-icon--text {
