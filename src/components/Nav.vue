@@ -1,20 +1,20 @@
 <template>
-  <div id="nav-container" :class="{ expanded: navExpanded }">
+  <div id="nav-container" :class="{ expanded: navExpanded }" data-cy="nav-container">
     <div id="nav" class="flex">
-      <a href="/" class="nav-logo hidden-sm">
-        <img alt="AEC Works Logo" src="@/assets/images/logo-black.svg" />
+      <a href="/" class="nav-logo hidden-sm" data-cy="logo-a">
+        <img alt="AEC Works Logo" src="@/assets/images/logo-black.svg" data-cy="logo-img" />
       </a>
-      <ul class="nav-list">
-        <li v-for="route in routes" :key="route.text" class="nav-item">
+      <ul class="nav-list" data-cy="nav-list">
+        <li v-for="route in routes" :key="route.text" class="nav-item" data-cy="nav-item">
           <router-link tag="a" :class="{ active: isActive(route) }" :to="{ name: route.name }">
             {{ route.text }}
           </router-link>
           <span class="ml muted small">{{ route.label }}</span>
         </li>
-        <li v-if="!profile" class="nav-item profile">
+        <li v-if="!profile" class="nav-item profile" data-cy="login">
           <a href="#" @click="handleLogin()">login</a>
         </li>
-        <li v-if="profile" class="nav-item profile">
+        <li v-if="profile" class="nav-item profile" data-cy="profile">
           <span class="nav-profile-avatar">
             <a class="mr-1 small" href="#" @click="handleLogout()">logout</a>
             <router-link tag="a" :to="{ name: 'Person', params: { slug: profile.slug } }">

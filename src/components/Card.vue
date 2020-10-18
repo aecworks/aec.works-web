@@ -1,14 +1,14 @@
 <template>
   <div class="c-card">
     <div v-if="showImage" class="c-card__image" href="#">
-      <div class="c-card__image__logo">
+      <div class="c-card__image__logo" data-cy="card-logo">
         <slot name="logo" />
       </div>
-      <div class="c-card__image__cover">
+      <div class="c-card__image__cover" data-cy="card-cover">
         <slot name="cover" />
       </div>
     </div>
-    <div class="c-card__content">
+    <div class="c-card__content" data-cy="card-content">
       <slot />
     </div>
     <div class="c-card__ribbon">

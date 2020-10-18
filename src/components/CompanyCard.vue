@@ -1,6 +1,6 @@
 <template>
   <!-- <Card @click="handleClick(company)"> -->
-  <Card>
+  <Card data-cy="company-card">
     <template v-slot:logo>
       <LazyImg v-if="company.logoUrl" class="company-logo" :src="getImageUrl(company.logoUrl)" />
     </template>

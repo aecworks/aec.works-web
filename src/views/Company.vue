@@ -5,7 +5,6 @@
         <lazy-img class="logo" :src="company.logoUrl || defaultLogo" alt="Company Logo" />
         <lazy-img class="cover" :src="company.coverUrl || defaultCover" alt="Company Cover Image" />
       </div>
-
       <h1 class="mt-2">
         {{ company.name }}
         <span class="small muted ml">{{ company.location || 'Somewhere' }}</span>

@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <div class="content">
+    <div class="content" data-cy="content">
       <Loader v-if="isLoading" />
       <CompanyCard
         v-for="(company, index) in items"
