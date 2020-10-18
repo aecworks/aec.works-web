@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "serve:staging": "vue-cli-service serve --mode staging",
+    "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "cypress open",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "serve:staging": "vue-cli-service serve --mode staging"
   },
   "dependencies": {
     "@johmun/vue-tags-input": "^2.1.0",
