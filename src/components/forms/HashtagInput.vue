@@ -54,7 +54,9 @@ export default {
   },
   async created() {
     const hashtagsResponse = await api.getHashtags()
-    this.existingHashtags = hashtagsResponse.map(({ slug }) => ({ text: slug }))
+    this.existingHashtags = hashtagsResponse
+      .map(({ slug }) => ({ text: slug }))
+      .sort((a, b) => a.text.localeCompare(b.text))
 
     // Listen on for external adds
     bus.$on(EVENTS.HASHTAG_CLICKED, (slug) => {
