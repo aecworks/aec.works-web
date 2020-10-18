@@ -2,16 +2,20 @@
   <!-- <Card @click="handleClick(company)"> -->
   <Card>
     <template v-slot:logo>
-      <LazyImg v-if="company.logoUrl" class="company-logo" :src="getImageUrl(company.logoUrl)" />
+      <RouterLink v-if="company.logoUrl" :to="routerLinkTo">
+        <LazyImg class="company-logo" :src="getImageUrl(company.logoUrl)" />
+      </RouterLink>
     </template>
     <template v-slot:cover>
-      <LazyImg v-if="company.coverUrl" :src="getImageUrl(company.coverUrl)" />
+      <RouterLink v-if="company.coverUrl" :to="routerLinkTo">
+        <LazyImg :src="getImageUrl(company.coverUrl)" />
+      </RouterLink>
     </template>
     <template v-slot:default>
       <!-- Company Name -->
       <h2 class="mt-1">
         <!-- TODO throwing router error -->
-        <router-link :to="{ name: 'Company', params: { slug: company.slug || '?' } }">
+        <router-link :to="routerLinkTo">
           {{ company.name }}
         </router-link>
       </h2>
@@ -65,6 +69,11 @@ export default {
     return {
       localClapCount: null,
     }
+  },
+  computed: {
+    routerLinkTo() {
+      return { name: 'Company', params: { slug: this.company.slug || '?' } }
+    },
   },
   methods: {
     handleClick(company) {
