@@ -1,0 +1,192 @@
+[
+  {
+    "slug": "hold",
+    "companyCount": "0",
+    "postCount": "10"
+  },
+  {
+    "slug": "webapp",
+    "companyCount": "52",
+    "postCount": "0"
+  },
+  {
+    "slug": "issuetracking",
+    "companyCount": "15",
+    "postCount": "0"
+  },
+  {
+    "slug": "changemanagement",
+    "companyCount": "7",
+    "postCount": "0"
+  },
+  {
+    "slug": "prefabrication",
+    "companyCount": "16",
+    "postCount": "0"
+  },
+  {
+    "slug": "housing",
+    "companyCount": "25",
+    "postCount": "0"
+  },
+  {
+    "slug": "constructionmanagement",
+    "companyCount": "31",
+    "postCount": "0"
+  },
+  {
+    "slug": "projectmanagement",
+    "companyCount": "22",
+    "postCount": "0"
+  },
+  {
+    "slug": "documentation",
+    "companyCount": "9",
+    "postCount": "0"
+  },
+  {
+    "slug": "modelviewer",
+    "companyCount": "19",
+    "postCount": "0"
+  },
+  {
+    "slug": "assetmanagement",
+    "companyCount": "11",
+    "postCount": "0"
+  },
+  {
+    "slug": "interoperability",
+    "companyCount": "8",
+    "postCount": "0"
+  },
+  {
+    "slug": "claimsAI",
+    "companyCount": "10",
+    "postCount": "0"
+  },
+  {
+    "slug": "analysis",
+    "companyCount": "21",
+    "postCount": "0"
+  },
+  {
+    "slug": "generative",
+    "companyCount": "10",
+    "postCount": "0"
+  },
+  {
+    "slug": "spatialdata",
+    "companyCount": "12",
+    "postCount": "0"
+  },
+  {
+    "slug": "vr",
+    "companyCount": "13",
+    "postCount": "0"
+  },
+  {
+    "slug": "spaceplanning",
+    "companyCount": "15",
+    "postCount": "0"
+  },
+  {
+    "slug": "datamanagement",
+    "companyCount": "20",
+    "postCount": "0"
+  },
+  {
+    "slug": "revitaddin",
+    "companyCount": "8",
+    "postCount": "0"
+  },
+  {
+    "slug": "pointcloud",
+    "companyCount": "5",
+    "postCount": "0"
+  },
+  {
+    "slug": "costestimation",
+    "companyCount": "11",
+    "postCount": "0"
+  },
+  {
+    "slug": "proptech",
+    "companyCount": "6",
+    "postCount": "0"
+  },
+  {
+    "slug": "desktopapp",
+    "companyCount": "6",
+    "postCount": "0"
+  },
+  {
+    "slug": "remodeling",
+    "companyCount": "4",
+    "postCount": "0"
+  },
+  {
+    "slug": "manufacturing",
+    "companyCount": "7",
+    "postCount": "0"
+  },
+  {
+    "slug": "supplychain",
+    "companyCount": "5",
+    "postCount": "0"
+  },
+  {
+    "slug": "designautomation",
+    "companyCount": "17",
+    "postCount": "0"
+  },
+  {
+    "slug": "software",
+    "companyCount": "4",
+    "postCount": "0"
+  },
+  {
+    "slug": "fluxspinoff",
+    "companyCount": "7",
+    "postCount": "0"
+  },
+  {
+    "slug": "zoning",
+    "companyCount": "6",
+    "postCount": "0"
+  },
+  {
+    "slug": "urbandesign",
+    "companyCount": "3",
+    "postCount": "0"
+  },
+  {
+    "slug": "verifiedAI",
+    "companyCount": "5",
+    "postCount": "0"
+  },
+  {
+    "slug": "rhinoplugin",
+    "companyCount": "6",
+    "postCount": "0"
+  },
+  {
+    "slug": "acquired",
+    "companyCount": "2",
+    "postCount": "0"
+  },
+  {
+    "slug": "interiordesign",
+    "companyCount": "2",
+    "postCount": "0"
+  },
+  {
+    "slug": "ar",
+    "companyCount": "3",
+    "postCount": "0"
+  },
+  {
+    "slug": "facilitiesmanagement",
+    "companyCount": "2",
+    "postCount": "0"
+  }
+]

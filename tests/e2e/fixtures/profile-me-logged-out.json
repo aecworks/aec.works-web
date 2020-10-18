@@ -1,0 +1,5 @@
+{
+  "errors": {
+    "nonFieldError": "Authentication credentials were not provided."
+  }
+}
