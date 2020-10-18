@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CompanyCard.vue Renders a card without a cover 1`] = `
+<card-stub banner="" showimage="true" data-cy="company-card">
+  <lazyimg-stub src="https://aecworks-bucket-staging.s3.amazonaws.com/__sized__/images/29930a4516ed439fb07ec38413464efd-crop-c0-5__0-5-80x80.png" class="company-logo"></lazyimg-stub>
+  <!---->
+  <h2 class="mt-1">
+    <router-link-stub to="[object Object]" tag="a" ariacurrentvalue="page" event="click">
+      3D Repo
+    </router-link-stub>
+  </h2>
+  <p class="mt-1">Cloud-Based BIM</p>
+  <div class="mt-1">
+    <hashtag-stub slug="webapp" clickable="true"></hashtag-stub>
+    <hashtag-stub slug="issuetracking" clickable="true"></hashtag-stub>
+    <hashtag-stub slug="changemanagement" clickable="true"></hashtag-stub>
+  </div>
+  <div class="flex mt-1">
+    <icon-stub icon="chat" class="mr-1"><span class="small">2</span></icon-stub>
+    <icon-stub clickable="true" icon="clap"><span class="small">1</span></icon-stub> <span class="small flex-right">London, UK</span>
+  </div>
+</card-stub>
+`;
+
+exports[`CompanyCard.vue Renders a card without a cover or a logo 1`] = `
+<card-stub banner="" showimage="true" data-cy="company-card">
+  <!---->
+  <!---->
+  <h2 class="mt-1">
+    <router-link-stub to="[object Object]" tag="a" ariacurrentvalue="page" event="click">
+      3D Repo
+    </router-link-stub>
+  </h2>
+  <p class="mt-1">Cloud-Based BIM</p>
+  <div class="mt-1">
+    <hashtag-stub slug="webapp" clickable="true"></hashtag-stub>
+    <hashtag-stub slug="issuetracking" clickable="true"></hashtag-stub>
+    <hashtag-stub slug="changemanagement" clickable="true"></hashtag-stub>
+  </div>
+  <div class="flex mt-1">
+    <icon-stub icon="chat" class="mr-1"><span class="small">2</span></icon-stub>
+    <icon-stub clickable="true" icon="clap"><span class="small">1</span></icon-stub> <span class="small flex-right">London, UK</span>
+  </div>
+</card-stub>
+`;
+
+exports[`CompanyCard.vue Renders a card without a logo 1`] = `
+<card-stub banner="" showimage="true" data-cy="company-card">
+  <!---->
+  <lazyimg-stub src="https://aecworks-bucket-staging.s3.amazonaws.com/__sized__/images/fede69a591e84008b535767e2212632c-crop-c0-5__0-5-800x400.png"></lazyimg-stub>
+  <h2 class="mt-1">
+    <router-link-stub to="[object Object]" tag="a" ariacurrentvalue="page" event="click">
+      3D Repo
+    </router-link-stub>
+  </h2>
+  <p class="mt-1">Cloud-Based BIM</p>
+  <div class="mt-1">
+    <hashtag-stub slug="webapp" clickable="true"></hashtag-stub>
+    <hashtag-stub slug="issuetracking" clickable="true"></hashtag-stub>
+    <hashtag-stub slug="changemanagement" clickable="true"></hashtag-stub>
+  </div>
+  <div class="flex mt-1">
+    <icon-stub icon="chat" class="mr-1"><span class="small">2</span></icon-stub>
+    <icon-stub clickable="true" icon="clap"><span class="small">1</span></icon-stub> <span class="small flex-right">London, UK</span>
+  </div>
+</card-stub>
+`;
+
+exports[`CompanyCard.vue Renders a full company with logo and cover 1`] = `
+<card-stub banner="" showimage="true" data-cy="company-card">
+  <lazyimg-stub src="https://aecworks-bucket-staging.s3.amazonaws.com/__sized__/images/29930a4516ed439fb07ec38413464efd-crop-c0-5__0-5-80x80.png" class="company-logo"></lazyimg-stub>
+  <lazyimg-stub src="https://aecworks-bucket-staging.s3.amazonaws.com/__sized__/images/fede69a591e84008b535767e2212632c-crop-c0-5__0-5-800x400.png"></lazyimg-stub>
+  <h2 class="mt-1">
+    <router-link-stub to="[object Object]" tag="a" ariacurrentvalue="page" event="click">
+      3D Repo
+    </router-link-stub>
+  </h2>
+  <p class="mt-1">Cloud-Based BIM</p>
+  <div class="mt-1">
+    <hashtag-stub slug="webapp" clickable="true"></hashtag-stub>
+    <hashtag-stub slug="issuetracking" clickable="true"></hashtag-stub>
+    <hashtag-stub slug="changemanagement" clickable="true"></hashtag-stub>
+  </div>
+  <div class="flex mt-1">
+    <icon-stub icon="chat" class="mr-1"><span class="small">2</span></icon-stub>
+    <icon-stub clickable="true" icon="clap"><span class="small">1</span></icon-stub> <span class="small flex-right">London, UK</span>
+  </div>
+</card-stub>
+`;
