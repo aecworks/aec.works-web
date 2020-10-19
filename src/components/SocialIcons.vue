@@ -1,46 +1,16 @@
 <template>
   <div id="social">
-    <a
-      href="https://github.com/aecworks"
-      :class="gIconExpanded ? 'social-icon--container-active' : 'social-icon--container'"
-      class="transition"
-      @mouseover="gHandleExpand"
-      @mouseout="gHandleCollapse"
-    >
-      <img
-        alt="Github"
-        :class="gIconExpanded ? 'social-icon-active' : 'social-icon'"
-        src="@/assets/images/social-icons/github.svg"
-      />
-      <div :class="gIconExpanded ? 'social-icon--text-active' : 'social-icon--text'">Github</div>
+    <a href="https://github.com/aecworks" class="transition social-icon--container">
+      <img alt="Github" src="@/assets/images/social-icons/github.svg" />
+      <div class="social-icon--text">Github</div>
     </a>
-    <a
-      href="https://twitter.com/gtalarico"
-      :class="tIconExpanded ? 'social-icon--container-active' : 'social-icon--container'"
-      class="transition"
-      @mouseover="tHandleExpand"
-      @mouseout="tHandleCollapse"
-    >
-      <img
-        alt="Twitter"
-        :class="tIconExpanded ? 'social-icon-active' : 'social-icon'"
-        src="@/assets/images/social-icons/twitter.svg"
-      />
-      <div :class="tIconExpanded ? 'social-icon--text-active' : 'social-icon--text'">Twitter</div>
+    <a href="https://twitter.com/gtalarico" class="transition social-icon--container">
+      <img alt="Twitter" src="@/assets/images/social-icons/twitter.svg" />
+      <div class="social-icon--text">Twitter</div>
     </a>
-    <a
-      href="https://twitter.com/gtalarico"
-      :class="aIconExpanded ? 'social-icon--container-active' : 'social-icon--container'"
-      class="transition"
-      @mouseover="aHandleExpand"
-      @mouseout="aHandleCollapse"
-    >
-      <img
-        alt="About"
-        :class="aIconExpanded ? 'social-icon-active' : 'social-icon'"
-        src="@/assets/images/social-icons/about.svg"
-      />
-      <div :class="aIconExpanded ? 'social-icon--text-active' : 'social-icon--text'">About</div>
+    <a href="https://twitter.com/gtalarico" class="transition social-icon--container">
+      <img alt="About" src="@/assets/images/social-icons/about.svg" />
+      <div class="social-icon--text">About</div>
     </a>
   </div>
 </template>
@@ -48,33 +18,6 @@
 <script>
 export default {
   name: 'SocialIcons',
-  data() {
-    return {
-      gIconExpanded: false,
-      tIconExpanded: false,
-      aIconExpanded: false,
-    }
-  },
-  methods: {
-    gHandleExpand: function () {
-      this.gIconExpanded = true
-    },
-    gHandleCollapse: function () {
-      this.gIconExpanded = false
-    },
-    tHandleExpand: function () {
-      this.tIconExpanded = true
-    },
-    tHandleCollapse: function () {
-      this.tIconExpanded = false
-    },
-    aHandleExpand: function () {
-      this.aIconExpanded = true
-    },
-    aHandleCollapse: function () {
-      this.aIconExpanded = false
-    },
-  },
 }
 </script>
 
@@ -102,16 +45,16 @@ export default {
 
 .transition:hover {
   width: 120px;
-  transition: all 0.1s;
+  transition: all 200ms;
 }
 
-.social-icon--container,
-.social-icon--container-active {
+.social-icon--container {
   direction: ltr;
   align-items: center;
+  justify-content: center;
   background-color: #fff;
   display: flex;
-  border: 1px solid #333;
+  @extend .border-thin;
   border-radius: 2px;
   height: 32px;
   margin: 0.25rem 0;
@@ -119,35 +62,24 @@ export default {
   @include for-large-down {
     width: 32px;
     margin: 0 0.25rem;
-    box-shadow: 3px 3px 0px #32312d;
+    @include shadow-color($dark);
   }
-}
 
-.social-icon--container {
-  justify-content: center;
-}
+  & .social-icon--text {
+    font-family: $font-family;
+    font-weight: $font-weight-bold;
+    display: none;
+  }
 
-.social-icon--container-active {
-  justify-content: center;
-  padding: 0 0.25rem;
-  box-shadow: 3px 3px 0px #32312d;
-}
-
-.social-icon--text,
-.social-icon--text-active {
-  font-family: $font-family;
-  font-weight: $font-weight-bold;
-}
-
-.social-icon--text {
-  display: none;
-}
-
-.social-icon--text-active {
-  display: block;
-}
-
-.social-icon-active {
-  margin-right: 1rem;
+  &:hover {
+    @include shadow-color($dark);
+    padding: 0 0.25rem;
+    & .social-icon--text {
+      font-family: $font-family;
+      font-weight: $font-weight-bold;
+      display: block;
+      margin-left: 1rem;
+    }
+  }
 }
 </style>
