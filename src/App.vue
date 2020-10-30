@@ -2,6 +2,7 @@
   <div id="app" class="app-wrapper">
     <Nav />
     <Poopee />
+    <SocialIcons />
     <transition name="fade" mode="out-in">
       <router-view />
     </transition>
@@ -15,6 +16,7 @@
 import Poopee from './components/Poopee.vue'
 import Nav from '@/components/Nav'
 import Login from '@/components/Login'
+import SocialIcons from '@/components/SocialIcons'
 
 export default {
   name: 'App',
@@ -76,6 +78,7 @@ export default {
     Nav,
     Login,
     Poopee,
+    SocialIcons,
   },
   data() {
     return {}
