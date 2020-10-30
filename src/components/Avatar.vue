@@ -41,7 +41,6 @@ export default {
     border: 1px solid $yellow;
     padding: 2px;
   }
-
   .profile-name {
     cursor: pointer;
     margin-left: 0.75rem;
