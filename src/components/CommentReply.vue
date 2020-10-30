@@ -30,11 +30,11 @@ export default {
   props: {
     threadId: {
       type: Number,
-      required: false,
+      required: true,
     },
     parentId: {
       type: Number,
-      required: false,
+      default: null,
     },
   },
   data() {

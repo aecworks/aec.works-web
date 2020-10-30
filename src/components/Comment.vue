@@ -13,7 +13,7 @@
         <Loader v-if="isLoading" />
         <CommentReply
           v-if="isReplying"
-          v-bind="{ parentId: comment.id }"
+          v-bind="{ threadId, parentId: comment.id }"
           @replied="handleReplied"
           @cancel="isReplying = false"
         />
@@ -34,8 +34,7 @@
       v-for="(subcomment, j) in comments"
       :key="subcomment.id"
       v-waypoint="{ active: j + 1 === comments.length, callback: onVisible }"
-      :index="j"
-      :comment="subcomment"
+      v-bind="{ threadId, index: j, comment: subcomment }"
     />
   </div>
 </template>
@@ -52,6 +51,10 @@ export default {
   name: 'Comment',
   components: { IconCounter, Button, CommentReply, Loader },
   props: {
+    threadId: {
+      type: Number,
+      required: true,
+    },
     comment: {
       type: Object,
       required: true,

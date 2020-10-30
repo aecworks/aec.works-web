@@ -4,7 +4,7 @@
       v-for="(comment, index) in comments"
       :key="comment.id"
       v-waypoint="{ active: index + 1 === comments.length, callback: onVisible }"
-      v-bind="{ comment, index }"
+      v-bind="{ threadId, comment, index }"
     />
     <Loader v-if="isLoading" />
     <CommentReply class="root-comment" v-bind="{ threadId }" @replied="handleReplied" />
