@@ -29,6 +29,7 @@
           <div>
             <h3>Companies I Like</h3>
             <ul class="mt-1">
+              <li v-if="!companyClaps.length">None so far</li>
               <li v-for="company in companyClaps" :key="company.slug">
                 <router-link tag="a" :to="{ name: 'Company', params: { slug: company.slug } }">
                   {{ company.name }}
