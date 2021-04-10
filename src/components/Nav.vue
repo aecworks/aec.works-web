@@ -39,8 +39,8 @@ export default {
       navExpanded: false,
       routes: [
         { text: 'companies', name: 'CompanyList' },
-        { text: 'feed', name: 'PostList', label: '( beta )' },
-        { text: 'people', name: 'PersonList' },
+        // { text: 'feed', name: 'PostList', label: '( beta )' },
+        // { text: 'people', name: 'PersonList' },
       ],
     }
   },

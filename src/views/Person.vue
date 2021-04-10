@@ -43,10 +43,10 @@
       </div>
     </div>
     <div class="sidebar hidden-sm">
-      <div class="mt-2">
+      <!-- <div class="mt-2">
         <label>Share</label>
         <SocialShare />
-      </div>
+      </div> -->
     </div>
     <div class="footer">
       <div v-if="isSelf" class="mt-3">
@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import SocialShare from '../components/SocialShare.vue'
+// import SocialShare from '../components/SocialShare.vue'
 import TwitterFeed from '../components/TwitterFeed.vue'
 import LazyImg from '../components/LazyImg.vue'
 import Icon from '../components/Icon.vue'
@@ -75,7 +75,7 @@ export default {
       title: () => (profile && profile.name ? profile.name : 'People'),
     }
   },
-  components: { Icon, LazyImg, TwitterFeed, SocialShare },
+  components: { Icon, LazyImg, TwitterFeed },
   props: {
     slug: { required: true, type: String },
   },
