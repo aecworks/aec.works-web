@@ -8,11 +8,16 @@
         v-bind="{ company }"
         @hashtagClick="handleHashtagClick"
       />
-      <Pagination v-if="items.length" :num-pages="numPages" @click="handlePageClick"></Pagination>
-      <p class="mt-1 sans small muted">
-        Showing Page {{ $route.query.page || 1 }} of {{ numPages }} ({{ count }}
-        {{ count === 1 ? 'company' : 'companies' }})
-      </p>
+      <div v-if="items.length">
+        <Pagination :num-pages="numPages" @click="handlePageClick"></Pagination>
+        <p class="mt-1 sans small muted">
+          Showing Page {{ $route.query.page || 1 }} of {{ numPages }} ({{ count }}
+          {{ count === 1 ? 'company' : 'companies' }})
+        </p>
+      </div>
+      <div v-else>
+        <p class="mt-1 sans small muted">No Results</p>
+      </div>
     </div>
     <div class="sidebar">
       <TextInput
