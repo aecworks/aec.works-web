@@ -38,17 +38,15 @@
     </div>
 
     <div v-if="company" class="sidebar">
+      <!-- <label>Claps</label> -->
       <div>
         <Icon icon="clap" clickable @click="handleClap(company)">
           {{ localClapCount || company.clapCount }}
         </Icon>
       </div>
-      <div>
-        <Icon icon="chat">{{ company.threadSize || 0 }}</Icon>
-      </div>
 
-      <div class="mt-2">
-        <label>Share</label>
+      <div v-if="false" class="mt-2">
+        <label></label>
         <SocialShare />
       </div>
 
@@ -58,8 +56,13 @@
       </div>
     </div>
 
-    <div class="footer">
-      <Discussion v-if="company && company.threadId" :thread-id="company.threadId" />
+    <div v-if="company && company.threadId" class="footer">
+      <div>
+        <Icon icon="chat">
+          {{ company.threadSize || 0 }} {{ company.threadSize == 1 ? 'comment' : 'comments' }}
+        </Icon>
+      </div>
+      <Discussion :thread-id="company.threadId" />
     </div>
   </div>
 </template>
