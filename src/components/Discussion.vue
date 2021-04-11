@@ -76,10 +76,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .discussion {
-  margin-top: 5rem;
+  margin-top: 1rem;
   margin-bottom: 10rem;
   .root-comment {
-    margin-top: 4rem;
+    margin-top: 1rem;
   }
 }
 </style>

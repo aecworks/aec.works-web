@@ -1,11 +1,12 @@
 <template>
   <div class="wrapper sm-grid-sidebar-down">
-    <div v-if="company" class="content">
+    <div v-if="company" class="content-header">
       <div class="company-images">
-        <lazy-img class="logo" :src="company.logoUrl || defaultLogo" alt="Company Logo" />
         <lazy-img class="cover" :src="company.coverUrl || defaultCover" alt="Company Cover Image" />
+        <lazy-img class="logo" :src="company.logoUrl || defaultLogo" alt="Company Logo" />
       </div>
-
+    </div>
+    <div v-if="company" class="content">
       <h1 class="mt-2">
         {{ company.name }}
         <span class="small muted ml">{{ company.location || 'Somewhere' }}</span>
@@ -39,7 +40,7 @@
 
     <div v-if="company" class="sidebar">
       <!-- <label>Claps</label> -->
-      <div>
+      <div class="mt-2">
         <Icon icon="clap" clickable @click="handleClap(company)">
           {{ localClapCount || company.clapCount }}
         </Icon>
@@ -150,19 +151,19 @@ export default {
   position: relative;
   .logo {
     position: absolute;
-    width: 100px;
-    height: 100px;
-    top: 25px;
-    right: 25px;
+    width: 80px;
+    height: 80px;
+    bottom: -25px;
+    left: 10px;
     @extend .border-thin;
+    @include shadow-color($dark);
   }
   .cover {
     display: block; // Remove gap below image
-    height: 100px;
+    height: 200px; // match $content-header-height;
     width: 100%;
     object-fit: cover;
     object-position: center;
-
     @extend .border-thin;
   }
 }

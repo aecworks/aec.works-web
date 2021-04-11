@@ -34,7 +34,7 @@
         <Button :kind="'text'">See All Hashtags</Button>
       </div>
 
-      <div class="mt-2">
+      <div class="mt-2 mb-2">
         <Button v-if="userIsEditor" @click="handleAdd">Add Company</Button>
       </div>
     </div>

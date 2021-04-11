@@ -3,6 +3,7 @@ $wrapper-width-max: 900px;
 $content-width-max: 650px;
 $sidebar-width: 250px;
 // 800px total width to match mixins break
+$content-header-height: 200px;
 
 // div {
 //   border: 1px solid red;
@@ -54,13 +55,15 @@ body {
 
   @include for-large-down {
     grid-template-columns: auto;
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto auto auto;
     grid-template-areas:
         "sidebar"
+        "content-header"
         "content"
         "footer";
     &.sm-grid-sidebar-down {
         grid-template-areas:
+        "content-header"
         "content"
         "sidebar"
         "footer";
@@ -69,11 +72,16 @@ body {
 
   @include for-large-up {
     column-gap: 50px;
-    grid-template-rows: auto auto;
     grid-template-columns: auto $sidebar-width;
+    grid-template-rows: $content-header-height auto auto;
     grid-template-areas:
+      "content-header content-header"
       "content sidebar"
       "footer footer";
+  }
+
+  .content-header {
+    grid-area: content-header;
   }
 
   .content {
@@ -89,6 +97,7 @@ body {
     @include for-large-up {
     }
   }
+
   .footer {
     grid-area: footer;
     @include for-large-up {
