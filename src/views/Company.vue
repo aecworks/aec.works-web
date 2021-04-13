@@ -58,11 +58,6 @@
     </div>
 
     <div v-if="company && company.threadId" class="footer">
-      <div>
-        <Icon icon="chat">
-          {{ company.threadSize || 0 }} {{ company.threadSize == 1 ? 'comment' : 'comments' }}
-        </Icon>
-      </div>
       <Discussion :thread-id="company.threadId" />
     </div>
   </div>
