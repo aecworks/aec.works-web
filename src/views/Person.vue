@@ -27,7 +27,7 @@
         </div>
         <div class="profile-activity">
           <div>
-            <h3>Companies I Like</h3>
+            <h3>Clapped For</h3>
             <ul class="mt-1">
               <li v-for="company in companyClaps" :key="company.slug">
                 <router-link tag="a" :to="{ name: 'Company', params: { slug: company.slug } }">
@@ -49,7 +49,7 @@
       </div> -->
     </div>
     <div class="footer">
-      <div v-if="isSelf" class="mt-3">
+      <div v-if="false" class="mt-3">
         <label class="mt-1">Notifications</label>
         <input type="checkbox" />
         Email
