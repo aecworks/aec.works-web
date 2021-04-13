@@ -100,7 +100,8 @@ export default {
       this.isReplying = false
       this.isLoading = true
       setTimeout(() => {
-        this.fetchItems((this.offset, 1)).then(() => {
+        this.comments = []
+        this.fetchItems((this.offset, 0)).then(() => {
           this.isLoading = false
         })
       }, 1000)
