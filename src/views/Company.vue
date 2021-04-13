@@ -25,7 +25,13 @@
 
       <div class="mt-2">
         <label>Tags</label>
-        <Hashtag v-for="hashtagSlug in company.hashtags" :key="hashtagSlug" :slug="hashtagSlug" />
+        <Hashtag
+          v-for="hashtagSlug in company.hashtags"
+          :key="hashtagSlug"
+          :slug="hashtagSlug"
+          clickable
+          @click="handleHashtagClick(hashtagSlug)"
+        />
       </div>
 
       <div v-if="company.articles.length" class="mt-2">
@@ -131,6 +137,9 @@ export default {
       await waitForLogin()
       const clapCount = await api.postCompanyClap(company.slug)
       this.localClapCount = clapCount
+    },
+    handleHashtagClick(hashtagSlug) {
+      this.$router.push({ name: 'CompanyList', query: { hashtags: hashtagSlug } })
     },
   },
 }

@@ -1,4 +1,5 @@
 <template>
+  <!-- // NEED TO CLEAN UP AFTER REMOVING NESTED COMMENT SUPPORT -->
   <div>
     <div class="comment">
       <!-- <div v-if="comment.level != 0" class="comment-prefix" :class="{ 'not-first': index !== 0 }" /> -->

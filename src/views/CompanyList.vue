@@ -106,7 +106,7 @@ export default {
   },
   methods: {
     refetch() {
-      this.$router.replace({ query: { ...this.$route.query, page: 1 } })
+      this.$router.replace({ query: { ...this.$route.query, page: 1 } }).catch(() => {})
       this.items = []
       this.fetchItems(0)
     },
@@ -138,7 +138,7 @@ export default {
 
     handleSearchInput: debounce(function (query) {
       if (query) {
-        this.$router.replace({ query: { ...this.$route.query, search: query } })
+        this.$router.replace({ query: { ...this.$route.query, search: query } }).catch(() => {})
       } else {
         popQuery(this.$router, this.$route.query, 'search')
       }
@@ -148,7 +148,9 @@ export default {
     handleHashtagFilterChanged(tags) {
       if (tags.length) {
         const hashtagStr = tags.join(',')
-        this.$router.replace({ query: { ...this.$route.query, hashtags: hashtagStr } })
+        this.$router
+          .replace({ query: { ...this.$route.query, hashtags: hashtagStr } })
+          .catch(() => {})
       } else {
         popQuery(this.$router, this.$route.query, 'hashtags')
       }
