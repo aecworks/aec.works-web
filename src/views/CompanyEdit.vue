@@ -23,13 +23,16 @@
 
         <div class="flex">
           <div class="fill-x">
-            <label for="input-twitter-handle">Twitter handle</label>
-            <input
-              id="input-twitter-handle"
-              v-model="company.twitter"
-              type="text"
-              class="input fill-x"
-            />
+            <label for="input-twitter-handle">Twitter Handle</label>
+            <div class="input-group">
+              <span class="input-group-prefix">@</span>
+              <input
+                id="input-twitter-handle"
+                v-model="company.twitter"
+                class="input input-with-prefix fill-x"
+                type="text"
+              />
+            </div>
           </div>
           <div class="fill-x ml-2">
             <label for="input-crunchbase-id">Crunchbase id</label>
