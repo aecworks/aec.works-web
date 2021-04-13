@@ -55,6 +55,7 @@ import Icon from '@/components/Icon.vue'
 import Card from '@/components/Card.vue'
 import Hashtag from '@/components/Hashtag'
 import LazyImg from '@/components/LazyImg'
+import { clapForCount } from '@/libs/sounds'
 
 export default {
   name: 'CompanyCard',
@@ -90,6 +91,7 @@ export default {
       await waitForLogin()
       const clapCount = await api.postCompanyClap(company.slug)
       this.localClapCount = clapCount
+      clapForCount(clapCount)
     },
   },
 }

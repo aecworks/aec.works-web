@@ -81,6 +81,7 @@ import Discussion from '@/components/Discussion'
 import Hashtag from '@/components/Hashtag'
 import LazyImg from '@/components/LazyImg'
 import { waitForLogin } from '@/mixins'
+import { clapForCount } from '@/libs/sounds'
 
 export default {
   name: 'Company',
@@ -137,6 +138,7 @@ export default {
       await waitForLogin()
       const clapCount = await api.postCompanyClap(company.slug)
       this.localClapCount = clapCount
+      clapForCount(clapCount)
     },
     handleHashtagClick(hashtagSlug) {
       this.$router.push({ name: 'CompanyList', query: { hashtags: hashtagSlug } })
