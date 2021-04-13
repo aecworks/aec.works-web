@@ -15,7 +15,7 @@
           {{ count === 1 ? 'company' : 'companies' }})
         </p>
       </div>
-      <div v-else>
+      <div v-if="!items.length && !isLoading">
         <p class="mt-1 sans small muted">No Results</p>
       </div>
     </div>
