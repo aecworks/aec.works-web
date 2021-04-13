@@ -3,12 +3,21 @@
     <div class="content">
       <Loader v-if="isLoading" />
       <CompanyCard
-        v-for="(company, index) in items"
+        v-for="company in items"
         :key="company.id"
-        v-waypoint="{ active: index + 1 === items.length, callback: onVisible }"
         v-bind="{ company }"
         @hashtagClick="handleHashtagClick"
       />
+      <div v-if="items.length">
+        <Pagination :num-pages="numPages" @click="handlePageClick"></Pagination>
+        <p class="mt-1 sans small muted">
+          Showing Page {{ $route.query.page || 1 }} of {{ numPages }} ({{ count }}
+          {{ count === 1 ? 'company' : 'companies' }})
+        </p>
+      </div>
+      <div v-else>
+        <p class="mt-1 sans small muted">No Results</p>
+      </div>
     </div>
     <div class="sidebar">
       <TextInput
@@ -20,11 +29,12 @@
       <label class="mt-1">Hashtags</label>
       <HashtagInput :initial-tags="initialQueryHashtags" @changed="handleHashtagFilterChanged" />
 
-      <p class="mt-1 sans small muted">
-        Showing {{ count }} {{ count === 1 ? 'company' : 'companies' }}
-      </p>
+      <!-- TODO see all hashtags -->
+      <div v-if="false" class="mt-1">
+        <Button :kind="'text'">See All Hashtags</Button>
+      </div>
 
-      <div class="mb-1">
+      <div class="mt-2 mb-2">
         <Button v-if="userIsEditor" @click="handleAdd">Add Company</Button>
       </div>
     </div>
@@ -34,6 +44,7 @@
 <script>
 import { USERS } from '@/store/users'
 import Button from '../components/forms/Button.vue'
+import Pagination from '../components/Pagination.vue'
 import HashtagInput from '../components/forms/HashtagInput.vue'
 import Loader from '../components/Loader.vue'
 import TextInput from '../components/forms/TextInput.vue'
@@ -54,6 +65,7 @@ export default {
     Loader,
     HashtagInput,
     Button,
+    Pagination,
   },
   props: {
     search: {
@@ -67,9 +79,11 @@ export default {
   },
   data() {
     return {
-      items: [],
-      offset: 0,
+      PAGE_SIZE: 10,
+      numPages: 1,
+      hasMore: false,
       count: 0,
+      items: [],
       isLoading: true,
       searchQuery: '',
       initialQueryHashtags: [],
@@ -79,9 +93,6 @@ export default {
     userIsEditor() {
       return this.$store.getters[USERS.IS_EDITOR]
     },
-    hasMore() {
-      return this.count > this.items.length
-    },
   },
   created() {
     if (this.hashtags) {
@@ -90,34 +101,44 @@ export default {
     if (this.search) {
       this.searchQuery = this.search
     }
-    this.fetchItems(0)
+    const pageNumber = this.$route.query.page || 1
+    this.fetchItems(pageNumber)
   },
   methods: {
     refetch() {
+      this.$router.replace({ query: { ...this.$route.query, page: 1 } }).catch(() => {})
       this.items = []
       this.fetchItems(0)
     },
 
-    async fetchItems(offset) {
+    async fetchItems(pageNumber) {
+      this.items = []
+      this.isLoading = true
       let query = {
-        offset,
+        page: pageNumber,
         hashtags: this.hashtags,
         search: this.searchQuery,
       }
       // Remove null/undefined
       query = Object.entries(query).reduce((a, [k, v]) => (v ? ((a[k] = v), a) : a), {})
 
-      const { results, count } = await api.getCompanies(query)
-      this.items = [...this.items, ...results]
-      this.offset = this.offset + results.length
+      const { results, count, next } = await api.getCompanies(query)
+      this.numPages = Math.ceil(count / this.PAGE_SIZE)
+      this.items = results
       this.count = count
-
+      this.hasMore = next !== null
       this.isLoading = false
+
+      if (this.hasMore) {
+        // Preload Next
+        query.page = Number(pageNumber) + 1
+        api.getCompanies(query)
+      }
     },
 
     handleSearchInput: debounce(function (query) {
       if (query) {
-        this.$router.replace({ query: { ...this.$route.query, search: query } })
+        this.$router.replace({ query: { ...this.$route.query, search: query } }).catch(() => {})
       } else {
         popQuery(this.$router, this.$route.query, 'search')
       }
@@ -127,7 +148,9 @@ export default {
     handleHashtagFilterChanged(tags) {
       if (tags.length) {
         const hashtagStr = tags.join(',')
-        this.$router.replace({ query: { ...this.$route.query, hashtags: hashtagStr } })
+        this.$router
+          .replace({ query: { ...this.$route.query, hashtags: hashtagStr } })
+          .catch(() => {})
       } else {
         popQuery(this.$router, this.$route.query, 'hashtags')
       }
@@ -143,10 +166,9 @@ export default {
       this.$router.push({ name: 'CompanyNew' })
     },
 
-    onVisible({ going }) {
-      if (going === 'in' && this.hasMore) {
-        this.fetchItems(this.offset)
-      }
+    handlePageClick(pageNumber) {
+      this.$router.replace({ query: { ...this.$route.query, page: pageNumber } })
+      this.fetchItems(pageNumber)
     },
   },
 }

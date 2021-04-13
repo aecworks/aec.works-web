@@ -132,7 +132,9 @@ class Api {
   }
 
   getCompanyRevisions(slug) {
-    return this._get(`community/companies/${slug}/revisions/`)
+    return this._get(`community/companies/${slug}/revisions/`, {
+      headers: { 'Cache-Control': 'no-cache' },
+    })
   }
 
   postCompany(company) {

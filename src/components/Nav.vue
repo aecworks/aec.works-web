@@ -39,8 +39,8 @@ export default {
       navExpanded: false,
       routes: [
         { text: 'companies', name: 'CompanyList' },
-        { text: 'feed', name: 'PostList', label: '( beta )' },
-        { text: 'people', name: 'PersonList' },
+        // { text: 'feed', name: 'PostList', label: '( beta )' },
+        // { text: 'people', name: 'PersonList' },
       ],
     }
   },
@@ -121,10 +121,10 @@ export default {
   .nav-list {
     scroll-snap-type: x mandatory;
 
-    @include for-large-up {
-      width: 100%;
-      display: flex;
-    }
+    // @include for-large-up {
+    width: 100%;
+    display: flex;
+    // }
 
     .nav-item {
       scroll-snap-align: center;
@@ -147,10 +147,10 @@ export default {
         }
       }
       &.profile {
-        @include for-large-up {
-          margin-left: auto;
-          margin-right: 0;
-        }
+        // @include for-large-up {
+        margin-left: auto;
+        margin-right: 0;
+        // }
         a:hover {
           text-decoration: none;
           border-bottom: none;

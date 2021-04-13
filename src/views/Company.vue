@@ -1,11 +1,12 @@
 <template>
   <div class="wrapper sm-grid-sidebar-down">
-    <div v-if="company" class="content">
+    <div v-if="company" class="content-header">
       <div class="company-images">
-        <lazy-img class="logo" :src="company.logoUrl || defaultLogo" alt="Company Logo" />
         <lazy-img class="cover" :src="company.coverUrl || defaultCover" alt="Company Cover Image" />
+        <lazy-img class="logo" :src="company.logoUrl || defaultLogo" alt="Company Logo" />
       </div>
-
+    </div>
+    <div v-if="company" class="content">
       <h1 class="mt-2">
         {{ company.name }}
         <span class="small muted ml">{{ company.location || 'Somewhere' }}</span>
@@ -24,7 +25,13 @@
 
       <div class="mt-2">
         <label>Tags</label>
-        <Hashtag v-for="hashtagSlug in company.hashtags" :key="hashtagSlug" :slug="hashtagSlug" />
+        <Hashtag
+          v-for="hashtagSlug in company.hashtags"
+          :key="hashtagSlug"
+          :slug="hashtagSlug"
+          clickable
+          @click="handleHashtagClick(hashtagSlug)"
+        />
       </div>
 
       <div v-if="company.articles.length" class="mt-2">
@@ -38,17 +45,15 @@
     </div>
 
     <div v-if="company" class="sidebar">
-      <div>
+      <!-- <label>Claps</label> -->
+      <div class="mt-2">
         <Icon icon="clap" clickable @click="handleClap(company)">
           {{ localClapCount || company.clapCount }}
         </Icon>
       </div>
-      <div>
-        <Icon icon="chat">{{ company.threadSize || 0 }}</Icon>
-      </div>
 
-      <div class="mt-2">
-        <label>Share</label>
+      <div v-if="false" class="mt-2">
+        <label></label>
         <SocialShare />
       </div>
 
@@ -58,8 +63,8 @@
       </div>
     </div>
 
-    <div class="footer">
-      <Discussion v-if="company && company.threadId" :thread-id="company.threadId" />
+    <div v-if="company && company.threadId" class="footer">
+      <Discussion :thread-id="company.threadId" />
     </div>
   </div>
 </template>
@@ -133,6 +138,9 @@ export default {
       const clapCount = await api.postCompanyClap(company.slug)
       this.localClapCount = clapCount
     },
+    handleHashtagClick(hashtagSlug) {
+      this.$router.push({ name: 'CompanyList', query: { hashtags: hashtagSlug } })
+    },
   },
 }
 </script>
@@ -147,19 +155,19 @@ export default {
   position: relative;
   .logo {
     position: absolute;
-    width: 100px;
-    height: 100px;
-    top: 25px;
-    right: 25px;
+    width: 80px;
+    height: 80px;
+    bottom: -25px;
+    left: 10px;
     @extend .border-thin;
+    @include shadow-color($dark);
   }
   .cover {
     display: block; // Remove gap below image
-    height: 100px;
+    height: 200px; // match $content-header-height;
     width: 100%;
     object-fit: cover;
     object-position: center;
-
     @extend .border-thin;
   }
 }

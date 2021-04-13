@@ -19,11 +19,11 @@
           <p class="sans">{{ profile.bio }}</p>
 
           <!-- TODO Make Social Media Component -->
-          <label class="mt-1">Social</label>
-          <div class="mt">
-            <Icon icon="twitter" clickable></Icon>
-            <Icon icon="linkedin" clickable></Icon>
-          </div>
+          <!-- <label class="mt-1">Social</label> -->
+          <!-- <div class="mt"> -->
+          <!-- <Icon icon="twitter" clickable></Icon> -->
+          <!-- <Icon icon="linkedin" clickable></Icon> -->
+          <!-- </div> -->
         </div>
         <div class="profile-activity">
           <div>
@@ -43,10 +43,10 @@
       </div>
     </div>
     <div class="sidebar hidden-sm">
-      <div class="mt-2">
+      <!-- <div class="mt-2">
         <label>Share</label>
         <SocialShare />
-      </div>
+      </div> -->
     </div>
     <div class="footer">
       <div v-if="isSelf" class="mt-3">
@@ -61,11 +61,11 @@
 </template>
 
 <script>
-import SocialShare from '../components/SocialShare.vue'
 import TwitterFeed from '../components/TwitterFeed.vue'
 import LazyImg from '../components/LazyImg.vue'
-import Icon from '../components/Icon.vue'
 import api from '@/api'
+// import Icon from '../components/Icon.vue'
+// import SocialShare from '../components/SocialShare.vue'
 
 export default {
   name: 'Person',
@@ -75,7 +75,7 @@ export default {
       title: () => (profile && profile.name ? profile.name : 'People'),
     }
   },
-  components: { Icon, LazyImg, TwitterFeed, SocialShare },
+  components: { LazyImg, TwitterFeed },
   props: {
     slug: { required: true, type: String },
   },

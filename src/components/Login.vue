@@ -160,22 +160,19 @@ export default {
 
   .login-info {
     @include for-large-up {
-      // flex-basis: 50%;
     }
     display: flex;
     flex-direction: column;
     .logo {
+      height: 100px;
       margin-bottom: 1.5rem;
     }
   }
   .login-form {
     @include for-large-up {
-      // flex-basis: 25%;
     }
 
     display: flex;
-    // flex-direction: column;
-
     align-items: center;
     justify-content: center;
     .login-form-social {

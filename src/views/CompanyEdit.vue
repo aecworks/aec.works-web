@@ -23,13 +23,16 @@
 
         <div class="flex">
           <div class="fill-x">
-            <label for="input-twitter-handle">Twitter handle</label>
-            <input
-              id="input-twitter-handle"
-              v-model="company.twitter"
-              type="text"
-              class="input fill-x"
-            />
+            <label for="input-twitter-handle">Twitter Handle</label>
+            <div class="input-group">
+              <span class="input-group-prefix">@</span>
+              <input
+                id="input-twitter-handle"
+                v-model="company.twitter"
+                class="input input-with-prefix fill-x"
+                type="text"
+              />
+            </div>
           </div>
           <div class="fill-x ml-2">
             <label for="input-crunchbase-id">Crunchbase id</label>
@@ -90,7 +93,7 @@
       <h3 class="mb-2">Revisions</h3>
       <div v-for="rev in revisions" :key="rev.id" class="revisions">
         <label v-if="rev.id == company.lastRevisionId" class="mb">👇Applied 👇</label>
-        <label v-if="rev.approvedBy && rev.id == company.id" class="mb">👇Previwing 👇</label>
+        <label v-if="rev.id == company.id" class="mb">👇Previwing 👇</label>
         <h5>{{ rev.createdAt | calendar }}</h5>
         <span class="muted small">{{ rev.createdBy.name }}</span>
         <div>

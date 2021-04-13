@@ -30,7 +30,7 @@
           :key="slug"
           :slug="slug"
           clickable
-          @click="$emit('hashtag-click', slug)"
+          @click="$emit('hashtagClick', slug)"
         />
       </div>
 
