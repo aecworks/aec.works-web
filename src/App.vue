@@ -25,6 +25,7 @@ export default {
     title: 'aec.works',
     // all titles will be injected into this template
     titleTemplate: '%s | aec.works',
+    keywords: 'aec,startups,technology,architecture,engineering,construction,design',
     htmlAttrs: {
       lang: 'en',
       amp: false,

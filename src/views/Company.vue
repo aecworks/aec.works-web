@@ -88,7 +88,7 @@ export default {
   metaInfo() {
     const company = this.company
     return {
-      title: () => (company && company.name ? company.name : company.slug || 'Company'),
+      title: () => (company && company.name ? company.name : 'Company'),
     }
   },
   components: {
