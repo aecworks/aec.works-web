@@ -56,10 +56,8 @@ import { waitForLogin } from '@/mixins'
 
 export default {
   name: 'CompanyList',
-  metaInfo() {
-    return {
-      title: 'Companies',
-    }
+  metaInfo: {
+    title: 'Companies',
   },
   components: {
     CompanyCard,
