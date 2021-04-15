@@ -32,6 +32,12 @@ export default {
       isResultSelected: false,
     }
   },
+  watch: {
+    value(newVal) {
+      // Update Query when set from prop - this allow input to be mounted and proped to be set later
+      this.query = newVal
+    },
+  },
   async mounted() {
     try {
       this.google = await gmapsInit()

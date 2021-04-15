@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper sm-grid-sidebar-down">
-    <div v-if="company" class="content">
+    <div class="content">
       <h1>{{ isEditing ? 'Edit' : 'New' }}</h1>
 
       <form class="form">
