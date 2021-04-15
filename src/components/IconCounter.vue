@@ -1,5 +1,5 @@
 <template>
-  <div class="icon" @click="$emit('click')">
+  <div class="icon" :class="{ pointer: clickable }" @click="$emit('click')">
     <img :src="iconPath" />
     <span class="small">{{ count }}</span>
   </div>
@@ -16,6 +16,10 @@ export default {
     icon: {
       required: true,
       type: String,
+    },
+    clickable: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
