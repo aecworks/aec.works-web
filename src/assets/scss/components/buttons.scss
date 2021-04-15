@@ -40,7 +40,8 @@
     }
 
     &.disabled {
-        opacity: .5
+        opacity: .5;
+        pointer-events: none;
     }
     &.disabled:hover {
         box-shadow: none;

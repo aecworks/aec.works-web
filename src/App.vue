@@ -22,9 +22,10 @@ export default {
   name: 'App',
   metaInfo: {
     // if no subcomponents specify a metaInfo.title, this title will be used
-    title: 'Welcome',
+    title: 'aec.works',
     // all titles will be injected into this template
     titleTemplate: '%s | aec.works',
+    keywords: 'aec,startups,technology,architecture,engineering,construction,design',
     htmlAttrs: {
       lang: 'en',
       amp: false,

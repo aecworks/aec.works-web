@@ -1,13 +1,31 @@
 <template>
   <div class="pagination-row">
-    <div v-if="hasBefore" class="pagination-number button" @click="$emit('click', 1)">First</div>
-    <div v-if="hasBefore" class="pagination-number button" @click="$emit('click', currentPage - 1)">
+    <div
+      :class="{ disabled: !hasBefore }"
+      class="pagination-number button"
+      @click="$emit('click', 1)"
+    >
+      First
+    </div>
+    <div
+      :class="{ disabled: !hasBefore }"
+      class="pagination-number button"
+      @click="$emit('click', currentPage - 1)"
+    >
       Previous
     </div>
-    <div v-if="hasMore" class="pagination-number button" @click="$emit('click', currentPage + 1)">
+    <div
+      :class="{ disabled: !hasMore }"
+      class="pagination-number button"
+      @click="$emit('click', currentPage + 1)"
+    >
       Next
     </div>
-    <div v-if="hasMore" class="pagination-number button" @click="$emit('click', numPages)">
+    <div
+      :class="{ disabled: !hasMore }"
+      class="pagination-number button"
+      @click="$emit('click', numPages)"
+    >
       Last
     </div>
   </div>

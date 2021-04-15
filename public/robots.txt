@@ -1,6 +1,5 @@
 User-agent: *
-Allow: /
-Disallow:/people/
-Disallow:/people/*
+Disallow:/people
+Disallow:/posts
 
 Sitemap: https://aec.works/sitemap.xml

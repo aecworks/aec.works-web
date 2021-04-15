@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper sm-grid-sidebar-down">
-    <div v-if="company" class="content">
+    <LoaderOverlay v-if="isLoadingBlocked"></LoaderOverlay>
+    <div class="content">
       <h1>{{ isEditing ? 'Edit' : 'New' }}</h1>
 
       <form class="form">
@@ -113,6 +114,7 @@
 </template>
 
 <script>
+import LoaderOverlay from '../components/LoaderOverlay.vue'
 import HashtagInput from '../components/forms/HashtagInput'
 import Button from '../components/forms/Button'
 import CompanyCard from '../components/CompanyCard'
@@ -141,6 +143,7 @@ export default {
     GmapsAutocomplete,
     HashtagInput,
     ImageUploader,
+    LoaderOverlay,
   },
   props: {
     slug: {
@@ -150,6 +153,7 @@ export default {
   },
   data() {
     return {
+      isLoadingBlocked: false,
       defaultImageUrl: require('@/assets/images/image.svg'),
       errors: null,
       revisions: [],
@@ -187,20 +191,26 @@ export default {
   methods: {
     async handleSave() {
       await waitForLogin()
-      if (this.isEditing) {
-        // Is Editing Company
-        await api.postCompanyRevision(this.company.slug, this.company)
-        this.revisions = await api.getCompanyRevisions(this.slug)
-      } else {
-        // Is Creating New
-        const response = await api.postCompany(this.company)
-        if (!response.errors) {
-          const company = response
-          this.$router.push({ name: 'Company', params: { slug: company.slug } })
+      this.isLoadingBlocked = true
+      try {
+        if (this.isEditing) {
+          // Is Editing Company
+          await api.postCompanyRevision(this.company.slug, this.company)
+          this.revisions = await api.getCompanyRevisions(this.slug)
         } else {
-          this.errors = response.errors
+          // Is Creating New
+          const response = await api.postCompany(this.company)
+          if (!response.errors) {
+            const company = response
+            this.$router.push({ name: 'Company', params: { slug: company.slug } })
+          } else {
+            this.errors = response.errors
+          }
         }
+      } catch (e) {
+        console.error(e)
       }
+      this.isLoadingBlocked = false
     },
 
     handleCancelEdit() {
@@ -240,13 +250,19 @@ export default {
     },
 
     async handleRevisionApprove(revisionId) {
-      await api.postCompanyRevisionApprove(revisionId)
-      this.revisions = await api.getCompanyRevisions(this.slug)
-      this.company = await api.getCompany(this.slug)
-      this.isReadyForHashtags = false
-      this.$nextTick(() => {
-        this.isReadyForHashtags = true
-      })
+      this.isLoadingBlocked = true
+      try {
+        await api.postCompanyRevisionApprove(revisionId)
+        this.revisions = await api.getCompanyRevisions(this.slug)
+        this.company = await api.getCompany(this.slug)
+        this.isReadyForHashtags = false
+        this.$nextTick(() => {
+          this.isReadyForHashtags = true
+        })
+      } catch (e) {
+        console.error(e)
+      }
+      this.isLoadingBlocked = false
     },
 
     showRevision(revision) {

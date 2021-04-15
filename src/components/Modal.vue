@@ -10,16 +10,6 @@
 <script>
 export default {
   name: 'Modal',
-  components: {},
-  props: {
-    isActive: {
-      type: Boolean,
-    },
-  },
-  data() {
-    return {}
-  },
-  created() {},
   methods: {
     onOverlayClick(el) {
       if (el.target.className === 'modal-overlay') {
