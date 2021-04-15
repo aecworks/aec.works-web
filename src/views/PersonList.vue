@@ -1,10 +1,10 @@
 <template>
   <div class="wrapper">
     <div class="content">
-      <div class="sans small muted mb-1 people-count">{{ items.length }} lovely people</div>
-      <p v-for="profile in items" :key="profile.slug">
+      <div v-for="profile in items" :key="profile.slug">
         <PeopleAvatar :profile="profile" />
-      </p>
+      </div>
+      <a v-if="hasMore" @click="handleLoadMore">load more</a>
     </div>
     <div class="sidebar">
       <TextInput
@@ -13,6 +13,7 @@
         placeholder="search"
         @input="handleSearchInput"
       />
+      <div class="mt-1 sans small muted">{{ count }} lovely people</div>
     </div>
   </div>
 </template>
@@ -32,18 +33,25 @@ export default {
   data() {
     return {
       items: [],
+      count: 0,
       searchQuery: '',
     }
   },
-  computed: {},
+  computed: {
+    hasMore() {
+      return this.items.length < this.count
+    },
+  },
   async created() {
-    const { results: items } = await api.getProfiles()
-    this.items = items
+    this.fetchItems(0)
   },
   methods: {
     refetch() {
       this.items = []
       this.fetchItems(0)
+    },
+    handleLoadMore() {
+      this.fetchItems(this.items.length)
     },
     async fetchItems(offset) {
       let query = {
@@ -52,8 +60,8 @@ export default {
       }
       query = query = Object.entries(query).reduce((a, [k, v]) => (v ? ((a[k] = v), a) : a), {})
       const { results, count } = await api.getProfiles(query)
+
       this.items = [...this.items, ...results]
-      this.offset = this.offset + results.length
       this.count = count
     },
     handleSearchInput: debounce(function (query) {
@@ -63,15 +71,9 @@ export default {
         popQuery(this.$router, this.$route.query, 'search')
       }
       this.refetch()
-    }, 200),
+    }, 100),
   },
 }
 </script>
 
-<style lang="scss" scoped>
-.people-count {
-  @include for-large-down {
-    margin-top: 1rem;
-  }
-}
-</style>
+<style lang="scss" scoped></style>
