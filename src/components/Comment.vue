@@ -1,40 +1,39 @@
 <template>
-  <!-- // NEED TO CLEAN UP AFTER REMOVING NESTED COMMENT SUPPORT -->
   <div>
     <div class="comment">
-      <!-- <div v-if="comment.level != 0" class="comment-prefix" :class="{ 'not-first': index !== 0 }" /> -->
       <div class="fill-x">
         <h4>
           {{ comment.profile.name || 'No One' }}
           <span class="comment-timestamp">{{ comment.createdAt | fromNow }}</span>
         </h4>
 
-        <p class="comment-text">{{ comment.text }}</p>
-
-        <Loader v-if="isLoading" />
-
-        <div class="flex flex-center comment-footer">
+        <div class="flex fill-x">
+          <p class="comment-text">{{ comment.text }}</p>
           <IconCounter
+            class="flex-right"
+            :class="{ unclapped: (comment.clapCount || localClapCount) == 0 }"
             :icon="'clap'"
             :count="comment.clapCount || localClapCount"
             clickable
             @click="handleClap(comment)"
           />
         </div>
+
+        <!-- <div class="flex flex-center comment-footer"> -->
+        <!-- </div> -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Loader from './Loader.vue'
 import api from '@/api'
 import IconCounter from '@/components/IconCounter'
 import { waitForLogin } from '@/mixins'
 
 export default {
   name: 'Comment',
-  components: { IconCounter, Loader },
+  components: { IconCounter },
   props: {
     threadId: {
       type: Number,
@@ -51,45 +50,21 @@ export default {
   },
   data() {
     return {
-      comments: [],
-      offset: 0,
-      count: 0,
-      isReplying: false,
       isLoading: false,
       localClapCount: 0,
-      // expanded: false, TODO
     }
   },
-  computed: {
-    hasReplies() {
-      return this.comment.replyCount > 0
-    },
-    hasMore() {
-      return this.count > this.comments.length
-    },
-  },
+  computed: {},
   async created() {
     if (this.hasReplies) {
       this.fetchItems(0)
     }
   },
   methods: {
-    async fetchItems(offset) {
-      const { results, count } = await api.getCommentsByParentId(this.comment.id, { offset })
-      this.comments = [...this.comments, ...results]
-      this.offset = this.offset + results.length
-      this.count = count
-    },
     async handleClap({ id }) {
       await waitForLogin()
       const clapCount = await api.commentClap(id)
       this.localClapCount = clapCount
-    },
-    onVisible({ going }) {
-      // TODO: Make paginated loading util
-      if (going === 'in' && this.hasMore) {
-        this.fetchItems(this.offset)
-      }
     },
   },
 }
@@ -115,7 +90,8 @@ export default {
 }
 .comment-text {
   margin-top: 0.5rem;
-  margin-bottom: 1.25rem;
+  margin-left: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 .comment-timestamp {
   @extend .muted;
@@ -123,9 +99,6 @@ export default {
   margin-left: 0.5rem;
 }
 .comment-footer {
-  // margin-bottom: 1.5rem;
-  > * {
-    margin-right: 1rem;
-  }
+  margin-left: 0.5rem;
 }
 </style>

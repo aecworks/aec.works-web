@@ -4,13 +4,13 @@
       {{ comments.length || 0 }} {{ comments.length == 1 ? 'comment' : 'comments' }}
     </h3>
 
-    <Loader v-if="isLoading" />
     <Comment
       v-for="(comment, index) in comments"
       :key="comment.id"
       v-waypoint="{ active: index + 1 === comments.length, callback: onVisible }"
       v-bind="{ threadId, comment, index }"
     />
+    <Loader v-if="isLoading" />
     <CommentReply class="root-comment" v-bind="{ threadId }" @replied="handleReplied" />
   </div>
 </template>

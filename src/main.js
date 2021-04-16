@@ -12,6 +12,7 @@ import VueWaypoint from 'vue-waypoint'
 import VueMeta from 'vue-meta'
 
 Vue.use(VueWaypoint)
+Vue.use(VueMeta)
 new Vue({
   router,
   store,
@@ -20,4 +21,3 @@ new Vue({
   },
   render: (h) => h(App),
 }).$mount('#app')
-Vue.use(VueMeta)
