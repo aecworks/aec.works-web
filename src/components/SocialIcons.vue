@@ -57,7 +57,7 @@ export default {
     @include shadow-color($dark);
   }
 
-  overflow-y: hidden;
+  overflow: hidden;
   height: 32px;
   max-width: 32px;
   transition: max-width 200ms ease-in-out;
