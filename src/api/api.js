@@ -108,15 +108,11 @@ class Api {
   }
 
   getCommentsByThreadId(threadId, query) {
-    return this._get(`community/comments/`, { query: { ...query, thread_id: threadId } })
+    return this._get(`community/comments/${threadId}/`, { query: { ...query } })
   }
 
-  getCommentsByParentId(commentId, query) {
-    return this._get(`community/comments/`, { query: { ...query, parent_id: commentId } })
-  }
-
-  postComment(text, threadId, parentId) {
-    return this._post(`community/comments/`, { body: { text, threadId, parentId } })
+  postComment(text, threadId) {
+    return this._post(`community/comments/${threadId}/`, { body: { text } })
   }
 
   getCompanyClapsByProfileSlug(slug) {
