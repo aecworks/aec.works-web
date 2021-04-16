@@ -1,4 +1,5 @@
-https://aec.works/sitemap.xml                       https://api.aec.works/sitemap.xml                       200
+https://aec.works/sitemap.xml                       https://api.aec.works/sitemaps/sitemap.xml              200
+https://aec.works/sitemaps/*                        https://api.aec.works/sitemaps/:splat                   200
 https://aec.works/api/*                             https://api.aec.works/:splat                            200
 https://aec.works/*                                 https://aec.works/                                      200
 
