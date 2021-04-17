@@ -26,9 +26,15 @@
         placeholder="search"
         @input="handleSearchInput"
       />
-      <label class="mt-1">Hashtags</label>
+      <label for="input-hashtags" class="mt-1">Hashtags</label>
       <HashtagInput :initial-tags="initialQueryHashtags" @changed="handleHashtagFilterChanged" />
 
+      <p class="mt-2">
+        <strong>aec.works</strong>
+        is a curated list of kick-ass product-oriented aec companies and startups.
+        <br />
+        <a href="/about">read more</a>
+      </p>
       <!-- TODO see all hashtags -->
       <div v-if="false" class="mt-1">
         <Button :kind="'text'">See All Hashtags</Button>
