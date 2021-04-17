@@ -21,10 +21,10 @@
       </h2>
 
       <!-- Company Description -->
-      <p class="mt-1">{{ company.description || '-' }}</p>
+      <p class="mt-0">{{ company.description || '-' }}</p>
 
       <!-- Company Hashtags -->
-      <div class="mt-1">
+      <div class="mt-0">
         <Hashtag
           v-for="slug in company.hashtags"
           :key="slug"

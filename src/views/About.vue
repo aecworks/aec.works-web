@@ -14,9 +14,9 @@
         interesting things in AEC.
       </p>
       <p>
-        As the list grew, I thought this could be of value to others, so created
+        As the list grew, I thought this could be of value to others, so
         <a href="https://AecStartups.com">AecStartups.com</a>
-        It was a simple one-page website that displayed this list along with some logos and images.
+        was born.
       </p>
       <p>
         As people discovered the project, I started receiving contributions from visitors. But the
