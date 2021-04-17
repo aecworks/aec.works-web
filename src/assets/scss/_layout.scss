@@ -45,6 +45,7 @@ body {
   }
 }
 
+
 .wrapper {
   margin: 0 auto;
   width: $wrapper-width-max;
@@ -86,7 +87,7 @@ body {
 
   .content {
     grid-area: content;
-
+    padding-bottom: 5rem;
     @include for-large-up {
       max-width: $content-width-max;
     }

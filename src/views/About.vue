@@ -1,42 +1,53 @@
 <template>
-  <div class="tos-container">
-    <div class="tos-header">
-      <h1 class="tos-title">About</h1>
-      <div class="tos-marker"></div>
-    </div>
-    <div class="mt-3">
+  <div class="wrapper">
+    <div class="content">
+      <h1 class="mt-1">About</h1>
+      <div class="marker"></div>
+
       <p>
         <strong>aec.works</strong>
         is a curated list of kick-ass product-oriented AEC companies and startups.
       </p>
-      <h2 class="mb-1 mt-3">History</h2>
+      <h2>Background</h2>
       <p>
-        In 2019, I started a small website called AecStartups.com started as a spreadsheet to track
-        what he thought were cool new companies springing up around AEC. The project is still live
-        at
-        <a href="http://aecstartups.com">aecstartups.com</a>
-        .
+        In 2019 while working at WeWork, I started a list of companies I thought were doign
+        interesting things in AEC.
       </p>
       <p>
-        As the word went around, it started to get contributions from visitors. But the experience
-        to view or collaborate was not great, and there was also no way to track/moderate changes to
-        improve content over time. It became a time-consuming task to moderate submissions and
-        format logos properly.
+        As the list grew, I thought this could be of value to others, so created
+        <a href="https://AecStartups.com">AecStartups.com</a>
+        It was a simple one-page website that displayed this list along with some logos and images.
       </p>
+      <p>
+        As people discovered the project, I started receiving contributions from visitors. But the
+        experience to view or collaborate was not great, and there was also no way to track/moderate
+        changes to improve content over time. It became a time-consuming task to moderate
+        submissions and format logos properly.
+      </p>
+      <!-- <h2>aec.works </h2> -->
       <p>
         <strong>aec.works</strong>
-        started as a redo of AecStartups, with a few changes:
+        started is a redo of AecStartups, with a few important improvements:
       </p>
-      <ul class="tos-list">
+      <ul class="mt-2 mb-2">
         <li class="ml-1">
           <p>
             • It is about
             <strong>all of AEC</strong>
-            and not just startups
+            and, not just startups
           </p>
         </li>
-        <li class="ml-1"><p>• It invites collaboration and has tools to manage content</p></li>
-        <li class="ml-1"><p>• It allows for discussion and user contributions</p></li>
+        <li class="ml-1"><p>• It's better looking, we think : )</p></li>
+        <li class="ml-1">
+          <p>
+            • It has a user accounts and ability to created and edit without leaving the website
+          </p>
+        </li>
+        <li class="ml-1">
+          <p>
+            • It's more interactive and engaging through commenting, likes, and posts (planned).
+          </p>
+        </li>
       </ul>
 
       <p>
@@ -44,37 +55,67 @@
         people to finalize and build the version you are seeing now.
       </p>
 
-      <h2 class="mb-1 mt-3">Building a community</h2>
+      <h2>Content Quality</h2>
 
       <p>
-        I am deeply inspired and grateful for all the communities that spring up around different
-        expertise and topics: Maxwell Render Forum, Grasshopper, Sketchup Forum, Stack Overflow,
-        Dynamo Forum, GitHub, and Slack Channels like python-aec or Architechie, just to name a few.
-        I attribute many of the skills I have acquired over the few years to the knowledge and
-        support these communities offer.
+        We believe the value of
+        <strong>aec.works</strong>
+        is not only on the platform itself, but the in community of editors and content curators.
+      </p>
+      <p>
+        <strong>aec.works</strong>
+        is not intended to be a comprehensive list of AEC companies, but a selected list that
+        includes only companies considered kick-ass by our editors.
+      </p>
+      <p>
+        If you intereseting on becoming a contributor just send us a note at
+        <a href="mailto:team@aec.works">team@aec.works.</a>
+      </p>
+
+      <h2>Project Contributors</h2>
+
+      <p>
+        <strong>aec.works</strong>
+        Was created by
+        <a href="https://twitter.com/gtalarico">Gui Talarico</a>
+        but has received valuable feedback and advice industry peers
+        <a href="https://twitter.com/andrewheumann">Andrew Heumann</a>
+        ,
+        <a href="https://twitter.com/dr_danieldavis">Daniel Davis</a>
+        ,
+        <a href="https://twitter.com/eirannejad">Ehsan Iran-Njead</a>
+        , and
+        <a href="https://twitter.com/tywygo">Tyler Goss</a>
+        ,
       </p>
 
       <p>
-        Although these technical forums are great, I believe there is value in bringing people
-        across the industry to a single place to exchange content and ideas. Generic social
-        platforms like Twitter and LinkedIn are not tailored for AEC, and content gets mixed with
-        and diluted by other unrelated topics and industries.
+        In 2020 as
+        <strong>aec.works</strong>
+        started shape, a group of other AEC technology enthusiasts began collaborating on the
+        project and are now core contributors of the project:
       </p>
 
+      <h3 class="mb-1 mt-2"><a href="https://twitter.com/danrocc">Daniel da Rocha</a></h3>
       <p>
-        Social platforms are ultimately all about the people and the community that forms around
-        them. Our goal with aec.works is to stay simple and bring lots of energy and great content
-        to everyone.
+        Architect turned developer and creator of
+        <a href="https://remotearchitects.club">remotearchitects.club</a>
+        , organizer of
+        <a href="https://architecturalnetworks.com/berlin">architecturalnetworks.com/berlin</a>
+        , and author of
+        <a href="http://theforeignarchitect.com ">theforeignarchitect.com</a>
+        .
       </p>
 
-      <h2 class="mb-1 mt-3">Vision</h2>
-
-      <p>Text about vision.</p>
-
-      <h2 class="mb-1 mt-3">People</h2>
-
-      <p>Talking about who you are and who we are, with names and photos!!</p>
-      <p>And never forget Justin!!</p>
+      <h3 class="mb-1 mt-2"><a href="https://twitter.com/dan__n">Daniel Nguyen</a></h3>
+      <p>
+        Also an architect turned developer and creator of
+        <a href="https://archdictionary.com/">archdictionary.com/</a>
+        , and doing
+        <a href="https://staircalculator.monograph.io/">some really cool stuff</a>
+        at
+        <a href="https://planner.monograph.io/">Monograph</a>
+      </p>
     </div>
   </div>
 </template>
