@@ -39,7 +39,12 @@
         <Icon :icon="'chat'" class="mr-1">
           <span class="small">{{ company.threadSize }}</span>
         </Icon>
-        <Icon :icon="'clap'" clickable @click="handleClapClick(company)">
+        <Icon
+          :icon="'clap'"
+          :class="{ unclapped: (localClapCount || company.clapCount) == 0 }"
+          clickable
+          @click="handleClapClick(company)"
+        >
           <span class="small">{{ localClapCount || company.clapCount }}</span>
         </Icon>
         <span class="small flex-right">{{ company.location }}</span>
