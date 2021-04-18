@@ -6,7 +6,7 @@
 
       <p>
         <strong>aec.works</strong>
-        is a curated list of kick-ass product-oriented AEC companies and startups.
+        is a curated list of innovative and product-oriented aec companies and startups.
       </p>
       <h2>Background</h2>
       <p>
@@ -55,23 +55,6 @@
         people to finalize and build the version you are seeing now.
       </p>
 
-      <h2>Content Quality</h2>
-
-      <p>
-        We believe the value of
-        <strong>aec.works</strong>
-        is not only on the platform itself, but the in community of editors and content curators.
-      </p>
-      <p>
-        <strong>aec.works</strong>
-        is not intended to be a comprehensive list of AEC companies, but a selected list that
-        includes only companies considered kick-ass by our editors.
-      </p>
-      <p>
-        If you intereseting on becoming a contributor just send us a note at
-        <a href="mailto:team@aec.works">team@aec.works.</a>
-      </p>
-
       <h2>Project Contributors</h2>
 
       <p>
@@ -84,7 +67,7 @@
       <h3 class="mb-1 mt-2"><a href="https://twitter.com/gtalarico">Gui Talarico</a></h3>
       <p>
         Architect turned developer and creator of
-        <a href="https://revitapidocs.com">remotearchitects.club</a>
+        <a href="https://revitapidocs.com">revitapidocs.com</a>
         and
         <a href="https://apidocs.co">apidocs.co</a>
         .
@@ -144,6 +127,24 @@
           <a href="https://twitter.com/tywygo">Tyler Goss</a>
         </li>
       </ul>
+
+      <h2>Content Quality</h2>
+
+      <p>
+        We believe the value of
+        <strong>aec.works</strong>
+        is not only on the platform itself, but the in the community of editors and content
+        curators.
+      </p>
+      <p>
+        <strong>aec.works</strong>
+        is not intended to be a comprehensive list of AEC companies, but a selected list that
+        includes only companies considered intereseting and innovative by our editors.
+      </p>
+      <p>
+        If you intereseting on becoming a contributor just send us a note at
+        <a href="mailto:team@aec.works">team@aec.works.</a>
+      </p>
     </div>
   </div>
 </template>
