@@ -35,7 +35,7 @@
         <div class="login-form-social flex flex-down">
           <div class="button dark icon" @click="oauthRedirect('github')">
             <span class="icon">
-              <img alt="Github Logo" class="button-icon" src="@/assets/images/github.svg" />
+              <img alt="Github Logo" class="button-icon" src="@/assets/images/github-login.svg" />
             </span>
             Login with Github
           </div>
