@@ -150,7 +150,8 @@ export default {
 <style lang="scss">
 .sidebar {
   @include for-large-up {
-    // margin-top: 130px;
+    margin-top: 1rem;
+    text-align: right;
   }
 }
 .company-images {
@@ -162,7 +163,12 @@ export default {
     bottom: -25px;
     left: 10px;
     @extend .border-thin;
-    @include shadow-color($dark);
+    // Custom:
+    border-radius: 5px;
+    border-color: $dark-gray;
+    border-width: 1px;
+    box-shadow: 0 5px 10px -10px rgba(0, 0, 0, 0.25);
+    background-color: white;
   }
   .cover {
     display: block; // Remove gap below image
@@ -171,6 +177,7 @@ export default {
     object-fit: cover;
     object-position: center;
     @extend .border-thin;
+    border-color: $dark-gray;
   }
 }
 </style>

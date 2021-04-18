@@ -1,6 +1,6 @@
 <template>
   <div class="discussion">
-    <h3 class="mb-1">
+    <h3 class="mb-2">
       {{ comments.length || 0 }} {{ comments.length == 1 ? 'comment' : 'comments' }}
     </h3>
 

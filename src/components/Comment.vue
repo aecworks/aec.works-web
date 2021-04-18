@@ -3,14 +3,20 @@
     <div class="comment">
       <div class="fill-x">
         <h4>
-          {{ comment.profile.name || 'No One' }}
-          <span class="comment-timestamp">{{ comment.createdAt | fromNow }}</span>
+          <div class="comment-profile flex fill">
+            <img class="profile-avatar" :src="comment.profile.avatarUrl" />
+            <span class="profile-name">{{ comment.profile.name || 'No One' }}</span>
+            <span class="comment-timestamp">{{ comment.createdAt | fromNow }}</span>
+          </div>
         </h4>
 
-        <div class="flex fill-x">
-          <p class="comment-text">{{ comment.text }}</p>
+        <!-- <div class="flex fill-x"> -->
+        <div class="comment-text">
+          <p class="mb-0">
+            {{ comment.text }}
+          </p>
           <IconCounter
-            class="flex-right"
+            class="mt"
             :class="{ unclapped: (comment.clapCount || localClapCount) == 0 }"
             :icon="'clap'"
             :count="comment.clapCount || localClapCount"
@@ -18,9 +24,6 @@
             @click="handleClap(comment)"
           />
         </div>
-
-        <!-- <div class="flex flex-center comment-footer"> -->
-        <!-- </div> -->
       </div>
     </div>
   </div>
@@ -75,30 +78,25 @@ export default {
 .comment {
   display: flex;
   margin-bottom: 2rem;
+}
 
-  .comment-prefix {
-    flex-shrink: 0;
-    height: 1rem;
-    width: 1rem;
-    border-left: 1px solid $light-gray;
-    border-bottom: 1px solid $light-gray;
-    margin-right: 1rem;
-    &.not-first {
-      border: none;
-    }
+.comment-profile {
+  line-height: 1.5rem;
+  .profile-avatar {
+    height: 22px;
+    border-radius: 11px;
+    @extend .border-thin;
+    margin-right: 0.5rem;
+  }
+  .comment-timestamp {
+    @extend .muted;
+    font-size: 80%;
+    margin-left: 0.5rem;
   }
 }
 .comment-text {
   margin-top: 0.5rem;
-  margin-left: 0.5rem;
+  // margin-left: 0.5rem;
   margin-bottom: 0.5rem;
-}
-.comment-timestamp {
-  @extend .muted;
-  font-size: 80%;
-  margin-left: 0.5rem;
-}
-.comment-footer {
-  margin-left: 0.5rem;
 }
 </style>
