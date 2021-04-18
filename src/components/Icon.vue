@@ -19,10 +19,17 @@ export default {
       required: true,
       type: String,
     },
+    iconHover: {
+      required: true,
+      type: String,
+    },
   },
   computed: {
     iconPath() {
       return require(`@/assets/images/${this.icon}.svg`)
+    },
+    iconHoverPath() {
+      return require(`@/assets/images/${this.iconHover}.svg`)
     },
   },
 }

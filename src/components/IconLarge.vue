@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: 'IconCounter',
+  name: 'IconLarge',
   props: {
     clickable: {
       type: Boolean,

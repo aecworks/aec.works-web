@@ -134,12 +134,3 @@
   -ms-user-select: none;
   user-select: none;
 }
-
-.unclapped {
-  filter: saturate(0);
-  opacity: 0.25;
-  &:hover {
-    filter: saturate(1);
-    opacity: 1;
-  }
-}

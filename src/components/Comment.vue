@@ -9,20 +9,20 @@
             <span class="comment-timestamp">{{ comment.createdAt | fromNow }}</span>
           </div>
         </h4>
-
-        <!-- <div class="flex fill-x"> -->
         <div class="comment-text">
           <p class="mb-0">
             {{ comment.text }}
           </p>
-          <IconCounter
+          <Icon
             class="mt"
             :class="{ unclapped: (comment.clapCount || localClapCount) == 0 }"
-            :icon="'clap'"
-            :count="comment.clapCount || localClapCount"
+            :icon="'clap_off'"
+            :icon-hover="'clap_off'"
             clickable
             @click="handleClap(comment)"
-          />
+          >
+            {{ comment.clapCount || localClapCount }}
+          </Icon>
         </div>
       </div>
     </div>
@@ -31,12 +31,12 @@
 
 <script>
 import api from '@/api'
-import IconCounter from '@/components/IconCounter'
+import Icon from '@/components/Icon'
 import { waitForLogin } from '@/mixins'
 
 export default {
   name: 'Comment',
-  components: { IconCounter },
+  components: { Icon },
   props: {
     threadId: {
       type: Number,
