@@ -36,16 +36,16 @@
 
       <!-- Footer -->
       <div class="flex mt-1">
-        <Icon :icon="'chat'" class="mr-1">
+        <Icon :icon="company.threadSize ? 'chat' : 'chat_off'" class="mr-1">
           <span class="small">{{ company.threadSize }}</span>
         </Icon>
         <Icon
-          :icon="'clap'"
-          :class="{ unclapped: (localClapCount || company.clapCount) == 0 }"
+          :icon="company.userDidClap ? 'clap' : 'clap_off'"
+          icon-hover="clap"
           clickable
           @click="handleClapClick(company)"
         >
-          <span class="small">{{ localClapCount || company.clapCount }}</span>
+          <span class="small">{{ company.clapCount }}</span>
         </Icon>
         <span class="small flex-right">{{ company.location }}</span>
       </div>
@@ -72,9 +72,7 @@ export default {
     },
   },
   data() {
-    return {
-      localClapCount: null,
-    }
+    return {}
   },
   computed: {
     routerLinkTo() {
@@ -93,9 +91,11 @@ export default {
       }
     },
     async handleClapClick(company) {
+      // Refactor, duplicated in Company
       await waitForLogin()
       const clapCount = await api.postCompanyClap(company.slug)
-      this.localClapCount = clapCount
+      company.clapCount = clapCount
+      company.userDidClap = true
       clapForCount(clapCount)
     },
   },

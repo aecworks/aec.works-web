@@ -1,21 +1,28 @@
 <template>
   <div class="discussion">
-    <h3 class="mb-2">
-      {{ comments.length || 0 }} {{ comments.length == 1 ? 'comment' : 'comments' }}
-    </h3>
+    <h3 class="mb-2">{{ count || 0 }} {{ count == 1 ? 'comment' : 'comments' }}</h3>
 
     <Comment
       v-for="(comment, index) in comments"
       :key="comment.id"
-      v-waypoint="{ active: index + 1 === comments.length, callback: onVisible }"
       v-bind="{ threadId, comment, index }"
     />
     <Loader v-if="isLoading" />
+    <Button
+      v-if="hasMore"
+      kind="text"
+      class="mb-3"
+      aria-label="load more comments"
+      @click="fetchItems(offset)"
+    >
+      Load More Comments
+    </Button>
     <CommentReply class="root-comment" v-bind="{ threadId }" @replied="handleReplied" />
   </div>
 </template>
 
 <script>
+import Button from './forms/Button.vue'
 import api from '@/api'
 import Comment from '@/components/Comment'
 import CommentReply from '@/components/CommentReply'
@@ -27,6 +34,7 @@ export default {
     Comment,
     CommentReply,
     Loader,
+    Button,
   },
   props: {
     threadId: { required: true, type: Number },

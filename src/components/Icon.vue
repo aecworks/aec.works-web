@@ -1,7 +1,13 @@
 <template>
-  <div class="icon" :class="{ pointer: clickable }" @click="$emit('click')">
+  <div
+    class="icon"
+    :class="{ pointer: clickable }"
+    @click="$emit('click')"
+    @mouseover="isHovering = true"
+    @mouseout="isHovering = false"
+  >
     <div class="flex">
-      <img :src="iconPath" />
+      <img :src="isHovering ? iconHoverPath : iconPath" />
       <slot></slot>
     </div>
   </div>
@@ -20,9 +26,17 @@ export default {
       type: String,
     },
     iconHover: {
-      required: true,
+      required: false,
       type: String,
+      default: function () {
+        return this.icon
+      },
     },
+  },
+  data() {
+    return {
+      isHovering: false,
+    }
   },
   computed: {
     iconPath() {

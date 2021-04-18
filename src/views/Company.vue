@@ -45,10 +45,14 @@
     </div>
 
     <div v-if="company" class="sidebar">
-      <!-- <label>Claps</label> -->
       <div class="mt-2">
-        <Icon icon="clap" clickable @click="handleClap(company)">
-          {{ localClapCount || company.clapCount }}
+        <Icon
+          :icon="company.userDidClap ? 'clap' : 'clap_off'"
+          icon-hover="clap"
+          clickable
+          @click="handleClap(company)"
+        >
+          {{ company.clapCount }}
         </Icon>
       </div>
 
@@ -58,7 +62,6 @@
       </div>
 
       <div v-if="userIsEditor" class="mt-2">
-        <!-- <label>Contribute</label> -->
         <Button @click="handleEdit">Edit</Button>
       </div>
     </div>
@@ -113,7 +116,6 @@ export default {
     return {
       errors: [],
       company: null,
-      localClapCount: null,
       defaultLogo: require('@/assets/images/image.svg'),
       defaultCover: 'https://picsum.photos/600/200.jpg?blur=5&grayscale',
     }
@@ -135,9 +137,11 @@ export default {
       this.$router.push({ name: 'CompanyEdit', params: { slug: this.slug } })
     },
     async handleClap(company) {
+      // Refactor, duplicated in Company Card
       await waitForLogin()
       const clapCount = await api.postCompanyClap(company.slug)
-      this.localClapCount = clapCount
+      company.clapCount = clapCount
+      company.userDidClap = true
       clapForCount(clapCount)
     },
     handleHashtagClick(hashtagSlug) {

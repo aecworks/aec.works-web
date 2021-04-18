@@ -15,13 +15,12 @@
           </p>
           <Icon
             class="mt"
-            :class="{ unclapped: (comment.clapCount || localClapCount) == 0 }"
-            :icon="'clap_off'"
-            :icon-hover="'clap_off'"
+            :icon="comment.userDidClap ? 'clap' : 'clap_off'"
+            icon-hover="clap"
             clickable
             @click="handleClap(comment)"
           >
-            {{ comment.clapCount || localClapCount }}
+            {{ comment.clapCount }}
           </Icon>
         </div>
       </div>
@@ -33,6 +32,7 @@
 import api from '@/api'
 import Icon from '@/components/Icon'
 import { waitForLogin } from '@/mixins'
+import { clapForCount } from '@/libs/sounds'
 
 export default {
   name: 'Comment',
@@ -54,7 +54,6 @@ export default {
   data() {
     return {
       isLoading: false,
-      localClapCount: 0,
     }
   },
   computed: {},
@@ -64,10 +63,13 @@ export default {
     }
   },
   methods: {
-    async handleClap({ id }) {
+    async handleClap(comment) {
       await waitForLogin()
+      const { id } = comment
       const clapCount = await api.commentClap(id)
-      this.localClapCount = clapCount
+      comment.userDidClap = true
+      comment.clapCount = clapCount
+      clapForCount(clapCount)
     },
   },
 }
