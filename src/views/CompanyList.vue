@@ -135,11 +135,11 @@ export default {
       this.hasMore = next !== null
       this.isLoading = false
 
-      if (this.hasMore) {
-        // Preload Next
-        query.page = Number(pageNumber) + 1
-        api.getCompanies(query)
-      }
+      // if (this.hasMore) {
+      //   // Preload Next
+      //   query.page = Number(pageNumber) + 1
+      //   api.getCompanies(query)
+      // }
     },
 
     handleSearchInput: debounce(function (query) {
