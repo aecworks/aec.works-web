@@ -1,12 +1,11 @@
 <template>
-  <div class="tos-container">
-    <div class="tos-header">
-      <h1 class="tos-title">Privacy Policy</h1>
-      <div class="tos-marker"></div>
-      <h5 class="tos-subtitle">Effective date: October 1, 2020</h5>
-    </div>
-    <div>
-      <h2 class="mb-1 mt-3">What information AEC Works collects and Why</h2>
+  <div class="wrapper">
+    <div class="content">
+      <h1 class="mt-1">Privacy Policy</h1>
+      <div class="marker"></div>
+      <h5 class="mt-2">Effective date: October 1, 2020</h5>
+
+      <h2>What information AEC Works collects and Why</h2>
       <p>
         In order to give you the best possible experience using AEC Works, we collect information
         from your interactions with our network. We use common internet technologies, such as
@@ -90,7 +89,7 @@
           </p>
         </li>
       </ul>
-      <h2 class="mb-1 mt-3">Information Disclosure</h2>
+      <h2>Information Disclosure</h2>
       <p>
         We do not share, sell, rent, or trade User Personal Information with third parties for
         commercial purposes.
@@ -104,7 +103,7 @@
         process it on our behalf to provide or improve our service, and who have agreed to privacy
         restrictions similar to our own Privacy Statement. Our third party vendors are listed below.
       </p>
-      <h2 class="mb-1 mt-3">Data Storage</h2>
+      <h2>Data Storage</h2>
       <p>
         AEC Works uses third-party vendors and hosting partners for hardware, software, networking,
         storage, and related technology we need to run AEC Works. By using AEC Works Services, you
@@ -112,14 +111,14 @@
         any other country where we operate. All service providers and third-party vendors are
         required to meet our data protection standards.
       </p>
-      <h2 class="mb-1 mt-3">Site monitoring</h2>
+      <h2>Site monitoring</h2>
       <p>
         AEC Works uses a variety of third-party services to diagnose errors and improve the
         performance of our site. We aim to minimize the amount of personal information shared, but
         the information may include your IP address or other identifying information. All service
         providers and third-party vendors are required to meet our data protection standards.
       </p>
-      <h2 class="mb-1 mt-3">Third-Party Embeds</h2>
+      <h2>Third-Party Embeds</h2>
       <p>
         Some of the content that you see displayed on AEC Works is not hosted by AEC Works. These
         “embeds” are hosted by a third-party and embedded in AEC Works. For example: Twitter tweets
@@ -131,7 +130,7 @@
         the privacy policy of the third-party service. Be mindful when interacting with these
         services.
       </p>
-      <h2 class="mb-1 mt-3">Tracking & Cookies</h2>
+      <h2>Tracking & Cookies</h2>
       <p>
         We use browser cookies and similar technologies to recognize you when you return to our
         Services. Third-party vendors may also use cookies for various reasons.
@@ -154,14 +153,14 @@
         cookies are being sent. If you do so, note that some parts of the Site may not function
         properly.
       </p>
-      <h2 class="mb-1 mt-3">Data Security</h2>
+      <h2>Data Security</h2>
       <p>
         We use encryption (HTTPS/TLS) to protect data transmitted to and from our site. However, no
         data transmission over the Internet is 100% secure, so we can’t guarantee security. You use
         the Service at your own risk, and you’re responsible for taking reasonable measures to
         secure your account.
       </p>
-      <h2 class="mb-1 mt-3">Administrative Emails from AEC Works</h2>
+      <h2>Administrative Emails from AEC Works</h2>
       <p>
         Sometimes we’ll send you emails about your account, service changes or new policies. You
         can’t opt out of this type of “transactional” email (unless you delete your account).
@@ -171,7 +170,7 @@
         or clicking on a particular link in an email), we may receive information about that
         interaction.
       </p>
-      <h2 class="mb-1 mt-3">Deleting Your Personal Information</h2>
+      <h2>Deleting Your Personal Information</h2>
       <p>
         You may request deletion of your personal information and account by emailing
         <a href="mailto:team@aec.works">team@aec.works.</a>
@@ -181,19 +180,19 @@
         copies for a brief time period. But, if you delete your account, your information and
         content will be unrecoverable after that time.
       </p>
-      <h2 class="mb-1 mt-3">Data Portability</h2>
+      <h2>Data Portability</h2>
       <p>
         If you would like to request a copy of your user data, please email
         <a href="mailto:team@aec.works">team@aec.works</a>
         .
       </p>
-      <h2 class="mb-1 mt-3">Business Transfers</h2>
+      <h2>Business Transfers</h2>
       <p>
         If we are involved in a merger, acquisition, bankruptcy, reorganization or sale of assets
         such that your information would be transferred or become subject to a different privacy
         policy, we’ll notify you in advance of any such change.
       </p>
-      <h2 class="mb-1 mt-3">Changes to this Policy</h2>
+      <h2>Changes to this Policy</h2>
       <p>
         We reserve the right to revise this Privacy Policy at any time. If we change this Privacy
         Policy in the future, we will post the revised Privacy Policy and update the “Effective

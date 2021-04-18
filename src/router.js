@@ -78,6 +78,11 @@ const routes = [
     props: true,
   },
   {
+    path: '/about',
+    name: 'About',
+    component: () => import('@/views/About'),
+  },
+  {
     path: '/privacy',
     name: 'Privacy',
     component: () => import('@/views/Privacy'),

@@ -16,7 +16,7 @@ code {
 p {
     font-size: $font-size-p;
     font-family: $font-family-serif;
-    margin-bottom: 16px;
+    margin-bottom: 1.25rem;
     &.sans {
         font-family: $font-family;
     }
@@ -44,9 +44,12 @@ h1,h2,h3,h4,h5 {
 }
 h1 {
     font-size: $font-size-h1;
-    margin-bottom: 2rem;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
 }
 h2 {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
     font-size: $font-size-h2;
 }
 h3 {

@@ -1,12 +1,11 @@
 <template>
-  <div class="tos-container">
-    <div class="tos-header">
-      <h1 class="tos-title">Terms of Service</h1>
-      <div class="tos-marker"></div>
-      <h5 class="tos-subtitle">Effective date: October 1, 2020</h5>
-    </div>
-    <div>
-      <h2 class="mb-1 mt-3">Terms</h2>
+  <div class="wrapper">
+    <div class="content">
+      <h1 class="mt-1">Terms of Service</h1>
+      <div class="marker"></div>
+      <h5 class="mt-2">Effective date: October 1, 2020</h5>
+
+      <h2>Terms</h2>
       <p>
         By accessing this web site, you are agreeing to be bound by these web site Terms and
         Conditions of Use, our
@@ -17,13 +16,13 @@
         protected by applicable copyright and trade mark law.
       </p>
 
-      <h2 class="mb-1 mt-3">Use License</h2>
+      <h2>Use License</h2>
       <p>
         Permission is granted to temporarily download one copy of the materials (information or
         software) on AEC Works' web site for personal, non-commercial transitory viewing only. This
         is the grant of a license, not a transfer of title, and under this license you may not:
       </p>
-      <ul class="tos-list">
+      <ul class="mt-2 mb-2">
         <li class="ml-1">
           <p>• Modify or copy the materials</p>
         </li>
@@ -54,7 +53,7 @@
         upon the termination of this license, you must destroy any downloaded materials in your
         possession whether in electronic or printed format.
       </p>
-      <h2 class="mb-1 mt-3">Disclaimer</h2>
+      <h2>Disclaimer</h2>
       <p>
         The materials on AEC Works' web site are provided "as is". AEC Works makes no warranties,
         expressed or implied, and hereby disclaims and negates all other warranties, including
@@ -64,7 +63,7 @@
         accuracy, likely results, or reliability of the use of the materials on its Internet web
         site or otherwise relating to such materials or on any sites linked to this site.
       </p>
-      <h2 class="mb-1 mt-3">Limitations</h2>
+      <h2>Limitations</h2>
       <p>
         In no event shall AEC Works or its suppliers be liable for any damages (including, without
         limitation, damages for loss of data or profit, or due to business interruption,) arising
@@ -75,7 +74,7 @@
         limitations may not apply to you.
       </p>
 
-      <h2 class="mb-1 mt-3">Revisions and Errata</h2>
+      <h2>Revisions and Errata</h2>
       <p>
         The materials appearing on AEC Works' web site could include technical, typographical, or
         photographic errors. AEC Works does not warrant that any of the materials on its web site
@@ -84,7 +83,7 @@
         update the materials.
       </p>
 
-      <h2 class="mb-1 mt-3">Links</h2>
+      <h2>Links</h2>
       <p>
         AEC Works has not reviewed all of the sites linked to its Internet web site and is not
         responsible for the contents of any such linked site. The inclusion of any link does not
@@ -92,7 +91,7 @@
         own risk.
       </p>
 
-      <h2 class="mb-1 mt-3">Copyright / Takedown</h2>
+      <h2>Copyright / Takedown</h2>
       <p>
         Users agree and certify that they have rights to share all content that they post on
         aec.works — including, but not limited to, information posted in articles, discussions, and
@@ -106,14 +105,14 @@
         . AEC Works may remove any content users post for any reason.
       </p>
 
-      <h2 class="mb-1 mt-3">Site Terms of Use Modifications</h2>
+      <h2>Site Terms of Use Modifications</h2>
       <p>
         AEC Works may revise these terms of use for its web site at any time without notice. By
         using this web site you are agreeing to be bound by the then current version of these Terms
         and Conditions of Use.
       </p>
 
-      <h2 class="mb-1 mt-3">AEC Works Trademarks and Logos Policy</h2>
+      <h2>AEC Works Trademarks and Logos Policy</h2>
       <p>
         All uses of the AEC Works logo, AEC Works badges, brand slogans, iconography, and the like,
         may only be used with express permission from AEC Works. AEC Works reserves all rights, even
@@ -122,7 +121,7 @@
         with any questions or to request permission.
       </p>
 
-      <h2 class="mb-1 mt-3">Reserved Names</h2>
+      <h2>Reserved Names</h2>
       <p>
         AEC Works has the right to maintain a list of reserved names which will not be made publicly
         available. These reserved names may be set aside for purposes of proactive trademark
@@ -140,7 +139,7 @@
         The following policy applies to comments, articles, and all other works shared on the AEC
         Works platform:
       </p>
-      <ul class="tos-list">
+      <ul class="mt-2 mb-2">
         <li class="ml-1">
           <p>
             • Users must make a good-faith effort to share content that is on-topic, of
@@ -168,7 +167,7 @@
         user’s ability to participate on the platform at its sole discretion.
       </p>
 
-      <h2 class="mb-1 mt-3">Governing Law</h2>
+      <h2>Governing Law</h2>
       <p>
         Any claim relating to AEC Works's web site shall be governed by the laws of the State of New
         York without regard to its conflict of law provisions.
