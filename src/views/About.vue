@@ -10,57 +10,47 @@
       </p>
       <h2>Background</h2>
       <p>
-        In 2019 while working at WeWork, I started a list of companies I thought were doing
-        interesting things in AEC.
-      </p>
-      <p>
-        As the list grew, I thought this could be of value to others, so
+        Sometime in 2019, Gui Talarico started a list of companies he thought were doing interesting
+        things in AEC. As the list grew, he thought it could be of value to others.
         <a href="https://AecStartups.com">AecStartups.com</a>
         was born.
       </p>
       <p>
-        As people discovered the project, I started receiving contributions from visitors. But the
-        experience to view or collaborate was not great, and there was also no way to track/moderate
-        changes to improve content over time. It became a time-consuming task to moderate
-        submissions and format logos properly.
+        As people discovered it, new submissions started coming in, but moderating and formatting
+        entries was very time consuming and error prone.
       </p>
-      <!-- <h2>aec.works </h2> -->
       <p>
         <strong>aec.works</strong>
-        started is a redo of AecStartups, with a few important improvements:
+        was started in 2020 to become the successor of AecStartups and has some noticeable
+        improvements:
       </p>
       <ul class="mt-2 mb-2">
         <li class="ml-1">
-          <p>
-            • It is about
-            <strong>all of AEC</strong>
-            and, not just startups
-          </p>
-        </li>
-        <li class="ml-1"><p>• It's better looking, we think : )</p></li>
-        <li class="ml-1">
-          <p>
-            • It has user accounts and the ability to created and edit without leaving the website
-          </p>
+          <p>• Streamlined tooling to edit content, including non-descructive revisions.</p>
         </li>
         <li class="ml-1">
-          <p>• It's more interactive and engaging through comments, likes, and posts (planned).</p>
+          <p>• It's more interactive and engaging, with the ability to comment and clap.</p>
+        </li>
+        <li class="ml-1">
+          <p>
+            • New and improved entries, totaling more than 160 companies with sleek cover images and
+            logos.
+          </p>
+        </li>
+        <li class="ml-1">
+          <p>
+            •
+            <a href="https://github.com/orgs/aecworks/projects/1">Many more planned</a>
+            features yet to be build!
+          </p>
         </li>
       </ul>
 
-      <p>
-        After speaking with many people in the field, I got together with a few equally motivated
-        people to finalize and build the version you are seeing now.
-      </p>
-
       <h2>Project Contributors</h2>
 
-      <p>
-        <strong>aec.works</strong>
-        was created by
-        <a href="https://twitter.com/gtalarico">Gui Talarico</a>
-        with the support of and feedback of several industry peers.
-      </p>
+      <strong>aec.works</strong>
+      is Open Source and licensed under GNU GPLv3, and is the result worldwide collaboration of
+      several AEC techonology peers.
 
       <h3 class="mb-1 mt-2"><a href="https://twitter.com/gtalarico">Gui Talarico</a></h3>
       <p>
@@ -68,7 +58,7 @@
         <a href="https://revitapidocs.com">revitapidocs.com</a>
         and
         <a href="https://apidocs.co">apidocs.co</a>
-        .
+        . Gui is responsible for the overal vision, backend, and for introducing many frontend bugs.
       </p>
 
       <h3 class="mb-1 mt-2"><a href="https://twitter.com/danrocc">Daniel da Rocha</a></h3>
@@ -79,7 +69,7 @@
         <a href="https://architecturalnetworks.com/berlin">architecturalnetworks.com/berlin</a>
         , and author of
         <a href="http://theforeignarchitect.com ">theforeignarchitect.com</a>
-        .
+        . Daniel works primarily on the frontend and is trying hard to undo the mess created by Gui.
       </p>
 
       <h3 class="mb-1 mt-2"><a href="https://twitter.com/dan__n">Daniel Nguyen</a></h3>
@@ -89,7 +79,7 @@
         , and doing
         <a href="https://staircalculator.monograph.io/">some really cool stuff</a>
         at
-        <a href="https://planner.monograph.io/">Monograph</a>
+        <a href="https://planner.monograph.io/">Monograph.</a>
       </p>
 
       <h3 class="mb-1 mt-2">Other Contributors</h3>
@@ -140,7 +130,7 @@
         includes only companies considered interesting and innovative by our editors.
       </p>
       <p>
-        If you are interested in becoming a contributor just send us a note at
+        If you are interested in becoming an editor just send us a note at
         <a href="mailto:team@aec.works">team@aec.works.</a>
       </p>
     </div>

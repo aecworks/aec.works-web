@@ -1,6 +1,6 @@
 <template>
   <!-- <Card @click="handleClick(company)"> -->
-  <Card>
+  <Card :banner="company.banner">
     <template v-slot:logo>
       <RouterLink v-if="company.logoUrl" :to="routerLinkTo">
         <LazyImg class="company-logo" :src="getImageUrl(company.logoUrl)" />
@@ -36,11 +36,16 @@
 
       <!-- Footer -->
       <div class="flex mt-1">
-        <Icon :icon="'chat'" class="mr-1">
+        <Icon :icon="company.threadSize ? 'chat' : 'chat_off'" class="mr-1">
           <span class="small">{{ company.threadSize }}</span>
         </Icon>
-        <Icon :icon="'clap'" clickable @click="handleClapClick(company)">
-          <span class="small">{{ localClapCount || company.clapCount }}</span>
+        <Icon
+          :icon="company.userDidClap ? 'clap' : 'clap_off'"
+          icon-hover="clap"
+          clickable
+          @click="handleClapClick(company)"
+        >
+          <span class="small">{{ company.clapCount }}</span>
         </Icon>
         <span class="small flex-right">{{ company.location }}</span>
       </div>
@@ -67,9 +72,7 @@ export default {
     },
   },
   data() {
-    return {
-      localClapCount: null,
-    }
+    return {}
   },
   computed: {
     routerLinkTo() {
@@ -88,9 +91,11 @@ export default {
       }
     },
     async handleClapClick(company) {
+      // Refactor, duplicated in Company
       await waitForLogin()
       const clapCount = await api.postCompanyClap(company.slug)
-      this.localClapCount = clapCount
+      company.clapCount = clapCount
+      company.userDidClap = true
       clapForCount(clapCount)
     },
   },
@@ -104,12 +109,7 @@ export default {
   bottom: -50px;
   width: 80px;
   height: 80px;
-  @extend .border-thin;
-  // Custom:
-  border-radius: 5px;
-  border-color: $dark-gray;
-  border-width: 1px;
-  box-shadow: 0 5px 10px -10px rgba(0, 0, 0, 0.25);
   background-color: white;
+  @extend .border-soft;
 }
 </style>

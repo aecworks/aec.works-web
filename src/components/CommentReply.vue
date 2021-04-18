@@ -78,8 +78,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .comment-reply {
-  margin-bottom: 2rem;
-
   .comment-reply-input {
     transition: height 200ms;
     height: 2.5rem;

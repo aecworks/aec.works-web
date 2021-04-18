@@ -29,7 +29,7 @@
       <label for="input-hashtags" class="mt-1">Hashtags</label>
       <HashtagInput :initial-tags="initialQueryHashtags" @changed="handleHashtagFilterChanged" />
 
-      <p class="mt-3">
+      <p class="mt-3 small">
         <strong>aec.works</strong>
         is a curated list of innovative and product-oriented aec companies and startups.
         <br />
@@ -179,3 +179,5 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped></style>

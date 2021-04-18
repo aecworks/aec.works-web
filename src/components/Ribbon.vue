@@ -23,10 +23,10 @@ export default {
 .corner-ribbon {
   h5 {
     font-weight: $font-weight-normal;
+    color: $dark !important;
   }
-  color: $dark;
-  background: $cream;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  background: $yellow;
+  box-shadow: (0 0 3px rgba(0, 0, 0, 0.3), 0 0 2px rgba(0, 0, 0, 0.5));
   width: 200px;
   position: absolute;
   top: 25px;

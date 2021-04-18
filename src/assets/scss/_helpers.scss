@@ -30,6 +30,9 @@
 .mt-3 {
   margin-top: 3rem !important;
 }
+.mr {
+  margin-right: 0.5rem !important;
+}
 .mr-1 {
   margin-right: 1rem !important;
 }
@@ -133,13 +136,4 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-.unclapped {
-  filter: saturate(0);
-  opacity: 0.25;
-  &:hover {
-    filter: saturate(1);
-    opacity: 1;
-  }
 }
