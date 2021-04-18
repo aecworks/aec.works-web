@@ -10,7 +10,7 @@
       </p>
       <h2>Background</h2>
       <p>
-        In 2019 while working at WeWork, I started a list of companies I thought were doign
+        In 2019 while working at WeWork, I started a list of companies I thought were doing
         interesting things in AEC.
       </p>
       <p>
@@ -40,13 +40,11 @@
         <li class="ml-1"><p>• It's better looking, we think : )</p></li>
         <li class="ml-1">
           <p>
-            • It has a user accounts and ability to created and edit without leaving the website
+            • It has user accounts and the ability to created and edit without leaving the website
           </p>
         </li>
         <li class="ml-1">
-          <p>
-            • It's more interactive and engaging through commenting, likes, and posts (planned).
-          </p>
+          <p>• It's more interactive and engaging through comments, likes, and posts (planned).</p>
         </li>
       </ul>
 
@@ -59,7 +57,7 @@
 
       <p>
         <strong>aec.works</strong>
-        Was created by
+        was created by
         <a href="https://twitter.com/gtalarico">Gui Talarico</a>
         with the support of and feedback of several industry peers.
       </p>
@@ -133,16 +131,16 @@
       <p>
         We believe the value of
         <strong>aec.works</strong>
-        is not only on the platform itself, but the in the community of editors and content
+        is not only on the platform itself but also in the community of editors and content
         curators.
       </p>
       <p>
         <strong>aec.works</strong>
         is not intended to be a comprehensive list of AEC companies, but a selected list that
-        includes only companies considered intereseting and innovative by our editors.
+        includes only companies considered interesting and innovative by our editors.
       </p>
       <p>
-        If you intereseting on becoming a contributor just send us a note at
+        If you are interested in becoming a contributor just send us a note at
         <a href="mailto:team@aec.works">team@aec.works.</a>
       </p>
     </div>
