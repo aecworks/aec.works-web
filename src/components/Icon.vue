@@ -8,7 +8,9 @@
   >
     <div class="flex">
       <img :src="isHovering ? iconHoverPath : iconPath" />
-      <slot></slot>
+      <span class="icon-text" :class="isHovering ? '' : 'muted'">
+        <slot></slot>
+      </span>
     </div>
   </div>
 </template>
@@ -53,10 +55,14 @@ export default {
 $icon-height: 20px;
 .icon {
   display: inline-block;
-  line-height: $icon-height;
+  line-height: $icon-height + 2;
   img {
     height: $icon-height;
     margin-right: 0.4rem;
+  }
+  .icon-text {
+    color: $dark-gray;
+    font-size: 0.8rem;
   }
 }
 </style>
