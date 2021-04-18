@@ -121,13 +121,16 @@
       <p>
         We believe the value of
         <strong>aec.works</strong>
-        is not only on the platform itself but also in the community of editors and content
-        curators.
+        is not on the platform itself but in the community of editors and content curators.
       </p>
       <p>
         <strong>aec.works</strong>
         is not intended to be a comprehensive list of AEC companies, but a selected list that
         includes only companies considered interesting and innovative by our editors.
+      </p>
+      <p>
+        It should a place people go to to discover disruptive products and who is innovating on
+        different spheres of the AEC industry.
       </p>
       <p>
         If you are interested in becoming an editor just send us a note at
