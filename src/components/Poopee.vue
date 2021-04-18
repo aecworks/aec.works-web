@@ -4,7 +4,7 @@
       <img src="@/assets/images/poopee.svg" />
     </div>
     <p class="delete-me hidden-sm">
-      <a href="#" @click="handleDelete">Delete Website</a>
+      <a href="#" @click="handleDelete">delete website</a>
     </p>
   </div>
 </template>
