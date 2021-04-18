@@ -87,8 +87,8 @@ export default {
   .profile-avatar {
     height: 22px;
     border-radius: 11px;
-    @extend .border-thin;
     margin-right: 0.5rem;
+    @extend .border-thin;
   }
   .comment-timestamp {
     @extend .muted;
@@ -98,7 +98,6 @@ export default {
 }
 .comment-text {
   margin-top: 0.5rem;
-  // margin-left: 0.5rem;
   margin-bottom: 0.5rem;
 }
 </style>

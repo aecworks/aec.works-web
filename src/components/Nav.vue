@@ -16,7 +16,7 @@
         </li>
         <li v-if="profile" class="nav-item profile">
           <span class="nav-profile-avatar">
-            <a class="mr-1 small" href="#" @click="handleLogout()">logout</a>
+            <a class="mr small" href="#" @click="handleLogout()">logout</a>
             <router-link tag="a" :to="{ name: 'Person', params: { slug: profile.slug } }">
               <img :src="profile.avatarUrl" alt="avatar" />
             </router-link>
@@ -162,6 +162,7 @@ export default {
           vertical-align: middle;
           display: inline-block;
           @extend .border-thin;
+          // border-radius: 12px;
           height: 24px;
         }
       }

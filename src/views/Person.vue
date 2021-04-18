@@ -11,19 +11,20 @@
             />
           </div>
           <h2 class="mt-1">{{ profile.name }}</h2>
+          <div class="mt">
+            <a v-if="profile.github" :href="`https://github.com/${profile.github}`">
+              <Icon icon="github"></Icon>
+            </a>
+            <a v-if="profile.twitter" :href="`https://twitter.com/${profile.twitter}`">
+              <Icon icon="twitter"></Icon>
+            </a>
+          </div>
 
           <label class="mt-2">Location</label>
           <p class="sans">{{ profile.location }}</p>
 
           <label class="mt-1">About</label>
           <p class="sans">{{ profile.bio }}</p>
-
-          <!-- TODO Make Social Media Component -->
-          <!-- <label class="mt-1">Social</label> -->
-          <!-- <div class="mt"> -->
-          <!-- <Icon icon="twitter" clickable></Icon> -->
-          <!-- <Icon icon="linkedin" clickable></Icon> -->
-          <!-- </div> -->
         </div>
         <div class="profile-activity">
           <div>
@@ -62,6 +63,7 @@
 </template>
 
 <script>
+import Icon from '../components/Icon.vue'
 import TwitterFeed from '../components/TwitterFeed.vue'
 import LazyImg from '../components/LazyImg.vue'
 import api from '@/api'
@@ -76,7 +78,7 @@ export default {
       title: () => (profile && profile.name ? profile.name : 'People'),
     }
   },
-  components: { LazyImg, TwitterFeed },
+  components: { LazyImg, TwitterFeed, Icon },
   props: {
     slug: { required: true, type: String },
   },
@@ -136,25 +138,15 @@ export default {
 
 .profile-image {
   @extend .border-soft;
+  // position: absolute;
+  // border-radius: 50px;;
+  display: inline-block;
+  text-align: center;
+  overflow: hidden;
   img {
-    // @extend .border-thin;
-    // @include shadow-color($dark);
+    display: block;
     height: 100px;
-    // position: absolute;
-    // width: 80px;
-    // height: 80px;
-    // bottom: -25px;
-    // left: 10px;
-    // Custom:
-    // border-radius: 5px;
-    // border-color: $dark-gray;
-    // border-width: 1px;
-    // box-shadow: 0 5px 10px -10px rgba(0, 0, 0, 0.25);
-    // background-color: white;
-
-    @include for-large-down {
-      margin: 0 auto;
-    }
+    width: 100px;
   }
 }
 </style>

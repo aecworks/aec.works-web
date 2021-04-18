@@ -53,15 +53,17 @@ export default {
 
 <style lang="scss" scoped>
 $icon-height: 20px;
+
 .icon {
   display: inline-block;
-  line-height: $icon-height + 2;
+  line-height: $icon-height;
   img {
     height: $icon-height;
-    margin-right: 0.4rem;
+    width: $icon-height;
+    margin-right: 0.3rem;
   }
   .icon-text {
-    color: $dark-gray;
+    color: $dark;
     font-size: 0.8rem;
   }
 }
