@@ -86,6 +86,7 @@ export default {
   @extend .input;
   max-width: none !important;
   padding: 0;
+  text-align: left;
   &:focus-within {
     @include shadow-color($dark);
   }

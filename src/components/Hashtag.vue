@@ -53,7 +53,7 @@ export default {
       @include shadow-color($dark);
     }
     &.active:hover {
-      @include shadow-color($yellow);
+      @include shadow-color($light-gray);
     }
   }
 

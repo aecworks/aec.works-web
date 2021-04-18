@@ -52,7 +52,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$icon-height: 20px;
+$icon-height: 24px;
 
 .icon {
   display: inline-block;

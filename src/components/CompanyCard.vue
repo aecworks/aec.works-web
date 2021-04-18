@@ -1,6 +1,6 @@
 <template>
   <!-- <Card @click="handleClick(company)"> -->
-  <Card>
+  <Card :banner="company.banner">
     <template v-slot:logo>
       <RouterLink v-if="company.logoUrl" :to="routerLinkTo">
         <LazyImg class="company-logo" :src="getImageUrl(company.logoUrl)" />
