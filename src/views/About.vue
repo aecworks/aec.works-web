@@ -74,12 +74,10 @@
 
       <h3 class="mb-1 mt-2"><a href="https://twitter.com/dan__n">Daniel Nguyen</a></h3>
       <p>
-        Also an architect turned developer and creator of
+        Also an architect turned developer, creator of
         <a href="https://archdictionary.com/">archdictionary.com/</a>
-        , and doing
-        <a href="https://staircalculator.monograph.io/">some really cool stuff</a>
-        at
-        <a href="https://planner.monograph.io/">Monograph.</a>
+        , and doing some really cool stuff at
+        <a href="https://monograph.io/">Monograph.</a>
       </p>
 
       <h3 class="mb-1 mt-2">Other Contributors</h3>
