@@ -166,13 +166,9 @@ export default {
     height: 80px;
     bottom: -25px;
     left: 10px;
-    @extend .border-thin;
-    // Custom:
-    border-radius: 5px;
-    border-color: $dark-gray;
-    border-width: 1px;
-    box-shadow: 0 5px 10px -10px rgba(0, 0, 0, 0.25);
+
     background-color: white;
+    @extend .border-soft;
   }
   .cover {
     display: block; // Remove gap below image

@@ -135,10 +135,22 @@ export default {
 }
 
 .profile-image {
+  @extend .border-soft;
   img {
-    @extend .border-thin;
-    @include shadow-color($dark);
+    // @extend .border-thin;
+    // @include shadow-color($dark);
     height: 100px;
+    // position: absolute;
+    // width: 80px;
+    // height: 80px;
+    // bottom: -25px;
+    // left: 10px;
+    // Custom:
+    // border-radius: 5px;
+    // border-color: $dark-gray;
+    // border-width: 1px;
+    // box-shadow: 0 5px 10px -10px rgba(0, 0, 0, 0.25);
+    // background-color: white;
 
     @include for-large-down {
       margin: 0 auto;
