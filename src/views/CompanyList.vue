@@ -29,9 +29,9 @@
       <label for="input-hashtags" class="mt-1">Hashtags</label>
       <HashtagInput :initial-tags="initialQueryHashtags" @changed="handleHashtagFilterChanged" />
 
-      <p class="mt-2">
+      <p class="mt-3">
         <strong>aec.works</strong>
-        is a curated list of kick-ass product-oriented aec companies and startups.
+        is a curated list of innovative and product-oriented aec companies and startups.
         <br />
         <a href="/about">read more</a>
       </p>

@@ -78,22 +78,16 @@
         <strong>aec.works</strong>
         Was created by
         <a href="https://twitter.com/gtalarico">Gui Talarico</a>
-        but has received valuable feedback and advice industry peers
-        <a href="https://twitter.com/andrewheumann">Andrew Heumann</a>
-        ,
-        <a href="https://twitter.com/dr_danieldavis">Daniel Davis</a>
-        ,
-        <a href="https://twitter.com/eirannejad">Ehsan Iran-Njead</a>
-        , and
-        <a href="https://twitter.com/tywygo">Tyler Goss</a>
-        ,
+        with the support of and feedback of several industry peers.
       </p>
 
+      <h3 class="mb-1 mt-2"><a href="https://twitter.com/gtalarico">Gui Talarico</a></h3>
       <p>
-        In 2020 as
-        <strong>aec.works</strong>
-        started shape, a group of other AEC technology enthusiasts began collaborating on the
-        project and are now core contributors of the project:
+        Architect turned developer and creator of
+        <a href="https://revitapidocs.com">remotearchitects.club</a>
+        and
+        <a href="https://apidocs.co">apidocs.co</a>
+        .
       </p>
 
       <h3 class="mb-1 mt-2"><a href="https://twitter.com/danrocc">Daniel da Rocha</a></h3>
@@ -116,6 +110,40 @@
         at
         <a href="https://planner.monograph.io/">Monograph</a>
       </p>
+
+      <h3 class="mb-1 mt-2">Other Contributors</h3>
+      The following people also contributed or provided feedback and advice to guide this project:
+
+      <ul class="mt-1">
+        <li>
+          •
+          <a href="https://twitter.com/andrewheumann">Andrew Heumann</a>
+        </li>
+        <li>
+          •
+          <a href="https://twitter.com/dr_danieldavis">Daniel Davis</a>
+        </li>
+        <li>
+          •
+          <a href="https://twitter.com/idid">Dimitrie Stefanescu</a>
+        </li>
+        <li>
+          •
+          <a href="https://twitter.com/eirannejad">Ehsan Iran-Njead</a>
+        </li>
+        <li>
+          •
+          <a href="https://twitter.com/eng_mclare">Maryanne Clare</a>
+        </li>
+        <li>
+          •
+          <a href="https://www.linkedin.com/in/theresediede/">Therese Diede</a>
+        </li>
+        <li>
+          •
+          <a href="https://twitter.com/tywygo">Tyler Goss</a>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
