@@ -31,8 +31,8 @@
       <HashtagInput :initial-tags="initialQueryHashtags" @changed="handleHashtagFilterChanged" />
 
       <!-- Sorting -->
-      <div class="mb-1">
-        <label class="mt-1">Order</label>
+      <div class="mt-1 mb-2">
+        <label class="mt-1">Sorting</label>
         <div class="sorting-options fill-x">
           {{ $route.query.reverse ? '🔻' : '' }}
           <ul>
@@ -221,12 +221,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.sidebar {
+  @include for-large-up {
+    text-align: right;
+  }
+}
 .sorting-options {
   display: flex;
-  justify-content: flex-end;
+  @include for-large-up {
+    justify-content: flex-end;
+  }
   li {
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
     display: inline-block;
-    margin-left: 1rem;
     color: $light-gray;
     &.active {
       color: $dark;
