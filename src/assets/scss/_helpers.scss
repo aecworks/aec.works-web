@@ -30,11 +30,17 @@
 .mt-3 {
   margin-top: 3rem !important;
 }
+.mr-0 {
+  margin-right: 0rem !important;
+}
 .mr {
   margin-right: 0.5rem !important;
 }
 .mr-1 {
   margin-right: 1rem !important;
+}
+.ml-0 {
+  margin-left: 0 !important;
 }
 .ml {
   margin-left: 0.5rem !important;
@@ -106,6 +112,10 @@
 
   &.flex-column {
     flex-direction: column;
+  }
+
+  &.flex-reverse {
+    flex-direction: row-reverse;
   }
 
   &.flex-oposite {

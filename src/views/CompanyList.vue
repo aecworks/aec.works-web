@@ -2,6 +2,7 @@
   <div class="wrapper">
     <div class="content">
       <Loader v-if="isLoading" />
+
       <CompanyCard
         v-for="company in items"
         :key="company.id"
@@ -29,6 +30,25 @@
       <label for="input-hashtags" class="mt-1">Hashtags</label>
       <HashtagInput :initial-tags="initialQueryHashtags" @changed="handleHashtagFilterChanged" />
 
+      <!-- Sorting -->
+      <div class="mb-1">
+        <label class="mt-1">Order</label>
+        <div class="sorting-options fill-x">
+          {{ $route.query.reverse ? '🔻' : '' }}
+          <ul>
+            <li
+              v-for="paramName in ['name', 'updated', 'claps']"
+              :key="paramName"
+              class="pointer small"
+              :class="getSortStyle(paramName)"
+              @click="handleSortChange(paramName)"
+            >
+              {{ paramName }}
+            </li>
+          </ul>
+        </div>
+      </div>
+
       <p class="mt-3 small">
         <strong>aec.works</strong>
         is a curated list of innovative and product-oriented aec companies and startups.
@@ -41,7 +61,7 @@
       </div>
 
       <div class="mt-2 mb-2">
-        <Button v-if="userIsEditor" @click="handleAdd">Add Company</Button>
+        <Button v-if="userIsEditor" class="mr-0" @click="handleAdd">Add Company</Button>
       </div>
     </div>
   </div>
@@ -107,6 +127,9 @@ export default {
     if (this.search) {
       this.searchQuery = this.search
     }
+    if (!this.$route.query.sort) {
+      this.$route.query.sort = 'update'
+    }
     const pageNumber = this.$route.query.page || 1
     this.fetchItems(pageNumber)
   },
@@ -124,6 +147,8 @@ export default {
         page: pageNumber,
         hashtags: this.hashtags,
         search: this.searchQuery,
+        sort: this.$route.query.sort,
+        reverse: this.$route.query.reverse,
       }
       // Remove null/undefined
       query = Object.entries(query).reduce((a, [k, v]) => (v ? ((a[k] = v), a) : a), {})
@@ -134,12 +159,6 @@ export default {
       this.count = count
       this.hasMore = next !== null
       this.isLoading = false
-
-      // if (this.hasMore) {
-      //   // Preload Next
-      //   query.page = Number(pageNumber) + 1
-      //   api.getCompanies(query)
-      // }
     },
 
     handleSearchInput: debounce(function (query) {
@@ -151,6 +170,26 @@ export default {
       this.refetch()
     }, 200),
 
+    getSortStyle(sortBy) {
+      let isActive = this.$route.query.sort == sortBy
+      let isReverse = this.$route.query.reverse
+      return (isActive ? 'active' : '') + ' ' + (isActive && isReverse ? 'reversed' : '')
+    },
+    handleSortChange(sortBy) {
+      let isAlready = Boolean(this.$route.query.sort == sortBy)
+      let isReversed = Boolean(this.$route.query.reverse)
+      if (isAlready && !isReversed) {
+        this.$router.replace({ query: { ...this.$route.query, reverse: 1 } }).catch(() => {})
+      } else if (isAlready && isReversed) {
+        popQuery(this.$router, this.$route.query, 'reverse')
+      } else {
+        this.$router.replace({ query: { ...this.$route.query, sort: sortBy } }).catch(() => {})
+        if (isReversed) {
+          popQuery(this.$router, this.$route.query, 'reverse')
+        }
+      }
+      this.refetch()
+    },
     handleHashtagFilterChanged(tags) {
       if (tags.length) {
         const hashtagStr = tags.join(',')
@@ -180,4 +219,17 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.sorting-options {
+  display: flex;
+  justify-content: flex-end;
+  li {
+    display: inline-block;
+    margin-left: 1rem;
+    color: $light-gray;
+    &.active {
+      color: $dark;
+    }
+  }
+}
+</style>

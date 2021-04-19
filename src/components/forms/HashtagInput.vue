@@ -3,6 +3,7 @@
     <vue-tags-input
       id="input-hashtags"
       v-model="tag"
+      placeholder="hashtags"
       :validation="validation"
       :tags.sync="tags"
       :autocomplete-items="filteredItems"
@@ -98,7 +99,7 @@ export default {
 }
 
 .vue-tags-input .ti-input {
-  border: none;
+  border: none !important;
 }
 
 .vue-tags-input .ti-tag {
