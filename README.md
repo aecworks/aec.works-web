@@ -19,14 +19,25 @@ yarn install
 ```
 yarn run serve:staging
 ```
+This will run dev server locally but point it to our staging api at [aecworks-api-staging.herokuapp.com](http://aecworks-api-staging.herokuapp.com/).
 
-PS: when using staging api, only LinkedIn login will work
+This is the recommended approach for contributors working on the front end only.
+
+Note: when using staging api, you must use LinkedIn login (could not get Github to work locally due to limitations of using oauth on localhost).
+
 
 ### With Local API Servers (requires local aecworks api)
+
+This is the recommended approach for contributors working on the front end only.
 
 ```
 yarn run serve
 ```
+
+This requieres you to have [aecworks.api](https://github.com/aecworks/aec.works-api) running locally at `localhost:8000`
+
+This is the recommended approach for working on features the span across front and back end.
+
 
 ## Release
 
@@ -36,7 +47,8 @@ All code pushed or merged into `staging` is automatically deployed to http://sta
 
 #### Production
 
-All code pushed or merged into `master` is automatically deployed to https://aec.works
+#### PRs
 
-# Contributing
-TODO
+All PRs generate a preview deploy through netlify. Previews using the staging api.
+
+All code pushed or merged into `master` is automatically deployed to https://aec.works
