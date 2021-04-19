@@ -2,6 +2,7 @@
   <div class="wrapper">
     <div class="content">
       <Loader v-if="isLoading" />
+
       <CompanyCard
         v-for="company in items"
         :key="company.id"
@@ -29,6 +30,25 @@
       <label for="input-hashtags" class="mt-1">Hashtags</label>
       <HashtagInput :initial-tags="initialQueryHashtags" @changed="handleHashtagFilterChanged" />
 
+      <!-- Sorting -->
+      <div class="mt-1 mb-2">
+        <label class="mt-1">Sorting</label>
+        <div class="sorting-options fill-x">
+          {{ $route.query.reverse ? '🔻' : '' }}
+          <ul>
+            <li
+              v-for="paramName in sortingOptions"
+              :key="paramName"
+              class="pointer small"
+              :class="getSortStyle(paramName)"
+              @click="handleSortChange(paramName)"
+            >
+              {{ paramName }}
+            </li>
+          </ul>
+        </div>
+      </div>
+
       <p class="mt-3 small">
         <strong>aec.works</strong>
         is a curated list of innovative and product-oriented aec companies and startups.
@@ -41,7 +61,7 @@
       </div>
 
       <div class="mt-2 mb-2">
-        <Button v-if="userIsEditor" @click="handleAdd">Add Company</Button>
+        <Button v-if="userIsEditor" class="mr-0" @click="handleAdd">Add Company</Button>
       </div>
     </div>
   </div>
@@ -85,6 +105,7 @@ export default {
   },
   data() {
     return {
+      sortingOptions: ['claps', 'name', 'updated'],
       PAGE_SIZE: 10,
       numPages: 1,
       hasMore: false,
@@ -107,6 +128,11 @@ export default {
     if (this.search) {
       this.searchQuery = this.search
     }
+    if (!this.$route.query.sort) {
+      this.$router
+        .replace({ query: { ...this.$route.query, sort: this.sortingOptions[2] } })
+        .catch(() => {})
+    }
     const pageNumber = this.$route.query.page || 1
     this.fetchItems(pageNumber)
   },
@@ -124,6 +150,8 @@ export default {
         page: pageNumber,
         hashtags: this.hashtags,
         search: this.searchQuery,
+        sort: this.$route.query.sort,
+        reverse: this.$route.query.reverse,
       }
       // Remove null/undefined
       query = Object.entries(query).reduce((a, [k, v]) => (v ? ((a[k] = v), a) : a), {})
@@ -134,12 +162,6 @@ export default {
       this.count = count
       this.hasMore = next !== null
       this.isLoading = false
-
-      // if (this.hasMore) {
-      //   // Preload Next
-      //   query.page = Number(pageNumber) + 1
-      //   api.getCompanies(query)
-      // }
     },
 
     handleSearchInput: debounce(function (query) {
@@ -151,6 +173,26 @@ export default {
       this.refetch()
     }, 200),
 
+    getSortStyle(sortBy) {
+      let isActive = this.$route.query.sort == sortBy
+      let isReverse = this.$route.query.reverse
+      return (isActive ? 'active' : '') + ' ' + (isActive && isReverse ? 'reversed' : '')
+    },
+    handleSortChange(sortBy) {
+      let isAlready = Boolean(this.$route.query.sort == sortBy)
+      let isReversed = Boolean(this.$route.query.reverse)
+      if (isAlready && !isReversed) {
+        this.$router.replace({ query: { ...this.$route.query, reverse: 1 } }).catch(() => {})
+      } else if (isAlready && isReversed) {
+        popQuery(this.$router, this.$route.query, 'reverse')
+      } else {
+        this.$router.replace({ query: { ...this.$route.query, sort: sortBy } }).catch(() => {})
+        if (isReversed) {
+          popQuery(this.$router, this.$route.query, 'reverse')
+        }
+      }
+      this.refetch()
+    },
     handleHashtagFilterChanged(tags) {
       if (tags.length) {
         const hashtagStr = tags.join(',')
@@ -180,4 +222,28 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.sidebar {
+  @include for-large-up {
+    text-align: right;
+  }
+}
+.sorting-options {
+  display: flex;
+  @include for-large-up {
+    justify-content: flex-end;
+  }
+  li {
+    text-decoration: underline;
+    text-decoration-color: $yellow;
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
+    display: inline-block;
+    color: $light-gray;
+    &.active {
+      color: $dark;
+    }
+  }
+}
+</style>

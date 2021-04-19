@@ -151,10 +151,9 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .sidebar {
   @include for-large-up {
-    margin-top: 1rem;
     text-align: right;
   }
 }

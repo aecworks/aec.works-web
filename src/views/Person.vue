@@ -28,10 +28,10 @@
         </div>
         <div class="profile-activity">
           <div>
-            <h3>Clapped For</h3>
+            <h3 class="mt-0 mb-1">Clapped For</h3>
             <ul class="mt-1">
               <li v-if="!companyClaps.length">None so far</li>
-              <li v-for="company in companyClaps" :key="company.slug">
+              <li v-for="company in companyClaps" :key="company.slug" class="mb">
                 <router-link tag="a" :to="{ name: 'Company', params: { slug: company.slug } }">
                   {{ company.name }}
                 </router-link>
@@ -129,6 +129,7 @@ export default {
 }
 .profile-data {
   width: 200px;
+  flex-shrink: 0;
 }
 .profile-activity {
   @include for-large-down {
