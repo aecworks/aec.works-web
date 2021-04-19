@@ -129,7 +129,9 @@ export default {
       this.searchQuery = this.search
     }
     if (!this.$route.query.sort) {
-      this.$route.query.sort = this.sortingOptions[2]
+      this.$router
+        .replace({ query: { ...this.$route.query, sort: this.sortingOptions[2] } })
+        .catch(() => {})
     }
     const pageNumber = this.$route.query.page || 1
     this.fetchItems(pageNumber)

@@ -11,29 +11,28 @@
       <h2>Background</h2>
       <p>
         Sometime in 2019, Gui Talarico started a list of companies he thought were doing interesting
-        things in AEC. As the list grew, he thought it could be of value to others.
+        things in AEC. As the list grew, he thought it could be valuable to others.
         <a href="https://AecStartups.com">AecStartups.com</a>
-        was born.
+        was born ✨
       </p>
       <p>
-        As people discovered it, new submissions started coming in, but moderating and formatting
-        entries was very time consuming and error prone.
+        As its popularity grew, so did the number of user submssions, which were done through an
+        Airtable form. Moderating and formatting entries was very time consuming and error prone.
       </p>
       <p>
         <strong>aec.works</strong>
-        was started in 2020 to become the successor of AecStartups and has some noticeable
-        improvements:
+        was started in 2020 to become the successor of AecStartups, with some notable improvements:
       </p>
       <ul class="mt-2 mb-2">
         <li class="ml-1">
           <p>• Streamlined tooling to edit content, including non-descructive revisions.</p>
         </li>
         <li class="ml-1">
-          <p>• It's more interactive and engaging, with the ability to comment and clap.</p>
+          <p>• It's more interactive and engaging, including ability to comment and clap.</p>
         </li>
         <li class="ml-1">
           <p>
-            • New and improved entries, totaling more than 160 companies with sleek cover images and
+            • New and improved entries, totaling more than 150 companies with sleek cover images and
             logos.
           </p>
         </li>
@@ -48,9 +47,11 @@
 
       <h2>Project Contributors</h2>
 
-      <strong>aec.works</strong>
-      is Open Source and licensed under GNU GPLv3, and is the result worldwide collaboration of
-      several AEC techonology peers.
+      <p>
+        <strong>aec.works</strong>
+        is open source and licensed under GNU GPLv3, and is the result worldwide collaboration of
+        several AEC techonology peers.
+      </p>
 
       <h3 class="mb-1 mt-2"><a href="https://twitter.com/gtalarico">Gui Talarico</a></h3>
       <p>
@@ -75,13 +76,15 @@
       <h3 class="mb-1 mt-2"><a href="https://twitter.com/dan__n">Daniel Nguyen</a></h3>
       <p>
         Also an architect turned developer, creator of
-        <a href="https://archdictionary.com/">archdictionary.com/</a>
-        , and doing some really cool stuff at
+        <a href="https://archdictionary.com/">archdictionary.com</a>
+        , and is currently doing some really cool stuff at
         <a href="https://monograph.io/">Monograph.</a>
       </p>
 
       <h3 class="mb-1 mt-2">Other Contributors</h3>
-      The following people also contributed or provided feedback and advice to guide this project:
+      <p>
+        The following people also contributed or provided feedback and advice to guide this project:
+      </p>
 
       <ul class="mt-1">
         <li>
