@@ -25,14 +25,23 @@ export default {
     title: 'aec.works',
     // all titles will be injected into this template
     titleTemplate: '%s | aec.works',
-    keywords: 'aec,startups,technology,architecture,engineering,construction,design',
     htmlAttrs: {
       lang: 'en',
       amp: false,
     },
     meta: [
       {
-        property: 'og:type',
+        property: 'description',
+        content:
+          'aec.works is a curated list of innovative and product-oriented aec companies and startups',
+        // Also at sidebar, /about, github.com/aecworks, and twitter
+      },
+      {
+        property: 'keywords',
+        content: 'aec,startups,technology,architecture,engineering,construction,design',
+      },
+      {
+        keywords: 'og:type',
         content: 'website',
       },
       {
