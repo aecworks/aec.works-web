@@ -6,41 +6,40 @@
 
       <p>
         <strong>aec.works</strong>
-        is a curated list of innovative and product-oriented aec companies and startups.
+        is a curated list of innovative AEC companies and startups. It isn't a comprehensive list of every AEC company – rather, it is a selected list of companies that our editors consider fresh and exciting. 
       </p>
-      <h2>Background</h2>
+      <h2>How we got started</h2>
       <p>
         Sometime in 2019, Gui Talarico started a list of companies he thought were doing interesting
-        things in AEC. As the list grew, he thought it could be valuable to others.
+        things in AEC. As the list grew, he felt it could be valuable to others.
         <a href="https://AecStartups.com">AecStartups.com</a>
         was born ✨
       </p>
       <p>
-        As its popularity grew, so did the number of user submssions, which were done through an
-        Airtable form. Moderating and formatting entries was very time consuming and error prone.
+        As its popularity grew, so did the number of submissions. Since everything was managed through Airtable, the whole process was time-consuming and error-prone.
       </p>
       <p>
         <strong>aec.works</strong>
-        was started in 2020 to become the successor of AecStartups, with some notable improvements:
+        began in 2020 as the successor of AecStartups. It includes some notable improvements:
       </p>
       <ul class="mt-2 mb-2">
-        <li class="ml-1">
-          <p>• Streamlined tooling to edit content, including non-descructive revisions.</p>
-        </li>
-        <li class="ml-1">
-          <p>• It's more interactive and engaging, including ability to comment and clap.</p>
-        </li>
-        <li class="ml-1">
+      	<li class="ml-1">
           <p>
             • New and improved entries, totaling more than 150 companies with sleek cover images and
             logos.
           </p>
         </li>
         <li class="ml-1">
+          <p>• Streamlined tooling to edit content, including non-destructive revisions.</p>
+        </li>
+        <li class="ml-1">
+          <p>• A more interactive and engaging interface, including the ability to comment and clap (upvote).</p>
+        </li>
+        <li class="ml-1">
           <p>
             •
             <a href="https://github.com/orgs/aecworks/projects/1">Many more planned</a>
-            features yet to be build!
+            features yet to be built!
           </p>
         </li>
       </ul>
@@ -48,9 +47,7 @@
       <h2>Project Contributors</h2>
 
       <p>
-        <strong>aec.works</strong>
-        is open source and licensed under GNU GPLv3, and is the result worldwide collaboration of
-        several AEC techonology peers.
+        <strong>aec.works</strong> is a collaborative effort from several people in the AEC technology industry. The project is open source and licensed under GNU GPLv3.
       </p>
 
       <h3 class="mb-1 mt-2"><a href="https://twitter.com/gtalarico">Gui Talarico</a></h3>
@@ -59,7 +56,7 @@
         <a href="https://revitapidocs.com">revitapidocs.com</a>
         and
         <a href="https://apidocs.co">apidocs.co</a>
-        . Gui is responsible for the overal vision, backend, and for introducing many frontend bugs.
+        . Gui is responsible for the overall vision, backend, and for introducing many frontend bugs.
       </p>
 
       <h3 class="mb-1 mt-2"><a href="https://twitter.com/danrocc">Daniel da Rocha</a></h3>
@@ -130,7 +127,7 @@
         includes only companies considered interesting and innovative by our editors.
       </p>
       <p>
-        It should a place people go to to discover disruptive products and who is innovating on
+        It should a place people go to to discover disruptive products and who is innovating in
         different spheres of the AEC industry.
       </p>
       <p>
