@@ -37,7 +37,7 @@
           {{ $route.query.reverse ? '🔻' : '' }}
           <ul>
             <li
-              v-for="paramName in ['name', 'updated', 'claps']"
+              v-for="paramName in sortingOptions"
               :key="paramName"
               class="pointer small"
               :class="getSortStyle(paramName)"
@@ -105,6 +105,7 @@ export default {
   },
   data() {
     return {
+      sortingOptions: ['claps', 'name', 'updated'],
       PAGE_SIZE: 10,
       numPages: 1,
       hasMore: false,
@@ -128,7 +129,7 @@ export default {
       this.searchQuery = this.search
     }
     if (!this.$route.query.sort) {
-      this.$route.query.sort = 'update'
+      this.$route.query.sort = this.sortingOptions[2]
     }
     const pageNumber = this.$route.query.page || 1
     this.fetchItems(pageNumber)
