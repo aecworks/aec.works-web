@@ -21,7 +21,7 @@
       </h2>
 
       <!-- Company Description -->
-      <p class="mt-0">{{ company.description || '-' }}</p>
+      <p class="mt-0 tight">{{ company.description || '-' }}</p>
 
       <!-- Company Hashtags -->
       <div class="mt-0">

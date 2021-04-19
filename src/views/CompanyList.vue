@@ -234,6 +234,8 @@ export default {
     justify-content: flex-end;
   }
   li {
+    text-decoration: underline;
+    text-decoration-color: $yellow;
     &:not(:last-child) {
       margin-right: 1rem;
     }

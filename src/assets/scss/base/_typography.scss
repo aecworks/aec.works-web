@@ -17,14 +17,14 @@ p {
     font-size: $font-size-p;
     font-family: $font-family-serif;
     margin-bottom: 1.25rem;
-    line-height: 2.125rem;
-    &.sans {
-        font-family: $font-family;
+    &.tight {
+        line-height: 2rem;
     }
 }
 p, span {
     &.small {
         font-size: $font-size-h4;
+        line-height: 2rem;
     }
 }
 
@@ -65,4 +65,8 @@ h5 {
 
 .emoji {
     font-size: $font-size-h2;
+}
+
+.sans {
+    font-family: $font-family;
 }
