@@ -6,7 +6,9 @@
 
       <p>
         <strong>aec.works</strong>
-        is a curated list of innovative AEC companies and startups. It isn't a comprehensive list of every AEC company – rather, it is a selected list of companies that our editors consider fresh and exciting. 
+        is a curated list of innovative AEC companies and startups. It isn't a comprehensive list of
+        every AEC company – rather, it is a selected list of companies that our editors consider
+        fresh and exciting.
       </p>
       <h2>How we got started</h2>
       <p>
@@ -16,14 +18,15 @@
         was born ✨
       </p>
       <p>
-        As its popularity grew, so did the number of submissions. Since everything was managed through Airtable, the whole process was time-consuming and error-prone.
+        As its popularity grew, so did the number of submissions. Since everything was managed
+        through Airtable, the whole process was time-consuming and error-prone.
       </p>
       <p>
         <strong>aec.works</strong>
         began in 2020 as the successor of AecStartups. It includes some notable improvements:
       </p>
       <ul class="mt-2 mb-2">
-      	<li class="ml-1">
+        <li class="ml-1">
           <p>
             • New and improved entries, totaling more than 150 companies with sleek cover images and
             logos.
@@ -33,7 +36,10 @@
           <p>• Streamlined tooling to edit content, including non-destructive revisions.</p>
         </li>
         <li class="ml-1">
-          <p>• A more interactive and engaging interface, including the ability to comment and clap (upvote).</p>
+          <p>
+            • A more interactive and engaging interface, including the ability to comment and clap
+            (upvote).
+          </p>
         </li>
         <li class="ml-1">
           <p>
@@ -47,7 +53,9 @@
       <h2>Project Contributors</h2>
 
       <p>
-        <strong>aec.works</strong> is a collaborative effort from several people in the AEC technology industry. The project is open source and licensed under GNU GPLv3.
+        <strong>aec.works</strong>
+        is a collaborative effort from several people in the AEC technology industry. The project is
+        open source and licensed under GNU GPLv3.
       </p>
 
       <h3 class="mb-1 mt-2"><a href="https://twitter.com/gtalarico">Gui Talarico</a></h3>
@@ -56,7 +64,8 @@
         <a href="https://revitapidocs.com">revitapidocs.com</a>
         and
         <a href="https://apidocs.co">apidocs.co</a>
-        . Gui is responsible for the overall vision, backend, and for introducing many frontend bugs.
+        . Gui is responsible for the overall vision, backend, and for introducing many frontend
+        bugs.
       </p>
 
       <h3 class="mb-1 mt-2"><a href="https://twitter.com/danrocc">Daniel da Rocha</a></h3>
@@ -127,7 +136,7 @@
         includes only companies considered interesting and innovative by our editors.
       </p>
       <p>
-        It should a place people go to to discover disruptive products and who is innovating in
+        It should be a place people go to to discover disruptive products and who is innovating in
         different spheres of the AEC industry.
       </p>
       <p>
