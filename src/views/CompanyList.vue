@@ -51,7 +51,7 @@
 
       <p class="mt-3 small">
         <strong>aec.works</strong>
-        is a curated list of innovative and product-oriented aec companies and startups.
+        is a curated list of innovative AEC companies and startups.
         <br />
         <a href="/about">read more</a>
       </p>
