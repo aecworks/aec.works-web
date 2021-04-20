@@ -1,7 +1,9 @@
 <template>
   <div class="wrapper">
-    <div class="content">
-      <Loader v-if="isLoading" />
+    <div class="content relative">
+      <div v-if="isLoading" class="loader-overlay">
+        <Loader />
+      </div>
 
       <CompanyCard
         v-for="company in items"
@@ -139,12 +141,10 @@ export default {
   methods: {
     refetch() {
       this.$router.replace({ query: { ...this.$route.query, page: 1 } }).catch(() => {})
-      this.items = []
       this.fetchItems(0)
     },
 
     async fetchItems(pageNumber) {
-      this.items = []
       this.isLoading = true
       let query = {
         page: pageNumber,
@@ -245,5 +245,18 @@ export default {
       color: $dark;
     }
   }
+}
+
+.loader-overlay {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding-top: 4rem;
 }
 </style>

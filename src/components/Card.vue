@@ -46,7 +46,7 @@ export default {
   display: flex;
   flex-direction: column;
   margin-bottom: 2rem;
-  width: 100%;
+  width: 99%; // compensated for the shadow
   z-index: 1;
 
   @extend .border-thin;
