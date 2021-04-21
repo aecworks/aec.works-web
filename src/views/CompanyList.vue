@@ -34,26 +34,12 @@
 
       <!-- Sorting -->
       <div class="mt-1 mb-2">
-        <label class="mt-1">Sorting</label>
-        <div class="sorting-options fill-x">
-          {{ $route.query.reverse ? '🔻' : '' }}
-          <ul>
-            <li
-              v-for="paramName in sortingOptions"
-              :key="paramName"
-              class="pointer small"
-              :class="getSortStyle(paramName)"
-              @click="handleSortChange(paramName)"
-            >
-              {{ paramName }}
-            </li>
-          </ul>
-        </div>
+        <Sorting :sorting-options="sortingOptions" @sort="refetch" />
       </div>
 
       <p class="mt-3 small">
         <strong>aec.works</strong>
-        is a curated list of innovative and product-oriented aec companies and startups.
+        is a curated list of innovative AEC companies and startups.
         <br />
         <a href="/about">read more</a>
       </p>
@@ -75,6 +61,7 @@ import Button from '../components/forms/Button.vue'
 import Pagination from '../components/Pagination.vue'
 import HashtagInput from '../components/forms/HashtagInput.vue'
 import Loader from '../components/Loader.vue'
+import Sorting from '../components/Sorting.vue'
 import TextInput from '../components/forms/TextInput.vue'
 import api from '@/api'
 import CompanyCard from '@/components/CompanyCard'
@@ -90,6 +77,7 @@ export default {
   components: {
     CompanyCard,
     TextInput,
+    Sorting,
     Loader,
     HashtagInput,
     Button,
@@ -107,7 +95,6 @@ export default {
   },
   data() {
     return {
-      sortingOptions: ['claps', 'name', 'updated'],
       PAGE_SIZE: 10,
       numPages: 1,
       hasMore: false,
@@ -116,6 +103,7 @@ export default {
       isLoading: true,
       searchQuery: '',
       initialQueryHashtags: [],
+      sortingOptions: ['claps', 'name', 'updated'],
     }
   },
   computed: {
@@ -173,26 +161,6 @@ export default {
       this.refetch()
     }, 200),
 
-    getSortStyle(sortBy) {
-      let isActive = this.$route.query.sort == sortBy
-      let isReverse = this.$route.query.reverse
-      return (isActive ? 'active' : '') + ' ' + (isActive && isReverse ? 'reversed' : '')
-    },
-    handleSortChange(sortBy) {
-      let isAlready = Boolean(this.$route.query.sort == sortBy)
-      let isReversed = Boolean(this.$route.query.reverse)
-      if (isAlready && !isReversed) {
-        this.$router.replace({ query: { ...this.$route.query, reverse: 1 } }).catch(() => {})
-      } else if (isAlready && isReversed) {
-        popQuery(this.$router, this.$route.query, 'reverse')
-      } else {
-        this.$router.replace({ query: { ...this.$route.query, sort: sortBy } }).catch(() => {})
-        if (isReversed) {
-          popQuery(this.$router, this.$route.query, 'reverse')
-        }
-      }
-      this.refetch()
-    },
     handleHashtagFilterChanged(tags) {
       if (tags.length) {
         const hashtagStr = tags.join(',')
@@ -228,24 +196,6 @@ export default {
     text-align: right;
   }
 }
-.sorting-options {
-  display: flex;
-  @include for-large-up {
-    justify-content: flex-end;
-  }
-  li {
-    text-decoration: underline;
-    text-decoration-color: $yellow;
-    &:not(:last-child) {
-      margin-right: 1rem;
-    }
-    display: inline-block;
-    color: $light-gray;
-    &.active {
-      color: $dark;
-    }
-  }
-}
 
 .loader-overlay {
   position: absolute;
@@ -259,4 +209,5 @@ export default {
   background-color: rgba(255, 255, 255, 0.8);
   padding-top: 4rem;
 }
+
 </style>
