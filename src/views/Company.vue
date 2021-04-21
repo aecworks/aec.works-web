@@ -62,7 +62,7 @@
       </div>
 
       <div v-if="userIsEditor" class="mt-2">
-        <Button @click="handleEdit">Edit</Button>
+        <Button class="mr-0" @click="handleEdit">Edit</Button>
       </div>
     </div>
 
