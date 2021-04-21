@@ -148,6 +148,7 @@ export default {
       }
       &.profile {
         // @include for-large-up {
+        padding-right: 0;
         margin-left: auto;
         margin-right: 0;
         // }

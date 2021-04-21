@@ -6,10 +6,9 @@
 
       <p>
         <strong>aec.works</strong>
-        is a curated list of innovative AEC companies and startups. It isn't a comprehensive list of
-        every AEC company – rather, it is a selected list of companies that our editors consider
-        fresh and exciting.
+        is a curated list of innovative AEC companies and startups.
       </p>
+
       <h2>How we got started</h2>
       <p>
         Sometime in 2019, Gui Talarico started a list of companies he thought were doing interesting
@@ -132,8 +131,8 @@
       </p>
       <p>
         <strong>aec.works</strong>
-        is not intended to be a comprehensive list of AEC companies, but a selected list that
-        includes only companies considered interesting and innovative by our editors.
+        it is not intended to be a comprehensive list of every AEC company – rather, it is a
+        selected list of companies that our editors consider fresh and exciting.
       </p>
       <p>
         It should be a place people go to to discover disruptive products and who is innovating in
@@ -141,7 +140,7 @@
       </p>
       <p>
         If you are interested in becoming an editor just send us a note at
-        <a href="mailto:team@aec.works">team@aec.works.</a>
+        <a href="mailto:team@aec.works">team@aec.works</a>
       </p>
     </div>
   </div>

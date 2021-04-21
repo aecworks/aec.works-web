@@ -18,6 +18,9 @@ import Nav from '@/components/Nav'
 import Login from '@/components/Login'
 import SocialIcons from '@/components/SocialIcons'
 
+const description =
+  'aec.works is a curated list of innovative and product-oriented aec companies and startups'
+
 export default {
   name: 'App',
   metaInfo: {
@@ -32,8 +35,7 @@ export default {
     meta: [
       {
         property: 'description',
-        content:
-          'aec.works is a curated list of innovative and product-oriented aec companies and startups',
+        content: description,
         // Also at sidebar, /about, github.com/aecworks, and twitter
       },
       {
@@ -55,32 +57,41 @@ export default {
       },
       {
         property: 'og:description',
-        content: 'The Open Source AEC Community Platform',
+        content: description,
       },
       {
         property: 'og:image',
-        content: require('@/assets/images/logo-color-200.png'),
+        content: require('@/assets/images/logo-social-share.png'),
       },
       {
-        property: 'twitter:card',
-        content: 'summary_large_image',
+        name: 'twitter:card',
+        content: 'summary',
+        // content: 'summary_large_image',
       },
       {
-        property: 'twitter:url',
+        name: 'twitter:url',
         content: 'https://aec.works',
       },
       {
-        property: 'twitter:title',
+        name: 'twitter:site',
+        content: '@aec_works',
+      },
+      {
+        name: 'twitter:creator',
+        content: '@gtalarico',
+      },
+      {
+        name: 'twitter:title',
         vmid: 'twitter:title',
         template: (chunk) => `${chunk} | aec.works`,
       },
       {
-        property: 'twitter:description',
-        content: 'The Open Source AEC Community Platform',
+        name: 'twitter:description',
+        content: description,
       },
       {
-        property: 'twitter:image',
-        content: require('@/assets/images/logo-color-200.png'),
+        name: 'twitter:image',
+        content: require('@/assets/images/logo-social-share.png'),
       },
     ],
   },
