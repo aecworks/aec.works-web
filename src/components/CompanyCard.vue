@@ -21,7 +21,7 @@
       </h2>
 
       <!-- Company Description -->
-      <p class="mt-0 tight">{{ company.description || '-' }}</p>
+      <CollapsibleParagraph :text="company.description || '-'" />
 
       <!-- Company Hashtags -->
       <div class="mt-0">
@@ -60,11 +60,12 @@ import Icon from '@/components/Icon.vue'
 import Card from '@/components/Card.vue'
 import Hashtag from '@/components/Hashtag'
 import LazyImg from '@/components/LazyImg'
+import CollapsibleParagraph from '@/components/CollapsibleParagraph.vue'
 import { clapForCount } from '@/libs/sounds'
 
 export default {
   name: 'CompanyCard',
-  components: { LazyImg, Hashtag, Card, Icon },
+  components: { LazyImg, Hashtag, Card, Icon, CollapsibleParagraph },
   props: {
     company: {
       type: Object,
