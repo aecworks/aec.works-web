@@ -34,7 +34,8 @@ export default {
       return this.text.length > this.breakpointIndex
     },
     breakpointIndex() {
-      return this.text.match(/(\r?\n)\s*\1+/).index
+      const match = this.text.match(/\r|\n\n/)
+      return match ? match.index : this.text.length
     },
   },
   methods: {},
