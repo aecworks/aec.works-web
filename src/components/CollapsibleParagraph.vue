@@ -4,9 +4,7 @@
       {{ visibleText }}
     </p>
     <div v-if="shouldTruncate && isTruncated" class="mt-1 mb-2">
-      <a class="pointer" @click="isTruncated = !isTruncated">
-        {{ isTruncated ? 'show more' : 'show less' }}
-      </a>
+      <a class="pointer" @click="isTruncated = !isTruncated">read more</a>
     </div>
   </div>
 </template>
