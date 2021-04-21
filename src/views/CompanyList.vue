@@ -32,7 +32,7 @@
 
       <!-- Sorting -->
       <div class="mt-1 mb-2">
-        <Sorting @sort="refetch" />
+        <Sorting :sorting-options="sortingOptions" @sort="refetch" />
       </div>
 
       <p class="mt-3 small">
@@ -101,6 +101,7 @@ export default {
       isLoading: true,
       searchQuery: '',
       initialQueryHashtags: [],
+      sortingOptions: ['claps', 'name', 'updated'],
     }
   },
   computed: {

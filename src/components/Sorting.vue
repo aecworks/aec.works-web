@@ -23,10 +23,11 @@
 import { popQuery } from '@/utils'
 
 export default {
-  data() {
-    return {
-      sortingOptions: ['claps', 'name', 'updated'],
-    }
+  props: {
+    sortingOptions: {
+      type: Array,
+      required: true,
+    },
   },
   methods: {
     getSortStyle(sortBy) {
