@@ -18,6 +18,9 @@ import Nav from '@/components/Nav'
 import Login from '@/components/Login'
 import SocialIcons from '@/components/SocialIcons'
 
+const description =
+  'aec.works is a curated list of innovative and product-oriented aec companies and startups'
+
 export default {
   name: 'App',
   metaInfo: {
@@ -32,8 +35,7 @@ export default {
     meta: [
       {
         property: 'description',
-        content:
-          'aec.works is a curated list of innovative and product-oriented aec companies and startups',
+        content: description,
         // Also at sidebar, /about, github.com/aecworks, and twitter
       },
       {
@@ -55,7 +57,7 @@ export default {
       },
       {
         property: 'og:description',
-        content: 'The Open Source AEC Community Platform',
+        content: description,
       },
       {
         property: 'og:image',
@@ -63,11 +65,19 @@ export default {
       },
       {
         property: 'twitter:card',
-        content: 'summary_large_image',
+        content: 'summary',
       },
       {
         property: 'twitter:url',
         content: 'https://aec.works',
+      },
+      {
+        property: 'twitter:site',
+        content: '@aec_works',
+      },
+      {
+        property: 'twitter:creator',
+        content: '@gtalarico',
       },
       {
         property: 'twitter:title',
@@ -76,7 +86,7 @@ export default {
       },
       {
         property: 'twitter:description',
-        content: 'The Open Source AEC Community Platform',
+        content: description,
       },
       {
         property: 'twitter:image',
