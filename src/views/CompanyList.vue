@@ -184,6 +184,7 @@ export default {
 
     handlePageClick(pageNumber) {
       this.$router.replace({ query: { ...this.$route.query, page: pageNumber } })
+      this.items = []
       this.fetchItems(pageNumber)
     },
   },
@@ -209,5 +210,4 @@ export default {
   background-color: rgba(255, 255, 255, 0.8);
   padding-top: 4rem;
 }
-
 </style>
