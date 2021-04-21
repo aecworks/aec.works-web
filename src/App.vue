@@ -61,7 +61,7 @@ export default {
       },
       {
         property: 'og:image',
-        content: require('@/assets/images/logo-color-200.png'),
+        content: require('@/assets/images/logo-social-share.png'),
       },
       {
         name: 'twitter:card',
@@ -91,7 +91,7 @@ export default {
       },
       {
         name: 'twitter:image',
-        content: require('@/assets/images/logo-color-200.png'),
+        content: require('@/assets/images/logo-social-share.png'),
       },
     ],
   },
