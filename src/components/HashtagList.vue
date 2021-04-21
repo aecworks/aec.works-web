@@ -40,7 +40,7 @@ export default {
   methods: {
     async fetchItems() {
       const hashtags = await api.getHashtags()
-      this.hashtags = hashtags.sort((a, b) => b.postCount - a.postCount)
+      this.hashtags = hashtags.sort((a, b) => b.companyCount - a.companyCount)
     },
     handleMore() {
       this.limit += 5
