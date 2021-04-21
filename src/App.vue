@@ -64,32 +64,33 @@ export default {
         content: require('@/assets/images/logo-color-200.png'),
       },
       {
-        property: 'twitter:card',
+        name: 'twitter:card',
         content: 'summary',
+        // content: 'summary_large_image',
       },
       {
-        property: 'twitter:url',
+        name: 'twitter:url',
         content: 'https://aec.works',
       },
       {
-        property: 'twitter:site',
+        name: 'twitter:site',
         content: '@aec_works',
       },
       {
-        property: 'twitter:creator',
+        name: 'twitter:creator',
         content: '@gtalarico',
       },
       {
-        property: 'twitter:title',
+        name: 'twitter:title',
         vmid: 'twitter:title',
         template: (chunk) => `${chunk} | aec.works`,
       },
       {
-        property: 'twitter:description',
+        name: 'twitter:description',
         content: description,
       },
       {
-        property: 'twitter:image',
+        name: 'twitter:image',
         content: require('@/assets/images/logo-color-200.png'),
       },
     ],
