@@ -8,6 +8,11 @@ module.exports = {
         pathRewrite: { '^/api': '/' },
         logLevel: 'warn',
       },
+      '^/storage/': {
+        target: process.env.VUE_APP_API_URL,
+        changeOrigin: true,
+        logLevel: 'warn',
+      },
     },
   },
   css: {
