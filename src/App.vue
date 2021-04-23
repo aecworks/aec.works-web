@@ -4,7 +4,7 @@
     <Poopee />
     <SocialIcons />
     <transition name="fade" mode="out-in">
-      <keep-alive>
+      <keep-alive include="CompanyList">
         <router-view />
       </keep-alive>
     </transition>
