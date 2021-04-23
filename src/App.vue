@@ -4,7 +4,9 @@
     <Poopee />
     <SocialIcons />
     <transition name="fade" mode="out-in">
-      <router-view />
+      <keep-alive>
+        <router-view />
+      </keep-alive>
     </transition>
     <transition name="zoom" mode="out-in">
       <Login v-if="showLoginModal" @closed="$router.replace({ query: {} })" />
