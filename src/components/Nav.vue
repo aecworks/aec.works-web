@@ -89,6 +89,7 @@ export default {
   .nav-logo {
     transition: transform 200ms, width 200ms;
     width: 80px;
+    margin-right: 1rem;
     img {
       height: 60px;
       margin-right: 1.5rem;
@@ -105,6 +106,7 @@ export default {
       animation-duration: 300ms;
       transform: translateY(-75px);
       width: 0;
+      margin-right: 0;
     }
     @keyframes animatelogo {
       0% {
@@ -131,7 +133,7 @@ export default {
       height: 100%;
       display: inline-block;
       line-height: 50px;
-      padding: 0 1rem;
+      padding-right: 1rem;
       a {
         font-family: $font-family;
         text-decoration: none;
