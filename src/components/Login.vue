@@ -49,7 +49,7 @@
             </span>
             Login with LinkedIn
           </div>
-          <div class="button" @click="devLogin()">Dev Login</div>
+          <div v-if="showDevLogin" class="button" @click="devLogin()">Dev Login</div>
           <div v-for="(value, name) in errors" :key="name">
             <div>
               <p class="small muted">{{ errors }}</p>
