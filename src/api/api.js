@@ -79,11 +79,10 @@ class Api {
    * @param  {String} password
    */
   async loginWithCredentials(email, password) {
-    const response = await this._getJwt(email, password)
+    const response = await this._fetch('POST', `users/login/`, { body: { email, password } })
     if (response.status !== 200) {
       return await response.json()
     }
-    // return this._handleTokenResponse(response)
   }
 
   /**

@@ -49,9 +49,10 @@
             </span>
             Login with LinkedIn
           </div>
+          <div class="button" @click="devLogin()">Dev Login</div>
           <div v-for="(value, name) in errors" :key="name">
             <div>
-              <!-- <p class="small muted">{{value}}</p> -->
+              <p class="small muted">{{ errors }}</p>
             </div>
           </div>
         </div>
@@ -83,6 +84,11 @@ export default {
       errors: [],
       isLoading: false,
     }
+  },
+  computed: {
+    showDevLogin() {
+      return document.location.href.includes('localhost')
+    },
   },
   mounted() {
     this.handleOauthCallback(this.$route.query)
@@ -129,6 +135,19 @@ export default {
       this.isLoading = true
       const state = this.buildState(provider)
       window.location.href = oauthLoginUrl(provider, state)
+    },
+    async devLogin() {
+      this.isLoading = true
+      const responseErrors = await api.loginWithCredentials('dev@dev.com', '1')
+      this.isLoading = false
+
+      if (responseErrors) {
+        this.errors.push(responseErrors)
+        console.log(responseErrors)
+      } else {
+        this.$store.dispatch(USERS.GET_PROFILE)
+        popQueries(this.$router, this.$route.query, ['login'])
+      }
     },
   },
 }
