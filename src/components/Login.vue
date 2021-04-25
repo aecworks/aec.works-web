@@ -51,9 +51,7 @@
           </div>
           <div v-if="showDevLogin" class="button" @click="devLogin()">Dev Login</div>
           <div v-for="(value, name) in errors" :key="name">
-            <div>
-              <p class="small muted">{{ errors }}</p>
-            </div>
+            <p class="small muted">{{ value }}</p>
           </div>
         </div>
 
@@ -105,8 +103,8 @@ export default {
       const { code, error, provider } = query
 
       if (error) {
-        this.errors.push(error)
-        console.log(error)
+        this.errors = ['Login Error']
+        console.error(error)
         return
       }
 
@@ -117,8 +115,8 @@ export default {
         this.isLoading = false
 
         if (responseErrors) {
-          this.errors.push(responseErrors)
-          console.log(responseErrors)
+          this.errors = ['Login Error']
+          console.error(responseErrors)
         } else {
           this.$store.dispatch(USERS.GET_PROFILE)
           popQueries(this.$router, this.$route.query, ['state', 'provider', 'login', 'code'])
@@ -138,12 +136,12 @@ export default {
     },
     async devLogin() {
       this.isLoading = true
-      const responseErrors = await api.loginWithCredentials('dev@dev.com', '1')
+      const responseErrors = await api.loginWithCredentials('dev@dev.com', '12')
       this.isLoading = false
 
       if (responseErrors) {
-        this.errors.push(responseErrors)
-        console.log(responseErrors)
+        this.errors = ['Login Error']
+        console.error(responseErrors)
       } else {
         this.$store.dispatch(USERS.GET_PROFILE)
         popQueries(this.$router, this.$route.query, ['login'])
