@@ -136,7 +136,7 @@ export default {
     },
     async devLogin() {
       this.isLoading = true
-      const responseErrors = await api.loginWithCredentials('dev@dev.com', '12')
+      const responseErrors = await api.loginWithCredentials('dev@dev.com', '1')
       this.isLoading = false
 
       if (responseErrors) {
