@@ -6,10 +6,10 @@
           <Loader />
         </div>
       </div>
-      <div class="login-info invert">
-        <img alt="AEC Guide Logo" class="logo" src="@/assets/images/logo.svg" />
-        <p class="center">Login to join the conversation.</p>
-        <p class="center small mt-2">
+      <div class="login-info">
+        <img alt="AEC Guide Logo" class="logo" src="@/assets/images/logo-black.svg" />
+        <p class="center small">Login to join the conversation</p>
+        <p class="center small mt-3">
           Bored? Check out our
           <br />
           <router-link :to="{ name: 'Privacy', query: {} }">Privacy Policy</router-link>
@@ -49,10 +49,9 @@
             </span>
             Login with LinkedIn
           </div>
+          <div v-if="showDevLogin" class="button" @click="devLogin()">Dev Login</div>
           <div v-for="(value, name) in errors" :key="name">
-            <div>
-              <!-- <p class="small muted">{{value}}</p> -->
-            </div>
+            <p class="small muted">{{ value }}</p>
           </div>
         </div>
 
@@ -84,6 +83,11 @@ export default {
       isLoading: false,
     }
   },
+  computed: {
+    showDevLogin() {
+      return document.location.href.includes('localhost')
+    },
+  },
   mounted() {
     this.handleOauthCallback(this.$route.query)
   },
@@ -99,8 +103,8 @@ export default {
       const { code, error, provider } = query
 
       if (error) {
-        this.errors.push(error)
-        console.log(error)
+        this.errors = ['Login Error']
+        console.error(error)
         return
       }
 
@@ -111,8 +115,8 @@ export default {
         this.isLoading = false
 
         if (responseErrors) {
-          this.errors.push(responseErrors)
-          console.log(responseErrors)
+          this.errors = ['Login Error']
+          console.error(responseErrors)
         } else {
           this.$store.dispatch(USERS.GET_PROFILE)
           popQueries(this.$router, this.$route.query, ['state', 'provider', 'login', 'code'])
@@ -129,6 +133,19 @@ export default {
       this.isLoading = true
       const state = this.buildState(provider)
       window.location.href = oauthLoginUrl(provider, state)
+    },
+    async devLogin() {
+      this.isLoading = true
+      const responseErrors = await api.loginWithCredentials('dev@dev.com', '1')
+      this.isLoading = false
+
+      if (responseErrors) {
+        this.errors = ['Login Error']
+        console.error(responseErrors)
+      } else {
+        this.$store.dispatch(USERS.GET_PROFILE)
+        popQueries(this.$router, this.$route.query, ['login'])
+      }
     },
   },
 }
@@ -150,6 +167,14 @@ export default {
     padding: 3rem 1.5rem;
   }
 
+  .button {
+    margin-right: 0;
+  }
+
+  .small {
+    font-size: 0.8rem;
+  }
+
   .login-loader {
     position: absolute;
     width: 100%;
@@ -159,12 +184,14 @@ export default {
   }
 
   .login-info {
+    background-color: $cream;
+    border-right: 1px solid $dark-gray;
     @include for-large-up {
     }
     display: flex;
     flex-direction: column;
     .logo {
-      height: 100px;
+      height: 80px;
       margin-bottom: 1.5rem;
     }
   }

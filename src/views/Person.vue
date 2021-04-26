@@ -4,11 +4,7 @@
       <div class="profile">
         <div class="profile-data">
           <div class="profile-image">
-            <LazyImg
-              :src="
-                profile.avatarUrl || 'https://avatars.dicebear.com/api/male/john.svg?mood[]=happy'
-              "
-            />
+            <LazyImg :src="profile.avatarUrl" />
           </div>
           <h2 class="mt-1">{{ profile.name }}</h2>
           <div class="mt">
