@@ -65,6 +65,15 @@
         </div>
         <ImageUploader :crop-ratio="0.5" @uploaded="handleCoverUploaded" />
 
+        <label class="mt-2" for="input-note">Editor's Note (Optional)</label>
+        <input
+          id="input-note"
+          v-model="company.note"
+          type="text"
+          class="input fill-x"
+          placeholder="eg. added twitter handle"
+        />
+
         <div v-if="errors">
           <h3 class="mt-2">Errors:</h3>
           <ul>
@@ -170,6 +179,7 @@ export default {
         coverUrl: '',
         cover: '',
         hashtags: [],
+        note: '',
         lastRevisionId: '',
       },
     }

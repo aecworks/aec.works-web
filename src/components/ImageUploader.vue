@@ -21,7 +21,7 @@
       <div class="section flex flex-down flex-center">
         <IconLarge class="mt-1" icon="paste" />
         <p class="mt-1 muted small">
-          <code>ctrl+c</code>
+          <code>ctrl+v</code>
         </p>
       </div>
     </Modal>
