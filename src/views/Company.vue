@@ -2,31 +2,41 @@
   <div class="wrapper sm-grid-sidebar-down">
     <div v-if="company" class="content-header">
       <div class="company-images">
-        <lazy-img class="cover" :src="company.coverUrl || defaultCover" alt="Company Cover Image" />
-        <lazy-img class="logo" :src="company.logoUrl || defaultLogo" alt="Company Logo" />
+        <lazy-img
+          class="cover"
+          :src="company.currentRevision.coverUrl || defaultCover"
+          alt="Company Cover Image"
+        />
+        <lazy-img
+          class="logo"
+          :src="company.currentRevision.logoUrl || defaultLogo"
+          alt="Company Logo"
+        />
       </div>
     </div>
     <div v-if="company" class="content">
       <h1 class="mt-2">
-        {{ company.name }}
-        <span class="small muted ml">{{ company.location || 'Somewhere' }}</span>
+        {{ company.currentRevision.name }}
+        <span class="small muted ml">{{ company.currentRevision.location || 'Somewhere' }}</span>
       </h1>
 
       <div class="mt-2 mb-2">
-        <p class="sans">{{ company.description || '...' }}</p>
+        <p class="sans">{{ company.currentRevision.description || '...' }}</p>
       </div>
 
       <div class="flex mt-2 mb-2">
         <div>
           <label>Website</label>
-          <a :href="company.website">{{ company.website || '-' | cleanUrl }}</a>
+          <a :href="company.currentRevision.website">
+            {{ company.currentRevision.website || '-' | cleanUrl }}
+          </a>
         </div>
       </div>
 
       <div class="mt-2">
         <label>Tags</label>
         <Hashtag
-          v-for="hashtagSlug in company.hashtags"
+          v-for="hashtagSlug in company.currentRevision.hashtags"
           :key="hashtagSlug"
           :slug="hashtagSlug"
           clickable
@@ -40,7 +50,10 @@
       </div>
 
       <div class="mt-2">
-        <TwitterFeed v-if="company.twitter" :handle="company.twitter" />
+        <TwitterFeed
+          v-if="company.currentRevision.twitter"
+          :handle="company.currentRevision.twitter"
+        />
       </div>
     </div>
 
@@ -91,7 +104,8 @@ export default {
   metaInfo() {
     const company = this.company
     return {
-      title: () => (company && company.name ? company.name : 'Company'),
+      title: () =>
+        company && company.currentRevision.name ? company.currentRevision.name : 'Company',
     }
   },
   components: {

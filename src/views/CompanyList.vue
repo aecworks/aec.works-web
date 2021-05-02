@@ -68,6 +68,7 @@ import CompanyCard from '@/components/CompanyCard'
 import { popQuery, debounce } from '@/utils'
 import { bus, EVENTS } from '@/events'
 import { waitForLogin } from '@/mixins'
+import { ModerationStatus } from '@/models.ts'
 
 export default {
   name: 'CompanyList',
@@ -91,6 +92,10 @@ export default {
     hashtags: {
       type: String,
       default: '',
+    },
+    status: {
+      type: String,
+      default: ModerationStatus.APPROVED,
     },
   },
   data() {
@@ -140,6 +145,7 @@ export default {
         search: this.searchQuery,
         sort: this.$route.query.sort,
         reverse: this.$route.query.reverse,
+        status: this.status,
       }
       // Remove null/undefined
       query = Object.entries(query).reduce((a, [k, v]) => (v ? ((a[k] = v), a) : a), {})

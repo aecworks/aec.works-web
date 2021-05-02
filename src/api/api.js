@@ -184,15 +184,15 @@ class Api {
   }
 
   postPostClap(slug) {
-    return this._post(`community/posts/${slug}/clap/`)
+    return this._post(`community/posts/${slug}/clap`)
   }
 
   postCompanyClap(slug) {
-    return this._post(`community/companies/${slug}/clap/`)
+    return this._post(`community/companies/${slug}/clap`)
   }
 
   commentClap(id) {
-    return this._post(`community/comments/${id}/clap/`)
+    return this._post(`community/comments/${id}/clap`)
   }
 
   getTwitterTimeline(handle) {

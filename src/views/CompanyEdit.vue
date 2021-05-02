@@ -6,21 +6,31 @@
 
       <form class="form">
         <label for="input-name">Name</label>
-        <input id="input-name" v-model="company.name" type="text" class="input fill-x" />
+        <input
+          id="input-name"
+          v-model="company.currentRevision.name"
+          type="text"
+          class="input fill-x"
+        />
         <label for="input-description">Description</label>
         <textarea
           id="input-description"
-          v-model="company.description"
+          v-model="company.currentRevision.description"
           type="text"
           class="input fill-x"
           rows="3"
         />
 
         <label for="input-location">Location</label>
-        <gmaps-autocomplete v-model="company.location" />
+        <gmaps-autocomplete v-model="company.currentRevision.location" />
 
         <label for="input-website">Website</label>
-        <input id="input-website" v-model="company.website" type="text" class="input fill-x" />
+        <input
+          id="input-website"
+          v-model="company.currentRevision.website"
+          type="text"
+          class="input fill-x"
+        />
 
         <div class="flex">
           <div class="fill-x">
@@ -29,7 +39,7 @@
               <span class="input-group-prefix">@</span>
               <input
                 id="input-twitter-handle"
-                v-model="company.twitter"
+                v-model="company.currentRevision.twitter"
                 class="input input-with-prefix fill-x"
                 type="text"
               />
@@ -39,7 +49,7 @@
             <label for="input-crunchbase-id">Crunchbase id</label>
             <input
               id="input-crunchbase-id"
-              v-model="company.crunchbaseId"
+              v-model="company.currentRevision.crunchbaseId"
               type="text"
               class="input fill-x"
             />
@@ -49,19 +59,27 @@
         <label for="input-hashtags">Hashtags</label>
         <HashtagInput
           v-if="isReadyForHashtags"
-          :initial-tags="company.hashtags"
+          :initial-tags="company.currentRevision.hashtags"
           @changed="handleTagChange"
         />
 
         <label class="mt-1">Logo</label>
-        <div class="company-logo" :class="{ empty: !company.logoUrl }" @click="clearLogo">
-          <img :src="company.logoUrl || defaultImageUrl" alt />
+        <div
+          class="company-logo"
+          :class="{ empty: !company.currentRevision.logoUrl }"
+          @click="clearLogo"
+        >
+          <img :src="company.currentRevision.logoUrl || defaultImageUrl" alt />
         </div>
         <ImageUploader :crop-ratio="1" @uploaded="handleLogoUploaded" />
 
         <label class="mt-1">Cover</label>
-        <div class="company-cover" :class="{ empty: !company.coverUrl }" @click="clearCover">
-          <img :src="company.coverUrl || defaultImageUrl" alt />
+        <div
+          class="company-cover"
+          :class="{ empty: !company.currentRevision.coverUrl }"
+          @click="clearCover"
+        >
+          <img :src="company.currentRevision.coverUrl || defaultImageUrl" alt />
         </div>
         <ImageUploader :crop-ratio="0.5" @uploaded="handleCoverUploaded" />
 
@@ -131,7 +149,9 @@ export default {
     return {
       title: () => {
         if (isEditing) {
-          return company && company.name ? `Edit: ${company.name}` : 'Edit Company'
+          return company && company.currentRevision.name
+            ? `Edit: ${company.currentRevision.name}`
+            : 'Edit Company'
         }
         return 'Add Company'
       },
@@ -159,18 +179,20 @@ export default {
       revisions: [],
       isReadyForHashtags: false,
       company: {
-        name: '',
-        description: '',
-        location: '',
-        website: '',
-        twitter: '',
-        crunchbaseId: '',
-        logoUrl: '',
-        logo: '',
-        coverUrl: '',
-        cover: '',
-        hashtags: [],
-        lastRevisionId: '',
+        status: '',
+        currentRevision: {
+          name: '',
+          description: '',
+          location: '',
+          website: '',
+          twitter: '',
+          crunchbaseId: '',
+          logoUrl: '',
+          logo: '',
+          coverUrl: '',
+          cover: '',
+          hashtags: [],
+        },
       },
     }
   },
@@ -195,11 +217,11 @@ export default {
       try {
         if (this.isEditing) {
           // Is Editing Company
-          await api.postCompanyRevision(this.company.slug, this.company)
+          await api.postCompanyRevision(this.company.slug, this.company.currentRevision)
           this.revisions = await api.getCompanyRevisions(this.slug)
         } else {
           // Is Creating New
-          const response = await api.postCompany(this.company)
+          const response = await api.postCompany(this.company.currentRevision)
           if (!response.errors) {
             const company = response
             this.$router.push({ name: 'Company', params: { slug: company.slug } })
@@ -222,31 +244,31 @@ export default {
     },
 
     clearLogo() {
-      this.company.logoUrl = ''
-      this.company.logo = ''
+      this.company.currentRevision.logoUrl = ''
+      this.company.currentRevision.logo = ''
     },
 
     clearCover() {
-      this.company.coverUrl = ''
-      this.company.cover = ''
+      this.company.currentRevision.coverUrl = ''
+      this.company.currentRevision.cover = ''
     },
 
     handleLogoUploaded(image) {
-      this.company.logoUrl = image.url
-      this.company.logo = image.id
+      this.company.currentRevision.logoUrl = image.url
+      this.company.currentRevision.logo = image.id
     },
 
     handleCoverUploaded(image) {
-      this.company.coverUrl = image.url
-      this.company.cover = image.id
+      this.company.currentRevision.coverUrl = image.url
+      this.company.currentRevision.cover = image.id
     },
 
     handleHashtagEdit(e) {
-      this.company.hashtags = e.target.value.split(',')
+      this.company.currentRevision.hashtags = e.target.value.split(',')
     },
 
     handleTagChange(hashtags) {
-      this.company.hashtags = hashtags
+      this.company.currentRevision.hashtags = hashtags
     },
 
     async handleRevisionApprove(revisionId) {
@@ -268,7 +290,7 @@ export default {
     showRevision(revision) {
       this.isReadyForHashtags = false
       this.$nextTick(() => {
-        this.company = { ...this.company, ...revision }
+        this.company = { ...this.company, ...{ currentRevision: revision } }
         this.isReadyForHashtags = true
       })
     },
@@ -287,7 +309,7 @@ export default {
   &:not(.empty):hover {
     cursor: pointer;
     img {
-      opacity: 0.25;
+      opacity: 1;
     }
   }
   &:not(.empty):hover::after,
@@ -326,6 +348,11 @@ export default {
 .company-cover {
   @extend .company-logo;
   width: 120px;
+
+  &:not(.empty):hover::before,
+  &:not(.empty):hover::after {
+    margin-left: 30px;
+  }
 }
 
 @include for-large-down {

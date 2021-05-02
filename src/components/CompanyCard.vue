@@ -1,14 +1,14 @@
 <template>
   <!-- <Card @click="handleClick(company)"> -->
-  <Card :banner="company.banner">
+  <Card :banner="company.currentRevision.banner">
     <template v-slot:logo>
-      <RouterLink v-if="company.logoUrl" :to="routerLinkTo">
-        <LazyImg class="company-logo" :src="getImageUrl(company.logoUrl)" />
+      <RouterLink v-if="company.currentRevision.logoUrl" :to="routerLinkTo">
+        <LazyImg class="company-logo" :src="getImageUrl(company.currentRevision.logoUrl)" />
       </RouterLink>
     </template>
     <template v-slot:cover>
-      <RouterLink v-if="company.coverUrl" :to="routerLinkTo">
-        <LazyImg :src="getImageUrl(company.coverUrl)" />
+      <RouterLink v-if="company.currentRevision.coverUrl" :to="routerLinkTo">
+        <LazyImg :src="getImageUrl(company.currentRevision.coverUrl)" />
       </RouterLink>
     </template>
     <template v-slot:default>
@@ -16,17 +16,17 @@
       <h2 class="mt-1">
         <!-- TODO throwing router error -->
         <router-link :to="routerLinkTo">
-          {{ company.name }}
+          {{ company.currentRevision.name }}
         </router-link>
       </h2>
 
       <!-- Company Description -->
-      <CollapsibleParagraph :text="company.description || '-'" />
+      <CollapsibleParagraph :text="company.currentRevision.description || '-'" />
 
       <!-- Company Hashtags -->
       <div class="mt-0">
         <Hashtag
-          v-for="slug in company.hashtags"
+          v-for="slug in company.currentRevision.hashtags"
           :key="slug"
           :slug="slug"
           clickable
@@ -47,7 +47,7 @@
         >
           <span class="small">{{ company.clapCount }}</span>
         </Icon>
-        <span class="small flex-right">{{ company.location }}</span>
+        <span class="small flex-right">{{ company.currentRevision.location }}</span>
       </div>
     </template>
   </Card>
