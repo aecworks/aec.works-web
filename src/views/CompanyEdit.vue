@@ -6,28 +6,23 @@
 
       <form class="form">
         <label for="input-name">Name</label>
-        <input
-          id="input-name"
-          v-model="company.currentRevision.name"
-          type="text"
-          class="input fill-x"
-        />
+        <input id="input-name" v-model="revisionState.name" type="text" class="input fill-x" />
         <label for="input-description">Description</label>
         <textarea
           id="input-description"
-          v-model="company.currentRevision.description"
+          v-model="revisionState.description"
           type="text"
           class="input fill-x"
           rows="3"
         />
 
         <label for="input-location">Location</label>
-        <gmaps-autocomplete v-model="company.currentRevision.location" />
+        <gmaps-autocomplete v-model="revisionState.location" />
 
         <label for="input-website">Website</label>
         <input
           id="input-website"
-          v-model="company.currentRevision.website"
+          v-model="revisionState.website"
           type="text"
           class="input fill-x"
         />
@@ -39,7 +34,7 @@
               <span class="input-group-prefix">@</span>
               <input
                 id="input-twitter-handle"
-                v-model="company.currentRevision.twitter"
+                v-model="revisionState.twitter"
                 class="input input-with-prefix fill-x"
                 type="text"
               />
@@ -49,7 +44,7 @@
             <label for="input-crunchbase-id">Crunchbase id</label>
             <input
               id="input-crunchbase-id"
-              v-model="company.currentRevision.crunchbaseId"
+              v-model="revisionState.crunchbaseId"
               type="text"
               class="input fill-x"
             />
@@ -59,27 +54,19 @@
         <label for="input-hashtags">Hashtags</label>
         <HashtagInput
           v-if="isReadyForHashtags"
-          :initial-tags="company.currentRevision.hashtags"
+          :initial-tags="revisionState.hashtags"
           @changed="handleTagChange"
         />
 
         <label class="mt-1">Logo</label>
-        <div
-          class="company-logo"
-          :class="{ empty: !company.currentRevision.logoUrl }"
-          @click="clearLogo"
-        >
-          <img :src="company.currentRevision.logoUrl || defaultImageUrl" alt />
+        <div class="company-logo" :class="{ empty: !revisionState.logoUrl }" @click="clearLogo">
+          <img :src="revisionState.logoUrl || defaultImageUrl" alt />
         </div>
         <ImageUploader :crop-ratio="1" @uploaded="handleLogoUploaded" />
 
         <label class="mt-1">Cover</label>
-        <div
-          class="company-cover"
-          :class="{ empty: !company.currentRevision.coverUrl }"
-          @click="clearCover"
-        >
-          <img :src="company.currentRevision.coverUrl || defaultImageUrl" alt />
+        <div class="company-cover" :class="{ empty: !revisionState.coverUrl }" @click="clearCover">
+          <img :src="revisionState.coverUrl || defaultImageUrl" alt />
         </div>
         <ImageUploader :crop-ratio="0.5" @uploaded="handleCoverUploaded" />
 
@@ -111,8 +98,8 @@
     <div class="sidebar mb-2">
       <h3 class="mb-2">Revisions</h3>
       <div v-for="rev in revisions" :key="rev.id" class="revisions">
-        <label v-if="rev.id == company.lastRevisionId" class="mb">👇Applied 👇</label>
-        <label v-if="rev.id == company.id" class="mb">👇Previwing 👇</label>
+        <label v-if="rev.id == company.currentRevision.id" class="mb">👇 Applied 👇</label>
+        <label v-if="rev.id == revisionState.id" class="mb">👇 Previewing 👇</label>
         <h5>{{ rev.createdAt | calendar }}</h5>
         <span class="muted small">{{ rev.createdBy.name }}</span>
         <div>
@@ -149,8 +136,8 @@ export default {
     return {
       title: () => {
         if (isEditing) {
-          return company && company.currentRevision.name
-            ? `Edit: ${company.currentRevision.name}`
+          return company && this.revisionState.name
+            ? `Edit: ${this.revisionState.name}`
             : 'Edit Company'
         }
         return 'Add Company'
@@ -178,20 +165,35 @@ export default {
       errors: null,
       revisions: [],
       isReadyForHashtags: false,
+      revisionState: {
+        name: '',
+        description: '',
+        location: '',
+        website: '',
+        twitter: '',
+        crunchbaseId: '',
+        logoUrl: '',
+        logo: '',
+        coverUrl: '',
+        cover: '',
+        hashtags: [],
+        createdBy: '',
+      },
       company: {
         status: '',
+        createdBy: '',
         currentRevision: {
-          name: '',
-          description: '',
-          location: '',
-          website: '',
-          twitter: '',
-          crunchbaseId: '',
-          logoUrl: '',
-          logo: '',
-          coverUrl: '',
-          cover: '',
-          hashtags: [],
+          id: '',
+          // description: '',
+          // location: '',
+          // website: '',
+          // twitter: '',
+          // crunchbaseId: '',
+          // logoUrl: '',
+          // logo: '',
+          // coverUrl: '',
+          // cover: '',
+          // hashtags: [],
         },
       },
     }
@@ -202,26 +204,31 @@ export default {
     },
   },
   async created() {
-    if (this.isEditing) {
-      this.company = await api.getCompany(this.slug)
-      this.revisions = await api.getCompanyRevisions(this.slug)
-    }
-    /// Use this to hold back hashtag input otherwise it's initiated as blank
-    // TODO: Sync, when applying doe snot work
-    this.isReadyForHashtags = true
+    this.fetchData()
   },
   methods: {
+    async fetchData() {
+      this.isReadyForHashtags = false
+      if (this.isEditing) {
+        this.company = await api.getCompany(this.slug, { headers: { 'Cache-Control': 'no-cache' } })
+        this.revisionState = this.company.currentRevision
+        this.revisions = await api.getCompanyRevisions(this.slug)
+      }
+      /// Use this to hold back hashtag input otherwise it's initiated as blank
+      // TODO: Sync, when applying doe snot work
+      this.isReadyForHashtags = true
+    },
     async handleSave() {
       await waitForLogin()
       this.isLoadingBlocked = true
       try {
         if (this.isEditing) {
           // Is Editing Company
-          await api.postCompanyRevision(this.company.slug, this.company.currentRevision)
+          await api.postCompanyRevision(this.company.slug, this.revisionState)
           this.revisions = await api.getCompanyRevisions(this.slug)
         } else {
           // Is Creating New
-          const response = await api.postCompany(this.company.currentRevision)
+          const response = await api.postCompany(this.revisionState)
           if (!response.errors) {
             const company = response
             this.$router.push({ name: 'Company', params: { slug: company.slug } })
@@ -244,43 +251,45 @@ export default {
     },
 
     clearLogo() {
-      this.company.currentRevision.logoUrl = ''
-      this.company.currentRevision.logo = ''
+      this.revisionState.logoUrl = ''
+      this.revisionState.logo = ''
     },
 
     clearCover() {
-      this.company.currentRevision.coverUrl = ''
-      this.company.currentRevision.cover = ''
+      this.revisionState.coverUrl = ''
+      this.revisionState.cover = ''
     },
 
     handleLogoUploaded(image) {
-      this.company.currentRevision.logoUrl = image.url
-      this.company.currentRevision.logo = image.id
+      this.revisionState.logoUrl = image.url
+      this.revisionState.logo = image.id
     },
 
     handleCoverUploaded(image) {
-      this.company.currentRevision.coverUrl = image.url
-      this.company.currentRevision.cover = image.id
+      this.revisionState.coverUrl = image.url
+      this.revisionState.cover = image.id
     },
 
     handleHashtagEdit(e) {
-      this.company.currentRevision.hashtags = e.target.value.split(',')
+      this.revisionState.hashtags = e.target.value.split(',')
     },
 
     handleTagChange(hashtags) {
-      this.company.currentRevision.hashtags = hashtags
+      this.revisionState.hashtags = hashtags
     },
 
     async handleRevisionApprove(revisionId) {
       this.isLoadingBlocked = true
       try {
         await api.postCompanyRevisionApprove(revisionId)
-        this.revisions = await api.getCompanyRevisions(this.slug)
-        this.company = await api.getCompany(this.slug)
-        this.isReadyForHashtags = false
-        this.$nextTick(() => {
-          this.isReadyForHashtags = true
-        })
+
+        this.fetchData()
+        // this.revisions = await api.getCompanyRevisions(this.slug)
+        // this.company = await api.getCompany(this.slug)
+        // this.isReadyForHashtags = false
+        // this.$nextTick(() => {
+        //   this.isReadyForHashtags = true
+        // })
       } catch (e) {
         console.error(e)
       }
@@ -290,7 +299,7 @@ export default {
     showRevision(revision) {
       this.isReadyForHashtags = false
       this.$nextTick(() => {
-        this.company = { ...this.company, ...{ currentRevision: revision } }
+        this.revisionState = revision
         this.isReadyForHashtags = true
       })
     },

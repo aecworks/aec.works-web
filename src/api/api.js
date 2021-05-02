@@ -118,8 +118,8 @@ class Api {
     return this._get(`community/companies/claps/${slug}/`)
   }
 
-  getCompany(slug) {
-    return this._get(`community/companies/${slug}/`)
+  getCompany(slug, options = {}) {
+    return this._get(`community/companies/${slug}/`, { ...options })
   }
 
   getCompanies(query) {
@@ -141,7 +141,7 @@ class Api {
   }
 
   postCompanyRevisionApprove(revisionId) {
-    return this._post(`community/revisions/${revisionId}/approve`)
+    return this._post(`community/revisions/${revisionId}/apply`)
   }
 
   putImage(file) {
