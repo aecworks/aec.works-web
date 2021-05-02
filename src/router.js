@@ -30,7 +30,6 @@ const routes = [
     name: 'CompanyNew',
     component: () => import(/* webpackChunkName: "company-edit" */ '@/views/CompanyEdit'),
     props: false,
-    // meta: { requiresAuth: true },
     meta: { requiresAuth: false },
   },
   {
@@ -38,7 +37,6 @@ const routes = [
     name: 'CompanyEdit',
     component: CompanyEdit,
     props: true,
-    // meta: { requiresAuth: true },
     meta: { requiresAuth: false },
   },
   {

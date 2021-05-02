@@ -49,7 +49,9 @@
       </div>
 
       <div class="mt-2 mb-2">
-        <Button v-if="userIsEditor" class="mr-0" @click="handleAdd">Add Company</Button>
+        <Button class="mr-0" @click="handleAdd">
+          {{ userIsEditor ? 'Add' : 'Suggest' }} Company
+        </Button>
       </div>
     </div>
   </div>

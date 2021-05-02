@@ -69,13 +69,17 @@
         </Icon>
       </div>
 
-      <div v-if="false" class="mt-2">
-        <label></label>
-        <SocialShare />
+      <div class="mt-1">
+        <div class="pill">{{ company.status }}</div>
       </div>
 
       <div v-if="userIsEditor" class="mt-2">
-        <Button class="mr-0" @click="handleEdit">Edit</Button>
+        <Button class="mr-0 block" @click="handleEdit">Edit</Button>
+      </div>
+
+      <div v-if="false" class="mt-2">
+        <label></label>
+        <SocialShare />
       </div>
     </div>
 
@@ -131,7 +135,7 @@ export default {
       errors: [],
       company: null,
       defaultLogo: require('@/assets/images/image.svg'),
-      defaultCover: 'https://picsum.photos/600/200.jpg?blur=5&grayscale',
+      defaultCover: 'https://picsum.photos/600/200.jpg?blur=1&grayscale',
     }
   },
   computed: {

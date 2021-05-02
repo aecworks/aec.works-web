@@ -2,7 +2,9 @@
   <div class="wrapper sm-grid-sidebar-down">
     <LoaderOverlay v-if="isLoadingBlocked"></LoaderOverlay>
     <div class="content">
-      <h1>{{ isEditing ? 'Edit' : 'New' }}</h1>
+      <h1 class="mt-0">
+        {{ isEditing ? 'Edit' : 'New' }}
+      </h1>
 
       <form class="form">
         <label for="input-name">Name</label>
@@ -25,6 +27,7 @@
           v-model="revisionState.website"
           type="text"
           class="input fill-x"
+          @blur="formatWebsite"
         />
 
         <div class="flex">
@@ -71,10 +74,10 @@
         <ImageUploader :crop-ratio="0.5" @uploaded="handleCoverUploaded" />
 
         <div v-if="errors">
-          <h3 class="mt-2">Errors:</h3>
+          <h3 class="mt-2">Errors</h3>
           <ul>
-            <li v-for="(value, key) in errors" :key="key">
-              <span>
+            <li v-for="(value, key) in errors" :key="key" class="mt">
+              <span class="pill">
                 <strong>{{ key }}:</strong>
                 {{ value[0] }}
               </span>
@@ -95,30 +98,54 @@
         <CompanyCard :company="company" />
       </div>
     </div>
+
     <div class="sidebar mb-2">
-      <h3 class="mb-2">Revisions</h3>
-      <div v-for="rev in revisions" :key="rev.id" class="revisions">
-        <label v-if="rev.id == company.currentRevision.id" class="mb">👇 Applied 👇</label>
-        <label v-if="rev.id == revisionState.id" class="mb">👇 Previewing 👇</label>
-        <h5>{{ rev.createdAt | calendar }}</h5>
-        <span class="muted small">{{ rev.createdBy.name }}</span>
-        <div>
-          <Button kind="text" aria-label="show revision" @click="showRevision(rev)">Show</Button>
-          <Button kind="text" aria-label="apply revision" @click="handleRevisionApprove(rev.id)">
-            Apply
-          </Button>
+      <div v-if="company.status">
+        <span class="pill">{{ company.status }}</span>
+      </div>
+
+      <div v-if="revisions.length" class="mt-2">
+        <h3 class="mb-1">Revisions</h3>
+
+        <div v-for="rev in revisions" :key="rev.id" class="revision">
+          <h5>{{ rev.createdAt | calendar }}</h5>
+          <h5 class="muted small">{{ rev.createdBy.name }}</h5>
+
+          <div class="mt">
+            <Icon
+              :icon="rev.id == revisionState.id ? 'eye' : 'eye_off'"
+              icon-hover="eye"
+              :clickable="rev.id != revisionState.id"
+              title="preview"
+              @click="rev.id != revisionState.id ? showRevision(rev) : 1"
+            ></Icon>
+            <Icon
+              :icon="rev.id == company.currentRevision.id ? 'apply' : 'apply_off'"
+              :icon-hover="rev.id == revisionState.id ? 'apply' : 'apply_off'"
+              :clickable="rev.id != company.currentRevision.id && rev.id == revisionState.id"
+              title="apply"
+              @click="
+                rev.id != company.currentRevision.id && rev.id == revisionState.id
+                  ? handleRevisionApprove(rev.id)
+                  : 1
+              "
+            ></Icon>
+          </div>
         </div>
       </div>
-      <div class="mt-2">
+      <div v-if="company.createdAt" class="mt-2">
         <h3>Created</h3>
-        <h5 class="mt-1">{{ company.createdAt | calendar }}</h5>
-        <span v-if="company.createdBy" class="small muted">{{ company.createdBy.name }}</span>
+        <div class="revision">
+          <h5 class="mt-1">{{ company.createdAt | calendar }}</h5>
+          <span v-if="company.createdBy" class="small muted">{{ company.createdBy.name }}</span>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Icon from '../components/Icon.vue'
 import LoaderOverlay from '../components/LoaderOverlay.vue'
 import HashtagInput from '../components/forms/HashtagInput'
 import Button from '../components/forms/Button'
@@ -151,6 +178,7 @@ export default {
     HashtagInput,
     ImageUploader,
     LoaderOverlay,
+    Icon,
   },
   props: {
     slug: {
@@ -184,16 +212,6 @@ export default {
         createdBy: '',
         currentRevision: {
           id: '',
-          // description: '',
-          // location: '',
-          // website: '',
-          // twitter: '',
-          // crunchbaseId: '',
-          // logoUrl: '',
-          // logo: '',
-          // coverUrl: '',
-          // cover: '',
-          // hashtags: [],
         },
       },
     }
@@ -224,7 +242,10 @@ export default {
       try {
         if (this.isEditing) {
           // Is Editing Company
-          await api.postCompanyRevision(this.company.slug, this.revisionState)
+          const response = await api.postCompanyRevision(this.company.slug, this.revisionState)
+          if (response.errors) {
+            this.errors = response.errors
+          }
           this.revisions = await api.getCompanyRevisions(this.slug)
         } else {
           // Is Creating New
@@ -282,14 +303,7 @@ export default {
       this.isLoadingBlocked = true
       try {
         await api.postCompanyRevisionApprove(revisionId)
-
         this.fetchData()
-        // this.revisions = await api.getCompanyRevisions(this.slug)
-        // this.company = await api.getCompany(this.slug)
-        // this.isReadyForHashtags = false
-        // this.$nextTick(() => {
-        //   this.isReadyForHashtags = true
-        // })
       } catch (e) {
         console.error(e)
       }
@@ -302,6 +316,11 @@ export default {
         this.revisionState = revision
         this.isReadyForHashtags = true
       })
+    },
+
+    formatWebsite(event) {
+      const withHttp = (url) => (!/^https?:\/\//i.test(url) ? `https://${url}` : url)
+      this.revisionState.website = withHttp(event.target.value)
     },
   },
 }
@@ -368,8 +387,31 @@ export default {
   flex-wrap: wrap;
 }
 
-.revisions {
-  margin-top: 2rem;
+.revision {
+  margin-left: 5px;
+  padding-left: 20px;
+  position: relative;
+  margin-bottom: 20px;
+
+  &:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    height: 100%;
+    border-left: 1px solid $dark;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: 4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: $dark;
+  }
+
   @include for-large-up {
   }
 }
