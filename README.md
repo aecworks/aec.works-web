@@ -45,6 +45,8 @@ This is the recommended approach for working on features the span across front a
 
 All code pushed or merged into `staging` is automatically deployed to http://staging--aecworks.netlify.app/
 
+You can push a specific branch to staging using `git push -f origin branch-name:staging`
+
 #### Production
 
 #### PRs
