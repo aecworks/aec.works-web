@@ -136,8 +136,8 @@ class Api {
     return this._post(`community/companies/`, { body: company })
   }
 
-  postCompanyModerationAction(slug, body) {
-    return this._post(`community/companies/${slug}/moderation/`, { body })
+  postCompanyModerationAction(slug, body, options = {}) {
+    return this._post(`community/companies/${slug}/moderation/`, { body, ...options })
   }
 
   postCompanyRevision(slug, revision) {
