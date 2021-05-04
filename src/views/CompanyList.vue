@@ -156,6 +156,7 @@ export default {
         reverse: this.$route.query.reverse,
         status: this.status,
       }
+      console.log(this.status)
       // Remove null/undefined
       query = Object.entries(query).reduce((a, [k, v]) => (v ? ((a[k] = v), a) : a), {})
 

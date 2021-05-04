@@ -42,7 +42,7 @@ export default {
       } else {
         this.$router.replace({ query: { ...this.$route.query, status: status } }).catch(() => {})
       }
-      this.$emit('filtered')
+      this.$nextTick(() => this.$emit('filtered'))
     },
   },
 }
