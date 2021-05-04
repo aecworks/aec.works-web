@@ -173,8 +173,7 @@ export default {
       this.company = company
     },
     async handleModerate(status) {
-      await api.postCompanyModerationAction(this.slug, {
-        status,
+      await api.postCompanyModerationAction(this.slug, status, {
         headers: { 'Cache-Control': 'no-cache' },
       })
       this.fetchData()
