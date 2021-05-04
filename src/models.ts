@@ -1,8 +1,8 @@
 export const ModerationStatus = {
-  UNMODERATED: 'UNMODERATED',
   APPROVED: 'APPROVED',
+  UNMODERATED: 'UNMODERATED',
   REJECTED: 'REJECTED',
-  FLAGGED: 'FLAGGED',
+  // FLAGGED: 'FLAGGED',
 }
 
 // TODO Create Typescript Models and use in API repsonses

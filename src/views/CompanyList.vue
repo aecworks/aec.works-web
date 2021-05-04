@@ -53,11 +53,16 @@
           {{ userIsEditor ? 'Add' : 'Suggest' }} Company
         </Button>
       </div>
+
+      <div class="mt-1 mb-2">
+        <StatusFilters :options="statusFilterOptions" @filtered="refetch" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import StatusFilters from '../components/StatusFilters.vue'
 import { USERS } from '@/store/users'
 import Button from '../components/forms/Button.vue'
 import Pagination from '../components/Pagination.vue'
@@ -85,6 +90,7 @@ export default {
     HashtagInput,
     Button,
     Pagination,
+    StatusFilters,
   },
   props: {
     search: {
@@ -111,6 +117,7 @@ export default {
       searchQuery: '',
       initialQueryHashtags: [],
       sortingOptions: ['claps', 'name', 'updated'],
+      statusFilterOptions: Object.values(ModerationStatus),
     }
   },
   computed: {

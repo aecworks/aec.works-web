@@ -69,12 +69,14 @@
         </Icon>
       </div>
 
-      <div class="mt-1">
+      <div v-if="userIsEditor" class="mt-1">
         <div class="pill">{{ company.status }}</div>
       </div>
 
-      <div v-if="userIsEditor" class="mt-2">
-        <Button class="mr-0 block" @click="handleEdit">Edit</Button>
+      <div class="mt-2">
+        <Button class="mr-0 block" @click="handleEdit">
+          {{ userIsEditor ? 'Edit' : 'Suggest Edit' }}
+        </Button>
       </div>
 
       <div v-if="false" class="mt-2">
