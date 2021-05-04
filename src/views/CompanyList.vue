@@ -54,7 +54,7 @@
         </Button>
       </div>
 
-      <div class="mt-1 mb-2">
+      <div v-if="userIsEditor" class="mt-1 mb-2">
         <StatusFilters :options="statusFilterOptions" @filtered="refetch" />
       </div>
     </div>
