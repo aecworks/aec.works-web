@@ -121,6 +121,7 @@
               @click="rev.id != revisionState.id ? showRevision(rev) : 1"
             ></Icon>
             <Icon
+              v-if="userIsEditor"
               :icon="rev.id == company.currentRevision.id ? 'apply' : 'apply_off'"
               :icon-hover="rev.id == revisionState.id ? 'apply' : 'apply_off'"
               :clickable="rev.id != company.currentRevision.id && rev.id == revisionState.id"
@@ -155,6 +156,7 @@ import ImageUploader from '../components/ImageUploader.vue'
 import GmapsAutocomplete from '../components/GmapsAutocomplete'
 import api from '@/api'
 import { waitForLogin } from '@/mixins'
+import { USERS } from '@/store/users'
 
 export default {
   name: 'CompanyEdit',
@@ -220,6 +222,9 @@ export default {
   computed: {
     isEditing() {
       return Boolean(this.slug)
+    },
+    userIsEditor() {
+      return this.$store.getters[USERS.IS_EDITOR]
     },
   },
   async created() {
