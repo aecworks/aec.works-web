@@ -49,13 +49,20 @@
       </div>
 
       <div class="mt-2 mb-2">
-        <Button v-if="userIsEditor" class="mr-0" @click="handleAdd">Add Company</Button>
+        <Button class="mr-0" @click="handleAdd">
+          {{ userIsEditor ? 'Add' : 'Suggest' }} Company
+        </Button>
+      </div>
+
+      <div class="mt-1 mb-2">
+        <StatusFilters :options="statusFilterOptions" @filtered="refetch" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import StatusFilters from '../components/StatusFilters.vue'
 import { USERS } from '@/store/users'
 import Button from '../components/forms/Button.vue'
 import Pagination from '../components/Pagination.vue'
@@ -68,6 +75,7 @@ import CompanyCard from '@/components/CompanyCard'
 import { popQuery, debounce } from '@/utils'
 import { bus, EVENTS } from '@/events'
 import { waitForLogin } from '@/mixins'
+import { ModerationStatus } from '@/models.ts'
 
 export default {
   name: 'CompanyList',
@@ -82,6 +90,7 @@ export default {
     HashtagInput,
     Button,
     Pagination,
+    StatusFilters,
   },
   props: {
     search: {
@@ -91,6 +100,10 @@ export default {
     hashtags: {
       type: String,
       default: '',
+    },
+    status: {
+      type: String,
+      default: ModerationStatus.APPROVED,
     },
   },
   data() {
@@ -104,6 +117,7 @@ export default {
       searchQuery: '',
       initialQueryHashtags: [],
       sortingOptions: ['claps', 'name', 'updated'],
+      statusFilterOptions: Object.values(ModerationStatus),
     }
   },
   computed: {
@@ -140,6 +154,7 @@ export default {
         search: this.searchQuery,
         sort: this.$route.query.sort,
         reverse: this.$route.query.reverse,
+        status: this.status,
       }
       // Remove null/undefined
       query = Object.entries(query).reduce((a, [k, v]) => (v ? ((a[k] = v), a) : a), {})

@@ -118,8 +118,8 @@ class Api {
     return this._get(`community/companies/claps/${slug}/`)
   }
 
-  getCompany(slug) {
-    return this._get(`community/companies/${slug}/`)
+  getCompany(slug, options = {}) {
+    return this._get(`community/companies/${slug}/`, { ...options })
   }
 
   getCompanies(query) {
@@ -136,12 +136,16 @@ class Api {
     return this._post(`community/companies/`, { body: company })
   }
 
-  postCompanyRevision(slug, company) {
-    return this._post(`community/companies/${slug}/revisions/`, { body: company })
+  postCompanyModerationAction(slug, body) {
+    return this._post(`community/companies/${slug}/moderation/`, { body })
+  }
+
+  postCompanyRevision(slug, revision) {
+    return this._post(`community/companies/${slug}/revisions/`, { body: revision })
   }
 
   postCompanyRevisionApprove(revisionId) {
-    return this._post(`community/revisions/${revisionId}/approve`)
+    return this._post(`community/revisions/${revisionId}/apply`)
   }
 
   putImage(file) {
@@ -184,15 +188,15 @@ class Api {
   }
 
   postPostClap(slug) {
-    return this._post(`community/posts/${slug}/clap/`)
+    return this._post(`community/posts/${slug}/clap`)
   }
 
   postCompanyClap(slug) {
-    return this._post(`community/companies/${slug}/clap/`)
+    return this._post(`community/companies/${slug}/clap`)
   }
 
   commentClap(id) {
-    return this._post(`community/comments/${id}/clap/`)
+    return this._post(`community/comments/${id}/clap`)
   }
 
   getTwitterTimeline(handle) {

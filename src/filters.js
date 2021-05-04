@@ -9,6 +9,6 @@ Vue.filter('calendar', (timestamp) => {
   return moment(timestamp).calendar()
 })
 
-Vue.filter('simpledate', (timestamp) => {
-  return moment(timestamp).format('lll')
+Vue.filter('capitalize', (str) => {
+  return str.charAt(0).toUpperCase() + str.substring(1, str.length).toLowerCase()
 })

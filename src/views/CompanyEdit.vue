@@ -2,25 +2,33 @@
   <div class="wrapper sm-grid-sidebar-down">
     <LoaderOverlay v-if="isLoadingBlocked"></LoaderOverlay>
     <div class="content">
-      <h1>{{ isEditing ? 'Edit' : 'New' }}</h1>
+      <h1 class="mt-0">
+        {{ isEditing ? 'Edit' : 'New' }}
+      </h1>
 
       <form class="form">
         <label for="input-name">Name</label>
-        <input id="input-name" v-model="company.name" type="text" class="input fill-x" />
+        <input id="input-name" v-model="revisionState.name" type="text" class="input fill-x" />
         <label for="input-description">Description</label>
         <textarea
           id="input-description"
-          v-model="company.description"
+          v-model="revisionState.description"
           type="text"
           class="input fill-x"
           rows="3"
         />
 
         <label for="input-location">Location</label>
-        <gmaps-autocomplete v-model="company.location" />
+        <gmaps-autocomplete v-model="revisionState.location" />
 
         <label for="input-website">Website</label>
-        <input id="input-website" v-model="company.website" type="text" class="input fill-x" />
+        <input
+          id="input-website"
+          v-model="revisionState.website"
+          type="text"
+          class="input fill-x"
+          @blur="formatWebsite"
+        />
 
         <div class="flex">
           <div class="fill-x">
@@ -29,7 +37,7 @@
               <span class="input-group-prefix">@</span>
               <input
                 id="input-twitter-handle"
-                v-model="company.twitter"
+                v-model="revisionState.twitter"
                 class="input input-with-prefix fill-x"
                 type="text"
               />
@@ -39,7 +47,7 @@
             <label for="input-crunchbase-id">Crunchbase id</label>
             <input
               id="input-crunchbase-id"
-              v-model="company.crunchbaseId"
+              v-model="revisionState.crunchbaseId"
               type="text"
               class="input fill-x"
             />
@@ -49,27 +57,27 @@
         <label for="input-hashtags">Hashtags</label>
         <HashtagInput
           v-if="isReadyForHashtags"
-          :initial-tags="company.hashtags"
+          :initial-tags="revisionState.hashtags"
           @changed="handleTagChange"
         />
 
         <label class="mt-1">Logo</label>
-        <div class="company-logo" :class="{ empty: !company.logoUrl }" @click="clearLogo">
-          <img :src="company.logoUrl || defaultImageUrl" alt />
+        <div class="company-logo" :class="{ empty: !revisionState.logoUrl }" @click="clearLogo">
+          <img :src="revisionState.logoUrl || defaultImageUrl" alt />
         </div>
         <ImageUploader :crop-ratio="1" @uploaded="handleLogoUploaded" />
 
         <label class="mt-1">Cover</label>
-        <div class="company-cover" :class="{ empty: !company.coverUrl }" @click="clearCover">
-          <img :src="company.coverUrl || defaultImageUrl" alt />
+        <div class="company-cover" :class="{ empty: !revisionState.coverUrl }" @click="clearCover">
+          <img :src="revisionState.coverUrl || defaultImageUrl" alt />
         </div>
         <ImageUploader :crop-ratio="0.5" @uploaded="handleCoverUploaded" />
 
         <div v-if="errors">
-          <h3 class="mt-2">Errors:</h3>
+          <h3 class="mt-2">Errors</h3>
           <ul>
-            <li v-for="(value, key) in errors" :key="key">
-              <span>
+            <li v-for="(value, key) in errors" :key="key" class="mt">
+              <span class="pill">
                 <strong>{{ key }}:</strong>
                 {{ value[0] }}
               </span>
@@ -90,30 +98,56 @@
         <CompanyCard :company="company" />
       </div>
     </div>
+
     <div class="sidebar mb-2">
-      <h3 class="mb-2">Revisions</h3>
-      <div v-for="rev in revisions" :key="rev.id" class="revisions">
-        <label v-if="rev.id == company.lastRevisionId" class="mb">👇Applied 👇</label>
-        <label v-if="rev.id == company.id" class="mb">👇Previwing 👇</label>
-        <h5>{{ rev.createdAt | calendar }}</h5>
-        <span class="muted small">{{ rev.createdBy.name }}</span>
-        <div>
-          <Button kind="text" aria-label="show revision" @click="showRevision(rev)">Show</Button>
-          <Button kind="text" aria-label="apply revision" @click="handleRevisionApprove(rev.id)">
-            Apply
-          </Button>
+      <div v-if="company.status">
+        <span class="pill">{{ company.status }}</span>
+      </div>
+
+      <div v-if="revisions.length" class="mt-2">
+        <h3 class="mb-1">Revisions</h3>
+
+        <div v-for="rev in revisions" :key="rev.id" class="revision">
+          <h5>{{ rev.createdAt | calendar }}</h5>
+          <h5 class="muted small">{{ rev.createdBy.name }}</h5>
+          <h5 class="muted small">{{ rev.status | capitalize }}</h5>
+
+          <div class="mt">
+            <Icon
+              :icon="rev.id == revisionState.id ? 'eye' : 'eye_off'"
+              icon-hover="eye"
+              :clickable="rev.id != revisionState.id"
+              title="preview"
+              @click="rev.id != revisionState.id ? showRevision(rev) : 1"
+            ></Icon>
+            <Icon
+              v-if="userIsEditor"
+              :icon="rev.id == company.currentRevision.id ? 'apply' : 'apply_off'"
+              :icon-hover="rev.id == revisionState.id ? 'apply' : 'apply_off'"
+              :clickable="rev.id != company.currentRevision.id && rev.id == revisionState.id"
+              title="apply"
+              @click="
+                rev.id != company.currentRevision.id && rev.id == revisionState.id
+                  ? handleRevisionApprove(rev.id)
+                  : 1
+              "
+            ></Icon>
+          </div>
         </div>
       </div>
-      <div class="mt-2">
+      <div v-if="company.createdAt" class="mt-2">
         <h3>Created</h3>
-        <h5 class="mt-1">{{ company.createdAt | calendar }}</h5>
-        <span v-if="company.createdBy" class="small muted">{{ company.createdBy.name }}</span>
+        <div class="revision">
+          <h5 class="mt-1">{{ company.createdAt | calendar }}</h5>
+          <span v-if="company.createdBy" class="small muted">{{ company.createdBy.name }}</span>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Icon from '../components/Icon.vue'
 import LoaderOverlay from '../components/LoaderOverlay.vue'
 import HashtagInput from '../components/forms/HashtagInput'
 import Button from '../components/forms/Button'
@@ -122,6 +156,7 @@ import ImageUploader from '../components/ImageUploader.vue'
 import GmapsAutocomplete from '../components/GmapsAutocomplete'
 import api from '@/api'
 import { waitForLogin } from '@/mixins'
+import { USERS } from '@/store/users'
 
 export default {
   name: 'CompanyEdit',
@@ -131,7 +166,9 @@ export default {
     return {
       title: () => {
         if (isEditing) {
-          return company && company.name ? `Edit: ${company.name}` : 'Edit Company'
+          return company && this.revisionState.name
+            ? `Edit: ${this.revisionState.name}`
+            : 'Edit Company'
         }
         return 'Add Company'
       },
@@ -144,6 +181,7 @@ export default {
     HashtagInput,
     ImageUploader,
     LoaderOverlay,
+    Icon,
   },
   props: {
     slug: {
@@ -158,7 +196,7 @@ export default {
       errors: null,
       revisions: [],
       isReadyForHashtags: false,
-      company: {
+      revisionState: {
         name: '',
         description: '',
         location: '',
@@ -170,7 +208,14 @@ export default {
         coverUrl: '',
         cover: '',
         hashtags: [],
-        lastRevisionId: '',
+        createdBy: '',
+      },
+      company: {
+        status: '',
+        createdBy: '',
+        currentRevision: {
+          id: '',
+        },
       },
     }
   },
@@ -178,28 +223,39 @@ export default {
     isEditing() {
       return Boolean(this.slug)
     },
+    userIsEditor() {
+      return this.$store.getters[USERS.IS_EDITOR]
+    },
   },
   async created() {
-    if (this.isEditing) {
-      this.company = await api.getCompany(this.slug)
-      this.revisions = await api.getCompanyRevisions(this.slug)
-    }
-    /// Use this to hold back hashtag input otherwise it's initiated as blank
-    // TODO: Sync, when applying doe snot work
-    this.isReadyForHashtags = true
+    this.fetchData()
   },
   methods: {
+    async fetchData() {
+      this.isReadyForHashtags = false
+      if (this.isEditing) {
+        this.company = await api.getCompany(this.slug, { headers: { 'Cache-Control': 'no-cache' } })
+        this.revisionState = this.company.currentRevision
+        this.revisions = await api.getCompanyRevisions(this.slug)
+      }
+      /// Use this to hold back hashtag input otherwise it's initiated as blank
+      // TODO: Sync, when applying doe snot work
+      this.isReadyForHashtags = true
+    },
     async handleSave() {
       await waitForLogin()
       this.isLoadingBlocked = true
       try {
         if (this.isEditing) {
           // Is Editing Company
-          await api.postCompanyRevision(this.company.slug, this.company)
+          const response = await api.postCompanyRevision(this.company.slug, this.revisionState)
+          if (response.errors) {
+            this.errors = response.errors
+          }
           this.revisions = await api.getCompanyRevisions(this.slug)
         } else {
           // Is Creating New
-          const response = await api.postCompany(this.company)
+          const response = await api.postCompany(this.revisionState)
           if (!response.errors) {
             const company = response
             this.$router.push({ name: 'Company', params: { slug: company.slug } })
@@ -222,43 +278,38 @@ export default {
     },
 
     clearLogo() {
-      this.company.logoUrl = ''
-      this.company.logo = ''
+      this.revisionState.logoUrl = ''
+      this.revisionState.logo = ''
     },
 
     clearCover() {
-      this.company.coverUrl = ''
-      this.company.cover = ''
+      this.revisionState.coverUrl = ''
+      this.revisionState.cover = ''
     },
 
     handleLogoUploaded(image) {
-      this.company.logoUrl = image.url
-      this.company.logo = image.id
+      this.revisionState.logoUrl = image.url
+      this.revisionState.logo = image.id
     },
 
     handleCoverUploaded(image) {
-      this.company.coverUrl = image.url
-      this.company.cover = image.id
+      this.revisionState.coverUrl = image.url
+      this.revisionState.cover = image.id
     },
 
     handleHashtagEdit(e) {
-      this.company.hashtags = e.target.value.split(',')
+      this.revisionState.hashtags = e.target.value.split(',')
     },
 
     handleTagChange(hashtags) {
-      this.company.hashtags = hashtags
+      this.revisionState.hashtags = hashtags
     },
 
     async handleRevisionApprove(revisionId) {
       this.isLoadingBlocked = true
       try {
         await api.postCompanyRevisionApprove(revisionId)
-        this.revisions = await api.getCompanyRevisions(this.slug)
-        this.company = await api.getCompany(this.slug)
-        this.isReadyForHashtags = false
-        this.$nextTick(() => {
-          this.isReadyForHashtags = true
-        })
+        this.fetchData()
       } catch (e) {
         console.error(e)
       }
@@ -268,9 +319,14 @@ export default {
     showRevision(revision) {
       this.isReadyForHashtags = false
       this.$nextTick(() => {
-        this.company = { ...this.company, ...revision }
+        this.revisionState = revision
         this.isReadyForHashtags = true
       })
+    },
+
+    formatWebsite(event) {
+      const withHttp = (url) => (!/^https?:\/\//i.test(url) ? `https://${url}` : url)
+      this.revisionState.website = withHttp(event.target.value)
     },
   },
 }
@@ -287,7 +343,7 @@ export default {
   &:not(.empty):hover {
     cursor: pointer;
     img {
-      opacity: 0.25;
+      opacity: 1;
     }
   }
   &:not(.empty):hover::after,
@@ -326,14 +382,42 @@ export default {
 .company-cover {
   @extend .company-logo;
   width: 120px;
+
+  &:not(.empty):hover::before,
+  &:not(.empty):hover::after {
+    margin-left: 30px;
+  }
 }
 
 @include for-large-down {
   flex-wrap: wrap;
 }
 
-.revisions {
-  margin-top: 2rem;
+.revision {
+  margin-left: 5px;
+  padding-left: 20px;
+  position: relative;
+  margin-bottom: 20px;
+
+  &:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    height: 100%;
+    border-left: 1px solid $dark;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: 4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: $dark;
+  }
+
   @include for-large-up {
   }
 }

@@ -2,31 +2,41 @@
   <div class="wrapper sm-grid-sidebar-down">
     <div v-if="company" class="content-header">
       <div class="company-images">
-        <lazy-img class="cover" :src="company.coverUrl || defaultCover" alt="Company Cover Image" />
-        <lazy-img class="logo" :src="company.logoUrl || defaultLogo" alt="Company Logo" />
+        <lazy-img
+          class="cover"
+          :src="company.currentRevision.coverUrl || defaultCover"
+          alt="Company Cover Image"
+        />
+        <lazy-img
+          class="logo"
+          :src="company.currentRevision.logoUrl || defaultLogo"
+          alt="Company Logo"
+        />
       </div>
     </div>
     <div v-if="company" class="content">
       <h1 class="mt-2">
-        {{ company.name }}
-        <span class="small muted ml">{{ company.location || 'Somewhere' }}</span>
+        {{ company.currentRevision.name }}
+        <span class="small muted ml">{{ company.currentRevision.location || 'Somewhere' }}</span>
       </h1>
 
       <div class="mt-2 mb-2">
-        <p class="sans">{{ company.description || '...' }}</p>
+        <p class="sans">{{ company.currentRevision.description || '...' }}</p>
       </div>
 
       <div class="flex mt-2 mb-2">
         <div>
           <label>Website</label>
-          <a :href="company.website">{{ company.website || '-' | cleanUrl }}</a>
+          <a :href="company.currentRevision.website">
+            {{ company.currentRevision.website || '-' | cleanUrl }}
+          </a>
         </div>
       </div>
 
       <div class="mt-2">
         <label>Tags</label>
         <Hashtag
-          v-for="hashtagSlug in company.hashtags"
+          v-for="hashtagSlug in company.currentRevision.hashtags"
           :key="hashtagSlug"
           :slug="hashtagSlug"
           clickable
@@ -40,7 +50,10 @@
       </div>
 
       <div class="mt-2">
-        <TwitterFeed v-if="company.twitter" :handle="company.twitter" />
+        <TwitterFeed
+          v-if="company.currentRevision.twitter"
+          :handle="company.currentRevision.twitter"
+        />
       </div>
     </div>
 
@@ -56,13 +69,36 @@
         </Icon>
       </div>
 
-      <div v-if="false" class="mt-2">
-        <label></label>
-        <SocialShare />
+      <div class="mt-2">
+        <Button class="mr-0 block" @click="handleEdit">
+          {{ userIsEditor ? 'Edit' : 'Suggest Edit' }}
+        </Button>
       </div>
 
       <div v-if="userIsEditor" class="mt-2">
-        <Button class="mr-0" @click="handleEdit">Edit</Button>
+        <h4 class="mt-1 mb-1">Moderation</h4>
+        <div class="mb-1">
+          <div class="pill">{{ company.status }}</div>
+        </div>
+        <Button
+          class="mr-2"
+          :disabled="company.status == ModerationStatus.APPROVED"
+          @click="handleModerate(ModerationStatus.APPROVED)"
+        >
+          Approve
+        </Button>
+        <Button
+          class="mr-0"
+          :disabled="company.status == ModerationStatus.REJECTED"
+          @click="handleModerate(ModerationStatus.REJECTED)"
+        >
+          Reject
+        </Button>
+      </div>
+
+      <div v-if="false" class="mt-2">
+        <label></label>
+        <SocialShare />
       </div>
     </div>
 
@@ -85,13 +121,15 @@ import Hashtag from '@/components/Hashtag'
 import LazyImg from '@/components/LazyImg'
 import { waitForLogin } from '@/mixins'
 import { clapForCount } from '@/libs/sounds'
+import { ModerationStatus } from '@/models.ts'
 
 export default {
   name: 'Company',
   metaInfo() {
     const company = this.company
     return {
-      title: () => (company && company.name ? company.name : 'Company'),
+      title: () =>
+        company && company.currentRevision.name ? company.currentRevision.name : 'Company',
     }
   },
   components: {
@@ -117,7 +155,8 @@ export default {
       errors: [],
       company: null,
       defaultLogo: require('@/assets/images/image.svg'),
-      defaultCover: 'https://picsum.photos/600/200.jpg?blur=5&grayscale',
+      defaultCover: 'https://picsum.photos/600/200.jpg?blur=1&grayscale',
+      ModerationStatus: ModerationStatus,
     }
   },
   computed: {
@@ -132,6 +171,10 @@ export default {
     async fetchData() {
       const company = await api.getCompany(this.slug)
       this.company = company
+    },
+    async handleModerate(status) {
+      await api.postCompanyModerationAction(this.slug, { status })
+      this.fetchData()
     },
     handleEdit() {
       this.$router.push({ name: 'CompanyEdit', params: { slug: this.slug } })
