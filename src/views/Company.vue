@@ -69,13 +69,30 @@
         </Icon>
       </div>
 
-      <div v-if="userIsEditor" class="mt-1">
-        <div class="pill">{{ company.status }}</div>
-      </div>
-
       <div class="mt-2">
         <Button class="mr-0 block" @click="handleEdit">
           {{ userIsEditor ? 'Edit' : 'Suggest Edit' }}
+        </Button>
+      </div>
+
+      <div v-if="userIsEditor" class="mt-2">
+        <h4 class="mt-1 mb-1">Moderation</h4>
+        <div class="mb-1">
+          <div class="pill">{{ company.status }}</div>
+        </div>
+        <Button
+          class="mr-2"
+          :disabled="company.status == ModerationStatus.APPROVED"
+          @click="handleModerate(ModerationStatus.APPROVED)"
+        >
+          Approve
+        </Button>
+        <Button
+          class="mr-0"
+          :disabled="company.status == ModerationStatus.REJECTED"
+          @click="handleModerate(ModerationStatus.REJECTED)"
+        >
+          Reject
         </Button>
       </div>
 
@@ -104,6 +121,7 @@ import Hashtag from '@/components/Hashtag'
 import LazyImg from '@/components/LazyImg'
 import { waitForLogin } from '@/mixins'
 import { clapForCount } from '@/libs/sounds'
+import { ModerationStatus } from '@/models.ts'
 
 export default {
   name: 'Company',
@@ -138,6 +156,7 @@ export default {
       company: null,
       defaultLogo: require('@/assets/images/image.svg'),
       defaultCover: 'https://picsum.photos/600/200.jpg?blur=1&grayscale',
+      ModerationStatus: ModerationStatus,
     }
   },
   computed: {
@@ -152,6 +171,10 @@ export default {
     async fetchData() {
       const company = await api.getCompany(this.slug)
       this.company = company
+    },
+    async handleModerate(status) {
+      await api.postCompanyModerationAction(this.slug, { status })
+      this.fetchData()
     },
     handleEdit() {
       this.$router.push({ name: 'CompanyEdit', params: { slug: this.slug } })

@@ -110,6 +110,7 @@
         <div v-for="rev in revisions" :key="rev.id" class="revision">
           <h5>{{ rev.createdAt | calendar }}</h5>
           <h5 class="muted small">{{ rev.createdBy.name }}</h5>
+          <h5 class="muted small">{{ rev.status | capitalize }}</h5>
 
           <div class="mt">
             <Icon
