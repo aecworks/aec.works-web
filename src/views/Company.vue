@@ -169,16 +169,15 @@ export default {
   },
   methods: {
     async fetchData() {
-      const company = await api.getCompany(this.slug)
+      const company = await api.getCompany(this.slug, { fresh: true })
       this.company = company
     },
     async handleModerate(status) {
-      await api.postCompanyModerationAction(this.slug, { status }, {
-        headers: { 'Cache-Control': 'no-cache' },
-      })
+      await api.postCompanyModerationAction(this.slug, { status })
       this.fetchData()
     },
-    handleEdit() {
+    async handleEdit() {
+      await waitForLogin()
       this.$router.push({ name: 'CompanyEdit', params: { slug: this.slug } })
     },
     async handleClap(company) {

@@ -234,7 +234,7 @@ export default {
     async fetchData() {
       this.isReadyForHashtags = false
       if (this.isEditing) {
-        this.company = await api.getCompany(this.slug, { headers: { 'Cache-Control': 'no-cache' } })
+        this.company = await api.getCompany(this.slug, { fresh: true })
         this.revisionState = this.company.currentRevision
         this.revisions = await api.getCompanyRevisions(this.slug)
       }

@@ -21,12 +21,15 @@ class Api {
     return this._isAuthenticated
   }
 
-  _buildHeaders(headers = {}) {
+  _buildHeaders(headers = {}, fresh) {
     const csrftoken = Cookies.get('csrftoken')
     const mergedHeaders = {
       ...this.DEFAULT_HEADERS,
       ...headers,
       'X-CSRFToken': csrftoken,
+    }
+    if (fresh) {
+      mergedHeaders['Cache-Control'] = 'no-cache'
     }
     return mergedHeaders
   }
@@ -36,15 +39,14 @@ class Api {
   }
 
   async _fetch(method, urlPath, options = {}) {
-    let { body, headers, query } = options
+    let { body, headers, query, fresh } = options
     const url = buildUrl(this.API_URL, urlPath, query)
-
     if (body && !body.arrayBuffer) {
       body = JSON.stringify(body)
     }
     const request = new Request(url, {
       method,
-      headers: this._buildHeaders(headers),
+      headers: this._buildHeaders(headers, fresh),
       body: body,
     })
     const response = await fetch(request)
@@ -118,18 +120,16 @@ class Api {
     return this._get(`community/companies/claps/${slug}/`)
   }
 
-  getCompany(slug, options = {}) {
-    return this._get(`community/companies/${slug}/`, { ...options })
+  getCompany(slug, fresh = false) {
+    return this._get(`community/companies/${slug}/`, { fresh })
   }
 
-  getCompanies(query) {
-    return this._get(`community/companies/`, { query })
+  getCompanies(query, fresh = false) {
+    return this._get(`community/companies/`, { query, fresh })
   }
 
-  getCompanyRevisions(slug) {
-    return this._get(`community/companies/${slug}/revisions/`, {
-      headers: { 'Cache-Control': 'no-cache' },
-    })
+  getCompanyRevisions(slug, fresh = false) {
+    return this._get(`community/companies/${slug}/revisions/`, { fresh })
   }
 
   postCompany(company) {
