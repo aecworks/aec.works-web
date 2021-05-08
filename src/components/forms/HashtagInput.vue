@@ -9,6 +9,7 @@
       :autocomplete-items="filteredItems"
       :add-on-key="[13, 188]"
       :max-tags="4"
+      add-only-from-autocomplete
       @tags-changed="handleTagChanged"
     />
   </div>
