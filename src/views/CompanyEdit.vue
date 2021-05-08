@@ -129,11 +129,12 @@
               @click="rev.id != revisionState.id ? showRevision(rev) : 1"
             ></Icon>
             <Icon
-              v-if="userIsEditor"
               :icon="rev.id == company.currentRevision.id ? 'apply' : 'apply_off'"
               :icon-hover="rev.id == revisionState.id ? 'apply' : 'apply_off'"
-              :clickable="rev.id != company.currentRevision.id && rev.id == revisionState.id"
-              title="apply"
+              :clickable="
+                rev.id != company.currentRevision.id && rev.id == revisionState.id && userIsEditor
+              "
+              :title="userIsEditor ? 'Apply' : 'Only Editors can apply'"
               @click="
                 rev.id != company.currentRevision.id && rev.id == revisionState.id
                   ? handleRevisionApprove(rev.id)
