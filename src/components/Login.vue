@@ -85,7 +85,10 @@ export default {
   },
   computed: {
     showDevLogin() {
-      return document.location.href.includes('localhost')
+      return (
+        document.location.href.includes('localhost') ||
+        document.location.href.includes('--aecworks.netlify.app')
+      )
     },
   },
   mounted() {

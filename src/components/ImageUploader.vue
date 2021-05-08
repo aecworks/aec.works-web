@@ -34,7 +34,7 @@ import IconLarge from '../components/IconLarge.vue'
 import api from '@/api'
 import Cropper from '@/components/Cropper.vue'
 import Modal from '@/components/Modal.vue'
-import { filePrompt, fileToBase64, subscribePaste, unsubscribePaste } from '@/utils'
+import { fileIsTooBig, filePrompt, fileToBase64, subscribePaste, unsubscribePaste } from '@/utils'
 
 export default {
   name: 'ImageUploader',
@@ -73,15 +73,26 @@ export default {
     },
 
     async onPasteEvent(file) {
-      this.dataUri = await fileToBase64(file)
-      this.startCrop()
-      this.endPaste()
+      if (fileIsTooBig(file)) {
+        this.$emit('error', 'File is a bit big, try a smaller one (3MB)')
+        this.isCropping = false
+        this.endPaste()
+      } else {
+        this.dataUri = await fileToBase64(file)
+        this.startCrop()
+        this.endPaste()
+      }
     },
 
     async handleFileUploaded() {
       const file = await filePrompt()
-      this.dataUri = await fileToBase64(file)
-      this.startCrop()
+      if (fileIsTooBig(file)) {
+        this.$emit('error', 'File is a bit big, try a smaller one (3MB)')
+        this.isCropping = false
+      } else {
+        this.dataUri = await fileToBase64(file)
+        this.startCrop()
+      }
     },
 
     startCrop() {

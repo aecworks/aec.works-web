@@ -96,3 +96,7 @@ export const toggleHashtag = (router, name) => {
 export const filterNullKeys = (obj) => {
   return Object.entries(obj).reduce((a, [k, v]) => (v ? ((a[k] = v), a) : a), {})
 }
+
+export const fileIsTooBig = (file) => {
+  return file.size / (1024 * 1024) > 3
+}
