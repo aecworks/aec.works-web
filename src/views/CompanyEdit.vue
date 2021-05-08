@@ -260,7 +260,7 @@ export default {
           if (response.errors) {
             this.errors = response.errors
           }
-          this.revisions = await api.getCompanyRevisions(this.slug, { fresh: true })
+          this.fetchData()
         } else {
           // Is Creating New
           const response = await api.postCompany(this.revisionState)
