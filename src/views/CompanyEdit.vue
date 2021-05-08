@@ -236,7 +236,7 @@ export default {
       if (this.isEditing) {
         this.company = await api.getCompany(this.slug, { fresh: true })
         this.revisionState = this.company.currentRevision
-        this.revisions = await api.getCompanyRevisions(this.slug)
+        this.revisions = await api.getCompanyRevisions(this.slug, { fresh: true })
       }
       /// Use this to hold back hashtag input otherwise it's initiated as blank
       // TODO: Sync, when applying doe snot work
@@ -252,7 +252,7 @@ export default {
           if (response.errors) {
             this.errors = response.errors
           }
-          this.revisions = await api.getCompanyRevisions(this.slug)
+          this.revisions = await api.getCompanyRevisions(this.slug, { fresh: true })
         } else {
           // Is Creating New
           const response = await api.postCompany(this.revisionState)
