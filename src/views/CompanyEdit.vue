@@ -65,13 +65,21 @@
         <div class="company-logo" :class="{ empty: !revisionState.logoUrl }" @click="clearLogo">
           <img :src="revisionState.logoUrl || defaultImageUrl" alt />
         </div>
-        <ImageUploader :crop-ratio="1" @uploaded="handleLogoUploaded" />
+        <ImageUploader
+          :crop-ratio="1"
+          @uploaded="handleLogoUploaded"
+          @error="handleImageUploadError"
+        />
 
         <label class="mt-1">Cover</label>
         <div class="company-cover" :class="{ empty: !revisionState.coverUrl }" @click="clearCover">
           <img :src="revisionState.coverUrl || defaultImageUrl" alt />
         </div>
-        <ImageUploader :crop-ratio="0.5" @uploaded="handleCoverUploaded" />
+        <ImageUploader
+          :crop-ratio="0.5"
+          @uploaded="handleCoverUploaded"
+          @error="handleImageUploadError"
+        />
 
         <div v-if="errors">
           <h3 class="mt-2">Errors</h3>
@@ -295,6 +303,10 @@ export default {
     handleCoverUploaded(image) {
       this.revisionState.coverUrl = image.url
       this.revisionState.cover = image.id
+    },
+
+    handleImageUploadError(errorMsg) {
+      this.errors = { 'Image Upload': [errorMsg] }
     },
 
     handleHashtagEdit(e) {
