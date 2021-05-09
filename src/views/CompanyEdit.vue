@@ -103,7 +103,7 @@
 
       <div class="mt-2">
         <h3>Preview</h3>
-        <CompanyCard :company="company" />
+        <CompanyCard :company="companyForPreview" />
       </div>
     </div>
 
@@ -234,6 +234,10 @@ export default {
     },
     userIsEditor() {
       return this.$store.getters[USERS.IS_EDITOR]
+    },
+    companyForPreview() {
+      const company = { ...(this.company || {}), currentRevision: this.revisionState || {} }
+      return company
     },
   },
   async created() {
