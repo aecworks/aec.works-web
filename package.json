@@ -18,7 +18,7 @@
     "croppr": "^2.3.1",
     "hamburgers": "^1.1.3",
     "js-cookie": "^2.2.1",
-    "moment": "^2.25.3",
+    "moment": "^2.29.2",
     "quill": "^1.3.7",
     "v-lazy-image": "^1.4.0",
     "vue": "^2.6.11",
