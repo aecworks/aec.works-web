@@ -1,6 +1,20 @@
 <template>
-  <div id="app" class="app-wrapper">
-    <Nav />
+  <div id="app" class="wrapper">
+    <img alt="AEC Guide Logo" class="logo" src="@/assets/images/logo-black.svg" />
+    <h1 class="center">All good things come to end</h1>
+    <p class="center mt-2">
+      <a href="https://github.com/gtalarico/aec-works-archive">data archive</a>
+    </p>
+
+    <a href="https://twitter.com/aec_works" class="center">
+      <div class="">
+        <br />
+        <img alt="Twitter" src="@/assets/images/social-icons/twitter.svg" />
+      </div>
+      <!-- <div class="social-icon--text">Twitter</div> -->
+    </a>
+
+    <!-- <Nav />
     <Poopee />
     <SocialIcons />
     <transition name="fade" mode="out-in">
@@ -10,16 +24,11 @@
     </transition>
     <transition name="zoom" mode="out-in">
       <Login v-if="showLoginModal" @closed="$router.replace({ query: {} })" />
-    </transition>
+    </transition> -->
   </div>
 </template>
 
 <script>
-import Poopee from './components/Poopee.vue'
-import Nav from '@/components/Nav'
-import Login from '@/components/Login'
-import SocialIcons from '@/components/SocialIcons'
-
 const description =
   'aec.works is a curated list of innovative and product-oriented aec companies and startups'
 
@@ -97,23 +106,19 @@ export default {
       },
     ],
   },
-  components: {
-    Nav,
-    Login,
-    Poopee,
-    SocialIcons,
-  },
+  components: {},
   data() {
     return {}
   },
-  computed: {
-    showLoginModal() {
-      return this.$route.query.login
-    },
-  },
+  computed: {},
 }
 </script>
 
 <style lang="scss">
 @import '~@/assets/scss/main.scss';
+
+.logo {
+  height: 80px;
+  margin-bottom: 1.5rem;
+}
 </style>
