@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="wrapper">
     <img alt="AEC Guide Logo" class="logo" src="@/assets/images/logo-black.svg" />
-    <h1 class="center">All good things come to end</h1>
+    <h1 class="center">All good things come to an end</h1>
     <p class="center mt-2">
       <a href="https://github.com/gtalarico/aec-works-archive">data archive</a>
     </p>
